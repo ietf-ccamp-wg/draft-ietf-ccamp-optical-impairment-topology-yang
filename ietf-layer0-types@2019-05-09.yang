@@ -316,24 +316,32 @@ module ietf-layer0-types {
     base dwdm-ch-spc-type;
     description
       "100GHz channel spacing";
+	reference
+	  "ITU-T Recommendation G.694.1"
   }
 
   identity dwdm-50ghz {
     base dwdm-ch-spc-type;
     description
       "50GHz channel spacing";
+	reference
+	  "ITU-T Recommendation G.694.1"
   }
 
   identity dwdm-25ghz {
     base dwdm-ch-spc-type;
     description
       "25GHz channel spacing";
+	reference
+	  "ITU-T Recommendation G.694.1"
   }
 
   identity dwdm-12p5ghz {
     base dwdm-ch-spc-type;
     description
       "12.5GHz channel spacing";
+	reference
+	  "ITU-T Recommendation G.694.1"
   }
 
   identity  flex-ch-spc-type {
