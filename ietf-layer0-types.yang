@@ -34,7 +34,7 @@ module ietf-layer0-types {
      Legal Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision "2019-05-09" {
+  revision "2019-05-14" {
     description
       "Initial Version";
     reference
@@ -101,10 +101,10 @@ module ietf-layer0-types {
 	  (WSONs)";
   }
 
-  identity flex-grid-node {
+  identity flexi-grid-node {
     base layer0-node-type;
     description
-      "Flex Grid node";
+      "flexi Grid node";
   }
 
   identity wson-node-foadm {
@@ -176,10 +176,10 @@ module ietf-layer0-types {
 	   (WSONs)";
   }
 
-  identity flex-grid-dwdm {
+  identity flexi-grid-dwdm {
     base layer0-grid-type;
     description
-      "Flex grid";
+      "flexi grid";
   }
 
   identity wson-grid-dwdm {
@@ -316,62 +316,50 @@ module ietf-layer0-types {
     base dwdm-ch-spc-type;
     description
       "100GHz channel spacing";
-	reference
-	  "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
-	  DWDM frequency grid";
   }
 
   identity dwdm-50ghz {
     base dwdm-ch-spc-type;
     description
       "50GHz channel spacing";
-	reference
-	  "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
-	  DWDM frequency grid";
   }
 
   identity dwdm-25ghz {
     base dwdm-ch-spc-type;
     description
       "25GHz channel spacing";
-	reference
-	  "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
-	  DWDM frequency grid";
   }
 
   identity dwdm-12p5ghz {
     base dwdm-ch-spc-type;
     description
       "12.5GHz channel spacing";
-	reference
-	  "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
-	  DWDM frequency grid";
   }
 
-  identity  flex-ch-spc-type {
+  identity  flexi-ch-spc-type {
     description
-      "Flex-grid channel spacing type";
+      "flexi-grid channel spacing type";
     reference 
       "RFC7581: Routing and Wavelength Assignment Information 
        Encoding for Wavelength Switched Optical Networks";
   }
   
-  identity flex-ch-spc-6p25ghz {
-    base flex-ch-spc-type;
+  identity flexi-ch-spc-6p25ghz {
+    base flexi-ch-spc-type;
     description
       "6.25GHz channel spacing";
   }
 
-  identity  flex-slot-width-granularity {
+  identity  flexi-slot-width-granularity {
     description
-      "Flex-grid slot width granularity";
+      "flexi-grid slot width granularity";
     reference 
       "RFC7581: Routing and Wavelength Assignment Information 
        Encoding for Wavelength Switched Optical Networks";
   }
   
-  identity flex-swg-12p5ghz {
-    base flex-slot-width-granularity;
+  identity flexi-swg-12p5ghz {
+    base flexi-slot-width-granularity;
     description
       "12.5GHz slot width granularity";
   }
@@ -595,50 +583,50 @@ module ietf-layer0-types {
     }
   }
 
-  grouping flex-grid-node-attributes {
-    description "Flex-grid node attributes";
+  grouping flexi-grid-node-attributes {
+    description "flexi-grid node attributes";
     reference 
       "RFC7698"; 
-    container flex-grid-node {
-      description "Flex-grid node attrtibutes";
+    container flexi-grid-node {
+      description "flexi-grid node attrtibutes";
       leaf node-type {
         type identityref {
           base layer0-node-type;
         }
-        description "Flex-grid node type";
+        description "flexi-grid node type";
       }
     }
   }
 
-  grouping flex-grid-path-bandwidth {
-    description "Flex-grid path bandwidth attributes";
+  grouping flexi-grid-path-bandwidth {
+    description "flexi-grid path bandwidth attributes";
     reference 
       "RFC7698"; 
     leaf bandwidth-type {
       type identityref {
         base layer0-bandwidth-type;
       }
-      description "Flex-grid bandwidth type";
+      description "flexi-grid bandwidth type";
     }
   }
 
-  grouping flex-grid-link-bandwidth {
-    description "flex-grid link bandwidth attributes";
+  grouping flexi-grid-link-bandwidth {
+    description "flexi-grid link bandwidth attributes";
     reference 
       "RFC7698"; 
     leaf-list supported-bandwidth-list {
       type identityref {
         base layer0-bandwidth-type;
       }
-      description "Flex-grid bandwidth type";
+      description "flexi-grid bandwidth type";
     }
   }
 
-  grouping flex-grid-link-label {
-    description "Flex-grid link label.";
+  grouping flexi-grid-link-label {
+    description "flexi-grid link label.";
     reference 
       "RFC7698"; 
-    leaf flex-n {
+    leaf flexi-n {
       type uint16;
       description
         "N is used to determine the Nominal Central Frequency. 
@@ -655,13 +643,13 @@ module ietf-layer0-types {
     }
   }
 
-  grouping flex-grid-channel {
-    description "Flex-grid channel grouping.";
+  grouping flexi-grid-channel {
+    description "flexi-grid channel grouping.";
     reference 
       "RFC7698"; 
-    uses flex-grid-link-label;
+    uses flexi-grid-link-label;
 
-    leaf flex-m {
+    leaf flexi-m {
       type uint16 {
 	    range "1..max";
 	  }
@@ -675,41 +663,41 @@ module ietf-layer0-types {
 		 (DWDM) Networks";
     }
   }
-  grouping flex-grid-path-label {
-    description "Flex-grid path label.";
+  grouping flexi-grid-path-label {
+    description "flexi-grid path label.";
     reference 
       "RFC7698"; 
       choice single-or-super-channel {
        description "single of super channel";
         case single {
-          uses flex-grid-channel;
+          uses flexi-grid-channel;
        }
         case super {
-         list subcarrier-flex-n {
-         key flex-n;
-         uses flex-grid-channel;
+         list subcarrier-flexi-n {
+         key flexi-n;
+         uses flexi-grid-channel;
          description
-            "List of subcarrier channels for flex-grid
+            "List of subcarrier channels for flexi-grid
              super channel.";
           }
         }
       }
   }
 
-  grouping flex-grid-label-restriction {
+  grouping flexi-grid-label-restriction {
     description
-      "Flex Grid-specific label restriction";
+      "flexi Grid-specific label restriction";
     reference 
       "RFC7698 & RFC3209"; 
     uses layer0-label-restriction;
 
-    container flex-grid {
-      description "flex-grid definition";
+    container flexi-grid {
+      description "flexi-grid definition";
       leaf nominal-central-frequency-granularity {
         type identityref {
-          base flex-ch-spc-type;
+          base flexi-ch-spc-type;
         }
-        default flex-ch-spc-6p25ghz;
+        default flexi-ch-spc-6p25ghz;
         description
           "It is the spacing between allowed nominal central
            frequencies. Default is 6.25 GHz";
@@ -722,9 +710,9 @@ module ietf-layer0-types {
 
       leaf slot-width-granularity {
         type identityref {
-          base flex-slot-width-granularity;
+          base flexi-slot-width-granularity;
         }
-        default flex-swg-12p5ghz;
+        default flexi-swg-12p5ghz;
         description
           "Minimum space between slot widths. Default is 
 		    12.5 GHz";
@@ -766,15 +754,15 @@ module ietf-layer0-types {
     }
   }
 
-  grouping flex-grid-label-step {
-    description "Label step information for flex grid";
+  grouping flexi-grid-label-step {
+    description "Label step information for flexi grid";
     reference 
       "draft-ietf-teas-yang-te-topo-20";
-    leaf flex {
+    leaf flexi {
       type identityref {
-        base flex-ch-spc-type;
+        base flexi-ch-spc-type;
       }
-	  default flex-ch-spc-6p25ghz;
+	  default flexi-ch-spc-6p25ghz;
       description
         "Label-step is the nominal central frequency
          granularity (GHz), e.g., 6.25 GHz";
