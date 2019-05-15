@@ -19,7 +19,6 @@ module ietf-layer0-types {
      
      Editor: Dieter Beller
        <mailto:Dieter.Beller@nokia.com>";
-     Editor: 
 
   description
     "This module defines Optical Layer 0 types. This module
