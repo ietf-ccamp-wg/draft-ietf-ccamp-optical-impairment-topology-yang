@@ -15,7 +15,11 @@ module ietf-layer0-types {
        <mailto:leeyoung@huawei.com>
      
      Editor: Italo Busi
-       <mailto:Italo.Busi@huawei.com>";
+       <mailto:Italo.Busi@huawei.com>"
+     
+     Editor: Dieter Beller
+       <mailto:Dieter.Beller@nokia.com>";
+     Editor: 
 
   description
     "This module defines Optical Layer 0 types. This module
@@ -34,7 +38,7 @@ module ietf-layer0-types {
      Legal Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision "2019-05-14" {
+  revision "2019-05-15" {
     description
       "Initial Version";
     reference
