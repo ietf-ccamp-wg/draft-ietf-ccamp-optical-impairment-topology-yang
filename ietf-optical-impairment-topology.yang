@@ -746,10 +746,10 @@ module ietf-optical-impairment-topology {
       }   
   
       list media-channels {
-        key "flex-n";
+        key "flexi-n";
         description
           "list of media channels represented as (n,m)";
-        uses layer0-types:flex-grid-channel;
+        uses layer0-types:flexi-grid-channel;
         leaf OTSiG-ref {
           type leafref {
            path "/nw:networks/nw:network/nw:node/tet:te" +
