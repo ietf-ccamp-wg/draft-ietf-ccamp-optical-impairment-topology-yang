@@ -1,7 +1,8 @@
 module ietf-optical-impairment-topology {  
   yang-version 1.1;
 
-  namespace "urn:ietf:params:xml:ns:yang:ietf-optical-impairment-topology";
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-optical-impairment-topology";
 
   prefix "optical-imp-topo";
 
@@ -25,16 +26,20 @@ module ietf-optical-impairment-topology {
     "IETF CCAMP Working Group";
 
   contact
-    "Editor:   Young Lee  <leeyoung@huawei.com>
+    "Editor:   Young Lee <younglee.tx@gmail.com>
      Editor:   Haomian Zheng <zhenghaomian@huawei.com>
      Editor:   Nicola Sambo <nicosambo@gmail.com>
      Editor:   Victor Lopez <victor.lopezalvarez@telefonica.com>
      Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
-     Editor:   Auge Jean-Luc <jeanluc.auge@orange.com>
+     Editor:   Giovanni Martinelli <giomarti@cisco.com>
+     Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
      Editor:   Julien Meuric <julien.meuric@orange.com>
-     Editor:   Italo Busi <Italo.Busi@huawei.com>"; 
-
+     Editor:   Italo Busi <Italo.Busi@huawei.com>
+     Editor:   Dieter Beller <dieter.beller@nokia.com>
+     Editor:   Sergio Belotti <Sergio.belotti@nokia.com>
+     Editor:   Griseri Enrico <enrico.griseri@nokia.com>
+     Editor:   Gert Grammel <ggrammel@juniper.net>";
 
   description
     "This module contains a collection of YANG definitions for
@@ -44,13 +49,13 @@ module ietf-optical-impairment-topology {
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
-     without modification, is permitted pursuant to, and subject 
+     without modification, is permitted pursuant to, and subject
      to the license terms contained in, the Simplified BSD
      License set forth in Section 4.c of the IETF Trust's Legal
      Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2019-05-14 {
+  revision 2019-05-30 {
     description
       "Initial Version";
     reference
@@ -102,7 +107,8 @@ module ietf-optical-impairment-topology {
   identity DC_DP_QAM16 {
     base modulation;      
     description 
-      "DC DP-QAM16 (Dual Polarization Quadrature Amplitude Modulation)";
+      "DC DP-QAM16 (Dual Polarization Quadrature Amplitude
+      Modulation)";
   }
     
 
@@ -155,22 +161,22 @@ module ietf-optical-impairment-topology {
   grouping transponder-attributes {
     description "Configuration of an optical transponder";
         
-    leaf-list available-modulation {
+    leaf-list available-modulation-types {
       type identityref {
       base modulation;
       }
       config false;
     description 
-      "List determining all the available modulations";
+      "List of modulation types the OTSi supports";
     }
 
-    leaf modulation-type {
+    leaf configured-modulation-type {
       type identityref {
       base modulation;
       }
     config false;
       description 
-      "Modulation configured for the transponder";
+      "Currently configured OTSi modulation type";
     }
 
     leaf-list available-baud-rates { 
@@ -192,7 +198,7 @@ module ietf-optical-impairment-topology {
       description "configured baud-rate";
     }
 
-    leaf-list available-FEC {
+    leaf-list available-FEC-types {
       type identityref {
       base FEC;
       }
@@ -200,7 +206,7 @@ module ietf-optical-impairment-topology {
       description "List determining all the available FEC";
     }
 
-    leaf FEC-type {
+    leaf configured-FEC-type {
       type identityref {
       base FEC;
       }
@@ -225,7 +231,7 @@ module ietf-optical-impairment-topology {
       }
       config false;
     description 
-        "Threshold on the BER, for which FEC is able to correct errors";
+      "Threshold on the BER, for which FEC is able to correct errors";
     }
     
   }
@@ -497,7 +503,7 @@ module ietf-optical-impairment-topology {
   grouping amplifier-params {
     description "describes parameters for an amplifier";
     container amplifier{
-    description "amplifier type, operatonal parameters are described"; 
+    description "amplifier type, operatonal parameters are described";
       leaf type_variety {
         type string ;
         mandatory true ;
@@ -544,7 +550,9 @@ module ietf-optical-impairment-topology {
   }
 
   grouping fiber-params {
-    description "String identifier of fiber type referencing a specification in a separate equipment catalog";
+    description
+      "String identifier of fiber type referencing a specification in
+      a separate equipment catalog";
     container fiber {
     description "fiber characteristics"; 
       leaf type_variety {
@@ -575,7 +583,8 @@ module ietf-optical-impairment-topology {
         units dB;
     mandatory true ;
         description 
-          "includes all losses: fiber loss and conn_in and conn_out losses";
+          "includes all losses: fiber loss and conn_in and conn_out
+          losses";
       }
       leaf pmd{
         type decimal64 {
@@ -608,7 +617,9 @@ module ietf-optical-impairment-topology {
       leaf type_variety {
         type string ;
         mandatory true ;
-        description "String identifier of roadm type referencing a specification in a separate equipment catalog";
+        description
+          "String identifier of roadm type referencing a specification
+          in a separate equipment catalog";
       }      
       leaf loss {
         type decimal64 {
@@ -648,7 +659,8 @@ module ietf-optical-impairment-topology {
           }
           units dBm ;
           description 
-            " Reference channel power after the ROADM or after the out-voa. ";
+            "Reference channel power after the ROADM or after the
+            out-voa.";
         }
       }
       case power-spectral-density{
@@ -659,8 +671,9 @@ module ietf-optical-impairment-topology {
           }
           units W/Hz ;
           description 
-            " Reference power spectral density after the ROADM or after the out-voa. 
-              Typical value : 3.9 E-14, resolution 0.1nW/MHz";
+            "Reference power spectral density after the ROADM or after
+            the out-voa.
+            Typical value: 3.9E-14, resolution 0.1 nW/MHz";
         }
       }
     }
@@ -686,7 +699,9 @@ module ietf-optical-impairment-topology {
   }
 
   grouping OTSiG {
-    description "OTSiG definition , representing client digital information stream supported by 1 or more OTSi"; 
+    description
+      "OTSiG definition, representing a digital client information
+      stream supported by 1 or more OTSi's"; 
     
     container OTSiG-container {
       config false;
@@ -726,8 +741,8 @@ module ietf-optical-impairment-topology {
          units dB;
          config false;
          description
-           "optional ; delta power to ref channel input-power applied 
-		    to this media channel";
+           "optional ; delta power to ref channel input-power applied
+           to this media channel";
        } 
   
      } 
@@ -753,21 +768,24 @@ module ietf-optical-impairment-topology {
         leaf OTSiG-ref {
           type leafref {
            path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/OTSiG-element/OTSiG-identifier" ;
+                "/tet:tunnel-termination-point/OTSiG-element/" +
+                "OTSiG-identifier";
            
           } 
           description 
-             "Reference to the OTSiG list to get OTSiG identifier of the 
-              OSiG carried by this media channel that reports the transient stat";   
+            "Reference to the OTSiG list to get OTSiG identifier of
+            the OSiG carried by this media channel that reports the
+            transient stat";   
         }
         leaf OTSi-ref {
           type leafref {
             path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/OTSiG-element[OTSiG-identifier=current()/../OTSiG-ref]/"+
-                "OTSiG-container/OTSi/OTSi-carrier-id" ;
+                "/tet:tunnel-termination-point/OTSiG-element" +
+                "[OTSiG-identifier=current()/../OTSiG-ref]" +
+                "/OTSiG-container/OTSi/OTSi-carrier-id" ;
           }
           description 
-             "Reference to the OTSi list supporting the related OTSiG" ;
+            "Reference to the OTSi list supporting the related OTSiG";
         }
         
 
@@ -780,11 +798,13 @@ module ietf-optical-impairment-topology {
     list OMS-elements {
         key "elt-index";
         description
-          "defines the spans and the amplifier blocks of the amplified lines";
+          "defines the spans and the amplifier blocks of the amplified
+          lines";
         leaf elt-index {
           type uint16;
           description
-            "ordered list of Index of OMS element (whether it's a Fiber, an EDFA or a Concentratedloss)";
+            "ordered list of Index of OMS element (whether it's a Fiber,
+            an EDFA or a Concentratedloss)";
         }
         leaf uid {
           type string;
@@ -826,9 +846,10 @@ module ietf-optical-impairment-topology {
    + "/tet:te-topology" {
    description "optical-impairment topology augmented";
    container optical-impairment-topology {
-     presence "indicates an impairment-aware topology of optical networks";
+     presence
+      "indicates an impairment-aware topology of optical networks";
      description
-     "Container to identify impairment-aware topology type";
+      "Container to identify impairment-aware topology type";
    }
   }
 
@@ -884,7 +905,8 @@ module ietf-optical-impairment-topology {
          }
      
          choice mode {
-             description "standard mode, organizational mode or explicit mode";
+          description
+            "standard mode, organizational mode or explicit mode";
            
              case G.692.2 {
                uses standard_mode; 
@@ -927,11 +949,12 @@ module ietf-optical-impairment-topology {
    when "/nw:networks/nw:network/nw:network-types"
     +"/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
     description
-      "This augment is only valid for optical impairment with sliceable 
+      "This augment is only valid for optical impairment with sliceable
       transponder model";
    }
    description 
-     "Tunnel termination point augmentation for sliceable transponder model.";
+     "Tunnel termination point augmentation for sliceable transponder
+     model.";
    uses sliceable-transponder-attributes; 
   }
 }

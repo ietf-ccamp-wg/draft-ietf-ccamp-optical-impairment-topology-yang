@@ -183,6 +183,9 @@ module ietf-layer0-types {
     base layer0-grid-type;
     description
       "flexi grid";
+    reference
+      "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
+      DWDM frequency grid";
   }
 
   identity wson-grid-dwdm {
@@ -363,6 +366,9 @@ module ietf-layer0-types {
     base flexi-ch-spc-type;
     description
       "6.25GHz channel spacing";
+    reference
+      "ITU-T Recommendation G.694.1: Spectral grids for WDM applications:
+      DWDM frequency grid";
   }
 
   identity  flexi-slot-width-granularity {
