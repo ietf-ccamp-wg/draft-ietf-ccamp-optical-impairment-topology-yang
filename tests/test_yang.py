@@ -47,5 +47,5 @@ def test_compile():
     if not cmp(TREE_FILE, EXPECTED_FILE):
         raise AssertionError()
     unlink(EXPECTED_FILE)
-    assert False
+
 #rmtree(temp_dir)
