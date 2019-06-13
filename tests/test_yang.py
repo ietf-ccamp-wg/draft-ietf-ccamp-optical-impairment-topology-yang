@@ -8,7 +8,7 @@ checks that tree created with yang modules are consistant with uploaded files
 
 """
 
-from os import system, unlink, path
+from os import system, unlink, path, mkdir
 from pathlib import Path
 import pytest
 from filecmp import cmp
@@ -26,12 +26,19 @@ EXPECTED_FILE = TEST_DIR /'ietf-optical-impairment-topology-expected.tree'
 
 
 # Create temporary dir
-temp_dir = mkdtemp()
+# temp_dir = mkdtemp()
+temp_dir = TEST_DIR /'ietf_library'
+try:  
+    mkdir(temp_dir)
+except OSError:  
+    print (f'Creation of the {temp_dir} directory failed.')
+print (f'Creation of the {temp_dir} directory')
 # Clone into temporary dir
 git.Repo.clone_from('https://github.com/YangModels/yang.git', temp_dir, branch='master', depth=1)
 
 def test_compile():
     my_cmd = f'pyang -f tree -p {temp_dir} {YANG_FILE} -o {EXPECTED_FILE}'
+    print(temp_dir)
     system(my_cmd)
     with open(EXPECTED_FILE) as expected:
         expected_tree = expected.read()
@@ -40,5 +47,5 @@ def test_compile():
     if not cmp(TREE_FILE, EXPECTED_FILE):
         raise AssertionError()
     unlink(EXPECTED_FILE)
-
-rmtree(temp_dir)
+    assert False
+#rmtree(temp_dir)
