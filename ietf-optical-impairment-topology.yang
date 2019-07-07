@@ -451,35 +451,6 @@ module ietf-optical-impairment-topology {
     /*
    * Identities
    */
-  identity type-element {
-    description
-      "Base identity for element type";
-  }
-
-  identity Fiber {
-    base type-element;
-    description
-      "Fiber element";
-  }
-
-  identity Roadm {
-    base type-element;
-    description
-      "Roadm element";
-  }
-
-  identity Edfa {
-    base type-element;
-    description
-      "Edfa element";
-  }
-
-  identity Concentratedloss {
-    base type-element;
-    description
-      "Concentratedloss element";
-  }
-  
   identity type-power-mode {
     description
       "power equalization mode used within the OMS and its elements";
@@ -811,28 +782,18 @@ module ietf-optical-impairment-topology {
           description
             "unique id of the element if it exists";
         }
-        leaf type {
-          type identityref {
-             base type-element;
-          }
-      mandatory true;    
-      description "element type";       
-        }
         
         container element {
           description "element of the list of elements of the OMS";
           choice element {
         description "OMS element type";
             case amplifier {
- /*             when "type = 'Edfa'"; */
               uses amplifier-params ;
             }
             case fiber {
-/*              when "type = 'Fiber'"; */
               uses fiber-params ;
             }
             case concentratedloss {
-/*             when "type = 'Concentratedloss'"; */
               uses concentratedloss-params ;
             }            
           }
