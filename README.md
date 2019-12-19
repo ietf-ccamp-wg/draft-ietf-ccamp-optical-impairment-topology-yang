@@ -6,6 +6,11 @@ This technology-specific YANG model augments/uses:
 * [draft-ietf-teas-yang-te-topo](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-topo/): YANG Data Model for Traffic Engineering (TE) Topologies (module ietf-te-topology)
 * [draft-ietf-teas-yang-te-types](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-types/): Traffic Engineering Common YANG Types (module ietf-te-types)
 
+## Warning!
+Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/ietf-optical-impairment-yang/blob/master/ietf-layer0-types.yang) in this repository. This file will soon be revoved!
+
+The ietf-layer0-types.yang repository is now: https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-layer0-types
+
 ## Contributing
 
 This repository relates to activities in the Internet Engineering Task Force
