@@ -1,4 +1,4 @@
-# [ietf-optical-impairment-yang](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
+# [draft-ietf-ccamp-optical-impairment-topology-yang](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
 This repository is to faciliate [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG's work item on optical impairment-aware topology model.
 
 This technology-specific YANG model augments/uses:
