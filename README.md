@@ -1,13 +1,13 @@
-# [draft-ietf-ccamp-optical-impairment-topology-yang](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
-This repository is to faciliate [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG's work item on optical impairment-aware topology model.
+# [A Yang Data Model for Optical Impairment-aware Topology](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
+This is the working area for the [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG Internet-Draft, "A Yang Data Model for Optical Impairment-aware Topology".
 
-This technology-specific YANG model augments/uses:
+This technology-specific topology YANG model augments/uses:
 * [RFC8345](https://tools.ietf.org/html/rfc8345): A YANG Data Model for Network Topologies (module ietf-network-topology)
-* [draft-ietf-teas-yang-te-topo](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-topo/): YANG Data Model for Traffic Engineering (TE) Topologies (module ietf-te-topology)
 * [draft-ietf-teas-yang-te-types](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-types/): Traffic Engineering Common YANG Types (module ietf-te-types)
+* [draft-ietf-teas-yang-te-topo](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-topo/): YANG Data Model for Traffic Engineering (TE) Topologies (module ietf-te-topology)
 
 ## Warning!
-Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/ietf-optical-impairment-yang/blob/master/ietf-layer0-types.yang) in this repository. This file will soon be revoved!
+Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/ietf-optical-impairment-yang/blob/master/ietf-layer0-types.yang) in this repository. This file will soon be removed!
 
 The ietf-layer0-types.yang repository is now: https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-layer0-types
 
