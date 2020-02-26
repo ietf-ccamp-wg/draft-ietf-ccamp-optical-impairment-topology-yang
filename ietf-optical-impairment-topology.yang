@@ -1,8 +1,7 @@
-module ietf-optical-impairment-topology {  
+module ietf-optical-impairment-topology {
   yang-version 1.1;
 
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-optical-impairment-topology";
+  namespace "urn:ietf:params:xml:ns:yang:ietf-optical-impairment-topology";
 
   prefix "optical-imp-topo";
 
@@ -19,7 +18,7 @@ module ietf-optical-impairment-topology {
   }
 
   import ietf-layer0-types {
-    prefix "layer0-types"; 
+    prefix "layer0-types";
   }
 
   organization
@@ -32,7 +31,7 @@ module ietf-optical-impairment-topology {
      Editor:   Victor Lopez <victor.lopezalvarez@telefonica.com>
      Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
      Editor:   Giovanni Martinelli <giomarti@cisco.com>
-     Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
+     Editor:   Auge Jean-Luc <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
      Editor:   Julien Meuric <julien.meuric@orange.com>
      Editor:   Italo Busi <Italo.Busi@huawei.com>
@@ -55,66 +54,64 @@ module ietf-optical-impairment-topology {
      Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2019-05-30 {
+  revision 2020-02-26 {
     description
       "Initial Version";
     reference
-      "RFC XXXX: A Yang Data Model for Impairment-aware 
+      "RFC XXXX: A Yang Data Model for Impairment-aware
        Optical Networks";
   }
 
   identity modulation {
-    description "base identity for modulation type"; 
+    description "base identity for modulation type";
   }
-  
+
   identity QPSK {
     base modulation;
-    description 
+    description
       "QPSK (Quadrature Phase Shift Keying) modulation";
   }
 
   identity DP_QPSK {
     base modulation;
-    description 
+    description
       "DP-QPSK (Dual Polarization Quadrature
-       Phase Shift Keying) modulation"; 
+       Phase Shift Keying) modulation";
   }
   identity QAM8 {
-    base modulation;      
-    description 
+    base modulation;
+    description
       "8QAM (8-State Quadrature Amplitude Modulation) modulation";
   }
   identity QAM16 {
-    base modulation;      
-    description 
+    base modulation;
+    description
       "QAM16 (Quadrature Amplitude Modulation)";
   }
   identity DP_QAM8 {
     base modulation;
-    description 
+    description
       "DP-QAM8 (Dual Polarization Quadrature Amplitude Modulation)";
   }
   identity DC_DP_QAM8 {
-    base modulation;      
-    description 
+    base modulation;
+    description
       "DC DP-QAM8 (Dual Polarization Quadrature Amplitude Modulation)";
   }
   identity DP_QAM16 {
     base modulation;
-    description 
+    description
       "DP-QAM16 (Dual Polarization Quadrature Amplitude Modulation)";
   }
   identity DC_DP_QAM16 {
-    base modulation;      
-    description 
-      "DC DP-QAM16 (Dual Polarization Quadrature Amplitude
-      Modulation)";
+    base modulation;
+    description
+      "DC DP-QAM16 (Dual Polarization Quadrature Amplitude Modulation)";
   }
-    
 
   identity FEC {
-    description 
-      "Enumeration that defines the type of 
+    description
+      "Enumeration that defines the type of
        Forward Error Correction";
   }
   identity reed-solomon {
@@ -124,18 +121,18 @@ module ietf-optical-impairment-topology {
   }
   identity hamming-code {
     base FEC;
-      description 
+      description
   "Hamming Code error correction";
   }
   identity golay {
     base FEC;
       description "Golay error correction";
   }
-    
+
   typedef fiber-type {
     type enumeration {
-      enum G.652 { 
-      description "G.652 Standard Singlemode Fiber"; 
+      enum G.652 {
+      description "G.652 Standard Singlemode Fiber";
       }
       enum G.654 {
         description "G.654 Cutoff Shifted Fiber";
@@ -145,49 +142,49 @@ module ietf-optical-impairment-topology {
       }
       enum G.655 {
         description "G.655 Non-Zero Dispersion Shifted Fiber";
-      } 
+      }
       enum G.656 {
-        description "G.656 Non-Zero Dispersion for Wideband 
+        description "G.656 Non-Zero Dispersion for Wideband
                Optical Transport";
       }
       enum G.657 {
-        description "G.657 Bend-Insensitive Fiber"; 
+        description "G.657 Bend-Insensitive Fiber";
       }
     }
-    description 
+    description
       "ITU-T based fiber-types";
-  }   
-  
+  }
+
   grouping transponder-attributes {
     description "Configuration of an optical transponder";
-        
-    leaf-list available-modulation-types {
+
+    leaf-list available-modulation {
       type identityref {
       base modulation;
       }
       config false;
-    description 
-      "List of modulation types the OTSi supports";
+    description
+      "List determining all the available modulations";
     }
 
-    leaf configured-modulation-type {
+    leaf modulation-type {
       type identityref {
       base modulation;
       }
     config false;
-      description 
-      "Currently configured OTSi modulation type";
+      description
+      "Modulation configured for the transponder";
     }
 
-    leaf-list available-baud-rates { 
+    leaf-list available-baud-rates {
       type uint32;
       units Bd;
       config false;
       description
-        "list of available baud-rates. Baud-rate is the unit for 
-         symbol rate or modulation rate in symbols per second or 
-         pulses per second. It is the number of distinct symbol 
-         changes (signaling events) made to the transmission medium 
+        "list of available baud-rates. Baud-rate is the unit for
+         symbol rate or modulation rate in symbols per second or
+         pulses per second. It is the number of distinct symbol
+         changes (signaling events) made to the transmission medium
          per second in a digitally modulated signal or a line code";
     }
 
@@ -198,7 +195,7 @@ module ietf-optical-impairment-topology {
       description "configured baud-rate";
     }
 
-    leaf-list available-FEC-types {
+    leaf-list available-FEC {
       type identityref {
       base FEC;
       }
@@ -206,15 +203,15 @@ module ietf-optical-impairment-topology {
       description "List determining all the available FEC";
     }
 
-    leaf configured-FEC-type {
+    leaf FEC-type {
       type identityref {
       base FEC;
       }
       config false;
-    description 
+    description
       "FEC type configured for the transponder";
     }
-  
+
     leaf FEC-code-rate {
       type decimal64 {
       fraction-digits 8;
@@ -223,19 +220,19 @@ module ietf-optical-impairment-topology {
       config false;
       description "FEC-code-rate";
     }
-  
+
     leaf FEC-threshold {
       type decimal64 {
       fraction-digits 8;
       range "0..max";
       }
       config false;
-    description 
-      "Threshold on the BER, for which FEC is able to correct errors";
+    description
+        "Threshold on the BER, for which FEC is able to correct errors";
     }
-    
+
   }
-    
+
   grouping sliceable-transponder-attributes {
     description
       "Configuration of a sliceable transponder.";
@@ -248,15 +245,15 @@ module ietf-optical-impairment-topology {
         config false;
         description "Identifier of the carrier";
       }
-    }        
+    }
   }
 
   grouping optical-fiber-data {
-    description 
+    description
     "optical link (fiber) attributes with impairment data";
     leaf fiber-type {
       type fiber-type;
-      config false; 
+      config false;
       description "fiber-type";
     }
 
@@ -266,17 +263,17 @@ module ietf-optical-impairment-topology {
       }
       units "km";
       config false;
-      description "the lenght of the fiber span in km"; 
+      description "the lenght of the fiber span in km";
     }
-   
+
     leaf input-power {
       type decimal64 {
         fraction-digits 2;
       }
       units "dBm";
-      config false; 
-      description 
-      "Average input power level estimated at the receiver 
+      config false;
+      description
+      "Average input power level estimated at the receiver
          of the link";
     }
 
@@ -285,7 +282,7 @@ module ietf-optical-impairment-topology {
         fraction-digits 2;
       }
       units "dBm";
-      description 
+      description
       "Mean launched power at the transmitter of the link";
     }
 
@@ -295,8 +292,8 @@ module ietf-optical-impairment-topology {
         range "0..max";
       }
       units "ps/(km)^0.5";
-      config false; 
-      description 
+      config false;
+      description
       "Polarization Mode Dispersion";
     }
 
@@ -305,8 +302,8 @@ module ietf-optical-impairment-topology {
         fraction-digits 5;
       }
       units "ps/nm/km";
-      config false; 
-      description 
+      config false;
+      description
       "Cromatic Dispersion";
     }
 
@@ -315,10 +312,10 @@ module ietf-optical-impairment-topology {
         fraction-digits 5;
       }
       units "dB";
-      config false; 
-      description 
+      config false;
+      description
       "Optical Signal-to-Noise Ratio (OSNR) estimated
-         at the receiver"; 
+         at the receiver";
     }
 
     leaf sigma {
@@ -327,14 +324,14 @@ module ietf-optical-impairment-topology {
       }
       units "dB";
       config false;
-      description 
+      description
       "sigma in the Gausian Noise Model";
     }
   }
-  
+
   grouping optical-channel-data {
-  description 
-    "optical impairment data per channel/wavelength"; 
+  description
+    "optical impairment data per channel/wavelength";
   leaf bit-rate {
     type decimal64 {
       fraction-digits 8;
@@ -342,17 +339,17 @@ module ietf-optical-impairment-topology {
     }
     units "Gbit/s";
     config false;
-    description 
+    description
       "Gross bit rate";
   }
-    
+
     leaf BER {
     type decimal64 {
       fraction-digits 18;
             range "0..max";
     }
     config false;
-      description 
+      description
       "BER (Bit Error Rate)";
   }
 
@@ -361,9 +358,9 @@ module ietf-optical-impairment-topology {
            fraction-digits 2;
         }
         units "dBm";
-        config false; 
-        description 
-    "Per channel average input power level 
+        config false;
+        description
+    "Per channel average input power level
           estimated at the receiver of the link";
         }
 
@@ -373,8 +370,8 @@ module ietf-optical-impairment-topology {
       range "0..max";
     }
     units "ps/(km)^0.5";
-    config false; 
-    description 
+    config false;
+    description
       "per channel Polarization Mode Dispersion";
   }
 
@@ -383,8 +380,8 @@ module ietf-optical-impairment-topology {
             fraction-digits 5;
     }
     units "ps/nm/km";
-    config false; 
-          description 
+    config false;
+          description
       "per channel Cromatic Dispersion";
   }
 
@@ -393,10 +390,10 @@ module ietf-optical-impairment-topology {
       fraction-digits 5;
     }
       units "dB";
-    config false; 
-    description 
-      "per channel Optical Signal-to-Noise Ratio 
-            (OSNR) estimated at the receiver"; 
+    config false;
+    description
+      "per channel Optical Signal-to-Noise Ratio
+            (OSNR) estimated at the receiver";
         }
 
     leaf q-factor {
@@ -404,50 +401,50 @@ module ietf-optical-impairment-topology {
       fraction-digits 5;
     }
     units "dB";
-    config false; 
-      description 
-      "q-factor estimated at the receiver"; 
+    config false;
+      description
+      "q-factor estimated at the receiver";
   }
   }
 
   grouping standard_mode {
-    description 
+    description
       "ITU-T G.698.2 standard mode that guarantees interoperability.
        It must be an string with the following format:
        B-DScW-ytz(v) where all these attributes are conformant
        to the ITU-T recomendation";
-    
+
     leaf standard_mode {
       type layer0-types:standard-mode;
       config false;
-      description 
+      description
         "G.698.2 standard mode";
     }
   }
-  
+
   grouping organizational_mode {
-    description 
+    description
       "Transponder operational mode supported by organizations or
        vendor";
-    
+
     leaf operational-mode {
       type layer0-types:operational-mode;
       config false;
-      description 
-        "configured organization- or vendor-specific 
+      description
+        "configured organization- or vendor-specific
          application identifiers (AI) supported by the transponder";
     }
-        
+
     leaf organization-identifier {
       type layer0-types:vendor-identifier;
       config false;
-      description 
+      description
       "organization identifier that uses organizational
-         mode"; 
-      
+         mode";
+
     }
-  } 
-  
+  }
+
     /*
    * Identities
    */
@@ -479,7 +476,7 @@ module ietf-optical-impairment-topology {
     description
       "Concentratedloss element";
   }
-  
+
   identity type-power-mode {
     description
       "power equalization mode used within the OMS and its elements";
@@ -507,8 +504,8 @@ module ietf-optical-impairment-topology {
       leaf type_variety {
         type string ;
         mandatory true ;
-        description 
-          "String identifier of amplifier type referencing 
+        description
+          "String identifier of amplifier type referencing
           a specification in a separate equipment catalog";
       }
       container operational {
@@ -519,14 +516,14 @@ module ietf-optical-impairment-topology {
           }
           units dB ;
       mandatory true ;
-          description "..";    
+          description "..";
         }
         leaf tilt-target {
           type decimal64 {
             fraction-digits 2;
           }
           mandatory true ;
-          description "..";    
+          description "..";
         }
         leaf out-voa {
           type decimal64 {
@@ -534,7 +531,7 @@ module ietf-optical-impairment-topology {
           }
           units dB;
       mandatory true;
-          description "..";    
+          description "..";
         }
         leaf in-voa {
           type decimal64 {
@@ -542,7 +539,7 @@ module ietf-optical-impairment-topology {
           }
           units dB;
       mandatory true;
-          description "..";    
+          description "..";
         }
         uses power-param;
       }
@@ -550,14 +547,13 @@ module ietf-optical-impairment-topology {
   }
 
   grouping fiber-params {
-    description
-      "String identifier of fiber type referencing a specification in
-      a separate equipment catalog";
+    description "String identifier of fiber type referencing a specification in a
+separate equipment catalog";
     container fiber {
-    description "fiber characteristics"; 
+    description "fiber characteristics";
       leaf type_variety {
         type string ;
-    mandatory true ;  
+    mandatory true ;
         description "fiber type";
       }
       leaf length {
@@ -566,7 +562,7 @@ module ietf-optical-impairment-topology {
         }
         units km;
     mandatory true ;
-    description "length of fiber"; 
+    description "length of fiber";
       }
       leaf loss_coef {
         type decimal64 {
@@ -574,7 +570,7 @@ module ietf-optical-impairment-topology {
         }
         units dB/km;
     mandatory true ;
-    description "loss coefficient of the fiber"; 
+    description "loss coefficient of the fiber";
       }
       leaf total_loss {
         type decimal64 {
@@ -582,9 +578,8 @@ module ietf-optical-impairment-topology {
         }
         units dB;
     mandatory true ;
-        description 
-          "includes all losses: fiber loss and conn_in and conn_out
-          losses";
+        description
+          "includes all losses: fiber loss and conn_in and conn_out losses";
       }
       leaf pmd{
         type decimal64 {
@@ -605,28 +600,238 @@ module ietf-optical-impairment-topology {
           fraction-digits 2;
         }
         units dB;
-    description "connector-out"; 
+    description "connector-out";
       }
     }
   }
 
-  grouping roadm-params{
-    description "roadm parameters description";
-    container roadm{
-    description "roadm parameters";
-      leaf type_variety {
-        type string ;
-        mandatory true ;
-        description
-          "String identifier of roadm type referencing a specification
-          in a separate equipment catalog";
+ 
+
+  grouping roadm-express-path {
+    description "roadm express path optical impairments";
+
+    container roadm-express-path {
+      description "roadm parameters per express path";
+     
+      leaf roadm-pmd {
+        type decimal64 {
+          fraction-digits 8;
+          range "0..max";
+        }
+        units "ps/(km)^0.5"; 
+        description 
+          "Polarization Mode Dispersion";
+      }
+      leaf roadm-cd {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "ps/nm/km";
+        description "Cromatic Dispersion";
+      }            
+      leaf pdl {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db ;
+        description "Polarization dependent loss";        
       }      
-      leaf loss {
+      leaf in-band_crosstalk {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db;
+        description
+          "In-band crosstalk, or coherent crosstalk, can occur in
+           components that can have multiple same wavelength inputs
+           with the inputs either routed to different output ports,
+           or all but 1 blocked";
+      }
+      leaf maxloss-exp {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB;
+        description
+          "..";
+      }
+    }
+  }
+
+  grouping roadm-add-path {
+    description "roadm add block path optical impairments";
+
+    container roadm-add-path {
+      description "roadm optical impairment parameters per add path";
+      
+      leaf roadm-pmd {
+        type decimal64 {
+          fraction-digits 8;
+          range "0..max";
+        }
+        units "ps/(km)^0.5"; 
+        description 
+          "Polarization Mode Dispersion";
+      }
+      leaf roadm-cd {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "ps/nm/km"; 
+        description "Cromatic Dispersion";
+      }            
+      leaf pdl {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db ;
+        description "Polarization dependent loss";      
+      }      
+      leaf in-band_crosstalk {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db;
+        description
+          "In-band crosstalk, or coherent crosstalk, can occur in
+           components that can have multiple same wavelength inputs,
+           with the inputs either routed to different output ports,
+           or all but 1 blocked.
+           In the case of add path it is the total of the add block
+           + the egress amp crosstalk contributions.";
+      }
+      leaf maxloss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
         description "..";        
+      }
+      leaf pmax {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf osnr {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "dB"; 
+        description 
+        "Optical Signal-to-Noise Ratio (OSNR)";
+      }
+      leaf noise-figure {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "dB"; 
+        description 
+        "Noise Figure";
+      }
+    }
+  }
+
+  grouping roadm-drop-path {
+    description "roadm drop block path optical impairments";
+
+    container roadm-drop-path {
+      description "roadm optical impairment parameters per drop path";
+      
+      leaf roadm-pmd {
+        type decimal64 {
+          fraction-digits 8;
+          range "0..max";
+        }
+        units "ps/(km)^0.5"; 
+        description 
+          "Polarization Mode Dispersion";
+      }
+      leaf roadm-cd {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "ps/nm/km"; 
+        description "Cromatic Dispersion";
+      }            
+      leaf pdl {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db ;
+        description "Polarization dependent loss";        
+      }      
+      leaf in-band_crosstalk {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units db;
+        description
+          "In-band crosstalk, or coherent crosstalk, can occur in
+           components that can have multiple same wavelength inputs,
+           with the inputs either routed to different output ports,
+           or all but 1 blocked.
+           In the case of drop path it is the total of the ingress
+           to drop e.g. WSS and drop block crosstalk contributions.";
+      }
+      leaf maxloss {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf minloss {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf typloss {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf pmin {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf pmax {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf ptyp {
+        type decimal64 {
+          fraction-digits 2;
+        }
+        units dB ;
+        description "..";        
+      }
+      leaf osnr {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "dB"; 
+        description 
+          "Optical Signal-to-Noise Ratio (OSNR)";
+      }
+      leaf noise-figure {
+        type decimal64 {
+          fraction-digits 5;
+        }
+        units "dB"; 
+        description 
+          "Noise Figure";
       }
     }
   }
@@ -634,13 +839,13 @@ module ietf-optical-impairment-topology {
   grouping concentratedloss-params{
     description "concentrated loss";
     container concentratedloss{
-    description "concentrated loss"; 
+    description "concentrated loss";
       leaf loss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
-        description "..";        
+        description "..";
       }
     }
   }
@@ -658,9 +863,8 @@ module ietf-optical-impairment-topology {
               fraction-digits 1;
           }
           units dBm ;
-          description 
-            "Reference channel power after the ROADM or after the
-            out-voa.";
+          description
+            " Reference channel power after the ROADM or after the out-voa. ";
         }
       }
       case power-spectral-density{
@@ -670,10 +874,9 @@ module ietf-optical-impairment-topology {
               fraction-digits 16;
           }
           units W/Hz ;
-          description 
-            "Reference power spectral density after the ROADM or after
-            the out-voa.
-            Typical value: 3.9E-14, resolution 0.1 nW/MHz";
+          description
+            " Reference power spectral density after the ROADM or after the out-voa.
+              Typical value : 3.9 E-14, resolution 0.1nW/MHz";
         }
       }
     }
@@ -693,24 +896,23 @@ module ietf-optical-impairment-topology {
         base type-power-mode;
       }
       mandatory true;
-      description "equalization mode";    
+      description "equalization mode";
     }
     uses power-param;
   }
 
   grouping OTSiG {
-    description
-      "OTSiG definition, representing a digital client information
-      stream supported by 1 or more OTSi's"; 
-    
+    description "OTSiG definition , representing client digital information stream
+supported by 1 or more OTSi";
+
     container OTSiG-container {
       config false;
       description
-        "the container contains the related list of OTSi. 
-		 The list could also be of only 1 element";
+        "the container contains the related list of OTSi.
+        The list could also be of only 1 element";
      list OTSi {
-       key "OTSi-carrier-id"; 
-       description 
+       key "OTSi-carrier-id";
+       description
          "list of OTSi's under OTSi-G";
        leaf OTSi-carrier-id {
          type int16;
@@ -722,7 +924,7 @@ module ietf-optical-impairment-topology {
          }
          units GHz;
          config false;
-         description 
+         description
            "OTSi carrier frequency";
        }
        leaf OTSi-signal-width {
@@ -731,9 +933,9 @@ module ietf-optical-impairment-topology {
          }
          units GHz;
          config false;
-         description 
+         description
            "OTSi signal width";
-       }    
+       }
        leaf channel-delta-power {
          type decimal64 {
            fraction-digits 2;
@@ -743,23 +945,23 @@ module ietf-optical-impairment-topology {
          description
            "optional ; delta power to ref channel input-power applied
            to this media channel";
-       } 
-  
-     } 
-    }  // OTSiG container 
-  } // OTSiG grouping  
-  
+       }
+
+     }
+    }  // OTSiG container
+  } // OTSiG grouping
+
   grouping media-channel-groups {
-    description "media channel groups"; 
+    description "media channel groups";
     list media-channel-group {
-    key "i"; 
-      description 
-        "list of media channel groups"; 
+    key "i";
+      description
+        "list of media channel groups";
       leaf i {
         type int16;
           description "index of media channel group member";
-      }   
-  
+      }
+
       list media-channels {
         key "flexi-n";
         description
@@ -768,43 +970,39 @@ module ietf-optical-impairment-topology {
         leaf OTSiG-ref {
           type leafref {
            path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/OTSiG-element/" +
-                "OTSiG-identifier";
-           
-          } 
-          description 
-            "Reference to the OTSiG list to get OTSiG identifier of
-            the OSiG carried by this media channel that reports the
-            transient stat";   
+                "/tet:tunnel-termination-point/OTSiG-element/OTSiG-identifier" ;
+
+          }
+          description
+             "Reference to the OTSiG list to get OTSiG identifier of the
+              OSiG carried by this media channel that reports the transient stat";
         }
         leaf OTSi-ref {
           type leafref {
             path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/OTSiG-element" +
-                "[OTSiG-identifier=current()/../OTSiG-ref]" +
-                "/OTSiG-container/OTSi/OTSi-carrier-id" ;
+                "/tet:tunnel-termination-point/"  
+               +"OTSiG-element[OTSiG-identifier=current()/../OTSiG-ref]/"+
+                "OTSiG-container/OTSi/OTSi-carrier-id" ;
           }
-          description 
-            "Reference to the OTSi list supporting the related OTSiG";
+          description
+             "Reference to the OTSi list supporting the related OTSiG" ;
         }
-        
 
-      } // media channels list 
-    } // media-channel-groups list 
+      } // media channels list
+    } // media-channel-groups list
   } // media media-channel-groups grouping
-  
+
   grouping oms-element {
     description "OMS description";
     list OMS-elements {
         key "elt-index";
         description
-          "defines the spans and the amplifier blocks of the amplified
-          lines";
+          "defines the spans and the amplifier blocks of the amplified lines";
         leaf elt-index {
           type uint16;
           description
-            "ordered list of Index of OMS element (whether it's a Fiber,
-            an EDFA or a Concentratedloss)";
+            "ordered list of Index of OMS element (whether it's a Fiber, an EDFA or a
+Concentratedloss)";
         }
         leaf uid {
           type string;
@@ -815,10 +1013,10 @@ module ietf-optical-impairment-topology {
           type identityref {
              base type-element;
           }
-      mandatory true;    
-      description "element type";       
+      mandatory true;
+      description "element type";
         }
-        
+
         container element {
           description "element of the list of elements of the OMS";
           choice element {
@@ -834,7 +1032,7 @@ module ietf-optical-impairment-topology {
             case concentratedloss {
 /*             when "type = 'Concentratedloss'"; */
               uses concentratedloss-params ;
-            }            
+            }
           }
         }
     }
@@ -846,10 +1044,9 @@ module ietf-optical-impairment-topology {
    + "/tet:te-topology" {
    description "optical-impairment topology augmented";
    container optical-impairment-topology {
-     presence
-      "indicates an impairment-aware topology of optical networks";
+     presence "indicates an impairment-aware topology of optical networks";
      description
-      "Container to identify impairment-aware topology type";
+     "Container to identify impairment-aware topology type";
    }
   }
 
@@ -862,11 +1059,11 @@ module ietf-optical-impairment-topology {
    }
    description "Optical Link augmentation for impairment data.";
    container OMS-attributes {
-       config false; 
-       description "OMS attributes";  
+       config false;
+       description "OMS attributes";
      uses oms-general-optical-params;
      uses media-channel-groups;
-     uses oms-element; 
+     uses oms-element;
      }
   }
 
@@ -875,23 +1072,23 @@ module ietf-optical-impairment-topology {
    when "/nw:networks/nw:network/nw:network-types"
     +"/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
     description
-      "This augment is only valid for Impairment with non-sliceable 
+      "This augment is only valid for Impairment with non-sliceable
        transponder model";
    }
-   description 
-     "Tunnel termination point augmentation for non-sliceable 
+   description
+     "Tunnel termination point augmentation for non-sliceable
       transponder model.";
 
      list OTSiG-element {
          key "OTSiG-identifier";
          config false;
-         description 
-		   "the list of possible OTSiG representing client digital stream";
+         description
+         "the list of possible OTSiG representing client digital stream";
 
          leaf OTSiG-identifier {
             type int16;
              description "index of OTSiG element";
-         }   
+         }
          uses OTSiG;
      }
 
@@ -900,45 +1097,43 @@ module ietf-optical-impairment-topology {
      config false;
          description "list of transponders";
          leaf transponder-id {
-       type uint32; 
+       type uint32;
        description "transponder identifier";
          }
-     
+
          choice mode {
-          description
-            "standard mode, organizational mode or explicit mode";
-           
+             description "standard mode, organizational mode or explicit mode";
+
              case G.692.2 {
-               uses standard_mode; 
-             }  
-        
+               uses standard_mode;
+             }
+
              case organizational_mode {
-               uses organizational_mode; 
-             }          
-           
+               uses organizational_mode;
+             }
+
              case explicit_mode {
-               uses transponder-attributes; 
+               uses transponder-attributes;
              }
          }
-         
+
          leaf power {
            type int32;
            units "dBm";
-           config false; 
+           config false;
            description "per channel power";
          }
 
          leaf power-min {
            type int32;
            units "dBm";
-           config false; 
+           config false;
            description "minimum power of the transponder";
          }
-
          leaf power-max {
            type int32;
            units "dBm";
-           config false; 
+           config false;
            description "maximum power of the transponder";
          }
    }
@@ -952,9 +1147,178 @@ module ietf-optical-impairment-topology {
       "This augment is only valid for optical impairment with sliceable
       transponder model";
    }
-   description 
-     "Tunnel termination point augmentation for sliceable transponder
-     model.";
-   uses sliceable-transponder-attributes; 
+   description
+     "Tunnel termination point augmentation for sliceable transponder model.";
+   uses sliceable-transponder-attributes;
   }
+
+  augment "/nw:networks/nw:network/nw:node/tet:te"
+        + "/tet:te-node-attributes" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+
+      description
+        "This augment is only valid for Optical Impairment topology";
+    }
+    description
+      "node attributes augmentantion for optical-impairment RAODM node";
+
+    list path-impairment {
+      key "path-impairment-id";
+      config false;
+      description "list of set of optical impairments related to ROADM ";
+
+      leaf path-impairment-id {
+        type uint32; 
+        description "index of the path-impairment list";
+      }
+      choice impairment-type {
+        description "type path impairment";
+        case roadm-express-path {
+          uses roadm-express-path; 
+        }  
+        case roadm-add-path {
+          uses roadm-add-path; 
+        }          
+        case roadm-drop-path {
+          uses roadm-drop-path; 
+        }
+      }
+    } // list path impairments 
+  } // augmentation for optical-impairment ROADM 
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment topology ";
+    }  
+    
+    description
+      "Augment default TE node connectivity matrix information source.";
+
+    leaf path-impairment {
+      type leafref {
+        path "../../../tet:te-node-attributes/path-impairment/path-impairment-id";
+      }
+      description "pointer to the list set of ROADM optical impairments";
+    }
+  } // augmentation connectivity-matrices information-source
+  
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:information-source-entry/tet:connectivity-matrices/tet:connectivity-matrix" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment topology ";
+    }
+    
+    description
+      "Augment TE node connectivity matrix entry information source.";
+
+    leaf path-impairment {
+      type leafref {
+        path "../../../../tet:te-node-attributes/path-impairment/path-impairment-id";
+      }
+      description "pointer to the list set of ROADM optical impairments";
+    } 
+  } // augmentation connectivity-matrix information-source
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment topology ";
+    }  
+    
+    description
+      "Augment default TE node connectivity matrix.";
+    leaf path-impairment {
+      type leafref {
+        path "../../path-impairment/path-impairment-id";
+      }
+      config false; /*the identifier in the list "path-impairment" of ROADM optical impairment*/
+                    /*is read-only as the rest of attributes*/ 
+      description "pointer to the list set of ROADM optical impairments";
+    } 
+  } // augmentation connectivity-matrices
+  
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/tet:connectivity-matrix" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment topology ";
+    }
+
+    description
+      "Augment TE node connectivity matrix entry.";
+
+    leaf path-impairment {
+      type leafref {
+        path "../../../path-impairment/path-impairment-id";
+      }
+      config false;
+      description "pointer to the list set of ROADM optical impairments";
+    }
+  } // augmentation connectivity-matrix
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities" {
+
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+      "This augment is only valid for Optical Impairment topology ";
+    }
+
+    description
+      "Augment default TTP LLC.";
+    leaf add-path-impairment {
+      type leafref {
+        path "../../../tet:te-node-attributes/path-impairment/path-impairment-id" ;
+      }
+      config false;
+      description "pointer to the list set of ROADM optical impairments";
+    }
+    leaf drop-path-impairment {
+      type leafref {
+        path "../../../tet:te-node-attributes/path-impairment/path-impairment-id" ;
+      }
+      config false;
+      description "pointer to the list set of ROADM optical impairments";
+    }
+  } // augmentation local-link-connectivities
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:tunnel-termination-point/"
+        + "tet:local-link-connectivities/tet:local-link-connectivity" {
+
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment topology ";
+    }
+    
+    description
+      "Augment TTP LLC entry.";
+    leaf add-path-impairment {
+      type leafref {
+        path "../../../../tet:te-node-attributes/path-impairment/path-impairment-id" ;
+      }
+      config false;
+      description "pointer to the list set of ROADM optical impairments";
+    }
+    leaf drop-path-impairment {
+      type leafref {
+        path "../../../../tet:te-node-attributes/path-impairment/path-impairment-id" ;
+      }
+      config false;
+      description "pointer to the list set of ROADM optical impairments";
+    }
+  } // augmentation local-link-connectivity
 }
+
