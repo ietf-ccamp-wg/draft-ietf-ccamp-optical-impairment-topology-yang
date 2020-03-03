@@ -54,13 +54,15 @@ module ietf-optical-impairment-topology {
      Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2020-02-26 {
+  revision 2020-03-03 {
     description
       "Initial Version";
     reference
       "RFC XXXX: A Yang Data Model for Impairment-aware
        Optical Networks";
   }
+
+  // identity
 
   identity modulation {
     description "base identity for modulation type";
@@ -129,6 +131,8 @@ module ietf-optical-impairment-topology {
       description "Golay error correction";
   }
 
+  // typedef
+
   typedef fiber-type {
     type enumeration {
       enum G.652 {
@@ -154,6 +158,37 @@ module ietf-optical-impairment-topology {
     description
       "ITU-T based fiber-types";
   }
+
+// temporary defined here for disalignment with ietf-layer0-types module
+  typedef operational-mode {
+    type string;
+    description
+      "Vendor-specific mode that guarantees interoperability.";
+    reference "ITU-T G.698.2 (11/2018)";
+  }
+
+// temporary defined here for disalignment with ietf-layer0-types module
+  typedef standard-mode {
+    type string;
+    description
+      "ITU-T G.698.2 standard mode that guarantees interoperability.
+       It must be an string with the following format:
+       B-DScW-ytz(v) where all these attributes are conformant
+       to the ITU-T recomendation";
+    reference "ITU-T G.698.2 (11/2018)";
+  }
+
+// temporary defined here for disalignment with ietf-layer0-types module
+  typedef vendor-identifier {
+    type string;
+    description
+      "vendor identifier that uses vendor-specific mode";
+    reference
+      "RFC7581: Routing and Wavelength Assignment Information
+       Encoding for Wavelength Switched Optical Networks";
+  }
+
+  // grouping
 
   grouping transponder-attributes {
     description "Configuration of an optical transponder";
@@ -394,7 +429,7 @@ module ietf-optical-impairment-topology {
     description
       "per channel Optical Signal-to-Noise Ratio
             (OSNR) estimated at the receiver";
-        }
+   }
 
     leaf q-factor {
     type decimal64 {
@@ -404,7 +439,7 @@ module ietf-optical-impairment-topology {
     config false;
       description
       "q-factor estimated at the receiver";
-  }
+    }
   }
 
   grouping standard_mode {
@@ -415,7 +450,7 @@ module ietf-optical-impairment-topology {
        to the ITU-T recomendation";
 
     leaf standard_mode {
-      type layer0-types:standard-mode;
+      type standard-mode;
       config false;
       description
         "G.698.2 standard mode";
@@ -428,7 +463,7 @@ module ietf-optical-impairment-topology {
        vendor";
 
     leaf operational-mode {
-      type layer0-types:operational-mode;
+      type operational-mode;
       config false;
       description
         "configured organization- or vendor-specific
@@ -436,7 +471,7 @@ module ietf-optical-impairment-topology {
     }
 
     leaf organization-identifier {
-      type layer0-types:vendor-identifier;
+      type vendor-identifier;
       config false;
       description
       "organization identifier that uses organizational
@@ -626,28 +661,28 @@ separate equipment catalog";
         type decimal64 {
           fraction-digits 5;
         }
-        units "ps/nm/km";
-        description "Cromatic Dispersion";
+        units "ps/nm";
+        description "Chromatic Dispersion";
       }            
-      leaf pdl {
+      leaf roadm-pdl {
         type decimal64 {
           fraction-digits 2;
         }
-        units db ;
+        units dB ;
         description "Polarization dependent loss";        
       }      
-      leaf in-band_crosstalk {
+      leaf roadm-inband_crosstalk {
         type decimal64 {
           fraction-digits 2;
         }
-        units db;
+        units dB;
         description
           "In-band crosstalk, or coherent crosstalk, can occur in
            components that can have multiple same wavelength inputs
            with the inputs either routed to different output ports,
            or all but 1 blocked";
       }
-      leaf maxloss-exp {
+      leaf roadm-maxloss-exp {
         type decimal64 {
           fraction-digits 2;
         }
@@ -669,7 +704,7 @@ separate equipment catalog";
           fraction-digits 8;
           range "0..max";
         }
-        units "ps/(km)^0.5"; 
+        units "ps"; 
         description 
           "Polarization Mode Dispersion";
       }
@@ -677,21 +712,21 @@ separate equipment catalog";
         type decimal64 {
           fraction-digits 5;
         }
-        units "ps/nm/km"; 
+        units "ps/nm"; 
         description "Cromatic Dispersion";
       }            
-      leaf pdl {
+      leaf roadm-pdl {
         type decimal64 {
           fraction-digits 2;
         }
-        units db ;
+        units dB ;
         description "Polarization dependent loss";      
       }      
-      leaf in-band_crosstalk {
+      leaf roadm-inband_crosstalk {
         type decimal64 {
           fraction-digits 2;
         }
-        units db;
+        units dB ;
         description
           "In-band crosstalk, or coherent crosstalk, can occur in
            components that can have multiple same wavelength inputs,
@@ -700,21 +735,21 @@ separate equipment catalog";
            In the case of add path it is the total of the add block
            + the egress amp crosstalk contributions.";
       }
-      leaf maxloss {
+      leaf roadm-maxloss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
         description "..";        
       }
-      leaf pmax {
+      leaf roadm-pmax {
         type decimal64 {
           fraction-digits 2;
         }
-        units dB ;
+        units dBm ;
         description "..";        
       }
-      leaf osnr {
+      leaf roadm-osnr {
         type decimal64 {
           fraction-digits 5;
         }
@@ -722,7 +757,7 @@ separate equipment catalog";
         description 
         "Optical Signal-to-Noise Ratio (OSNR)";
       }
-      leaf noise-figure {
+      leaf roadm-noise-figure {
         type decimal64 {
           fraction-digits 5;
         }
@@ -752,21 +787,21 @@ separate equipment catalog";
         type decimal64 {
           fraction-digits 5;
         }
-        units "ps/nm/km"; 
+        units "ps/nm"; 
         description "Cromatic Dispersion";
       }            
-      leaf pdl {
+      leaf roadm-pdl {
         type decimal64 {
           fraction-digits 2;
         }
-        units db ;
+        units dB ;
         description "Polarization dependent loss";        
       }      
-      leaf in-band_crosstalk {
+      leaf roadm-inband_crosstalk {
         type decimal64 {
           fraction-digits 2;
         }
-        units db;
+        units dB;
         description
           "In-band crosstalk, or coherent crosstalk, can occur in
            components that can have multiple same wavelength inputs,
@@ -775,49 +810,49 @@ separate equipment catalog";
            In the case of drop path it is the total of the ingress
            to drop e.g. WSS and drop block crosstalk contributions.";
       }
-      leaf maxloss {
+      leaf roadm-maxloss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
         description "..";        
       }
-      leaf minloss {
+      leaf roadm-minloss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
         description "..";        
       }
-      leaf typloss {
+      leaf roadm-typloss {
         type decimal64 {
           fraction-digits 2;
         }
         units dB ;
         description "..";        
       }
-      leaf pmin {
+      leaf roadm-pmin {
         type decimal64 {
           fraction-digits 2;
         }
-        units dB ;
+        units dBm ;
         description "..";        
       }
-      leaf pmax {
+      leaf roadm-pmax {
         type decimal64 {
           fraction-digits 2;
         }
-        units dB ;
+        units dBm ;
         description "..";        
       }
-      leaf ptyp {
+      leaf roadm-ptyp {
         type decimal64 {
           fraction-digits 2;
         }
-        units dB ;
+        units dBm ;
         description "..";        
       }
-      leaf osnr {
+      leaf roadm-osnr {
         type decimal64 {
           fraction-digits 5;
         }
@@ -825,7 +860,7 @@ separate equipment catalog";
         description 
           "Optical Signal-to-Noise Ratio (OSNR)";
       }
-      leaf noise-figure {
+      leaf roadm-noise-figure {
         type decimal64 {
           fraction-digits 5;
         }
@@ -1161,7 +1196,7 @@ Concentratedloss)";
         "This augment is only valid for Optical Impairment topology";
     }
     description
-      "node attributes augmentantion for optical-impairment RAODM node";
+      "node attributes augmentantion for optical-impairment ROADM node";
 
     list path-impairment {
       key "path-impairment-id";
@@ -1198,7 +1233,7 @@ Concentratedloss)";
     description
       "Augment default TE node connectivity matrix information source.";
 
-    leaf path-impairment {
+    leaf road-path-impairment {
       type leafref {
         path "../../../tet:te-node-attributes/path-impairment/path-impairment-id";
       }
@@ -1217,7 +1252,7 @@ Concentratedloss)";
     description
       "Augment TE node connectivity matrix entry information source.";
 
-    leaf path-impairment {
+    leaf roadm-path-impairment {
       type leafref {
         path "../../../../tet:te-node-attributes/path-impairment/path-impairment-id";
       }
@@ -1235,7 +1270,7 @@ Concentratedloss)";
     
     description
       "Augment default TE node connectivity matrix.";
-    leaf path-impairment {
+    leaf roadm-path-impairment {
       type leafref {
         path "../../path-impairment/path-impairment-id";
       }
@@ -1256,7 +1291,7 @@ Concentratedloss)";
     description
       "Augment TE node connectivity matrix entry.";
 
-    leaf path-impairment {
+    leaf roadm-path-impairment {
       type leafref {
         path "../../../path-impairment/path-impairment-id";
       }
