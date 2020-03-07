@@ -26,7 +26,7 @@ module: ietf-optical-impairment-topology
              +--ro (element)?
                 +--:(amplifier)
                 |  +--ro amplifier
-                |     +--ro type_variety    string
+                |     +--ro type-variety    string
                 |     +--ro operational
                 |        +--ro actual-gain                             decimal64
                 |        +--ro tilt-target                             decimal64
@@ -39,13 +39,13 @@ module: ietf-optical-impairment-topology
                 |              +--ro nominal-power-spectral-density?   decimal64
                 +--:(fiber)
                 |  +--ro fiber
-                |     +--ro type_variety    string
+                |     +--ro type-variety    string
                 |     +--ro length          decimal64
-                |     +--ro loss_coef       decimal64
-                |     +--ro total_loss      decimal64
+                |     +--ro loss-coef       decimal64
+                |     +--ro total-loss      decimal64
                 |     +--ro pmd?            decimal64
-                |     +--ro conn_in?        decimal64
-                |     +--ro conn_out?       decimal64
+                |     +--ro conn-in?        decimal64
+                |     +--ro conn-out?       decimal64
                 +--:(concentratedloss)
                    +--ro concentratedloss
                       +--ro loss?   decimal64
@@ -59,45 +59,45 @@ module: ietf-optical-impairment-topology
     |        +--ro OTSi-signal-width?        decimal64
     |        +--ro channel-delta-power?      decimal64
     +--ro transponders-list* [transponder-id]
-       +--ro transponder-id                   uint32
+       +--ro transponder-id                      uint32
        +--ro (mode)?
        |  +--:(G.692.2)
-       |  |  +--ro standard_mode?             standard-mode
-       |  +--:(organizational_mode)
-       |  |  +--ro operational-mode?          operational-mode
-       |  |  +--ro organization-identifier?   vendor-identifier
-       |  +--:(explicit_mode)
-       |     +--ro available-modulation*      identityref
-       |     +--ro modulation-type?           identityref
-       |     +--ro available-baud-rates*      uint32
-       |     +--ro configured-baud-rate?      uint32
-       |     +--ro available-FEC*             identityref
-       |     +--ro FEC-type?                  identityref
-       |     +--ro FEC-code-rate?             decimal64
-       |     +--ro FEC-threshold?             decimal64
-       +--ro power?                           int32
-       +--ro power-min?                       int32
-       +--ro power-max?                       int32
+       |  |  +--ro standard-mode?                standard-mode
+       |  +--:(organizational-mode)
+       |  |  +--ro operational-mode?             operational-mode
+       |  |  +--ro organization-identifier?      vendor-identifier
+       |  +--:(explicit-mode)
+       |     +--ro available-modulation-types*   identityref
+       |     +--ro configured-modulation-type?   identityref
+       |     +--ro available-baud-rates*         uint32
+       |     +--ro configured-baud-rate?         uint32
+       |     +--ro available-FEC-types*          identityref
+       |     +--ro configured-FEC-type?          identityref
+       |     +--ro FEC-code-rate?                decimal64
+       |     +--ro FEC-threshold?                decimal64
+       +--ro power?                              int32
+       +--ro power-min?                          int32
+       +--ro power-max?                          int32
   augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point:
     +--ro transponder-list* [carrier-id]
        +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes:
-    +--ro path-impairment* [path-impairment-id]
-       +--ro path-impairment-id          uint32
+    +--ro roadm-path-impairments* [roadm-path-impairments-id]
+       +--ro roadm-path-impairments-id    uint32
        +--ro (impairment-type)?
           +--:(roadm-express-path)
           |  +--ro roadm-express-path
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
-          |     +--ro roadm-inband_crosstalk?   decimal64
-          |     +--ro roadm-maxloss-exp?        decimal64
+          |     +--ro roadm-inband-crosstalk?   decimal64
+          |     +--ro roadm-maxloss?            decimal64
           +--:(roadm-add-path)
           |  +--ro roadm-add-path
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
-          |     +--ro roadm-inband_crosstalk?   decimal64
+          |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           |     +--ro roadm-pmax?               decimal64
           |     +--ro roadm-osnr?               decimal64
@@ -107,7 +107,7 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-pmd?                decimal64
                 +--ro roadm-cd?                 decimal64
                 +--ro roadm-pdl?                decimal64
-                +--ro roadm-inband_crosstalk?   decimal64
+                +--ro roadm-inband-crosstalk?   decimal64
                 +--ro roadm-maxloss?            decimal64
                 +--ro roadm-minloss?            decimal64
                 +--ro roadm-typloss?            decimal64
@@ -117,16 +117,16 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-osnr?               decimal64
                 +--ro roadm-noise-figure?       decimal64
   augment /nw:networks/nw:network/nw:node/tet:te/tet:information-source-entry/tet:connectivity-matrices:
-    +--ro road-path-impairment?   -> ../../../tet:te-node-attributes/path-impairment/path-impairment-id
+    +--ro roadm-path-impairments?   -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te/tet:information-source-entry/tet:connectivity-matrices/tet:connectivity-matrix:
-    +--ro roadm-path-impairment?   -> ../../../../tet:te-node-attributes/path-impairment/path-impairment-id
+    +--ro roadm-path-impairments?   -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairment?   -> ../../path-impairment/path-impairment-id
+    +--ro roadm-path-impairments?   -> ../../roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes/tet:connectivity-matrices/tet:connectivity-matrix:
-    +--ro roadm-path-impairment?   -> ../../../path-impairment/path-impairment-id
+    +--ro roadm-path-impairments?   -> ../../../roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point/tet:local-link-connectivities:
-    +--ro add-path-impairment?    -> ../../../tet:te-node-attributes/path-impairment/path-impairment-id
-    +--ro drop-path-impairment?   -> ../../../tet:te-node-attributes/path-impairment/path-impairment-id
+    +--ro add-path-impairments?    -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
+    +--ro drop-path-impairments?   -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point/tet:local-link-connectivities/tet:local-link-connectivity:
-    +--ro add-path-impairment?    -> ../../../../tet:te-node-attributes/path-impairment/path-impairment-id
-    +--ro drop-path-impairment?   -> ../../../../tet:te-node-attributes/path-impairment/path-impairment-id
+    +--ro add-path-impairments?    -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
+    +--ro drop-path-impairments?   -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
