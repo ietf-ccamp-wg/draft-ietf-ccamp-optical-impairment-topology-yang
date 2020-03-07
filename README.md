@@ -7,9 +7,13 @@ This technology-specific topology YANG model augments/uses:
 * [draft-ietf-teas-yang-te-topo](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-topo/): YANG Data Model for Traffic Engineering (TE) Topologies (module ietf-te-topology)
 
 ## Warning!
-Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/ietf-optical-impairment-yang/blob/master/ietf-layer0-types.yang) in this repository. This file will soon be removed!
+Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/ietf-optical-impairment-yang/blob/master/ietf-layer0-types.yang) (revision 2019-05-15) in this repository. This file will soon be removed!
 
 The ietf-layer0-types.yang repository is now: https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-layer0-types
+
+## draft-ietf-ccamp-optical-impairment-topology-yang.xml
+
+The I-D in xml format is now available in the [I-D_in_xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/tree/master/I-D_in_xml) folder. The xml file can converted into one of the supported output formats using the [xml2rfc](https://xml2rfc.tools.ietf.org/) online tool.
 
 ## Contributing
 
