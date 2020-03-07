@@ -11,7 +11,7 @@ Please do not edit [ietf-layer0-types.yang](https://github.com/ietf-ccamp-wg/iet
 
 The ietf-layer0-types.yang repository is now: https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-layer0-types
 
-## draft-ietf-ccamp-optical-impairment-topology-yang.xml
+## [draft-ietf-ccamp-optical-impairment-topology-yang.xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/blob/master/I-D_in_xml/draft-ietf-ccamp-optical-impairment-topology-yang.xml)
 
 The I-D in xml format is now available in the [I-D_in_xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/tree/master/I-D_in_xml) folder. The xml file can converted into one of the supported output formats using the [xml2rfc](https://xml2rfc.tools.ietf.org/) online tool.
 
