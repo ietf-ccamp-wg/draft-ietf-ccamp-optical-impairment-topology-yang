@@ -169,7 +169,7 @@
 
   </section>
 
-  <section title="Tree diagram" anchor="sect-1.2">
+  <section title="Tree Diagram" anchor="sect-1.2">
   <t>
    A simplified graphical representation of the data model is used in
    Section 2 of this this document.  The meaning of the symbols in
@@ -569,7 +569,7 @@ OTS Media Link represents a media link:
   </t>
 
   <t>
-   [Editor's Note: The current YANG model described in
+   [Editor's note: The current YANG model described in
    <xref target="sect-3"></xref> with respect to the relationship
    between the transponder attributes and the OTSi will need to be
    investigated in the future revision]
@@ -649,7 +649,7 @@ OTS Media Link represents a media link:
    document.]
   </t>
 
-  <section title="Integrated ROADM architecture with integrated transponders"
+  <section title="Integrated ROADM Architecture with Integrated Optical Transponders"
    anchor="sect-2.8.1">
   <t>
    <xref target="Figure-2"/> and <xref target="Figure-6"/> below show the
@@ -693,8 +693,7 @@ OTS Media Link represents a media link:
   
   </section>
 
-  <section title="Integrated ROADMs with integrated optical transponders
-   and single channel add/drop interfaces for remote optical transponders"
+  <section title="Integrated ROADMs with Integrated Optical Transponders and Single Channel Add/Drop Interfaces for Remote Optical Transponders"
    anchor="sect-2.8.2">
   
   <t>
@@ -714,11 +713,11 @@ OTS Media Link represents a media link:
   </t>
   
   <t>
-   [Editor's Note: this requires further study].
+   [Editor's note: this requires further study].
   </t>
 
   <figure align="center" title="ROADM Architectiure with Remote Transponders"
-  anchor="Figure-7"><artwork><![CDATA[
+   anchor="Figure-7"><artwork><![CDATA[
             . . . . . . . . . . . . . . . . . .
             .       Abstracted ROADM          .
       +-----.-------------------------------- .-----+
@@ -745,8 +744,8 @@ OTS Media Link represents a media link:
   </figure>
   </section>
 
-  <section title="Disaggregated ROADMs that are subdivided into degree,
-   add/drop, and optical transponder subsystems" anchor="sect-2.8.3">
+  <section title="Disaggregated ROADMs Subdivided into Degree, Add/Drop, and Optical Transponder Subsystems"
+   anchor="sect-2.8.3">
   <t>
    Recently, some DWDM network operators started demanding ROADM
    subsystems from their vendors. An example is the OpenROADM project
@@ -771,8 +770,8 @@ OTS Media Link represents a media link:
    view.
   </t>
 
-  <figure align="center" title="Disaggregated ROADM architecture with
-   remote transponders" anchor="Figure-8"><artwork><![CDATA[
+  <figure align="center" title="Disaggregated ROADM Architecture with Remote Transponders"
+   anchor="Figure-8"><artwork><![CDATA[
            . . . . . . . . . . . . . . . . . .
            .        Abstracted ROADM          .
      +-----.----------+            +----------.-----+
@@ -812,7 +811,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
  
   </section>
 
-  <section title="Optical Impairments Imposed by ROADM nodes" anchor="sect-2.8.4">
+  <section title="Optical Impairments Imposed by ROADM Nodes" anchor="sect-2.8.4">
   
   <t>
    When an optical OTSi signal traverses a ROADM node, optical impairments
@@ -836,7 +835,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="sect-2.3.4"/>. These MCs can be established between two
    line ports of the ROADM or between a line port and an Add/Drop port of
    the ROADM. The Add/Drp ports of a ROADM are those ports to which optical
-   transopners are connected. Typically, this is a single channel signal
+   transponders are connected. Typically, this is a single channel signal
    (single OTSi), but principally this could also be a group of OTSi
    signals. The optical impairments associated with these MCs are different
    and the paths of the MCs inside the ROADM node can be categorized as
@@ -860,7 +859,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
  
   <t>
-   The optical impairments associated with each of the three ROAM-internal
+   The optical impairments associated with each of the three ROADM-internal
    paths described above are modelled as optical impairment parameter sets.
    These parameter sets are modeled as an augmentation of the
    te-node-attributes defined in <xref target ="I-D.ietf-teas-yang-te-topo"/>.
@@ -871,7 +870,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    For the optical feasibiliy calculation based on the optical impairments,
    it is necessary to know whether the optical power of the OTSi stays within
    a certain power window. This is reflected by some optical power related
-   paramters such as loss parameters or power parameters, which are included
+   parameters such as loss parameters or power parameters, which are included
    in the optical impairment parameter sets (see tree view in
    <xref target="sect-3"/>).
   </t>
@@ -882,7 +881,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    connectivity matrix describes the connectivity for the express paths
    between the different lines of the ROADM and the local link connectivity
    list describes the connectivity for the Add and Drop paths of the ROADM.
-   These matrices are augmented with and new roadm-path-impairment matrix
+   These matrices are augmented with a new roadm-path-impairment matrix
    element, an add-path-impairment, and drop-path-impairment matrix element,
    respectively, which are defined as a pointer to the corresponding entry
    in the roadm-path-impairments list (leaf-ref).
@@ -901,10 +900,171 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
   
   <figure><artwork><![CDATA[
-
-[Editor's note: add latest tree view here!]
-
-  ]]></artwork>
+module: ietf-optical-impairment-topology
+  augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
+    +--rw optical-impairment-topology!
+  augment /nw:networks/nw:network/nt:link/tet:te/
+  tet:te-link-attributes:
+    +--ro OMS-attributes
+       +--ro generalized-snr?                        decimal64
+       +--ro equalization-mode                       identityref
+       +--ro (power-param)?
+       |  +--:(channel-power)
+       |  |  +--ro nominal-channel-power?            decimal64
+       |  +--:(power-spectral-density)
+       |     +--ro nominal-power-spectral-density?   decimal64
+       +--ro media-channel-group* [i]
+       |  +--ro i                 int16
+       |  +--ro media-channels* [flexi-n]
+       |     +--ro flexi-n      uint16
+       |     +--ro flexi-m?     uint16
+       |     +--ro OTSiG-ref?   -> /nw:networks/network/node/tet:te/
+             tunnel-termination-point/OTSiG-element/OTSiG-identifier
+       |     +--ro OTSi-ref?    -> /nw:networks/network/node/tet:te/
+             tunnel-termination-point/
+             OTSiG-element[OTSiG-identifier=current()/../OTSiG-ref]/
+             OTSiG-container/OTSi/OTSi-carrier-id
+       +--ro OMS-elements* [elt-index]
+          +--ro elt-index    uint16
+          +--ro uid?         string
+          +--ro type         identityref
+          +--ro element
+             +--ro (element)?
+                +--:(amplifier)
+                |  +--ro amplifier
+                |     +--ro type-variety    string
+                |     +--ro operational
+                |        +--ro actual-gain                 decimal64
+                |        +--ro tilt-target                 decimal64
+                |        +--ro out-voa                     decimal64
+                |        +--ro in-voa                      decimal64
+                |        +--ro (power-param)?
+                |           +--:(channel-power)
+                |           |  +--ro nominal-channel-power?
+                                                           decimal64
+                |           +--:(power-spectral-density)
+                |              +--ro nominal-power-spectral-density?
+                                     decimal64
+                +--:(fiber)
+                |  +--ro fiber
+                |     +--ro type-variety    string
+                |     +--ro length          decimal64
+                |     +--ro loss-coef       decimal64
+                |     +--ro total-loss      decimal64
+                |     +--ro pmd?            decimal64
+                |     +--ro conn-in?        decimal64
+                |     +--ro conn-out?       decimal64
+                +--:(concentratedloss)
+                   +--ro concentratedloss
+                      +--ro loss?   decimal64
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:tunnel-termination-point:
+    +--ro OTSiG-element* [OTSiG-identifier]
+    |  +--ro OTSiG-identifier    int16
+    |  +--ro OTSiG-container
+    |     +--ro OTSi* [OTSi-carrier-id]
+    |        +--ro OTSi-carrier-id           int16
+    |        +--ro OTSi-carrier-frequency?   decimal64
+    |        +--ro OTSi-signal-width?        decimal64
+    |        +--ro channel-delta-power?      decimal64
+    +--ro transponders-list* [transponder-id]
+       +--ro transponder-id                      uint32
+       +--ro (mode)?
+       |  +--:(G.692.2)
+       |  |  +--ro standard-mode?                standard-mode
+       |  +--:(organizational-mode)
+       |  |  +--ro operational-mode?             operational-mode
+       |  |  +--ro organization-identifier?      vendor-identifier
+       |  +--:(explicit-mode)
+       |     +--ro available-modulation-types*   identityref
+       |     +--ro configured-modulation-type?   identityref
+       |     +--ro available-baud-rates*         uint32
+       |     +--ro configured-baud-rate?         uint32
+       |     +--ro available-FEC-types*          identityref
+       |     +--ro configured-FEC-type?          identityref
+       |     +--ro FEC-code-rate?                decimal64
+       |     +--ro FEC-threshold?                decimal64
+       +--ro power?                              int32
+       +--ro power-min?                          int32
+       +--ro power-max?                          int32
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:tunnel-termination-point:
+    +--ro transponder-list* [carrier-id]
+       +--ro carrier-id    uint32
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:te-node-attributes:
+    +--ro roadm-path-impairments* [roadm-path-impairments-id]
+       +--ro roadm-path-impairments-id    uint32
+       +--ro (impairment-type)?
+          +--:(roadm-express-path)
+          |  +--ro roadm-express-path
+          |     +--ro roadm-pmd?                decimal64
+          |     +--ro roadm-cd?                 decimal64
+          |     +--ro roadm-pdl?                decimal64
+          |     +--ro roadm-inband-crosstalk?   decimal64
+          |     +--ro roadm-maxloss?            decimal64
+          +--:(roadm-add-path)
+          |  +--ro roadm-add-path
+          |     +--ro roadm-pmd?                decimal64
+          |     +--ro roadm-cd?                 decimal64
+          |     +--ro roadm-pdl?                decimal64
+          |     +--ro roadm-inband-crosstalk?   decimal64
+          |     +--ro roadm-maxloss?            decimal64
+          |     +--ro roadm-pmax?               decimal64
+          |     +--ro roadm-osnr?               decimal64
+          |     +--ro roadm-noise-figure?       decimal64
+          +--:(roadm-drop-path)
+             +--ro roadm-drop-path
+                +--ro roadm-pmd?                decimal64
+                +--ro roadm-cd?                 decimal64
+                +--ro roadm-pdl?                decimal64
+                +--ro roadm-inband-crosstalk?   decimal64
+                +--ro roadm-maxloss?            decimal64
+                +--ro roadm-minloss?            decimal64
+                +--ro roadm-typloss?            decimal64
+                +--ro roadm-pmin?               decimal64
+                +--ro roadm-pmax?               decimal64
+                +--ro roadm-ptyp?               decimal64
+                +--ro roadm-osnr?               decimal64
+                +--ro roadm-noise-figure?       decimal64
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:information-source-entry/tet:connectivity-matrices:
+    +--ro roadm-path-impairments?   -> ../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:information-source-entry/tet:connectivity-matrices/
+  tet:connectivity-matrix:
+    +--ro roadm-path-impairments?   -> ../../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:te-node-attributes/tet:connectivity-matrices:
+    +--ro roadm-path-impairments?   -> ../../roadm-path-impairments/
+    roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:te-node-attributes/tet:connectivity-matrices/
+  tet:connectivity-matrix:
+    +--ro roadm-path-impairments?   -> ../../../
+    roadm-path-impairments/roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:tunnel-termination-point/tet:local-link-connectivities:
+    +--ro add-path-impairments?    -> ../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+    +--ro drop-path-impairments?   -> ../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te/
+  tet:tunnel-termination-point/tet:local-link-connectivities/
+  tet:local-link-connectivity:
+    +--ro add-path-impairments?    -> ../../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+    +--ro drop-path-impairments?   -> ../../../../
+    tet:te-node-attributes/roadm-path-impairments/
+    roadm-path-impairments-id
+]]></artwork>
   </figure>
 
 
@@ -975,7 +1135,7 @@ module ietf-optical-impairment-topology {
      Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2020-03-03 {
+  revision 2020-03-09 {
     description
       "Initial Version";
     reference
