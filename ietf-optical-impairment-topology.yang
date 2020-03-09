@@ -55,7 +55,7 @@ module ietf-optical-impairment-topology {
      Provisions Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2020-03-03 {
+  revision 2020-03-09 {
     description
       "Initial Version";
     reference
