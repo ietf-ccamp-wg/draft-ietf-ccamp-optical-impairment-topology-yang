@@ -823,7 +823,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <t>Chromatic dispersion (CD)</t>
    <t>Polarization mode dispersion (PMD)</t>
    <t>Polarization dependent loss (PDL)</t>
-   <t>Optical amplifier noise due to amplified spontaneous emmission (ASE)</t>
+   <t>Optical amplifier noise due to amplified spontaneous emission (ASE)</t>
    <t>In-band cross-talk</t>
    <t>Filtering effects (for further study)</t>
   <?rfc subcompact="no"?>
@@ -831,10 +831,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    A ROADM node contains a wavelength selective photonic switching function
-   that is capable of switching media channels (MCs) described in
+   (WSS)that is capable of switching media channels (MCs) described in
    <xref target="sect-2.3.4"/>. These MCs can be established between two
    line ports of the ROADM or between a line port and an Add/Drop port of
-   the ROADM. The Add/Drp ports of a ROADM are those ports to which optical
+   the ROADM. The Add/Drop ports of a ROADM are those ports to which optical
    transponders are connected. Typically, this is a single channel signal
    (single OTSi), but principally this could also be a group of OTSi
    signals. The optical impairments associated with these MCs are different
@@ -843,31 +843,32 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
   
   <t><list style="symbols"><!-- <?rfc subcompact="yes"?> -->
-  <t>Express path: MC path betwen two line ports of the ROADM</t>
-  <t>Add Path: MC path from an Add port to a line port of the ROADM
-    (transmit direction)</t>
-  <t>Drop path: MC path from a line port to a Drop port of the ROADM
-    (receive direction)</t>
+  <t>Express path: MC path between two line ports of the ROADM
+    (unidirectional)</t>
+  <t>Add Path: MC path from an Add port to a line port of the ROADM</t>
+  <t>Drop path: MC path from a line port to a Drop port of the ROADM</t>
   <!-- <?rfc subcompact="no"?> -->
   </list></t>
   
   <t>
-   Due to the symmetrical architecture of ROADM nodes, the optical
-   impairments associated with the express path are typicall the same
-   in both directions whereas the optical impairments for the add and
-   drop path are different and therefore have to be modelled separately.
+   Due to the symmetrical architecture of the ROADM node, the optical
+   impairments associated with the express path are typically the same
+   between any two line ports of the ROADM whereas the optical impairments
+   for the add and drop paths are different and therefore have to be
+   modeled separately.
   </t>
  
   <t>
-   The optical impairments associated with each of the three ROADM-internal
-   paths described above are modelled as optical impairment parameter sets.
-   These parameter sets are modeled as an augmentation of the
-   te-node-attributes defined in <xref target ="I-D.ietf-teas-yang-te-topo"/>.
+   The optical impairments associated with each of the three types of
+   ROADM-node-internal paths described above are modeled as optical
+   impairment parameter sets. These parameter sets are modeled as an
+   augmentation of the te-node-attributes defined in
+   <xref target ="I-D.ietf-teas-yang-te-topo"/>.
    The te-node-attributes are augmented with a list of roadm-path-impairments
-   for the three ROADM paths distinguished by the impairment-type. Each
+   for the three ROADM path types distinguished by the impairment-type. Each
    roadm-path-impairments list entry contains the set of optical impairment
-   parameters for one of the three paths indicated by the impairment-type.
-   For the optical feasibiliy calculation based on the optical impairments,
+   parameters for one of the three path types indicated by the impairment-type.
+   For the optical feasibility calculation based on the optical impairments,
    it is necessary to know whether the optical power of the OTSi stays within
    a certain power window. This is reflected by some optical power related
    parameters such as loss parameters or power parameters, which are included
