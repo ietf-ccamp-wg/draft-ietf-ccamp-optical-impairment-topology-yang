@@ -14,7 +14,7 @@ module: ietf-optical-impairment-topology
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n      uint16
+       |     +--ro flexi-n      int16
        |     +--ro flexi-m?     uint16
        |     +--ro OTSiG-ref?   -> /nw:networks/network/node/tet:te/tunnel-termination-point/OTSiG-element/OTSiG-identifier
        |     +--ro OTSi-ref?    -> /nw:networks/network/node/tet:te/tunnel-termination-point/OTSiG-element[OTSiG-identifier=current()/../OTSiG-ref]/OTSiG-container/OTSi/OTSi-carrier-id
