@@ -8,11 +8,11 @@ checks that tree created with yang modules are consistant with uploaded files
 
 """
 
-from os import system, unlink
+from os import unlink
 from pathlib import Path
-import pytest
-from filecmp import cmp
 import subprocess
+import wget
+import pytest
 
 TEST_DIR = Path(__file__).parent.parent
 
@@ -24,15 +24,15 @@ IETF_DIR = TEST_DIR / 'tests'
 # case 1: download ietf library from github
 # Create temporary dir
 # temp_dir = TEST_DIR /'ietf_library'
-# try:  
+# try:
 #     mkdir(temp_dir)
-# except OSError:  
+# except OSError:
 #     print (f'Creation of the {temp_dir} directory failed.')
 # print (f'Creation of the {temp_dir} directory')
 # Clone into temporary dir
 # git.Repo.clone_from('https://github.com/YangModels/yang.git', temp_dir, branch='master', depth=1)
 # case 2 download only usefull files:
-import wget
+
 base_name = 'https://raw.githubusercontent.com/YangModels/yang/master/'
 urls = ['standard/ietf/RFC/ietf-network@2018-02-26.yang',
         'standard/ietf/RFC/ietf-yang-types@2010-09-24.yang',
@@ -54,7 +54,7 @@ for url in urls:
 
 @pytest.mark.parametrize("yangfile", [YANG_FILE])
 def test_yang_tree(yangfile):
-    res = subprocess.run(['pyang', '-f', 'tree', '-p',IETF_DIR, yangfile], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '-p', IETF_DIR, yangfile], stdout=subprocess.PIPE)
     if res.returncode != 0:
         assert False, f'pyang failed: exit code {res.returncode}'
     treefile = Path(yangfile).with_suffix('.tree')
