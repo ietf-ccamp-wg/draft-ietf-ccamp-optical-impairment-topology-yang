@@ -13,7 +13,9 @@ The ietf-layer0-types.yang repository is now: https://github.com/ietf-ccamp-wg/d
 
 ## [draft-ietf-ccamp-optical-impairment-topology-yang.xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/blob/master/I-D_in_xml/draft-ietf-ccamp-optical-impairment-topology-yang.xml)
 
-The I-D in xml format is now available in the [I-D_in_xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/tree/master/I-D_in_xml) folder. The xml file can converted into one of the supported output formats using the [xml2rfc](https://xml2rfc.tools.ietf.org/) online tool.
+The I-D in xml format is now available in the [I-D_in_xml](https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/tree/master/I-D_in_xml) folder. The xml file can be converted into one of the supported output formats using the [xml2rfc](https://xml2rfc.tools.ietf.org/) online tool. The following URL (link to "Raw" file) can be used if the URL Input Source option is selected for the conversion:
+
+https://raw.githubusercontent.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/master/I-D_in_xml/draft-ietf-ccamp-optical-impairment-topology-yang.xml
 
 ## Contributing
 
