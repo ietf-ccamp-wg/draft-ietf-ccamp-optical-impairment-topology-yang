@@ -2,7 +2,8 @@
 module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
-  augment /nw:networks/nw:network/nt:link/tet:te/tet:te-link-attributes:
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes:
     +--ro OMS-attributes
        +--ro generalized-snr?                        decimal64
        +--ro equalization-mode                       identityref
@@ -14,10 +15,10 @@ module: ietf-optical-impairment-topology
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n      uint16
+       |     +--ro flexi-n      int16
        |     +--ro flexi-m?     uint16
-       |     +--ro OTSiG-ref?   -> /nw:networks/network/node/tet:te/tunnel-termination-point/OTSiG-element/OTSiG-identifier
-       |     +--ro OTSi-ref?    -> /nw:networks/network/node/tet:te/tunnel-termination-point/OTSiG-element[OTSiG-identifier=current()/../OTSiG-ref]/OTSiG-container/OTSi/OTSi-carrier-id
+       |     +--ro OTSiG-ref?   leafref
+       |     +--ro OTSi-ref?    leafref
        +--ro OMS-elements* [elt-index]
           +--ro elt-index    uint16
           +--ro uid?         string
@@ -28,15 +29,21 @@ module: ietf-optical-impairment-topology
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
-                |        +--ro actual-gain                             decimal64
-                |        +--ro tilt-target                             decimal64
-                |        +--ro out-voa                                 decimal64
-                |        +--ro in-voa                                  decimal64
+                |        +--ro actual-gain
+                |        |       decimal64
+                |        +--ro tilt-target
+                |        |       decimal64
+                |        +--ro out-voa
+                |        |       decimal64
+                |        +--ro in-voa
+                |        |       decimal64
                 |        +--ro (power-param)?
                 |           +--:(channel-power)
-                |           |  +--ro nominal-channel-power?            decimal64
+                |           |  +--ro nominal-channel-power?
+                |           |          decimal64
                 |           +--:(power-spectral-density)
-                |              +--ro nominal-power-spectral-density?   decimal64
+                |              +--ro nominal-power-spectral-density?
+                |                      decimal64
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -49,7 +56,8 @@ module: ietf-optical-impairment-topology
                 +--:(concentratedloss)
                    +--ro concentratedloss
                       +--ro loss?   decimal64
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point:
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point:
     +--ro OTSiG-element* [OTSiG-identifier]
     |  +--ro OTSiG-identifier    int16
     |  +--ro OTSiG-container
@@ -59,29 +67,32 @@ module: ietf-optical-impairment-topology
     |        +--ro OTSi-signal-width?        decimal64
     |        +--ro channel-delta-power?      decimal64
     +--ro transponders-list* [transponder-id]
-       +--ro transponder-id                      uint32
-       +--ro (mode)?
-       |  +--:(G.692.2)
-       |  |  +--ro standard-mode?                standard-mode
-       |  +--:(organizational-mode)
-       |  |  +--ro operational-mode?             operational-mode
-       |  |  +--ro organization-identifier?      vendor-identifier
-       |  +--:(explicit-mode)
-       |     +--ro available-modulation-types*   identityref
-       |     +--ro configured-modulation-type?   identityref
-       |     +--ro available-baud-rates*         uint32
-       |     +--ro configured-baud-rate?         uint32
-       |     +--ro available-FEC-types*          identityref
-       |     +--ro configured-FEC-type?          identityref
-       |     +--ro FEC-code-rate?                decimal64
-       |     +--ro FEC-threshold?                decimal64
-       +--ro power?                              int32
-       +--ro power-min?                          int32
-       +--ro power-max?                          int32
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point:
+       +--ro transponder-id      uint32
+       +--ro tranceivers-list* [tranceiver-id]
+          +--ro tranceiver-id      uint32
+          +--ro supported-modes* [mode-id]
+          |  +--ro mode-id                          string
+          |  +--ro (mode)
+          |     +--:(G.692.2)
+          |     |  +--ro standard-mode?             standard-mode
+          |     +--:(organizational-mode)
+          |     |  +--ro operational-mode?          operational-mode
+          |     |  +--ro organization-identifier?   vendor-identifier
+          |     +--:(explicit-mode)
+          |        +--ro supported-std-modes
+          |           +--ro supported-application-codes*
+          |           |       -> ../../mode-id
+          |           +--ro supported-organizational-modes*
+          |                   -> ../../mode-id
+          +--ro power?             int32
+          +--ro power-min?         int32
+          +--ro power-max?         int32
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point:
     +--ro transponder-list* [carrier-id]
        +--ro carrier-id    uint32
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes:
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
        +--ro roadm-path-impairments-id    uint32
        +--ro (impairment-type)?
@@ -116,17 +127,29 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-ptyp?               decimal64
                 +--ro roadm-osnr?               decimal64
                 +--ro roadm-noise-figure?       decimal64
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:information-source-entry/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:information-source-entry/tet:connectivity-matrices/tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   -> ../../roadm-path-impairments/roadm-path-impairments-id
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes/tet:connectivity-matrices/tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   -> ../../../roadm-path-impairments/roadm-path-impairments-id
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point/tet:local-link-connectivities:
-    +--ro add-path-impairments?    -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
-    +--ro drop-path-impairments?   -> ../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
-  augment /nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point/tet:local-link-connectivities/tet:local-link-connectivity:
-    +--ro add-path-impairments?    -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
-    +--ro drop-path-impairments?   -> ../../../../tet:te-node-attributes/roadm-path-impairments/roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices:
+    +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:connectivity-matrix:
+    +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices:
+    +--ro roadm-path-impairments?
+            -> ../../roadm-path-impairments/roadm-path-impairments-id
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix:
+    +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities:
+    +--ro add-path-impairments?    leafref
+    +--ro drop-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point
+            /tet:local-link-connectivities
+            /tet:local-link-connectivity:
+    +--ro add-path-impairments?    leafref
+    +--ro drop-path-impairments?   leafref

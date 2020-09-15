@@ -53,7 +53,16 @@ module ietf-optical-impairment-topology {
      to the license terms contained in, the Simplified BSD
      License set forth in Section 4.c of the IETF Trust's Legal
      Provisions Relating to IETF Documents
-     (http://trustee.ietf.org/license-info).";
+     (http://trustee.ietf.org/license-info).
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+// RFC Ed.: replace XXXX with actual RFC number and remove
+// this note
+
+// replace the revision date with the module publication date
+// the format is (year-month-day)
+
 
   revision 2020-03-09 {
     description
@@ -494,6 +503,8 @@ module ietf-optical-impairment-topology {
 
     }
   }
+
+
 
     /*
    * Identities
@@ -1292,17 +1303,38 @@ Concentratedloss)";
      }
 
      list transponders-list {
-         key "transponder-id";
-     config false;
-         description "list of transponders";
-         leaf transponder-id {
-       type uint32;
-       description "transponder identifier";
-         }
+       key "transponder-id";
+       config false;
+       description "list of transponders";
+       leaf transponder-id {
+         type uint32;
+         description "transponder identifier";
+       }
 
-         choice mode {
+       list tranceivers-list {
+         key "tranceiver-id";
+         config false;
+         description "list of tranceivers related to a transponder";
+         leaf tranceiver-id {
+           type uint32;
+           description "tranceiver identifier";
+         }
+   
+         list supported-modes {
+           key "mode-id";
+           config false;
+           description "list of capabilities for tranceiver";
+           leaf mode-id {
+             type string { 
+               length "1..255";
+             }
+             description "ID for supported tranceiver 
+             capabilities";  
+           }
+           choice mode {
+             mandatory true;
              description "standard mode, organizational mode or
-              explicit mode";
+                          explicit mode";
 
              case G.692.2 {
                uses standard-mode;
@@ -1310,12 +1342,56 @@ Concentratedloss)";
 
              case organizational-mode {
                uses organizational-mode;
+
+/*add "common-tranceiver-capabilities-organizational-mode" 
+from layer0-ext*/
+/*add "common-tranceiver-capabilities-organizational-explicit"
+from layer0-ext*/
+
              }
 
              case explicit-mode {
-               uses transponder-attributes;
-             }
-         }
+               container supported-std-modes {
+                 description "container to group
+                  all supported modes";
+                 leaf-list supported-application-codes {
+                   type leafref {
+                    path "../../mode-id";
+                   }
+must "../../../supported-modes[mode-id=current()]/standard-mode"{
+                     description
+                       "the pointer is only for application-code 
+                         supported by tranceiver.";
+                   }
+
+                   description "list of 
+                      pointers to supported supported 
+                      application-code"; 
+                 }
+
+                 leaf-list supported-organizational-modes {
+                   type leafref {
+                    path "../../mode-id";
+                   }
+
+must "../../../supported-modes[mode-id=current()]/operational-mode"{
+                     description
+                       "the pointer is only for 
+                       organizational-mode supported
+                        by tranceiver.";                     
+                   }
+                   description "list of 
+                      pointers to supported organizational-mode";
+                 }
+               }  // end of container
+
+ // add "common-tranceiver-capabilities-organizational-explicit"
+ // from layer0-ext   
+
+             } // end of case explicit-mode
+           } // end of choice
+         } // end of list of supported modes for
+           //each tranceiver related to one transponder
 
          leaf power {
            type int32;
@@ -1330,14 +1406,21 @@ Concentratedloss)";
            config false;
            description "minimum power of the transponder";
          }
+
          leaf power-max {
            type int32;
            units "dBm";
            config false;
            description "maximum power of the transponder";
          }
-   }
-  }
+
+       } // end of list of tranceivers 
+
+
+     } // end list of transponders
+
+
+  } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
    + "/tet:tunnel-termination-point" {
