@@ -66,30 +66,28 @@ module: ietf-optical-impairment-topology
     |        +--ro OTSi-carrier-frequency?   decimal64
     |        +--ro OTSi-signal-width?        decimal64
     |        +--ro channel-delta-power?      decimal64
-    +--ro transponders-list* [transponder-id]
+    +--ro transponder-list* [transponder-id]
        +--ro transponder-id      uint32
-       +--ro tranceivers-list* [tranceiver-id]
-          +--ro tranceiver-id      uint32
+       +--ro transceiver-list* [transceiver-id]
+          +--ro transceiver-id     uint32
           +--ro supported-modes* [mode-id]
-          |  +--ro mode-id                          string
-          |  +--ro (mode)
-          |     +--:(G.692.2)
-          |     |  +--ro standard-mode?             standard-mode
-          |     +--:(organizational-mode)
-          |     |  +--ro operational-mode?          operational-mode
-          |     |  +--ro organization-identifier?   vendor-identifier
-          |     +--:(explicit-mode)
-          |        +--ro supported-std-modes
-          |           +--ro supported-application-codes*
-          |           |       -> ../../mode-id
-          |           +--ro supported-organizational-modes*
-          |                   -> ../../mode-id
-          +--ro power?             int32
-          +--ro power-min?         int32
-          +--ro power-max?         int32
+             +--ro mode-id                          string
+             +--ro (mode)
+                +--:(G.692.2)
+                |  +--ro standard-mode?             standard-mode
+                +--:(organizational-mode)
+                |  +--ro operational-mode?          operational-mode
+                |  +--ro organization-identifier?
+                |          organization-identifier
+                +--:(explicit-mode)
+                   +--ro supported-std-modes
+                      +--ro supported-application-codes*
+                      |       -> ../../mode-id
+                      +--ro supported-organizational-modes*
+                              -> ../../mode-id
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
-    +--ro transponder-list* [carrier-id]
+    +--ro sliceable-transponder-list* [carrier-id]
        +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:

@@ -176,7 +176,7 @@ module ietf-optical-impairment-topology {
   typedef operational-mode {
     type string;
     description
-      "Vendor-specific mode that guarantees 
+      "Organization/vendor specific mode that guarantees 
       interoperability.";
     reference "ITU-T G.698.2 (11/2018)";
   }
@@ -197,10 +197,11 @@ module ietf-optical-impairment-topology {
 
 // temporary defined here for disalignment 
 //with ietf-layer0-types module
-  typedef vendor-identifier {
+  typedef organization-identifier {
     type string;
     description
-      "vendor identifier that uses vendor-specific mode";
+      "vendor/organization identifier that uses a private mode
+      out of already defined in G.698.2 ITU-T application-code";
     reference
       "RFC7581: Routing and Wavelength Assignment Information
        Encoding for Wavelength Switched Optical Networks";
@@ -295,7 +296,7 @@ module ietf-optical-impairment-topology {
   grouping sliceable-transponder-attributes {
     description
       "Configuration of a sliceable transponder.";
-    list transponder-list {
+    list sliceable-transponder-list {
       key "carrier-id";
       config false;
       description "List of carriers";
@@ -495,7 +496,7 @@ module ietf-optical-impairment-topology {
     }
 
     leaf organization-identifier {
-      type vendor-identifier;
+      type organization-identifier;
       config false;
       description
       "organization identifier that uses organizational
@@ -1302,33 +1303,33 @@ Concentratedloss)";
          uses OTSiG;
      }
 
-     list transponders-list {
+     list transponder-list {
        key "transponder-id";
        config false;
-       description "list of transponders";
+       description "list of transponder";
        leaf transponder-id {
          type uint32;
          description "transponder identifier";
        }
 
-       list tranceivers-list {
-         key "tranceiver-id";
+       list transceiver-list {
+         key "transceiver-id";
          config false;
-         description "list of tranceivers related to a transponder";
-         leaf tranceiver-id {
+         description "list of transceiver related to a transponder";
+         leaf transceiver-id {
            type uint32;
-           description "tranceiver identifier";
+           description "transceiver identifier";
          }
    
          list supported-modes {
            key "mode-id";
            config false;
-           description "list of capabilities for tranceiver";
+           description "list of capabilities for transceiver";
            leaf mode-id {
              type string { 
                length "1..255";
              }
-             description "ID for supported tranceiver 
+             description "ID for supported transceiver 
              capabilities";  
            }
            choice mode {
@@ -1343,10 +1344,10 @@ Concentratedloss)";
              case organizational-mode {
                uses organizational-mode;
 
-/*add "common-tranceiver-capabilities-organizational-mode" 
-from layer0-ext*/
-/*add "common-tranceiver-capabilities-organizational-explicit"
-from layer0-ext*/
+/*add "common-transceiver-capabilities-organizational-mode" 
+from layer0-types-ext*/
+/*add "common-transceiver-capabilities-organizational-explicit"
+from layer0-types-ext*/
 
              }
 
@@ -1361,7 +1362,7 @@ from layer0-ext*/
 must "../../../supported-modes[mode-id=current()]/standard-mode"{
                      description
                        "the pointer is only for application-code 
-                         supported by tranceiver.";
+                         supported by transceiver.";
                    }
 
                    description "list of 
@@ -1378,46 +1379,30 @@ must "../../../supported-modes[mode-id=current()]/operational-mode"{
                      description
                        "the pointer is only for 
                        organizational-mode supported
-                        by tranceiver.";                     
+                        by transceiver.";                     
                    }
                    description "list of 
                       pointers to supported organizational-mode";
                  }
                }  // end of container
 
- // add "common-tranceiver-capabilities-organizational-explicit"
- // from layer0-ext   
+ // add "common-transceiver-capabilities-organizational-explicit"
+ // from layer0-types-ext   
 
              } // end of case explicit-mode
            } // end of choice
          } // end of list of supported modes for
-           //each tranceiver related to one transponder
-
-         leaf power {
-           type int32;
-           units "dBm";
-           config false;
-           description "per channel power";
-         }
-
-         leaf power-min {
-           type int32;
-           units "dBm";
-           config false;
-           description "minimum power of the transponder";
-         }
-
-         leaf power-max {
-           type int32;
-           units "dBm";
-           config false;
-           description "maximum power of the transponder";
-         }
-
-       } // end of list of tranceivers 
+           //each transceiver related to one transponder
 
 
-     } // end list of transponders
+// Power values are in the 
+//common-transceiver-capabilities-organizational-explicit"
+//grouping from layer0-types-ext  
+
+       } // end of list of transceiver 
+
+
+     } // end list of transponder
 
 
   } // end of augment
