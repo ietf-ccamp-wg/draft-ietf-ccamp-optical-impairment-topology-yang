@@ -15,8 +15,8 @@ module: ietf-optical-impairment-topology
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n      int16
-       |     +--ro flexi-m?     uint16
+       |     +--ro flexi-n      l0-types:flexi-n
+       |     +--ro flexi-m?     l0-types:flexi-m
        |     +--ro OTSiG-ref?   leafref
        |     +--ro OTSi-ref?    leafref
        +--ro OMS-elements* [elt-index]
@@ -70,21 +70,83 @@ module: ietf-optical-impairment-topology
        +--ro transponder-id      uint32
        +--ro transceiver-list* [transceiver-id]
           +--ro transceiver-id     uint32
-          +--ro supported-modes* [mode-id]
-             +--ro mode-id                          string
-             +--ro (mode)
-                +--:(G.692.2)
-                |  +--ro standard-mode?             standard-mode
-                +--:(organizational-mode)
-                |  +--ro operational-mode?          operational-mode
-                |  +--ro organization-identifier?
-                |          organization-identifier
-                +--:(explicit-mode)
-                   +--ro supported-std-modes
-                      +--ro supported-application-codes*
-                      |       -> ../../mode-id
-                      +--ro supported-organizational-modes*
-                              -> ../../mode-id
+          +--ro supported-modes
+             +--ro supported-mode* [mode-id]
+                +--ro mode-id                      string
+                +--ro (mode)
+                   +--:(G.698.2)
+                   |  +--ro standard-mode?         standard-mode
+                   +--:(organizational-mode)
+                   |  +--ro organizational-mode
+                   |     +--ro operational-mode?
+                   |     |       operational-mode
+                   |     +--ro organization-identifier?
+                   |     |       organization-identifier
+                   |     +--ro min-central-frequency?
+                   |     |       frequency-thz
+                   |     +--ro max-central-frequency?
+                   |     |       frequency-thz
+                   |     +--ro minimum-channel-spacing?
+                   |     |       frequency-ghz
+                   |     +--ro min-channel-output-power?     dbm-t
+                   |     +--ro max-channel-output-power?     dbm-t
+                   |     +--ro min-channel-input-power?      dbm-t
+                   |     +--ro max-channel-input-power?      dbm-t
+                   |     +--ro max-total-rx-optical-power?   dbm-t
+                   +--:(explicit-mode)
+                      +--ro explicit-mode
+                         +--ro supported-modes
+                         |  +--ro supported-application-codes*
+                         |  |       -> ../../mode-id
+                         |  +--ro supported-organizational-modes*
+                         |          -> ../../mode-id
+                         +--ro line-coding-bitrate?
+                         |       identityref
+                         +--ro max-polarization-mode-dispersion?
+                         |       decimal64
+                         +--ro max-chromatic-dispersion?
+                         |       decimal64
+                         +--ro chromatic-and-polarization-dispersion-penalty* []
+                         |  +--ro chromatic-dispersion
+                         |  |       decimal64
+                         |  +--ro polarization-mode-dispersion
+                         |  |       decimal64
+                         |  +--ro penalty
+                         |          decimal64
+                         +--ro max-diff-group-delay?
+                         |       int32
+                         +--ro max-polarization-dependent-loss?
+                         |       decimal64
+                         +--ro available-modulation-type?
+                         |       identityref
+                         +--ro min-OSNR?
+                         |       int32
+                         +--ro min-Q-factor?
+                         |       int32
+                         +--ro available-baud-rate?
+                         |       uint32
+                         +--ro available-FEC-type?
+                         |       identityref
+                         +--ro FEC-code-rate?
+                         |       decimal64
+                         +--ro FEC-threshold?
+                         |       decimal64
+                         +--ro min-central-frequency?
+                         |       frequency-thz
+                         +--ro max-central-frequency?
+                         |       frequency-thz
+                         +--ro minimum-channel-spacing?
+                         |       frequency-ghz
+                         +--ro min-channel-output-power?
+                         |       dbm-t
+                         +--ro max-channel-output-power?
+                         |       dbm-t
+                         +--ro min-channel-input-power?
+                         |       dbm-t
+                         +--ro max-channel-input-power?
+                         |       dbm-t
+                         +--ro max-total-rx-optical-power?
+                                 dbm-t
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]

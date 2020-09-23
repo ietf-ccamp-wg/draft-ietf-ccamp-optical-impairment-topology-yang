@@ -19,7 +19,11 @@ module ietf-optical-impairment-topology {
   }
 
   import ietf-layer0-types {
-    prefix "layer0-types";
+    prefix "l0-types";
+  }
+
+  import ietf-layer0-types-ext {
+    prefix "l0-types-ext";
   }
 
   organization
@@ -64,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2020-03-09 {
+  revision 2020-09-23 {
     description
       "Initial Version";
     reference
@@ -168,43 +172,6 @@ module ietf-optical-impairment-topology {
     }
     description
       "ITU-T based fiber-types";
-  }
-
-/*temporary defined here for disalignment with*/
-/* ietf-layer0-types module*/
-
-  typedef operational-mode {
-    type string;
-    description
-      "Organization/vendor specific mode that guarantees 
-      interoperability.";
-    reference "ITU-T G.698.2 (11/2018)";
-  }
-
-// temporary defined here for disalignment with 
-//ietf-layer0-types module
-  typedef standard-mode {
-    type string;
-    description
-      "ITU-T G.698.2 standard mode that guarantees 
-       interoperability.
-       It must be an string with the following format:
-       B-DScW-ytz(v) where all these attributes 
-       are conformant
-       to the ITU-T recomendation";
-    reference "ITU-T G.698.2 (11/2018)";
-  }
-
-// temporary defined here for disalignment 
-//with ietf-layer0-types module
-  typedef organization-identifier {
-    type string;
-    description
-      "vendor/organization identifier that uses a private mode
-      out of already defined in G.698.2 ITU-T application-code";
-    reference
-      "RFC7581: Routing and Wavelength Assignment Information
-       Encoding for Wavelength Switched Optical Networks";
   }
 
   // grouping
@@ -467,47 +434,7 @@ module ietf-optical-impairment-topology {
     }
   }
 
-  grouping standard-mode {
-    description
-      "ITU-T G.698.2 standard mode that guarantees interoperability.
-       It must be an string with the following format:
-       B-DScW-ytz(v) where all these attributes are conformant
-       to the ITU-T recomendation";
-
-    leaf standard-mode {
-      type standard-mode;
-      config false;
-      description
-        "G.698.2 standard mode";
-    }
-  }
-
-  grouping organizational-mode {
-    description
-      "Transponder operational mode supported by organizations or
-       vendor";
-
-    leaf operational-mode {
-      type operational-mode;
-      config false;
-      description
-        "configured organization- or vendor-specific
-         application identifiers (AI) supported by the transponder";
-    }
-
-    leaf organization-identifier {
-      type organization-identifier;
-      config false;
-      description
-      "organization identifier that uses organizational
-         mode";
-
-    }
-  }
-
-
-
-    /*
+  /*
    * Identities
    */
   identity type-element {
@@ -1167,7 +1094,7 @@ module ietf-optical-impairment-topology {
         key "flexi-n";
         description
           "list of media channels represented as (n,m)";
-        uses layer0-types:flexi-grid-channel;
+        uses l0-types:flexi-grid-frequency-slot;
         leaf OTSiG-ref {
           type leafref {
            path "/nw:networks/nw:network/nw:node/tet:te" +
@@ -1320,85 +1247,7 @@ Concentratedloss)";
            type uint32;
            description "transceiver identifier";
          }
-   
-         list supported-modes {
-           key "mode-id";
-           config false;
-           description "list of capabilities for transceiver";
-           leaf mode-id {
-             type string { 
-               length "1..255";
-             }
-             description "ID for supported transceiver 
-             capabilities";  
-           }
-           choice mode {
-             mandatory true;
-             description "standard mode, organizational mode or
-                          explicit mode";
-
-             case G.692.2 {
-               uses standard-mode;
-             }
-
-             case organizational-mode {
-               uses organizational-mode;
-
-/*add "common-transceiver-capabilities-organizational-mode" 
-from layer0-types-ext*/
-/*add "common-transceiver-capabilities-organizational-explicit"
-from layer0-types-ext*/
-
-             }
-
-             case explicit-mode {
-               container supported-std-modes {
-                 description "container to group
-                  all supported modes";
-                 leaf-list supported-application-codes {
-                   type leafref {
-                    path "../../mode-id";
-                   }
-must "../../../supported-modes[mode-id=current()]/standard-mode"{
-                     description
-                       "the pointer is only for application-code 
-                         supported by transceiver.";
-                   }
-
-                   description "list of 
-                      pointers to supported supported 
-                      application-code"; 
-                 }
-
-                 leaf-list supported-organizational-modes {
-                   type leafref {
-                    path "../../mode-id";
-                   }
-
-must "../../../supported-modes[mode-id=current()]/operational-mode"{
-                     description
-                       "the pointer is only for 
-                       organizational-mode supported
-                        by transceiver.";                     
-                   }
-                   description "list of 
-                      pointers to supported organizational-mode";
-                 }
-               }  // end of container
-
- // add "common-transceiver-capabilities-organizational-explicit"
- // from layer0-types-ext   
-
-             } // end of case explicit-mode
-           } // end of choice
-         } // end of list of supported modes for
-           //each transceiver related to one transponder
-
-
-// Power values are in the 
-//common-transceiver-capabilities-organizational-explicit"
-//grouping from layer0-types-ext  
-
+         uses l0-types-ext:transceiver-capabilities;
        } // end of list of transceiver 
 
 
@@ -1628,4 +1477,3 @@ must "../../../supported-modes[mode-id=current()]/operational-mode"{
     }
   } // augmentation local-link-connectivity
 }
-
