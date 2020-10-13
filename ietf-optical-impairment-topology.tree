@@ -5,7 +5,7 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
-       +--ro generalized-snr?                        decimal64
+       +--ro generalized-snr?                        l0-types-ext:snr
        +--ro equalization-mode                       identityref
        +--ro (power-param)?
        |  +--:(channel-power)
@@ -58,24 +58,21 @@ module: ietf-optical-impairment-topology
                       +--ro loss?   decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
-    +--ro OTSiG-element* [OTSiG-identifier]
-    |  +--ro OTSiG-identifier    int16
-    |  +--ro OTSiG-container
-    |     +--ro OTSi* [OTSi-carrier-id]
-    |        +--ro OTSi-carrier-id           int16
-    |        +--ro transponder-ref?          leafref
-    |        +--ro transceiver-ref?          leafref
-    |        +--ro configured-mode?          leafref
-    |        +--ro OTSi-carrier-frequency?   decimal64
-    |        +--ro OTSi-signal-width?        decimal64
-    |        +--ro channel-delta-power?      decimal64
-    |        +--ro central-frequency?        frequency-thz
-    |        +--ro channel-output-power?     dbm-t
-    |        +--ro channel-input-power?      dbm-t
-    |        +--ro total-input-power?        dbm-t
-    +--ro transponder-list* [transponder-id]
-       +--ro transponder-id      uint32
-       +--ro transceiver-list* [transceiver-id]
+    +--ro otsi-group* [otsi-group-id]
+    |  +--ro otsi-group-id    int16
+    |  +--ro otsi* [otsi-carrier-id]
+    |     +--ro otsi-carrier-id           int16
+    |     +--ro transponder-ref?          leafref
+    |     +--ro transceiver-ref?          leafref
+    |     +--ro configured-mode?          leafref
+    |     +--ro OTSi-carrier-frequency?   frequency-thz
+    |     +--ro OTSi-carrier-bandwidth?   frequency-ghz
+    |     +--ro tx-channel-power?         dbm-t
+    |     +--ro rx-channel-power?         dbm-t
+    |     +--ro rx-total-power?           dbm-t
+    +--ro transponder* [transponder-id]
+       +--ro transponder-id    uint32
+       +--ro transceiver* [transceiver-id]
           +--ro transceiver-id     uint32
           +--ro supported-modes
              +--ro supported-mode* [mode-id]
@@ -95,11 +92,11 @@ module: ietf-optical-impairment-topology
                    |     |       frequency-thz
                    |     +--ro minimum-channel-spacing?
                    |     |       frequency-ghz
-                   |     +--ro min-channel-output-power?   dbm-t
-                   |     +--ro max-channel-output-power?   dbm-t
-                   |     +--ro min-channel-input-power?    dbm-t
-                   |     +--ro max-channel-input-power?    dbm-t
-                   |     +--ro max-total-input-power?      dbm-t
+                   |     +--ro tx-channel-power-min?      dbm-t
+                   |     +--ro tx-channel-power-max?      dbm-t
+                   |     +--ro rx-channel-power-min?      dbm-t
+                   |     +--ro rx-channel-power-max?      dbm-t
+                   |     +--ro rx-total-power-max?        dbm-t
                    +--:(explicit-mode)
                       +--ro explicit-mode
                          +--ro supported-modes
@@ -127,7 +124,7 @@ module: ietf-optical-impairment-topology
                          +--ro available-modulation-type?
                          |       identityref
                          +--ro min-OSNR?
-                         |       int32
+                         |       snr
                          +--ro min-Q-factor?
                          |       int32
                          +--ro available-baud-rate?
@@ -144,15 +141,15 @@ module: ietf-optical-impairment-topology
                          |       frequency-thz
                          +--ro minimum-channel-spacing?
                          |       frequency-ghz
-                         +--ro min-channel-output-power?
+                         +--ro tx-channel-power-min?
                          |       dbm-t
-                         +--ro max-channel-output-power?
+                         +--ro tx-channel-power-max?
                          |       dbm-t
-                         +--ro min-channel-input-power?
+                         +--ro rx-channel-power-min?
                          |       dbm-t
-                         +--ro max-channel-input-power?
+                         +--ro rx-channel-power-max?
                          |       dbm-t
-                         +--ro max-total-input-power?
+                         +--ro rx-total-power-max?
                                  dbm-t
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
@@ -178,7 +175,7 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           |     +--ro roadm-pmax?               decimal64
-          |     +--ro roadm-osnr?               decimal64
+          |     +--ro roadm-osnr?               l0-types-ext:snr
           |     +--ro roadm-noise-figure?       decimal64
           +--:(roadm-drop-path)
              +--ro roadm-drop-path
@@ -192,7 +189,7 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-pmin?               decimal64
                 +--ro roadm-pmax?               decimal64
                 +--ro roadm-ptyp?               decimal64
-                +--ro roadm-osnr?               decimal64
+                +--ro roadm-osnr?               l0-types-ext:snr
                 +--ro roadm-noise-figure?       decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
