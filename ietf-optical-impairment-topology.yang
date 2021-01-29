@@ -863,7 +863,7 @@ module ietf-optical-impairment-topology {
            that is added, for example,
            to hit target power levels into a 
            drop path amplifier, or simply, to reduce the
-           power of a “strong” carrier
+           power of a strong carrier
            (due to ripple,for example), 
            then the use of the ROADM input power levels and 
            the above drop losses is not appropriate.
@@ -883,7 +883,7 @@ module ietf-optical-impairment-topology {
           "If the drop path has additional loss that is added, 
            for example, to hit target power levels into a 
            drop path amplifier,or simply,to reduce the power 
-           of a “strong” carrier(due to ripple,for example), 
+           of a strong carrier(due to ripple,for example), 
            then the use of the ROADM input power levels and the 
            above drop losses is not appropriate.
            This parameter corresponds to the best case per 
@@ -902,7 +902,7 @@ module ietf-optical-impairment-topology {
           "If the drop path has additional loss that is added,
            for example, to hit target power levels into a 
            drop path amplifier,or simply,to reduce the 
-           power of a “strong” carrier(due to ripple,for example), 
+           power of a strong carrier(due to ripple,for example), 
            then the use of the ROADM input power levels and 
            the above drop losses is not appropriate.
            This parameter corresponds to the typical case
