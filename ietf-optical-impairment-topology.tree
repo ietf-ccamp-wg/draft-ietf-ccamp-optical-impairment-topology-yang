@@ -21,7 +21,7 @@ module: ietf-optical-impairment-topology
        |     +--ro OTSi-ref?    leafref
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
-          +--ro uid?                      string
+          +--ro oms-element-uid?          string
           +--ro (element)
              +--:(amplifier)
              |  +--ro amplifier

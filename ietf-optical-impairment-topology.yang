@@ -1106,7 +1106,7 @@ module ietf-optical-impairment-topology {
             (whether it's a Fiber, an EDFA or a
 Concentratedloss)";
         }
-        leaf uid {
+        leaf oms-element-uid {
           type string;
           description
             "unique id of the element if it exists";
