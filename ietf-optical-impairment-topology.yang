@@ -930,6 +930,7 @@ module ietf-optical-impairment-topology {
           fraction-digits 2;
         }
         units dB ;
+        mandatory true;
         description "..";
       }
     }
@@ -1112,7 +1113,8 @@ Concentratedloss)";
         }
 
           choice element {
-        description "OMS element type";
+            mandatory true;
+            description "OMS element type";
             case amplifier {
               uses amplifier-params ;
             }
