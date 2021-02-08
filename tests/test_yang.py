@@ -57,7 +57,7 @@ for url in urls:
 
 @pytest.mark.parametrize("yangfile", [YANG_FILE])
 def test_yang_tree(yangfile):
-    res = subprocess.run(['pyang', '-f', 'tree', '-p', IETF_DIR, yangfile], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, yangfile], stdout=subprocess.PIPE)
     if res.returncode != 0:
         assert False, f'pyang failed: exit code {res.returncode}'
     treefile = Path(yangfile).with_suffix('.tree')
