@@ -1,5 +1,5 @@
-
 module: ietf-optical-impairment-topology
+
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network/nt:link/tet:te
@@ -59,14 +59,14 @@ module: ietf-optical-impairment-topology
     +--ro otsi-group* [otsi-group-id]
     |  +--ro otsi-group-id    int16
     |  +--ro otsi* [otsi-carrier-id]
-    |     +--ro otsi-carrier-id         int16
-    |     +--ro transponder-ref?        leafref
-    |     +--ro transceiver-ref?        leafref
-    |     +--ro configured-mode?        leafref
-    |     +--ro central-frequency?      frequency-thz
-    |     +--ro channel-output-power?   dbm-t
-    |     +--ro channel-input-power?    dbm-t
-    |     +--ro total-input-power?      dbm-t
+    |     +--ro otsi-carrier-id           int16
+    |     +--ro transponder-ref?          leafref
+    |     +--ro transceiver-ref?          leafref
+    |     +--ro configured-mode?          leafref
+    |     +--ro OTSi-carrier-frequency?   frequency-thz
+    |     +--ro tx-channel-power?         dbm-t
+    |     +--ro rx-channel-power?         dbm-t
+    |     +--ro rx-total-power?           dbm-t
     +--ro transponder* [transponder-id]
        +--ro transponder-id    uint32
        +--ro transceiver* [transceiver-id]
@@ -89,18 +89,18 @@ module: ietf-optical-impairment-topology
                    |     |       frequency-thz
                    |     +--ro minimum-channel-spacing?
                    |     |       frequency-ghz
-                   |     +--ro min-channel-output-power?   dbm-t
-                   |     +--ro max-channel-output-power?   dbm-t
-                   |     +--ro min-channel-input-power?    dbm-t
-                   |     +--ro max-channel-input-power?    dbm-t
-                   |     +--ro max-total-input-power?      dbm-t
+                   |     +--ro tx-channel-power-min?      dbm-t
+                   |     +--ro tx-channel-power-max?      dbm-t
+                   |     +--ro rx-channel-power-min?      dbm-t
+                   |     +--ro rx-channel-power-max?      dbm-t
+                   |     +--ro rx-total-power-max?        dbm-t
                    +--:(explicit-mode)
                       +--ro explicit-mode
                          +--ro supported-modes
                          |  +--ro supported-application-codes*
-                         |  |       -> ../../mode-id
+                         |  |       -> ../../../mode-id
                          |  +--ro supported-organizational-modes*
-                         |          -> ../../mode-id
+                         |          -> ../../../mode-id
                          +--ro line-coding-bitrate?
                          |       identityref
                          +--ro max-polarization-mode-dispersion?
@@ -120,6 +120,8 @@ module: ietf-optical-impairment-topology
                          |       decimal64
                          +--ro available-modulation-type?
                          |       identityref
+                         +--ro OTSi-carrier-bandwidth?
+                         |       frequency-ghz
                          +--ro min-OSNR?
                          |       snr
                          +--ro min-Q-factor?
@@ -138,15 +140,15 @@ module: ietf-optical-impairment-topology
                          |       frequency-thz
                          +--ro minimum-channel-spacing?
                          |       frequency-ghz
-                         +--ro min-channel-output-power?
+                         +--ro tx-channel-power-min?
                          |       dbm-t
-                         +--ro max-channel-output-power?
+                         +--ro tx-channel-power-max?
                          |       dbm-t
-                         +--ro min-channel-input-power?
+                         +--ro rx-channel-power-min?
                          |       dbm-t
-                         +--ro max-channel-input-power?
+                         +--ro rx-channel-power-max?
                          |       dbm-t
-                         +--ro max-total-input-power?
+                         +--ro rx-total-power-max?
                                  dbm-t
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
