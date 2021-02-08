@@ -74,5 +74,6 @@ def test_yang_tree():
 
     # remove downloaded yang files
     for url in urls:
-        filename = url.split('/')[-1]
+        base_name, file = url
+        filename = file.split('/')[-1]
         unlink(f'{IETF_DIR}/{filename}')
