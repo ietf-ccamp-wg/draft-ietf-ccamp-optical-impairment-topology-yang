@@ -1,5 +1,5 @@
 gitpython==2.1.11
-pyang==1.7.8
+pyang==2.4.0
 pytest==3.8.2
 PyYAML==5.1
 wget==3.2
