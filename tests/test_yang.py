@@ -18,7 +18,6 @@ TEST_DIR = Path(__file__).parent.parent
 
 YANG_FILE = TEST_DIR /'ietf-optical-impairment-topology.yang'
 TREE_FILE = TEST_DIR /'ietf-optical-impairment-topology.tree'
-EXPECTED_FILE = TEST_DIR /'ietf-optical-impairment-topology-expected.tree'
 IETF_DIR = TEST_DIR / 'tests'
 # use case 1 or case 2
 # case 1: download ietf library from github
@@ -67,10 +66,12 @@ def test_pyang():
 def test_yang_tree():
     """ check that the tree is consistent with the yang
     """
-    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE, '-o', 'expected.tree'], stdout=subprocess.PIPE)
     treefile = Path(YANG_FILE).with_suffix('.tree')
     tree = open(treefile, 'r').read()
-    assert res.stdout.decode('utf-8') == tree, "YANG tree rendering differs"
+    expected = open('expected.tree', 'r').read()
+    unlink('expected.tree')
+    assert expected == tree, "YANG tree rendering differs"
 
     # remove downloaded yang files
     for url in urls:
