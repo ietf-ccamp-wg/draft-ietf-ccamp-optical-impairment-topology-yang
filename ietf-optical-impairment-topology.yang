@@ -125,7 +125,7 @@ module ietf-optical-impairment-topology {
 
     leaf-list available-FEC-types {
       type identityref {
-      base l0-types-ext:FEC;
+      base l0-types-ext:fec-type;
       }
       config false;
       description "List determining all the available FEC";
@@ -133,7 +133,7 @@ module ietf-optical-impairment-topology {
 
     leaf configured-FEC-type {
       type identityref {
-      base l0-types-ext:FEC;
+      base l0-types-ext:fec-type;
       }
       config false;
     description

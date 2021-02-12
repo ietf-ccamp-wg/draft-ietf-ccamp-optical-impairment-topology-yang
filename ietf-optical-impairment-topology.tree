@@ -1,5 +1,5 @@
-module: ietf-optical-impairment-topology
 
+module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network/nt:link/tet:te
@@ -128,11 +128,11 @@ module: ietf-optical-impairment-topology
                          |       int32
                          +--ro available-baud-rate?
                          |       uint32
-                         +--ro available-FEC-type?
+                         +--ro available-fec-type?
                          |       identityref
-                         +--ro FEC-code-rate?
+                         +--ro fec-code-rate?
                          |       decimal64
-                         +--ro FEC-threshold?
+                         +--ro fec-threshold?
                          |       decimal64
                          +--ro min-central-frequency?
                          |       frequency-thz
