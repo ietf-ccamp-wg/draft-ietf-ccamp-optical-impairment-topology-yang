@@ -49,7 +49,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2019 IETF Trust and the persons identified as
+     Copyright (c) 2021 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -68,110 +68,20 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2020-10-13 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+  revision 2021-02-04 {
+=======
+  revision 2021-02-16 {
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
+=======
+  revision 2021-02-16 {
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
     description
       "Initial Version";
     reference
       "RFC XXXX: A Yang Data Model for Impairment-aware
        Optical Networks";
-  }
-
-  // identity
-
-  identity modulation {
-    description "base identity for modulation type";
-  }
-
-  identity QPSK {
-    base modulation;
-    description
-      "QPSK (Quadrature Phase Shift Keying) modulation";
-  }
-
-  identity DP-QPSK {
-    base modulation;
-    description
-      "DP-QPSK (Dual Polarization Quadrature
-       Phase Shift Keying) modulation";
-  }
-  identity QAM8 {
-    base modulation;
-    description
-      "8QAM (8-State Quadrature Amplitude Modulation) modulation";
-  }
-  identity QAM16 {
-    base modulation;
-    description
-      "QAM16 (Quadrature Amplitude Modulation)";
-  }
-  identity DP-QAM8 {
-    base modulation;
-    description
-      "DP-QAM8 (Dual Polarization Quadrature Amplitude Modulation)";
-  }
-  identity DC-DP-QAM8 {
-    base modulation;
-    description
-    "DC DP-QAM8 (Dual Polarization Quadrature Amplitude Modulation)";
-  }
-  identity DP-QAM16 {
-    base modulation;
-    description
-      "DP-QAM16 (Dual Polarization Quadrature Amplitude Modulation)";
-  }
-  identity DC-DP-QAM16 {
-    base modulation;
-    description
-    "DC DP-QAM16 (Dual Polarization Quadrature 
-    Amplitude Modulation)";
-  }
-
-  identity FEC {
-    description
-      "Enumeration that defines the type of
-       Forward Error Correction";
-  }
-  identity reed-solomon {
-    base FEC;
-      description
-  "Reed-Solomon error correction";
-  }
-  identity hamming-code {
-    base FEC;
-      description
-  "Hamming Code error correction";
-  }
-  identity golay {
-    base FEC;
-      description "Golay error correction";
-  }
-
-  // typedef
-
-  typedef fiber-type {
-    type enumeration {
-      enum G.652 {
-      description "G.652 Standard Singlemode Fiber";                 
-      }
-      enum G.654 {
-        description "G.654 Cutoff Shifted Fiber";
-      }
-      enum G.653 {
-        description "G.653 Dispersion Shifted Fiber";
-      }
-      enum G.655 {
-        description "G.655 Non-Zero Dispersion Shifted Fiber";
-      }
-      enum G.656 {
-        description "G.656 Non-Zero Dispersion for Wideband
-               Optical Transport";
-      }
-      enum G.657 {
-        description "G.657 Bend-Insensitive Fiber";
-      }
-    }
-    description
-      "ITU-T based fiber-types";
   }
 
   // grouping
@@ -181,7 +91,7 @@ module ietf-optical-impairment-topology {
 
     leaf-list available-modulation-types {
       type identityref {
-      base modulation;
+      base l0-types-ext:modulation;
       }
       config false;
     description
@@ -190,7 +100,7 @@ module ietf-optical-impairment-topology {
 
     leaf configured-modulation-type {
       type identityref {
-      base modulation;
+      base l0-types-ext:modulation;
       }
     config false;
       description
@@ -223,7 +133,15 @@ module ietf-optical-impairment-topology {
 
     leaf-list available-FEC-types {
       type identityref {
-      base FEC;
+<<<<<<< HEAD
+<<<<<<< HEAD
+      base l0-types-ext:FEC;
+=======
+      base l0-types-ext:fec-type;
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
+=======
+      base l0-types-ext:fec-type;
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
       }
       config false;
       description "List determining all the available FEC";
@@ -231,7 +149,15 @@ module ietf-optical-impairment-topology {
 
     leaf configured-FEC-type {
       type identityref {
-      base FEC;
+<<<<<<< HEAD
+<<<<<<< HEAD
+      base l0-types-ext:FEC;
+=======
+      base l0-types-ext:fec-type;
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
+=======
+      base l0-types-ext:fec-type;
+>>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
       }
       config false;
     description
@@ -431,34 +357,6 @@ module ietf-optical-impairment-topology {
   /*
    * Identities
    */
-  identity type-element {
-    description
-      "Base identity for element type";
-  }
-
-  identity Fiber {
-    base type-element;
-    description
-      "Fiber element";
-  }
-
-  identity Roadm {
-    base type-element;
-    description
-      "Roadm element";
-  }
-
-  identity Edfa {
-    base type-element;
-    description
-      "Edfa element";
-  }
-
-  identity Concentratedloss {
-    base type-element;
-    description
-      "Concentratedloss element";
-  }
 
   identity type-power-mode {
     description
@@ -479,13 +377,44 @@ module ietf-optical-impairment-topology {
   }
 
   /*
+   * Typedefs
+   */
+
+  typedef fiber-type {
+    type enumeration {
+      enum G.652 {
+      description "G.652 Standard Singlemode Fiber";                 
+      }
+      enum G.654 {
+        description "G.654 Cutoff Shifted Fiber";
+      }
+      enum G.653 {
+        description "G.653 Dispersion Shifted Fiber";
+      }
+      enum G.655 {
+        description "G.655 Non-Zero Dispersion Shifted Fiber";
+      }
+      enum G.656 {
+        description "G.656 Non-Zero Dispersion for Wideband
+               Optical Transport";
+      }
+      enum G.657 {
+        description "G.657 Bend-Insensitive Fiber";
+      }
+    }
+    description
+      "ITU-T based fiber-types";
+  }
+
+  /*
    * Groupings
    */
+
   grouping amplifier-params {
     description "describes parameters for an amplifier";
     container amplifier{
-    description "amplifier type, operatonal parameters 
-                 are described";
+      description
+        "amplifier type, operatonal parameters are described.";
       leaf type-variety {
         type string ;
         mandatory true ;
@@ -494,42 +423,71 @@ module ietf-optical-impairment-topology {
           a specification in a separate equipment catalog";
       }
       container operational {
-        description "amplifier operationnal parameters";
-        leaf actual-gain {
-          type decimal64 {
-            fraction-digits 2;
+        description "amplifier operational parameters";
+        list amplifier-element {
+          description
+            "The list of parallel amplifier elements within an
+            amplifier used to amplify different frequency ranges.";
+          leaf name {
+            type string;
+            description
+              "The name of the amplifier element as specified in
+              the vendor's specification associated with the
+              type-variety.";
           }
-          units dB ;
-      mandatory true ;
-          description "..";
-        }
-        leaf tilt-target {
-          type decimal64 {
-            fraction-digits 2;
+          container frequency-range {
+            description
+              "The frequency range amplified by the amplifier
+              element.";
+            leaf lower-frequency {
+              type l0-types-ext:frequency-thz;
+              description
+                "The lower frequency boundary of the
+                frequency range.";
+            }
+            leaf upper-frequency {
+              type l0-types-ext:frequency-thz;
+              description
+                "The upper frequency boundary of the
+                frequency range.";
+            }
           }
-          mandatory true ;
-          description "..";
-        }
-        leaf out-voa {
-          type decimal64 {
-            fraction-digits 2;
+          leaf actual-gain {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB ;
+            mandatory true ;
+            description "..";
           }
-          units dB;
-      mandatory true;
-          description "..";
-        }
-        leaf in-voa {
-          type decimal64 {
-            fraction-digits 2;
+          leaf tilt-target {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            mandatory true ;
+            description "..";
           }
-          units dB;
-      mandatory true;
-          description "..";
-        }
-        uses power-param;
-      }
-    }
-  }
+          leaf out-voa {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB;
+            mandatory true;
+            description "..";
+          }
+          leaf in-voa {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB;
+            mandatory true;
+            description "..";
+          }
+          uses power-param;
+        }  // list amplifier-element
+      }  // container operational
+    }  // container amplifier
+  }  // grouping amplifier-params
 
   grouping fiber-params {
     description 
@@ -591,8 +549,6 @@ module ietf-optical-impairment-topology {
       }
     }
   }
-
- 
 
   grouping roadm-express-path {
     description "roadm express path optical impairments";
@@ -958,6 +914,7 @@ module ietf-optical-impairment-topology {
           fraction-digits 2;
         }
         units dB ;
+        mandatory true;
         description "..";
       }
     }
@@ -1133,37 +1090,26 @@ module ietf-optical-impairment-topology {
             (whether it's a Fiber, an EDFA or a
 Concentratedloss)";
         }
-        leaf uid {
+        leaf oms-element-uid {
           type string;
           description
             "unique id of the element if it exists";
         }
-        leaf type {
-          type identityref {
-             base type-element;
-          }
-      mandatory true;
-      description "element type";
-        }
 
-        container element {
-          description "element of the list of elements of the OMS";
           choice element {
-        description "OMS element type";
+            mandatory true;
+            description "OMS element type";
             case amplifier {
- /*             when "type = 'Edfa'"; */
               uses amplifier-params ;
             }
             case fiber {
-/*              when "type = 'Fiber'"; */
               uses fiber-params ;
             }
             case concentratedloss {
-/*             when "type = 'Concentratedloss'"; */
               uses concentratedloss-params ;
             }
           }
-        }
+        
     }
   }
 

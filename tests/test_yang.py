@@ -55,15 +55,25 @@ for url in urls:
     print(f'loading {url}')
     filename = wget.download(base_name + file, out=f'{IETF_DIR}')
 
-@pytest.mark.parametrize("yangfile", [YANG_FILE])
-def test_yang_tree(yangfile):
-    res = subprocess.run(['pyang', '-f', 'tree', '-p', IETF_DIR, yangfile], stdout=subprocess.PIPE)
+
+def test_pyang():
+    """ first compile the yang with pyang
+    """
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
     if res.returncode != 0:
         assert False, f'pyang failed: exit code {res.returncode}'
-    treefile = Path(yangfile).with_suffix('.tree')
+
+
+def test_yang_tree():
+    """ check that the tree is consistent with the yang
+    """
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    treefile = Path(YANG_FILE).with_suffix('.tree')
     tree = open(treefile, 'r').read()
     assert res.stdout.decode('utf-8') == tree, "YANG tree rendering differs"
 
+    # remove downloaded yang files
     for url in urls:
-        filename = url.split('/')[-1]
+        base_name, file = url
+        filename = file.split('/')[-1]
         unlink(f'{IETF_DIR}/{filename}')
