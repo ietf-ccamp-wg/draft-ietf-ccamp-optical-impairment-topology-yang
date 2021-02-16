@@ -68,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-02-04 {
+  revision 2021-02-16 {
     description
       "Initial Version";
     reference
@@ -389,8 +389,8 @@ module ietf-optical-impairment-topology {
   grouping amplifier-params {
     description "describes parameters for an amplifier";
     container amplifier{
-    description "amplifier type, operatonal parameters 
-                 are described";
+      description
+        "amplifier type, operatonal parameters are described.";
       leaf type-variety {
         type string ;
         mandatory true ;
@@ -399,42 +399,71 @@ module ietf-optical-impairment-topology {
           a specification in a separate equipment catalog";
       }
       container operational {
-        description "amplifier operationnal parameters";
-        leaf actual-gain {
-          type decimal64 {
-            fraction-digits 2;
+        description "amplifier operational parameters";
+        list amplifier-element {
+          description
+            "The list of parallel amplifier elements within an
+            amplifier used to amplify different frequency ranges.";
+          leaf name {
+            type string;
+            description
+              "The name of the amplifier element as specified in
+              the vendor's specification associated with the
+              type-variety.";
           }
-          units dB ;
-      mandatory true ;
-          description "..";
-        }
-        leaf tilt-target {
-          type decimal64 {
-            fraction-digits 2;
+          container frequency-range {
+            description
+              "The frequency range amplified by the amplifier
+              element.";
+            leaf lower-frequency {
+              type l0-types-ext:frequency-thz;
+              description
+                "The lower frequency boundary of the
+                frequency range.";
+            }
+            leaf upper-frequency {
+              type l0-types-ext:frequency-thz;
+              description
+                "The upper frequency boundary of the
+                frequency range.";
+            }
           }
-          mandatory true ;
-          description "..";
-        }
-        leaf out-voa {
-          type decimal64 {
-            fraction-digits 2;
+          leaf actual-gain {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB ;
+            mandatory true ;
+            description "..";
           }
-          units dB;
-      mandatory true;
-          description "..";
-        }
-        leaf in-voa {
-          type decimal64 {
-            fraction-digits 2;
+          leaf tilt-target {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            mandatory true ;
+            description "..";
           }
-          units dB;
-      mandatory true;
-          description "..";
-        }
-        uses power-param;
-      }
-    }
-  }
+          leaf out-voa {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB;
+            mandatory true;
+            description "..";
+          }
+          leaf in-voa {
+            type decimal64 {
+              fraction-digits 2;
+            }
+            units dB;
+            mandatory true;
+            description "..";
+          }
+          uses power-param;
+        }  // list amplifier-element
+      }  // container operational
+    }  // container amplifier
+  }  // grouping amplifier-params
 
   grouping fiber-params {
     description 
