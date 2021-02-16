@@ -224,4 +224,3 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
-
