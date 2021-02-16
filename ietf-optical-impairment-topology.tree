@@ -1,5 +1,5 @@
-
 module: ietf-optical-impairment-topology
+
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network/nt:link/tet:te
