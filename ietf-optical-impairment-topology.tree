@@ -27,21 +27,29 @@ module: ietf-optical-impairment-topology
              |  +--ro amplifier
              |     +--ro type-variety    string
              |     +--ro operational
-             |        +--ro actual-gain
-             |        |       decimal64
-             |        +--ro tilt-target
-             |        |       decimal64
-             |        +--ro out-voa
-             |        |       decimal64
-             |        +--ro in-voa
-             |        |       decimal64
-             |        +--ro (power-param)?
-             |           +--:(channel-power)
-             |           |  +--ro nominal-channel-power?
-             |           |          decimal64
-             |           +--:(power-spectral-density)
-             |              +--ro nominal-power-spectral-density?
-             |                      decimal64
+             |        +--ro amplifier-element* []
+             |           +--ro name?
+             |           |       string
+             |           +--ro frequency-range
+             |           |  +--ro lower-frequency?
+             |           |  |       l0-types-ext:frequency-thz
+             |           |  +--ro upper-frequency?
+             |           |          l0-types-ext:frequency-thz
+             |           +--ro actual-gain
+             |           |       decimal64
+             |           +--ro tilt-target
+             |           |       decimal64
+             |           +--ro out-voa
+             |           |       decimal64
+             |           +--ro in-voa
+             |           |       decimal64
+             |           +--ro (power-param)?
+             |              +--:(channel-power)
+             |              |  +--ro nominal-channel-power?
+             |              |          decimal64
+             |              +--:(power-spectral-density)
+             |                 +--ro nominal-power-spectral-density?
+             |                         decimal64
              +--:(fiber)
              |  +--ro fiber
              |     +--ro type-variety    string
@@ -216,3 +224,4 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
+
