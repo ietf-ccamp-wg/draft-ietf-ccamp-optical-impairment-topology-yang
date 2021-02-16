@@ -68,15 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  revision 2021-02-04 {
-=======
   revision 2021-02-16 {
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
-=======
-  revision 2021-02-16 {
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
     description
       "Initial Version";
     reference
@@ -133,15 +125,7 @@ module ietf-optical-impairment-topology {
 
     leaf-list available-FEC-types {
       type identityref {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      base l0-types-ext:FEC;
-=======
       base l0-types-ext:fec-type;
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
-=======
-      base l0-types-ext:fec-type;
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
       }
       config false;
       description "List determining all the available FEC";
@@ -149,15 +133,7 @@ module ietf-optical-impairment-topology {
 
     leaf configured-FEC-type {
       type identityref {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      base l0-types-ext:FEC;
-=======
       base l0-types-ext:fec-type;
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
-=======
-      base l0-types-ext:fec-type;
->>>>>>> 7ea1e4f5778fa743d68e7b6b8e1a3b355f993923
       }
       config false;
     description
