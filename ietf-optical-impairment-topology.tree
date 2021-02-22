@@ -1,5 +1,5 @@
-
 module: ietf-optical-impairment-topology
+
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network/nt:link/tet:te
@@ -20,42 +20,48 @@ module: ietf-optical-impairment-topology
        |     +--ro OTSiG-ref?   leafref
        |     +--ro OTSi-ref?    leafref
        +--ro OMS-elements* [elt-index]
-          +--ro elt-index    uint16
-          +--ro uid?         string
-          +--ro type         identityref
-          +--ro element
-             +--ro (element)?
-                +--:(amplifier)
-                |  +--ro amplifier
-                |     +--ro type-variety    string
-                |     +--ro operational
-                |        +--ro actual-gain
-                |        |       decimal64
-                |        +--ro tilt-target
-                |        |       decimal64
-                |        +--ro out-voa
-                |        |       decimal64
-                |        +--ro in-voa
-                |        |       decimal64
-                |        +--ro (power-param)?
-                |           +--:(channel-power)
-                |           |  +--ro nominal-channel-power?
-                |           |          decimal64
-                |           +--:(power-spectral-density)
-                |              +--ro nominal-power-spectral-density?
-                |                      decimal64
-                +--:(fiber)
-                |  +--ro fiber
-                |     +--ro type-variety    string
-                |     +--ro length          decimal64
-                |     +--ro loss-coef       decimal64
-                |     +--ro total-loss      decimal64
-                |     +--ro pmd?            decimal64
-                |     +--ro conn-in?        decimal64
-                |     +--ro conn-out?       decimal64
-                +--:(concentratedloss)
-                   +--ro concentratedloss
-                      +--ro loss?   decimal64
+          +--ro elt-index                 uint16
+          +--ro oms-element-uid?          string
+          +--ro (element)
+             +--:(amplifier)
+             |  +--ro amplifier
+             |     +--ro type-variety    string
+             |     +--ro operational
+             |        +--ro amplifier-element* []
+             |           +--ro name?
+             |           |       string
+             |           +--ro frequency-range
+             |           |  +--ro lower-frequency?
+             |           |  |       l0-types-ext:frequency-thz
+             |           |  +--ro upper-frequency?
+             |           |          l0-types-ext:frequency-thz
+             |           +--ro actual-gain
+             |           |       decimal64
+             |           +--ro tilt-target
+             |           |       decimal64
+             |           +--ro out-voa
+             |           |       decimal64
+             |           +--ro in-voa
+             |           |       decimal64
+             |           +--ro (power-param)?
+             |              +--:(channel-power)
+             |              |  +--ro nominal-channel-power?
+             |              |          decimal64
+             |              +--:(power-spectral-density)
+             |                 +--ro nominal-power-spectral-density?
+             |                         decimal64
+             +--:(fiber)
+             |  +--ro fiber
+             |     +--ro type-variety    string
+             |     +--ro length          decimal64
+             |     +--ro loss-coef       decimal64
+             |     +--ro total-loss      decimal64
+             |     +--ro pmd?            decimal64
+             |     +--ro conn-in?        decimal64
+             |     +--ro conn-out?       decimal64
+             +--:(concentratedloss)
+                +--ro concentratedloss
+                   +--ro loss    decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro otsi-group* [otsi-group-id]
@@ -100,9 +106,9 @@ module: ietf-optical-impairment-topology
                       +--ro explicit-mode
                          +--ro supported-modes
                          |  +--ro supported-application-codes*
-                         |  |       -> ../../mode-id
+                         |  |       -> ../../../mode-id
                          |  +--ro supported-organizational-modes*
-                         |          -> ../../mode-id
+                         |          -> ../../../mode-id
                          +--ro line-coding-bitrate?
                          |       identityref
                          +--ro max-polarization-mode-dispersion?
@@ -130,11 +136,11 @@ module: ietf-optical-impairment-topology
                          |       int32
                          +--ro available-baud-rate?
                          |       uint32
-                         +--ro available-FEC-type?
+                         +--ro available-fec-type?
                          |       identityref
-                         +--ro FEC-code-rate?
+                         +--ro fec-code-rate?
                          |       decimal64
-                         +--ro FEC-threshold?
+                         +--ro fec-threshold?
                          |       decimal64
                          +--ro min-central-frequency?
                          |       frequency-thz
