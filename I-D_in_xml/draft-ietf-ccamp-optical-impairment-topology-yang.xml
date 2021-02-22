@@ -13,7 +13,7 @@
 <!ENTITY RFC8342 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8342.xml">
 <!ENTITY RFC8345 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8345.xml">
 <!ENTITY RFC8453 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8453.xml">
-<!ENTITY I-D.ietf-teas-yang-te-topo SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-teas-yang-te-topo.xml">
+<!ENTITY RFC8795 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8795.xml">
 <!ENTITY I-D.ietf-ccamp-wson-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-wson-yang.xml">
 <!ENTITY I-D.ietf-ccamp-layer0-types SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-layer0-types.xml">
 <!ENTITY I-D.ietf-ccamp-dwdm-if-param-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml">
@@ -138,7 +138,7 @@
 
   <t>
    This document augments the generic TE topology draft
-   <xref target="I-D.ietf-teas-yang-te-topo"/> where possible.
+   <xref target="RFC8795"/> where possible.
   </t>
 
   <t>
@@ -222,7 +222,7 @@
    <c><xref target="RFC8345"/></c>
    <c>tet</c>
    <c>ietf-te-topology</c>
-   <c><xref target="I-D.ietf-teas-yang-te-topo"/></c>
+   <c><xref target="RFC8795"/></c>
   </texttable>
   
   <t>
@@ -1047,7 +1047,7 @@ OTS Media Link represents a media link:
 
   <t>
    As this document defines TE topology YANG model augmentations
-   <xref target="I-D.ietf-teas-yang-te-topo"/> for the TE topology YANG
+   <xref target="RFC8795"/> for the TE topology YANG
    model provided at the north-bound interface of the optical domain
    controller, it is a valid assumption that the optical domain controller
    abstracts the subsystems of a disaggregated ROADM and presents the
@@ -1149,7 +1149,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    ROADM-node-internal paths described above are modeled as optical
    impairment parameter sets. These parameter sets are modeled as an
    augmentation of the te-node-attributes defined in
-   <xref target ="I-D.ietf-teas-yang-te-topo"/>.
+   <xref target ="RFC8795"/>.
    The te-node-attributes are augmented with a list of roadm-path-impairments
    for the three ROADM path types distinguished by the impairment-type. Each
    roadm-path-impairments list entry contains the set of optical impairment
@@ -1163,7 +1163,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
   
   <t>
-   <xref target ="I-D.ietf-teas-yang-te-topo"/> defines a connectivity
+   <xref target ="RFC8795"/> defines a connectivity
    matrix and a local link connectivity list for the TE node. The
    connectivity matrix describes the connectivity for the express paths
    between the different lines of the ROADM and the local link connectivity
@@ -2893,6 +2893,7 @@ reference: RFC XXXX (TDB)
   &RFC7950;
   &RFC8040;
   &RFC8341;
+  &RFC8795;
   
   </references>
   <references title="Informative References">
@@ -2907,7 +2908,6 @@ reference: RFC XXXX (TDB)
   &RFC8342;
   &RFC8345;
   &RFC8453;
-  &I-D.ietf-teas-yang-te-topo;
   &I-D.ietf-ccamp-wson-yang;
   &I-D.ietf-ccamp-layer0-types;
   &I-D.ietf-ccamp-dwdm-if-param-yang;

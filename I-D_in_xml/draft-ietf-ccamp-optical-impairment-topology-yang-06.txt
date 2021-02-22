@@ -170,8 +170,8 @@ Lee, et al.              Expires August 26, 2021                [Page 3]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-   This document augments the generic TE topology draft
-   [I-D.ietf-teas-yang-te-topo] where possible.
+   This document augments the generic TE topology draft [RFC8795] where
+   possible.
 
    This document defines one YANG module: ietf-optical-impairment-
    topology (Section 3) according to the new Network Management
@@ -235,8 +235,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
    |              |                          | types]                  |
    | nw           | ietf-network             | [RFC8345]               |
    | nt           | ietf-network-topology    | [RFC8345]               |
-   | tet          | ietf-te-topology         | [I-D.ietf-teas-yang-te- |
-   |              |                          | topo]                   |
+   | tet          | ietf-te-topology         | [RFC8795]               |
    +--------------+--------------------------+-------------------------+
 
              Table 1: Prefixes and corresponding YANG modules
@@ -249,6 +248,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 2.1.  Control Plane Architecture
 
    Figure 1 shows the control plane architecture.
+
 
 
 
@@ -1050,13 +1050,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
    architecture is depicted in Figure 8 below.
 
    As this document defines TE topology YANG model augmentations
-   [I-D.ietf-teas-yang-te-topo] for the TE topology YANG model provided
-   at the north-bound interface of the optical domain controller, it is
-   a valid assumption that the optical domain controller abstracts the
-   subsystems of a disaggregated ROADM and presents the disaggregated
-   ROADM in the same way as an integrated ROADM hiding all the
-   interconnects that are not relevant from an external TE topology
-   view.
+   [RFC8795] for the TE topology YANG model provided at the north-bound
+   interface of the optical domain controller, it is a valid assumption
+   that the optical domain controller abstracts the subsystems of a
+   disaggregated ROADM and presents the disaggregated ROADM in the same
+   way as an integrated ROADM hiding all the interconnects that are not
+   relevant from an external TE topology view.
+
 
 
 
@@ -1154,22 +1154,22 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
    The optical impairments associated with each of the three types of
    ROADM-node-internal paths described above are modeled as optical
    impairment parameter sets.  These parameter sets are modeled as an
-   augmentation of the te-node-attributes defined in
-   [I-D.ietf-teas-yang-te-topo].  The te-node-attributes are augmented
-   with a list of roadm-path-impairments for the three ROADM path types
-   distinguished by the impairment-type.  Each roadm-path-impairments
-   list entry contains the set of optical impairment parameters for one
-   of the three path types indicated by the impairment-type.  For the
-   optical feasibility calculation based on the optical impairments, it
-   is necessary to know whether the optical power of the OTSi stays
-   within a certain power window.  This is reflected by some optical
-   power related parameters such as loss parameters or power parameters,
-   which are included in the optical impairment parameter sets (see tree
-   view in Section 3).
+   augmentation of the te-node-attributes defined in [RFC8795].  The te-
+   node-attributes are augmented with a list of roadm-path-impairments
+   for the three ROADM path types distinguished by the impairment-type.
+   Each roadm-path-impairments list entry contains the set of optical
+   impairment parameters for one of the three path types indicated by
+   the impairment-type.  For the optical feasibility calculation based
+   on the optical impairments, it is necessary to know whether the
+   optical power of the OTSi stays within a certain power window.  This
+   is reflected by some optical power related parameters such as loss
+   parameters or power parameters, which are included in the optical
+   impairment parameter sets (see tree view in Section 3).
 
-   [I-D.ietf-teas-yang-te-topo] defines a connectivity matrix and a
-   local link connectivity list for the TE node.  The connectivity
-   matrix describes the connectivity for the express paths between the
+   [RFC8795] defines a connectivity matrix and a local link connectivity
+   list for the TE node.  The connectivity matrix describes the
+   connectivity for the express paths between the different lines of the
+   ROADM and the local link connectivity list describes the connectivity
 
 
 
@@ -1178,12 +1178,11 @@ Lee, et al.              Expires August 26, 2021               [Page 21]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-   different lines of the ROADM and the local link connectivity list
-   describes the connectivity for the Add and Drop paths of the ROADM.
-   These matrices are augmented with a new roadm-path-impairment matrix
-   element, an add-path-impairment, and drop-path-impairment matrix
-   element, respectively, which are defined as a pointer to the
-   corresponding entry in the roadm-path-impairments list (leaf-ref).
+   for the Add and Drop paths of the ROADM.  These matrices are
+   augmented with a new roadm-path-impairment matrix element, an add-
+   path-impairment, and drop-path-impairment matrix element,
+   respectively, which are defined as a pointer to the corresponding
+   entry in the roadm-path-impairments list (leaf-ref).
 
    [Editor's note: this section is still work in progress]
 
@@ -1226,6 +1225,7 @@ module: ietf-optical-impairment-topology
              |           |  |       l0-types-ext:frequency-thz
              |           |  +--ro upper-frequency?
              |           |          l0-types-ext:frequency-thz
+             |           +--ro actual-gain
 
 
 
@@ -1234,7 +1234,6 @@ Lee, et al.              Expires August 26, 2021               [Page 22]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-             |           +--ro actual-gain
              |           |       decimal64
              |           +--ro tilt-target
              |           |       decimal64
@@ -1282,6 +1281,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
              +--ro supported-mode* [mode-id]
                 +--ro mode-id                      string
                 +--ro (mode)
+                   +--:(G.698.2)
 
 
 
@@ -1290,7 +1290,6 @@ Lee, et al.              Expires August 26, 2021               [Page 23]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-                   +--:(G.698.2)
                    |  +--ro standard-mode?         standard-mode
                    +--:(organizational-mode)
                    |  +--ro organizational-mode
@@ -1338,6 +1337,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
                          +--ro OTSi-carrier-bandwidth?
                          |       frequency-ghz
                          +--ro min-OSNR?
+                         |       snr
 
 
 
@@ -1346,7 +1346,6 @@ Lee, et al.              Expires August 26, 2021               [Page 24]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-                         |       snr
                          +--ro min-Q-factor?
                          |       int32
                          +--ro available-baud-rate?
@@ -1394,6 +1393,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
+          |     +--ro roadm-inband-crosstalk?   decimal64
 
 
 
@@ -1402,7 +1402,6 @@ Lee, et al.              Expires August 26, 2021               [Page 25]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
 
-          |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           |     +--ro roadm-pmax?               decimal64
           |     +--ro roadm-osnr?               l0-types-ext:snr
@@ -1447,6 +1446,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
+
 
 
 
@@ -3160,6 +3160,12 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
               DOI 10.17487/RFC8341, March 2018,
               <https://www.rfc-editor.org/info/rfc8341>.
 
+   [RFC8795]  Liu, X., Bryskin, I., Beeram, V., Saad, T., Shah, H., and
+              O. Gonzalez de Dios, "YANG Data Model for Traffic
+              Engineering (TE) Topologies", RFC 8795,
+              DOI 10.17487/RFC8795, August 2020,
+              <https://www.rfc-editor.org/info/rfc8795>.
+
 8.2.  Informative References
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
@@ -3179,12 +3185,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
               DOI 10.17487/RFC7446, February 2015,
               <https://www.rfc-editor.org/info/rfc7446>.
 
-   [RFC7579]  Bernstein, G., Ed., Lee, Y., Ed., Li, D., Imajuku, W., and
-              J. Han, "General Network Element Constraint Encoding for
-              GMPLS-Controlled Networks", RFC 7579,
-              DOI 10.17487/RFC7579, June 2015,
-              <https://www.rfc-editor.org/info/rfc7579>.
-
 
 
 
@@ -3193,6 +3193,12 @@ Lee, et al.              Expires August 26, 2021               [Page 57]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
 
+
+   [RFC7579]  Bernstein, G., Ed., Lee, Y., Ed., Li, D., Imajuku, W., and
+              J. Han, "General Network Element Constraint Encoding for
+              GMPLS-Controlled Networks", RFC 7579,
+              DOI 10.17487/RFC7579, June 2015,
+              <https://www.rfc-editor.org/info/rfc7579>.
 
    [RFC7581]  Bernstein, G., Ed., Lee, Y., Ed., Li, D., Imajuku, W., and
               J. Han, "Routing and Wavelength Assignment Information
@@ -3225,12 +3231,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2021
               Abstraction and Control of TE Networks (ACTN)", RFC 8453,
               DOI 10.17487/RFC8453, August 2018,
               <https://www.rfc-editor.org/info/rfc8453>.
-
-   [I-D.ietf-teas-yang-te-topo]
-              Liu, X., Bryskin, I., Beeram, V., Saad, T., Shah, H., and
-              O. Dios, "YANG Data Model for Traffic Engineering (TE)
-              Topologies", draft-ietf-teas-yang-te-topo-22 (work in
-              progress), June 2019.
 
    [I-D.ietf-ccamp-wson-yang]
               Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
