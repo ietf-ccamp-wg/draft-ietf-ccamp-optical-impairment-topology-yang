@@ -903,7 +903,9 @@ module ietf-optical-impairment-topology {
       description
         "select the mode: channel power or power spectral density";
       case channel-power {
-        when "equalization-mode='carrier-power'";
+        when "/nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/OMS-attributes
+            /equalization-mode='carrier-power'";
         leaf nominal-carrier-power{
           type decimal64 {
               fraction-digits 2;
@@ -916,7 +918,9 @@ module ietf-optical-impairment-topology {
         }
       }
       case power-spectral-density{
-        when "equalization-mode='power-spectral-density'";
+        when "/nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/OMS-attributes
+            /equalization-mode='power-spectral-density'";
         leaf nominal-power-spectral-density{
           type decimal64 {
               fraction-digits 16;
@@ -1025,16 +1029,15 @@ module ietf-optical-impairment-topology {
 
         leaf OTSiG-ref {
           type leafref {
-           path "/nw:networks/nw:network/nw:node/tet:te" +
+            path "/nw:networks/nw:network/nw:node/tet:te" +
                 "/tet:tunnel-termination-point" +
                 "/otsi-group/otsi-group-id" ;
-
-          }
+            }
           description
-             "Reference to the otsi-group list to get otsi-group
-              identifier of the
-              OTSiG carried by this media channel 
-              that reports the transient stat";
+            "Reference to the otsi-group list to get otsi-group
+            identifier of the
+            OTSiG carried by this media channel 
+            that reports the transient stat";
         }
         leaf OTSi-ref {
           type leafref {
@@ -1048,7 +1051,15 @@ module ietf-optical-impairment-topology {
              "Reference to the otsi list supporting
              the related OTSiG to get otsi identifier";
         }
-
+        leaf delta-power{
+          type decimal64 {
+              fraction-digits 2;
+          }
+          units dB ;
+          description
+            " Deviation from the reference carrier power defined for
+            the OMS.";
+        }
       } // media channels list
     } // media-channel-groups list
   } // media media-channel-groups grouping
