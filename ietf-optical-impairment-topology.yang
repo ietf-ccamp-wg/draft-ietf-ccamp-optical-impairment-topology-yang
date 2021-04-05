@@ -903,8 +903,8 @@ module ietf-optical-impairment-topology {
       description
         "select the mode: channel power or power spectral density";
       case channel-power {
- /*       when "equalization-mode='channel-power'"; */
-        leaf nominal-channel-power{
+        when "equalization-mode='carrier-power'";
+        leaf nominal-carrier-power{
           type decimal64 {
               fraction-digits 1;
           }
@@ -915,7 +915,7 @@ module ietf-optical-impairment-topology {
         }
       }
       case power-spectral-density{
- /*       when "equalization-mode='power-spectral-density'"; */
+        when "equalization-mode='power-spectral-density'";
         leaf nominal-power-spectral-density{
           type decimal64 {
               fraction-digits 16;

@@ -9,7 +9,7 @@ module: ietf-optical-impairment-topology
        +--ro equalization-mode                       identityref
        +--ro (power-param)?
        |  +--:(channel-power)
-       |  |  +--ro nominal-channel-power?            decimal64
+       |  |  +--ro nominal-carrier-power?            decimal64
        |  +--:(power-spectral-density)
        |     +--ro nominal-power-spectral-density?   decimal64
        +--ro media-channel-group* [i]
@@ -45,7 +45,7 @@ module: ietf-optical-impairment-topology
              |           |       decimal64
              |           +--ro (power-param)?
              |              +--:(channel-power)
-             |              |  +--ro nominal-channel-power?
+             |              |  +--ro nominal-carrier-power?
              |              |          decimal64
              |              +--:(power-spectral-density)
              |                 +--ro nominal-power-spectral-density?
