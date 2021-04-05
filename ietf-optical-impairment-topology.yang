@@ -906,7 +906,7 @@ module ietf-optical-impairment-topology {
         when "equalization-mode='carrier-power'";
         leaf nominal-carrier-power{
           type decimal64 {
-              fraction-digits 1;
+              fraction-digits 2;
           }
           units dBm ;
           description
