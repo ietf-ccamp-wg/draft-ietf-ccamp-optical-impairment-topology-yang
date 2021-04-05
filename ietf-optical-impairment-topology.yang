@@ -910,8 +910,9 @@ module ietf-optical-impairment-topology {
           }
           units dBm ;
           description
-            " Reference channel power after the ROADM or after 
-            the out-voa. ";
+            " Reference channel power. Same grouping is used for the
+            OMS power after the ROADM (input of the OMS) or after the
+            out-voa of each amplifier. ";
         }
       }
       case power-spectral-density{
