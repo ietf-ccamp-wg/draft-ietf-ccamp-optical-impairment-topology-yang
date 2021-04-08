@@ -32,9 +32,9 @@ module: ietf-optical-impairment-topology
              |           +--ro name?
              |           |       string
              |           +--ro frequency-range
-             |           |  +--ro lower-frequency?
+             |           |  +--ro lower-frequency
              |           |  |       l0-types-ext:frequency-thz
-             |           |  +--ro upper-frequency?
+             |           |  +--ro upper-frequency
              |           |          l0-types-ext:frequency-thz
              |           +--ro actual-gain
              |           |       decimal64
@@ -169,14 +169,24 @@ module: ietf-optical-impairment-topology
        +--ro roadm-path-impairments-id    uint32
        +--ro (impairment-type)?
           +--:(roadm-express-path)
-          |  +--ro roadm-express-path
+          |  +--ro roadm-express-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency
+          |     |  |       l0-types-ext:frequency-thz
+          |     |  +--ro upper-frequency
+          |     |          l0-types-ext:frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
           |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           +--:(roadm-add-path)
-          |  +--ro roadm-add-path
+          |  +--ro roadm-add-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency
+          |     |  |       l0-types-ext:frequency-thz
+          |     |  +--ro upper-frequency
+          |     |          l0-types-ext:frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
@@ -186,7 +196,12 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-osnr?               l0-types-ext:snr
           |     +--ro roadm-noise-figure?       decimal64
           +--:(roadm-drop-path)
-             +--ro roadm-drop-path
+             +--ro roadm-drop-path* []
+                +--ro frequency-range
+                |  +--ro lower-frequency
+                |  |       l0-types-ext:frequency-thz
+                |  +--ro upper-frequency
+                |          l0-types-ext:frequency-thz
                 +--ro roadm-pmd?                decimal64
                 +--ro roadm-cd?                 decimal64
                 +--ro roadm-pdl?                decimal64
