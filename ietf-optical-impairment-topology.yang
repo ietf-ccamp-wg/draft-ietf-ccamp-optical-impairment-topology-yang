@@ -181,7 +181,7 @@ module ietf-optical-impairment-topology {
     description
     "optical link (fiber) attributes with impairment data";
     leaf fiber-type {
-      type fiber-type;
+      type l0-types-ext:fiber-type;
       config false;
       description "fiber-type";
     }
@@ -331,79 +331,8 @@ module ietf-optical-impairment-topology {
   }
 
   /*
-   * Identities
-   */
-
-  identity type-power-mode {
-    description
-      "power equalization mode used within the 
-       OMS and its elements";
-  }
-
-  identity power-spectral-density {
-    base type-power-mode;
-    description
-      "all elements must use power spectral density (W/Hz)";
-  }
-
-  identity channel-power {
-    base type-power-mode;
-    description
-      "all elements must use power (dBm)";
-  }
-
-  /*
-   * Typedefs
-   */
-
-  typedef fiber-type {
-    type enumeration {
-      enum G.652 {
-      description "G.652 Standard Singlemode Fiber";                 
-      }
-      enum G.654 {
-        description "G.654 Cutoff Shifted Fiber";
-      }
-      enum G.653 {
-        description "G.653 Dispersion Shifted Fiber";
-      }
-      enum G.655 {
-        description "G.655 Non-Zero Dispersion Shifted Fiber";
-      }
-      enum G.656 {
-        description "G.656 Non-Zero Dispersion for Wideband
-               Optical Transport";
-      }
-      enum G.657 {
-        description "G.657 Bend-Insensitive Fiber";
-      }
-    }
-    description
-      "ITU-T based fiber-types";
-  }
-
-  /*
    * Groupings
    */
-
-  grouping frequency-range {
-    description
-      "The parameters that define a frequency range.";
-    leaf lower-frequency {
-      type l0-types-ext:frequency-thz;
-      mandatory true;
-      description
-        "The lower frequency boundary of the
-        frequency range.";
-    }
-    leaf upper-frequency {
-      type l0-types-ext:frequency-thz;
-      mandatory true;
-      description
-        "The upper frequency boundary of the
-        frequency range.";
-    }
-  }
 
   grouping amplifier-params {
     description "describes parameters for an amplifier";
@@ -434,7 +363,7 @@ module ietf-optical-impairment-topology {
             description
               "The frequency range amplified by the amplifier
               element.";
-            uses frequency-range;
+            uses l0-types-ext:frequency-range;
           }
           leaf actual-gain {
             type decimal64 {
@@ -935,7 +864,7 @@ module ietf-optical-impairment-topology {
     }
     leaf equalization-mode{
       type identityref {
-        base type-power-mode;
+        base l0-types-ext:type-power-mode;
       }
       mandatory true;
       description "equalization mode";
@@ -1226,7 +1155,7 @@ Concentratedloss)";
               description
                 "The frequency range for which these optical
                 impairments apply.";
-              uses frequency-range;
+              uses l0-types-ext:frequency-range;
             }
             uses roadm-express-path;
           } 
@@ -1240,7 +1169,7 @@ Concentratedloss)";
               description
                 "The frequency range for which these optical
                 impairments apply.";
-              uses frequency-range;
+              uses l0-types-ext:frequency-range;
             }
             uses roadm-add-path; 
           }
@@ -1254,7 +1183,7 @@ Concentratedloss)";
               description
                 "The frequency range for which these optical
                 impairments apply.";
-              uses frequency-range;
+              uses l0-types-ext:frequency-range;
             }
             uses roadm-drop-path; 
           }
