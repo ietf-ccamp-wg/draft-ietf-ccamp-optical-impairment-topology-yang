@@ -339,6 +339,7 @@ module ietf-optical-impairment-topology {
     container amplifier {
       description
         "amplifier type, operatonal parameters are described.";
+      uses tet:geolocation-container ;
       leaf type-variety {
         type string ;
         mandatory true ;
