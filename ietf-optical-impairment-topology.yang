@@ -78,6 +78,45 @@ module ietf-optical-impairment-topology {
 
   // grouping
 
+  grouping cd-pmd-penalty {
+    description "entries of table; triplet chromatic
+    dispersion, polarization mode dispersion and
+    associated penalty";
+
+    leaf chromatic-dispersion {
+      type decimal64 {
+      fraction-digits 2;
+      range "0..max";
+      }
+      units "ps/nm";
+      mandatory true;
+      config false;
+      description "chromatic dispersion";
+      }
+
+    leaf polarization-mode-dispersion {
+      type decimal64 {
+      fraction-digits 2;
+      range "0..max";
+      }
+      units "ps";
+      mandatory true;
+      config false;
+      description "Polarization mode dispersion";
+      }
+
+    leaf penalty {
+      type decimal64 {
+      fraction-digits 2;
+      range "0..max";
+      }
+      units "dB";
+      mandatory true;
+      config false;
+      description "Associated penalty on the receiver";    }
+
+  }
+
   grouping transponder-attributes {
     description "Configuration of an optical transponder";
 
@@ -160,6 +199,38 @@ module ietf-optical-impairment-topology {
          is able to correct errors";
     }
 
+    leaf max-chromatic-dispersion {
+      type decimal64 {
+      fraction-digits 2;
+      range "0..max";
+      }
+      units "ps/nm";
+      mandatory true;
+      config false;
+      description "Maximum acceptable accumulated chromatic dispersion
+        on the receiver";
+      }
+
+    leaf max-polarization-mode-dispersion {
+      type decimal64 {
+      fraction-digits 2;
+      range "0..max";
+      }
+      units "ps";
+      mandatory true;
+      config false;
+      description "Maximum acceptable accumulated polarization mode dispersion
+        on the receiver";
+      }
+
+    list chromatic-and-polarization-dispersion-penalty {
+      description
+          "Optional penalty associated with a given accumulated CD and PMD.
+          This list of triplet cd, pmd, penalty can be used to sample 
+          the function penalty = f(CD, PMD).";
+      config false;
+      uses cd-pmd-penalty ;
+     }
   }
 
   grouping sliceable-transponder-attributes {
