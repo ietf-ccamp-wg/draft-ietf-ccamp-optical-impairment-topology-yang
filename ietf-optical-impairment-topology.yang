@@ -68,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-04-08 {
+  revision 2021-06-14 {
     description
       "Initial Version";
     reference
@@ -1150,7 +1150,10 @@ Concentratedloss)";
           list roadm-express-path {
             description
               "The list of optical impairments on a ROADM express
-              path for different frequency ranges.";
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
             container frequency-range {
               description
                 "The frequency range for which these optical
@@ -1164,7 +1167,10 @@ Concentratedloss)";
           list roadm-add-path {
             description
               "The list of optical impairments on a ROADM add
-              path for different frequency ranges.";
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
             container frequency-range {
               description
                 "The frequency range for which these optical
@@ -1178,7 +1184,10 @@ Concentratedloss)";
           list roadm-drop-path {
             description
               "The list of optical impairments on a ROADM add
-              path for different frequency ranges.";
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
             container frequency-range {
               description
                 "The frequency range for which these optical
