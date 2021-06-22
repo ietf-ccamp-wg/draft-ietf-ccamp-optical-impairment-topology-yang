@@ -9,16 +9,17 @@ module: ietf-optical-impairment-topology
        +--ro equalization-mode                       identityref
        +--ro (power-param)?
        |  +--:(channel-power)
-       |  |  +--ro nominal-channel-power?            decimal64
+       |  |  +--ro nominal-carrier-power?            decimal64
        |  +--:(power-spectral-density)
        |     +--ro nominal-power-spectral-density?   decimal64
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n      l0-types:flexi-n
-       |     +--ro flexi-m?     l0-types:flexi-m
-       |     +--ro OTSiG-ref?   leafref
-       |     +--ro OTSi-ref?    leafref
+       |     +--ro flexi-n        l0-types:flexi-n
+       |     +--ro flexi-m?       l0-types:flexi-m
+       |     +--ro OTSiG-ref?     leafref
+       |     +--ro OTSi-ref?      leafref
+       |     +--ro delta-power?   decimal64
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
           +--ro oms-element-uid?          string
@@ -31,10 +32,8 @@ module: ietf-optical-impairment-topology
              |           +--ro name?
              |           |       string
              |           +--ro frequency-range
-             |           |  +--ro lower-frequency?
-             |           |  |       l0-types-ext:frequency-thz
-             |           |  +--ro upper-frequency?
-             |           |          l0-types-ext:frequency-thz
+             |           |  +--ro lower-frequency    frequency-thz
+             |           |  +--ro upper-frequency    frequency-thz
              |           +--ro actual-gain
              |           |       decimal64
              |           +--ro tilt-target
@@ -45,7 +44,7 @@ module: ietf-optical-impairment-topology
              |           |       decimal64
              |           +--ro (power-param)?
              |              +--:(channel-power)
-             |              |  +--ro nominal-channel-power?
+             |              |  +--ro nominal-carrier-power?
              |              |          decimal64
              |              +--:(power-spectral-density)
              |                 +--ro nominal-power-spectral-density?
@@ -124,8 +123,11 @@ module: ietf-optical-impairment-topology
                          |          decimal64
                          +--ro max-diff-group-delay?
                          |       int32
-                         +--ro max-polarization-dependent-loss?
-                         |       decimal64
+                         +--ro max-polarization-dependent-loss-penalty* []
+                         |  +--ro max-polarization-dependent-loss
+                         |  |       decimal64
+                         |  +--ro penalty
+                         |          uint8
                          +--ro available-modulation-type?
                          |       identityref
                          +--ro OTSi-carrier-bandwidth?
@@ -136,6 +138,12 @@ module: ietf-optical-impairment-topology
                          |       int32
                          +--ro available-baud-rate?
                          |       uint32
+                         +--ro nyquist-spacing-factor?
+                         |       decimal64
+                         +--ro roll-off?
+                         |       decimal64
+                         +--ro xtalk-penalty?
+                         |       int32
                          +--ro available-fec-type?
                          |       identityref
                          +--ro fec-code-rate?
@@ -168,14 +176,20 @@ module: ietf-optical-impairment-topology
        +--ro roadm-path-impairments-id    uint32
        +--ro (impairment-type)?
           +--:(roadm-express-path)
-          |  +--ro roadm-express-path
+          |  +--ro roadm-express-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency    frequency-thz
+          |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
           |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           +--:(roadm-add-path)
-          |  +--ro roadm-add-path
+          |  +--ro roadm-add-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency    frequency-thz
+          |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
@@ -185,7 +199,10 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-osnr?               l0-types-ext:snr
           |     +--ro roadm-noise-figure?       decimal64
           +--:(roadm-drop-path)
-             +--ro roadm-drop-path
+             +--ro roadm-drop-path* []
+                +--ro frequency-range
+                |  +--ro lower-frequency    frequency-thz
+                |  +--ro upper-frequency    frequency-thz
                 +--ro roadm-pmd?                decimal64
                 +--ro roadm-cd?                 decimal64
                 +--ro roadm-pdl?                decimal64
