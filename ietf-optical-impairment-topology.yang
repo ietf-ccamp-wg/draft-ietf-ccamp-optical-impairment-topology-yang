@@ -938,7 +938,7 @@ module ietf-optical-impairment-topology {
  // this grouping add both n.m values
         uses l0-types:flexi-grid-frequency-slot; 
 
-        leaf OTSiG-ref {
+        leaf otsi-group-ref {
           type leafref {
             path "/nw:networks/nw:network/nw:node/tet:te" +
                 "/tet:tunnel-termination-point" +
@@ -950,12 +950,12 @@ module ietf-optical-impairment-topology {
             OTSiG carried by this media channel 
             that reports the transient stat";
         }
-        leaf OTSi-ref {
+        leaf otsi-ref {
           type leafref {
             path "/nw:networks/nw:network/nw:node/tet:te" +
                 "/tet:tunnel-termination-point/"  
                +"otsi-group[otsi-group-id=current()"
-               +"/../OTSiG-ref]/"
+               +"/../otsi-group-ref]/"
                + "otsi/otsi-carrier-id" ;
           }
           description

@@ -110,11 +110,11 @@ module: ietf-optical-impairment-topology
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n        l0-types:flexi-n
-       |     +--ro flexi-m?       l0-types:flexi-m
-       |     +--ro OTSiG-ref?     leafref
-       |     +--ro OTSi-ref?      leafref
-       |     +--ro delta-power?   decimal64
+       |     +--ro flexi-n           l0-types:flexi-n
+       |     +--ro flexi-m?          l0-types:flexi-m
+       |     +--ro otsi-group-ref?   leafref
+       |     +--ro otsi-ref?         leafref
+       |     +--ro delta-power?      decimal64
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
           +--ro oms-element-uid?          string
