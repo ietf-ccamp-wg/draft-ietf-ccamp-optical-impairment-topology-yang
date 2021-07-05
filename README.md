@@ -1,7 +1,6 @@
 # [A Yang Data Model for Optical Impairment-aware Topology](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
 This is the working area for the [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG Internet-Draft, "A Yang Data Model for Optical Impairment-aware Topology".
 
-
 This technology-specific topology YANG model augments/uses:
 * [RFC8345](https://tools.ietf.org/html/rfc8345): A YANG Data Model for Network Topologies (module ietf-network-topology)
 * [draft-ietf-teas-yang-te-types](https://datatracker.ietf.org/doc/draft-ietf-teas-yang-te-types/): Traffic Engineering Common YANG Types (module ietf-te-types)
