@@ -867,24 +867,34 @@ OTS Media Link represents a media link:
   <section title="3R Regenerators" anchor="sect-2.6">
   
   <t>
-   Optical transponders belonging to a ROADM node are usually used to terminate
-   a layer 0 tunnel (layer 0 service) in the WDM layer. If, however, no optical
-   path can be found from the source to the destination that is optically
-   feasible due to the optiocal impairments, a 3R regenerator is needed for
-   regenerating the optical signal in an intermediate node. A functional
-   description of an optical 3R regeneratator can be found in
-   <xref target="G.680"/>, section 7.6. Following this description, a 3R
-   regenearator is considered as layer 0 entity because it only
-   terminates the modulated optical signal and processes the FEC for correcting
-   any bit errors that may be present in the digital signal after the
-   (coherent) demodulation of the optical signal (FEC termination in receive
-   direction and FEC re-creation in transmit direction). Apart from the error
-   correction, there is no processing of the digital signal, i.e., the payload
-   of the signal is not processed and passed transparently from the receiver
-   including the demodulator to the transmitter including the modulator.
-   The end-to-end layer 0 tunnel is subdivided into 2 or more segments between
+   Optical transponders are usually used to terminate a layer 0 tunnel (layer 0
+   service) in the WDM layer. If, however, no optical path can be found from
+   the source transponder to the destination transponder that is optically
+   feasible due to the optical impairments, one or more 3R regenerators are
+   needed for regenerating the optical signal in intermediate nodes.
+   The term "3R" regenerator means: reamplification, reshaping, retiming.
+   As described in <xref target="G.807"/>, Appendix IV, a 3R regenerator
+   terminates the OTSi and generates a new OTSi. Depending on the 3R
+   regenerator capabilities, it can provide functions such as carrier frequency
+   translation (carrier-frequency), changes in the modulation scheme
+   (modulation-type) and FEC (FEC-type) while passing through the remaining
+   OTSi payload (client signal and related overhead).
+  </t>
+
+  <t>
+   The 3R regeneartion compound function is illustrated in section 10.1 of
+   <xref target="G.798.1"/>, and sections 10.3 and 10.4 provide examples of a
+   ROADM architecture and a photonic cross-connect architecture including 3R
+   regenerators.
+   Based on the provided functionality, 3R regenerators are considered as
+   topological layer 0 entities because they are needed for layer 0 path
+   computation in case the optical impairments make it impossible to find an
+   optically feasible end-to-end path from the source transponder to the
+   destination transponder without 3R regeneration.
+   When an end-to-end path includes one or more 3R regenerators, the
+   corresponding layer 0 tunnel is subdivided into 2 or more segments between
    the source transponder and the destination transponder terminating the
-   layer 0 tunnel when the signal passes one or more 3R regenerators.
+   layer 0 tunnel.
   </t>
   
   <t>
@@ -3053,14 +3063,14 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T" value="Recommendation G.698.2"/>
   </reference>
 
-  <reference anchor="G.680">
+  <reference anchor="G.798.1">
    <front>
-   <title>Physical transfer functions of optical network elements</title>
+   <title>Types and characteristics of optical transport network equipment</title>
    <author>
    </author>
-   <date month="July" year="2007"/>
+   <date month="January" year="2013"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.680"/>
+   <seriesInfo name="ITU-T" value="Recommendation G.798.1"/>
   </reference>
 
   </references>
