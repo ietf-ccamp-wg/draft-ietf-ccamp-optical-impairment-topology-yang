@@ -2,82 +2,14 @@ module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
-  augment /nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes:
-    +--ro OMS-attributes
-       +--ro generalized-snr?                        l0-types-ext:snr
-       +--ro equalization-mode                       identityref
-       +--ro (power-param)?
-       |  +--:(channel-power)
-       |  |  +--ro nominal-carrier-power?            decimal64
-       |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?   decimal64
-       +--ro media-channel-group* [i]
-       |  +--ro i                 int16
-       |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n        l0-types:flexi-n
-       |     +--ro flexi-m?       l0-types:flexi-m
-       |     +--ro OTSiG-ref?     leafref
-       |     +--ro OTSi-ref?      leafref
-       |     +--ro delta-power?   decimal64
-       +--ro OMS-elements* [elt-index]
-          +--ro elt-index                 uint16
-          +--ro oms-element-uid?          string
-          +--ro (element)
-             +--:(amplifier)
-             |  +--ro amplifier
-             |     +--ro type-variety    string
-             |     +--ro operational
-             |        +--ro amplifier-element* []
-             |           +--ro name?
-             |           |       string
-             |           +--ro frequency-range
-             |           |  +--ro lower-frequency    frequency-thz
-             |           |  +--ro upper-frequency    frequency-thz
-             |           +--ro actual-gain
-             |           |       decimal64
-             |           +--ro tilt-target
-             |           |       decimal64
-             |           +--ro out-voa
-             |           |       decimal64
-             |           +--ro in-voa
-             |           |       decimal64
-             |           +--ro (power-param)?
-             |              +--:(channel-power)
-             |              |  +--ro nominal-carrier-power?
-             |              |          decimal64
-             |              +--:(power-spectral-density)
-             |                 +--ro nominal-power-spectral-density?
-             |                         decimal64
-             +--:(fiber)
-             |  +--ro fiber
-             |     +--ro type-variety    string
-             |     +--ro length          decimal64
-             |     +--ro loss-coef       decimal64
-             |     +--ro total-loss      decimal64
-             |     +--ro pmd?            decimal64
-             |     +--ro conn-in?        decimal64
-             |     +--ro conn-out?       decimal64
-             +--:(concentratedloss)
-                +--ro concentratedloss
-                   +--ro loss    decimal64
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:tunnel-termination-point:
-    +--ro otsi-group* [otsi-group-id]
-    |  +--ro otsi-group-id    int16
-    |  +--ro otsi* [otsi-carrier-id]
-    |     +--ro otsi-carrier-id           int16
-    |     +--ro transponder-ref?          leafref
-    |     +--ro transceiver-ref?          leafref
-    |     +--ro configured-mode?          leafref
-    |     +--ro OTSi-carrier-frequency?   frequency-thz
-    |     +--ro tx-channel-power?         dbm-t
-    |     +--ro rx-channel-power?         dbm-t
-    |     +--ro rx-total-power?           dbm-t
+  augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
        +--ro transponder-id    uint32
        +--ro transceiver* [transceiver-id]
-          +--ro transceiver-id     uint32
+          +--ro transceiver-id                   uint32
+          +--ro termination-type-capabilities?   enumeration
+          +--ro supported-3r-mode?               enumeration
+          +--ro configured-termination-type?     enumeration
           +--ro supported-modes
              +--ro supported-mode* [mode-id]
                 +--ro mode-id                      string
@@ -130,7 +62,7 @@ module: ietf-optical-impairment-topology
                          |          uint8
                          +--ro available-modulation-type?
                          |       identityref
-                         +--ro OTSi-carrier-bandwidth?
+                         +--ro otsi-carrier-bandwidth?
                          |       frequency-ghz
                          +--ro min-OSNR?
                          |       snr
@@ -166,6 +98,83 @@ module: ietf-optical-impairment-topology
                          |       dbm-t
                          +--ro rx-total-power-max?
                                  dbm-t
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes:
+    +--ro OMS-attributes
+       +--ro generalized-snr?                        l0-types-ext:snr
+       +--ro equalization-mode                       identityref
+       +--ro (power-param)?
+       |  +--:(channel-power)
+       |  |  +--ro nominal-carrier-power?            decimal64
+       |  +--:(power-spectral-density)
+       |     +--ro nominal-power-spectral-density?   decimal64
+       +--ro media-channel-group* [i]
+       |  +--ro i                 int16
+       |  +--ro media-channels* [flexi-n]
+       |     +--ro flexi-n           l0-types:flexi-n
+       |     +--ro flexi-m?          l0-types:flexi-m
+       |     +--ro otsi-group-ref?   leafref
+       |     +--ro otsi-ref?         leafref
+       |     +--ro delta-power?      decimal64
+       +--ro OMS-elements* [elt-index]
+          +--ro elt-index                 uint16
+          +--ro oms-element-uid?          string
+          +--ro (element)
+             +--:(amplifier)
+             |  +--ro amplifier
+             |     +--ro type-variety    string
+             |     +--ro operational
+             |        +--ro amplifier-element* []
+             |           +--ro name?
+             |           |       string
+             |           +--ro frequency-range
+             |           |  +--ro lower-frequency    frequency-thz
+             |           |  +--ro upper-frequency    frequency-thz
+             |           +--ro actual-gain
+             |           |       decimal64
+             |           +--ro tilt-target
+             |           |       decimal64
+             |           +--ro out-voa
+             |           |       decimal64
+             |           +--ro in-voa
+             |           |       decimal64
+             |           +--ro (power-param)?
+             |              +--:(channel-power)
+             |              |  +--ro nominal-carrier-power?
+             |              |          decimal64
+             |              +--:(power-spectral-density)
+             |                 +--ro nominal-power-spectral-density?
+             |                         decimal64
+             +--:(fiber)
+             |  +--ro fiber
+             |     +--ro type-variety    string
+             |     +--ro length          decimal64
+             |     +--ro loss-coef       decimal64
+             |     +--ro total-loss      decimal64
+             |     +--ro pmd?            decimal64
+             |     +--ro conn-in?        decimal64
+             |     +--ro conn-out?       decimal64
+             +--:(concentratedloss)
+                +--ro concentratedloss
+                   +--ro loss    decimal64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point:
+    +--ro otsi-group* [otsi-group-id]
+    |  +--ro otsi-group-id    int16
+    |  +--ro otsi* [otsi-carrier-id]
+    |     +--ro otsi-carrier-id           int16
+    |     +--ro transponder-ref?
+    |     |       -> ../../../../../transponder/transponder-id
+    |     +--ro transceiver-ref?          leafref
+    |     +--ro configured-mode?          leafref
+    |     +--ro otsi-carrier-frequency?   frequency-thz
+    |     +--ro tx-channel-power?         dbm-t
+    |     +--ro rx-channel-power?         dbm-t
+    |     +--ro rx-total-power?           dbm-t
+    +--ro transceiver* []
+       +--ro transponder-ref?
+       |       -> ../../../../transponder/transponder-id
+       +--ro tranceiver-ref?    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
