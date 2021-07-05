@@ -6,9 +6,10 @@ module: ietf-optical-impairment-topology
     +--ro transponder* [transponder-id]
        +--ro transponder-id    uint32
        +--ro transceiver* [transceiver-id]
-          +--ro transceiver-id                uint32
-          +--ro supported-termination-type?   enumeration
-          +--ro supported-3r-mode?            enumeration
+          +--ro transceiver-id                   uint32
+          +--ro termination-type-capabilities?   enumeration
+          +--ro supported-3r-mode?               enumeration
+          +--ro configured-termination-type?     enumeration
           +--ro supported-modes
              +--ro supported-mode* [mode-id]
                 +--ro mode-id                      string

@@ -68,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-06-15 {
+  revision 2021-07-05 {
     description
       "Initial Version";
     reference
@@ -269,26 +269,26 @@ module ietf-optical-impairment-topology {
       "Gross bit rate";
   }
 
-    leaf BER {
+  leaf BER {
     type decimal64 {
       fraction-digits 18;
-            range "0..max";
+      range "0..max";
     }
     config false;
-      description
+    description
       "BER (Bit Error Rate)";
   }
 
-    leaf ch-input-power {
-          type decimal64 {
-           fraction-digits 2;
-        }
-        units "dBm";
-        config false;
-        description
-    "Per channel average input power level
-          estimated at the receiver of the link";
-        }
+  leaf ch-input-power {
+    type decimal64 {
+      fraction-digits 2;
+    }
+    units "dBm";
+    config false;
+    description
+      "Per channel average input power level
+      estimated at the receiver of the link";
+  }
 
   leaf ch-pmd {
     type decimal64 {
@@ -872,7 +872,7 @@ module ietf-optical-impairment-topology {
     uses power-param;
   }
 
-  grouping OTSiG {
+  grouping otsi-group {
     description "OTSiG definition , representing client
      digital information stream supported by 1 or more OTSi";
 
@@ -1050,7 +1050,7 @@ Concentratedloss)";
           type uint32;
           description "transceiver identifier";
         }
-        leaf supported-termination-type {
+        leaf termination-type-capabilities {
           type enumeration {
             enum tunnel-only {
               description
@@ -1075,8 +1075,9 @@ Concentratedloss)";
             configuration (or both).";
         }
         leaf supported-3r-mode {
-          when '(../supported-termination-type = "3r-only") or
-                (../supported-termination-type = "3r-or-tunnel")' {
+          when '(../termination-type-capabilities = "3r-only") or
+                (../termination-type-capabilities = "3r-or-tunnel")'
+                {
             description
               "Applies only when the tranceiver supports 3R
               configuration.";
@@ -1093,6 +1094,26 @@ Concentratedloss)";
           }
           description
             "Describes the supported 3R configuration type."; 
+        }
+        leaf configured-termination-type {
+          type enumeration {
+            enum tunnel-termination {
+              description
+                "The transceiver is currently used in an Optical
+                Tunnel termination configuration.";
+            }
+            enum 3r-regeneration {
+              description
+                "The transceiver is currently used in a 3R
+                configuration.";
+            }
+          }
+          description
+            "Describes whether the current configuration of the
+            tranceiver is used in an Optical Tunnel termination
+            configuration or in a 3R configuration.
+            
+            If empty, it means that the transcevier is not used.";
         }
         uses l0-types-ext:transceiver-capabilities;
       } // end of list of transceiver 
@@ -1140,7 +1161,7 @@ Concentratedloss)";
         type int16;
         description "index of otsi-group element";
       }
-      uses OTSiG;
+      uses otsi-group;
     } // list of OTSiG
     list transceiver {
       config false;
