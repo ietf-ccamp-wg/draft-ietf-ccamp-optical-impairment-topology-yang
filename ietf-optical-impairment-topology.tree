@@ -62,7 +62,7 @@ module: ietf-optical-impairment-topology
                          |          uint8
                          +--ro available-modulation-type?
                          |       identityref
-                         +--ro OTSi-carrier-bandwidth?
+                         +--ro otsi-carrier-bandwidth?
                          |       frequency-ghz
                          +--ro min-OSNR?
                          |       snr
@@ -167,7 +167,7 @@ module: ietf-optical-impairment-topology
     |     |       -> ../../../../../transponder/transponder-id
     |     +--ro transceiver-ref?          leafref
     |     +--ro configured-mode?          leafref
-    |     +--ro OTSi-carrier-frequency?   frequency-thz
+    |     +--ro otsi-carrier-frequency?   frequency-thz
     |     +--ro tx-channel-power?         dbm-t
     |     +--ro rx-channel-power?         dbm-t
     |     +--ro rx-total-power?           dbm-t
