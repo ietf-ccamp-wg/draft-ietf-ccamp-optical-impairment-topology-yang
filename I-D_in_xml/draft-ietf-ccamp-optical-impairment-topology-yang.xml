@@ -48,8 +48,8 @@
   </author>
   
   <author initials="V." surname="Lopez" fullname="Victor Lopez">
-  <organization>Telefonica</organization>
-  <address><email>victor.lopezalvarez@telefonica.com</email>
+  <organization>Nokia</organization>
+  <address><email>Victor.Lopez@nokia.com</email>
   </address>
   </author>
 
@@ -877,8 +877,8 @@ OTS Media Link represents a media link:
    terminates the OTSi and generates a new OTSi. Depending on the 3R
    regenerator capabilities, it can provide functions such as carrier frequency
    translation (carrier-frequency), changes in the modulation scheme
-   (modulation-type) and FEC (FEC-type) while passing through the remaining
-   OTSi payload (client signal and related overhead).
+   (modulation-type) and FEC (FEC-type) while passing through the digital
+   signal except the FEC (the FEC is processed and errors are corrected).
   </t>
 
   <t>
@@ -903,26 +903,82 @@ OTS Media Link represents a media link:
    transponders is used to perform a 3R regeneratator function, two different
    configurations are possible involving the pair of optical transceivers of
    the two optical transponders:
-  </t>   
-  <t><list style="symbols">
-  <t>
-   The two transponders can be operated in a back-to-back configuration where
-   the transceiver of each optical transponder receives and transmits the
-   optical signal from/to the same segment of the end-to-end tunnel. This means
-   that each transceiver is operated in a bi-directional mode.
   </t>
-  <t>
-   The two transponders can be operated in a configuration where each
-   transponder performs the 3R regeneration function in one direction, one
-   in forward direction (from source to destination) and the other in the
-   reverse direction. In this configuration, the transceiver of each optical
-   transponder receives the signal from one segment and transmits the
-   regenerated optical signal into the adjacent segment. This configuration
-   is also called cross-regeneration and each transceiver is operated in an
-   uni-directional mode.
-  </t>
-  </list></t>   
 
+  <t><list style="symbols">
+   <t>
+    The two transponders can be operated in a back-to-back configuration where
+    the transceiver of each optical transponder receives and transmits the
+    optical signal from/to the same segment of the end-to-end tunnel. This means
+    that each transceiver is operated in a bi-directional mode.
+   </t>
+  </list></t> 
+  
+  <figure align="center" title="Back-to-back 3R Regenerator Example" anchor="Figure-x">
+   <artwork><![CDATA[
+
+          Optical Transponder 1        Optical Transponder 2
+        +-----------------------+    +-----------------------+
+        | Transceiver           |    |           Transceiver |
+        |-------------+   +-----|    |-----+   +-------------|
+    --->| Receiver    |---|Sig. |--->|Sig. |---| Transmitter |--->
+        |-------------+   |     |    |     |   +-------------|
+    <---| Transmitter |---|Proc.|<---|Proc.|---|    Receiver |<---
+        |-------------+   +-----|    |-----+   +-------------|
+        |                       |    |                       |
+        +-----------------------+    +-----------------------+
+
+        Sig. Proc. = Signal Processing
+
+]]></artwork>
+  </figure>
+  
+  <t><list style="symbols">
+   <t>
+    The two transponders can be operated in a configuration where each
+    transponder performs the 3R regeneration function in one direction, one
+    in forward direction (from source to destination) and the other in the
+    reverse direction. In this configuration, the transceiver of each optical
+    transponder receives the signal from one segment and transmits the
+    regenerated optical signal into the adjacent segment. This configuration
+    is also called cross-regeneration and each transceiver is operated in an
+    uni-directional mode.
+   </t>
+  </list></t>
+    
+  <figure align="center" title="Cross-3R Regenerator Example" anchor="Figure-y">
+   <artwork><![CDATA[
+
+                    Optical Transponder 1
+               +-----------------------------+
+               | Transceiver                 |
+               |-------------+   +---------+ |
+           --->| Receiver    |---|Sig. --+ | |
+               |-------------+   |       | | |
+           <---| Transmitter |---|Proc.<-+ | |
+               |-------------+   +---------+ |
+               |                             |
+               +-----------------------------+
+                  3R in forward direction
+
+
+                    Optical Transponder 2
+               +-----------------------------+
+               | Transceiver                 |
+               |-------------+   +---------+ |
+           --->| Receiver    |---|Sig. --+ | |
+               |-------------+   |       | | |
+           <---| Transmitter |---|Proc.<-+ | |
+               |-------------+   +---------+ |
+               |                             |
+               +-----------------------------+
+                  3R in reverse direction
+       
+               Sig. Proc. = Signal Processing
+
+]]></artwork>
+  </figure>
+  
   <t>
    Due to the fact that 3R regenerators are composed of an optical transponder
    pair, the capabilitiy whether an optical transponder can be used as a 3R
@@ -939,15 +995,15 @@ OTS Media Link represents a media link:
   </list></t>
 
   <t>
-  The supported-termination-type attribute describes whether the optical
-  transponder can be used as tunnel terminating transponder only, as 3R
-  regenerator only, or whether it can support both functions.
-  The supported-3r-mode attrbute describes the configuration of the
-  transponder pair forming the 3R regeneartor as described above.
+   The supported-termination-type attribute describes whether the optical
+   transponder can be used as tunnel terminating transponder only, as 3R
+   regenerator only, or whether it can support both functions.
+   The supported-3r-mode attrbute describes the configuration of the
+   transponder pair forming the 3R regeneartor as described above.
   </t>
   
   <t>
-  More text to be added here!
+   More text to be added here!
   </t>
 
   </section>
