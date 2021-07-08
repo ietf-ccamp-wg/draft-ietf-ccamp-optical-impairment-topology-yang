@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY RFC6241 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml">
 <!ENTITY RFC6566 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6566.xml">
 <!ENTITY RFC7446 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7446.xml">
@@ -16,6 +17,7 @@
 <!ENTITY RFC8795 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8795.xml">
 <!ENTITY I-D.ietf-ccamp-wson-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-wson-yang.xml">
 <!ENTITY I-D.ietf-ccamp-layer0-types SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-layer0-types.xml">
+<!ENTITY I-D.esdih-ccamp-layer0-types-ext SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-esdih-ccamp-layer0-types-ext.xml">
 <!ENTITY I-D.ietf-ccamp-dwdm-if-param-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml">
 ]>
 <rfc submissionType="IETF" docName="draft-ietf-ccamp-optical-impairment-topology-yang-07" 
@@ -65,7 +67,7 @@
   </address>
   </author>
 
-  <date year="2021" month="July" day="12" />
+  <date year="2021" month="July" day="8" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -213,7 +215,10 @@
    <c>[RFCXXXX]</c>
    <c>layer0-types</c>
    <c>ietf-layer0-types</c>
-   <c><xref target="I-D.ietf-ccamp-layer0-types"/></c>
+   <c><xref target="I-D.ietf-ccamp-layer0-types"/></c> 
+   <c>l0-types-ext</c>
+   <c>ietf-layer0-types-ext</c>
+   <c><xref target="I-D.esdih-ccamp-layer0-types-ext"/></c>
    <c>nw</c>
    <c>ietf-network</c>
    <c><xref target="RFC8345"/></c>
@@ -1331,88 +1336,23 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
 
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
   
+  <t>
+   [Editor's note: tree view below always has to be updated before submitting a new revision!]
+  </t>
+  
   <figure><artwork><![CDATA[
 module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
-  augment /nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes:
-    +--ro OMS-attributes
-       +--ro generalized-snr?                        l0-types-ext:snr
-       +--ro equalization-mode                       identityref
-       +--ro (power-param)?
-       |  +--:(channel-power)
-       |  |  +--ro nominal-channel-power?            decimal64
-       |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?   decimal64
-       +--ro media-channel-group* [i]
-       |  +--ro i                 int16
-       |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n      l0-types:flexi-n
-       |     +--ro flexi-m?     l0-types:flexi-m
-       |     +--ro OTSiG-ref?   leafref
-       |     +--ro OTSi-ref?    leafref
-       +--ro OMS-elements* [elt-index]
-          +--ro elt-index                 uint16
-          +--ro oms-element-uid?          string
-          +--ro (element)
-             +--:(amplifier)
-             |  +--ro amplifier
-             |     +--ro type-variety    string
-             |     +--ro operational
-             |        +--ro amplifier-element* []
-             |           +--ro name?
-             |           |       string
-             |           +--ro frequency-range
-             |           |  +--ro lower-frequency?
-             |           |  |       l0-types-ext:frequency-thz
-             |           |  +--ro upper-frequency?
-             |           |          l0-types-ext:frequency-thz
-             |           +--ro actual-gain
-             |           |       decimal64
-             |           +--ro tilt-target
-             |           |       decimal64
-             |           +--ro out-voa
-             |           |       decimal64
-             |           +--ro in-voa
-             |           |       decimal64
-             |           +--ro (power-param)?
-             |              +--:(channel-power)
-             |              |  +--ro nominal-channel-power?
-             |              |          decimal64
-             |              +--:(power-spectral-density)
-             |                 +--ro nominal-power-spectral-density?
-             |                         decimal64
-             +--:(fiber)
-             |  +--ro fiber
-             |     +--ro type-variety    string
-             |     +--ro length          decimal64
-             |     +--ro loss-coef       decimal64
-             |     +--ro total-loss      decimal64
-             |     +--ro pmd?            decimal64
-             |     +--ro conn-in?        decimal64
-             |     +--ro conn-out?       decimal64
-             +--:(concentratedloss)
-                +--ro concentratedloss
-                   +--ro loss    decimal64
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:tunnel-termination-point:
-    +--ro otsi-group* [otsi-group-id]
-    |  +--ro otsi-group-id    int16
-    |  +--ro otsi* [otsi-carrier-id]
-    |     +--ro otsi-carrier-id           int16
-    |     +--ro transponder-ref?          leafref
-    |     +--ro transceiver-ref?          leafref
-    |     +--ro configured-mode?          leafref
-    |     +--ro OTSi-carrier-frequency?   frequency-thz
-    |     +--ro tx-channel-power?         dbm-t
-    |     +--ro rx-channel-power?         dbm-t
-    |     +--ro rx-total-power?           dbm-t
+  augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
        +--ro transponder-id    uint32
        +--ro transceiver* [transceiver-id]
-          +--ro transceiver-id     uint32
+          +--ro transceiver-id                   uint32
+          +--ro termination-type-capabilities?   enumeration
+          +--ro supported-3r-mode?               enumeration
+          +--ro configured-termination-type?     enumeration
           +--ro supported-modes
              +--ro supported-mode* [mode-id]
                 +--ro mode-id                      string
@@ -1458,11 +1398,14 @@ module: ietf-optical-impairment-topology
                          |          decimal64
                          +--ro max-diff-group-delay?
                          |       int32
-                         +--ro max-polarization-dependent-loss?
-                         |       decimal64
+                         +--ro max-polarization-dependent-loss-penalty* []
+                         |  +--ro max-polarization-dependent-loss
+                         |  |       decimal64
+                         |  +--ro penalty
+                         |          uint8
                          +--ro available-modulation-type?
                          |       identityref
-                         +--ro OTSi-carrier-bandwidth?
+                         +--ro otsi-carrier-bandwidth?
                          |       frequency-ghz
                          +--ro min-OSNR?
                          |       snr
@@ -1470,6 +1413,12 @@ module: ietf-optical-impairment-topology
                          |       int32
                          +--ro available-baud-rate?
                          |       uint32
+                         +--ro nyquist-spacing-factor?
+                         |       decimal64
+                         +--ro roll-off?
+                         |       decimal64
+                         +--ro xtalk-penalty?
+                         |       int32
                          +--ro available-fec-type?
                          |       identityref
                          +--ro fec-code-rate?
@@ -1492,6 +1441,83 @@ module: ietf-optical-impairment-topology
                          |       dbm-t
                          +--ro rx-total-power-max?
                                  dbm-t
+  augment /nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes:
+    +--ro OMS-attributes
+       +--ro generalized-snr?                        l0-types-ext:snr
+       +--ro equalization-mode                       identityref
+       +--ro (power-param)?
+       |  +--:(channel-power)
+       |  |  +--ro nominal-carrier-power?            decimal64
+       |  +--:(power-spectral-density)
+       |     +--ro nominal-power-spectral-density?   decimal64
+       +--ro media-channel-group* [i]
+       |  +--ro i                 int16
+       |  +--ro media-channels* [flexi-n]
+       |     +--ro flexi-n           l0-types:flexi-n
+       |     +--ro flexi-m?          l0-types:flexi-m
+       |     +--ro otsi-group-ref?   leafref
+       |     +--ro otsi-ref?         leafref
+       |     +--ro delta-power?      decimal64
+       +--ro OMS-elements* [elt-index]
+          +--ro elt-index                 uint16
+          +--ro oms-element-uid?          string
+          +--ro (element)
+             +--:(amplifier)
+             |  +--ro amplifier
+             |     +--ro type-variety    string
+             |     +--ro operational
+             |        +--ro amplifier-element* []
+             |           +--ro name?
+             |           |       string
+             |           +--ro frequency-range
+             |           |  +--ro lower-frequency    frequency-thz
+             |           |  +--ro upper-frequency    frequency-thz
+             |           +--ro actual-gain
+             |           |       decimal64
+             |           +--ro tilt-target
+             |           |       decimal64
+             |           +--ro out-voa
+             |           |       decimal64
+             |           +--ro in-voa
+             |           |       decimal64
+             |           +--ro (power-param)?
+             |              +--:(channel-power)
+             |              |  +--ro nominal-carrier-power?
+             |              |          decimal64
+             |              +--:(power-spectral-density)
+             |                 +--ro nominal-power-spectral-density?
+             |                         decimal64
+             +--:(fiber)
+             |  +--ro fiber
+             |     +--ro type-variety    string
+             |     +--ro length          decimal64
+             |     +--ro loss-coef       decimal64
+             |     +--ro total-loss      decimal64
+             |     +--ro pmd?            decimal64
+             |     +--ro conn-in?        decimal64
+             |     +--ro conn-out?       decimal64
+             +--:(concentratedloss)
+                +--ro concentratedloss
+                   +--ro loss    decimal64
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:tunnel-termination-point:
+    +--ro otsi-group* [otsi-group-id]
+    |  +--ro otsi-group-id    int16
+    |  +--ro otsi* [otsi-carrier-id]
+    |     +--ro otsi-carrier-id           int16
+    |     +--ro transponder-ref?
+    |     |       -> ../../../../../transponder/transponder-id
+    |     +--ro transceiver-ref?          leafref
+    |     +--ro configured-mode?          leafref
+    |     +--ro otsi-carrier-frequency?   frequency-thz
+    |     +--ro tx-channel-power?         dbm-t
+    |     +--ro rx-channel-power?         dbm-t
+    |     +--ro rx-total-power?           dbm-t
+    +--ro transceiver* []
+       +--ro transponder-ref?
+       |       -> ../../../../transponder/transponder-id
+       +--ro tranceiver-ref?    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
@@ -1502,14 +1528,20 @@ module: ietf-optical-impairment-topology
        +--ro roadm-path-impairments-id    uint32
        +--ro (impairment-type)?
           +--:(roadm-express-path)
-          |  +--ro roadm-express-path
+          |  +--ro roadm-express-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency    frequency-thz
+          |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
           |     +--ro roadm-inband-crosstalk?   decimal64
           |     +--ro roadm-maxloss?            decimal64
           +--:(roadm-add-path)
-          |  +--ro roadm-add-path
+          |  +--ro roadm-add-path* []
+          |     +--ro frequency-range
+          |     |  +--ro lower-frequency    frequency-thz
+          |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                decimal64
           |     +--ro roadm-cd?                 decimal64
           |     +--ro roadm-pdl?                decimal64
@@ -1519,7 +1551,10 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-osnr?               l0-types-ext:snr
           |     +--ro roadm-noise-figure?       decimal64
           +--:(roadm-drop-path)
-             +--ro roadm-drop-path
+             +--ro roadm-drop-path* []
+                +--ro frequency-range
+                |  +--ro lower-frequency    frequency-thz
+                |  +--ro upper-frequency    frequency-thz
                 +--ro roadm-pmd?                decimal64
                 +--ro roadm-cd?                 decimal64
                 +--ro roadm-pdl?                decimal64
@@ -1558,16 +1593,15 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
-]]></artwork>
-  </figure>
-
+]]>
+  </artwork></figure>
 
   </section>
 
   <section title="Optical Impairment Topology YANG Model" anchor="sect-4">
   
   <t>
-   [Editor's note: YANG code below may have to be updated before submission!]
+   [Editor's note: YANG code below always has to be updated before submitting a new revision!]
   </t>
   
   <figure><artwork><![CDATA[
@@ -1642,7 +1676,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-02-16 {
+  revision 2021-07-05 {
     description
       "Initial Version";
     reference
@@ -1755,7 +1789,7 @@ module ietf-optical-impairment-topology {
     description
     "optical link (fiber) attributes with impairment data";
     leaf fiber-type {
-      type fiber-type;
+      type l0-types-ext:fiber-type;
       config false;
       description "fiber-type";
     }
@@ -1843,26 +1877,26 @@ module ietf-optical-impairment-topology {
       "Gross bit rate";
   }
 
-    leaf BER {
+  leaf BER {
     type decimal64 {
       fraction-digits 18;
-            range "0..max";
+      range "0..max";
     }
     config false;
-      description
+    description
       "BER (Bit Error Rate)";
   }
 
-    leaf ch-input-power {
-          type decimal64 {
-           fraction-digits 2;
-        }
-        units "dBm";
-        config false;
-        description
-    "Per channel average input power level
-          estimated at the receiver of the link";
-        }
+  leaf ch-input-power {
+    type decimal64 {
+      fraction-digits 2;
+    }
+    units "dBm";
+    config false;
+    description
+      "Per channel average input power level
+      estimated at the receiver of the link";
+  }
 
   leaf ch-pmd {
     type decimal64 {
@@ -1905,64 +1939,12 @@ module ietf-optical-impairment-topology {
   }
 
   /*
-   * Identities
-   */
-
-  identity type-power-mode {
-    description
-      "power equalization mode used within the 
-       OMS and its elements";
-  }
-
-  identity power-spectral-density {
-    base type-power-mode;
-    description
-      "all elements must use power spectral density (W/Hz)";
-  }
-
-  identity channel-power {
-    base type-power-mode;
-    description
-      "all elements must use power (dBm)";
-  }
-
-  /*
-   * Typedefs
-   */
-
-  typedef fiber-type {
-    type enumeration {
-      enum G.652 {
-      description "G.652 Standard Singlemode Fiber";                 
-      }
-      enum G.654 {
-        description "G.654 Cutoff Shifted Fiber";
-      }
-      enum G.653 {
-        description "G.653 Dispersion Shifted Fiber";
-      }
-      enum G.655 {
-        description "G.655 Non-Zero Dispersion Shifted Fiber";
-      }
-      enum G.656 {
-        description "G.656 Non-Zero Dispersion for Wideband
-               Optical Transport";
-      }
-      enum G.657 {
-        description "G.657 Bend-Insensitive Fiber";
-      }
-    }
-    description
-      "ITU-T based fiber-types";
-  }
-
-  /*
    * Groupings
    */
 
   grouping amplifier-params {
     description "describes parameters for an amplifier";
-    container amplifier{
+    container amplifier {
       description
         "amplifier type, operatonal parameters are described.";
       leaf type-variety {
@@ -1989,18 +1971,7 @@ module ietf-optical-impairment-topology {
             description
               "The frequency range amplified by the amplifier
               element.";
-            leaf lower-frequency {
-              type l0-types-ext:frequency-thz;
-              description
-                "The lower frequency boundary of the
-                frequency range.";
-            }
-            leaf upper-frequency {
-              type l0-types-ext:frequency-thz;
-              description
-                "The upper frequency boundary of the
-                frequency range.";
-            }
+            uses l0-types-ext:frequency-range;
           }
           leaf actual-gain {
             type decimal64 {
@@ -2101,357 +2072,341 @@ module ietf-optical-impairment-topology {
   }
 
   grouping roadm-express-path {
-    description "roadm express path optical impairments";
-
-    container roadm-express-path {
-      description "roadm parameters per express path";
-     
-      leaf roadm-pmd {
-        type decimal64 {
-          fraction-digits 8;
-          range "0..max";
-        }
-        units "ps/(km)^0.5"; 
-        description 
-          "Polarization Mode Dispersion";
+    description
+      "The optical impairments of a ROADM express path.";
+    leaf roadm-pmd {
+      type decimal64 {
+        fraction-digits 8;
+        range "0..max";
       }
-      leaf roadm-cd {
-        type decimal64 {
-          fraction-digits 5;
-        }
-        units "ps/nm";
-        description "Chromatic Dispersion";
-      }            
-      leaf roadm-pdl {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description "Polarization dependent loss";        
-      }      
-      leaf roadm-inband-crosstalk {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB;
-        description
-          "In-band crosstalk, or coherent crosstalk, can occur in
-           components that can have multiple same wavelength inputs
-           with the inputs either routed to different output ports,
-           or all but 1 blocked";
+      units "ps/(km)^0.5"; 
+      description 
+        "Polarization Mode Dispersion";
+    }
+    leaf roadm-cd {
+      type decimal64 {
+        fraction-digits 5;
       }
-      leaf roadm-maxloss {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB;
-        description
-          "This is the maximum expected add path loss from the 
-           ROADM ingress to the ROADM egress 
-           assuming no additional add path loss is added";
+      units "ps/nm";
+      description "Chromatic Dispersion";
+    }            
+    leaf roadm-pdl {
+      type decimal64 {
+        fraction-digits 2;
       }
+      units dB ;
+      description "Polarization dependent loss";        
+    }      
+    leaf roadm-inband-crosstalk {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units dB;
+      description
+        "In-band crosstalk, or coherent crosstalk, can occur in
+          components that can have multiple same wavelength inputs
+          with the inputs either routed to different output ports,
+          or all but 1 blocked";
+    }
+    leaf roadm-maxloss {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units dB;
+      description
+        "This is the maximum expected add path loss from the 
+          ROADM ingress to the ROADM egress 
+          assuming no additional add path loss is added";
     }
   }
                                                                
   grouping roadm-add-path {
-    description "roadm add block path optical impairments";
-
-    container roadm-add-path {
-      description "roadm optical impairment parameters 
-      per add path";
-      
-      leaf roadm-pmd {
-        type decimal64 {
-          fraction-digits 8;
-          range "0..max";
-        }
-        units "ps"; 
-        description 
-          "Polarization Mode Dispersion";
+    description "The optical impairments of a ROADM add path.";   
+    leaf roadm-pmd {
+      type decimal64 {
+        fraction-digits 8;
+        range "0..max";
       }
-      leaf roadm-cd {
-        type decimal64 {
-          fraction-digits 5;
-        }
-        units "ps/nm"; 
-        description "Cromatic Dispersion";
-      }            
-      leaf roadm-pdl {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description "Polarization dependent loss";      
-      }      
-      leaf roadm-inband-crosstalk {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description
-          "In-band crosstalk, or coherent crosstalk, 
-           can occur in components that can have multiple same
-           wavelength inputs,with the inputs either 
-           routed to different output ports,
-           or all but 1 blocked.
-           In the case of add path it is the total 
-           of the add block
-           + egress WSS crosstalk contributions.";
+      units "ps"; 
+      description 
+        "Polarization Mode Dispersion";
+    }
+    leaf roadm-cd {
+      type decimal64 {
+        fraction-digits 5;
       }
-      leaf roadm-maxloss {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description 
-          "This is the maximum expected add path loss from 
-           the add/drop port input to the ROADM egress, 
-           assuming no additional add path loss is added.  
-           This is used to establish the minimum required
-           transponder output power required 
-           to hit the ROADM egress target power 
-           levels and preventing 
-           to hit the WSS attenuation limits.
-           If the add path contains an internal amplifier 
-           this loss value should be based 
-           on worst case expected amplifier gain due to
-           ripple or gain uncertainty";        
+      units "ps/nm"; 
+      description "Cromatic Dispersion";
+    }            
+    leaf roadm-pdl {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-pmax {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dBm ;
-        description 
-          "This is the maximum (per carrier) power level 
-           permitted at the add block input ports,
-           that can be handled by the ROADM node. 
-           This may reflect either add amplifier power 
-           contraints or WSS adjustment limits.
-           Higher power transponders would need to have 
-           their launch power reduced 
-           to this value or lower";
+      units dB ;
+      description "Polarization dependent loss";      
+    }      
+    leaf roadm-inband-crosstalk {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-osnr {
-        type l0-types-ext:snr; 
-        description 
-          "Optical Signal-to-Noise Ratio (OSNR).
-           If the add path contains the ability to adjust the 
-           carrier power levels into an add path amplifier 
-           (if present) to a target value,
-           this reflects the OSNR contribution of the
-           add amplifier assuming this target value is obtained.
-           The worst case OSNR based on the input power and 
-           NF calculation method, and this value, should be used
-           (if both are defined).";
+      units dB ;
+      description
+        "In-band crosstalk, or coherent crosstalk, 
+          can occur in components that can have multiple same
+          wavelength inputs,with the inputs either 
+          routed to different output ports,
+          or all but 1 blocked.
+          In the case of add path it is the total 
+          of the add block
+          + egress WSS crosstalk contributions.";
+    }
+    leaf roadm-maxloss {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-noise-figure {
-        type decimal64 {
-          fraction-digits 5;
-        }
-        units "dB"; 
-        description 
-          "Noise Figure. If the add path contains an amplifier, 
-           this is the noise figure of that amplifier inferred
-           to the add port.
-           This permits add path OSNR calculation based 
-           on the input power levels to the add block
-           without knowing the ROADM path losses to 
-           the add amplifier.";
+      units dB ;
+      description 
+        "This is the maximum expected add path loss from 
+          the add/drop port input to the ROADM egress, 
+          assuming no additional add path loss is added.  
+          This is used to establish the minimum required
+          transponder output power required 
+          to hit the ROADM egress target power 
+          levels and preventing 
+          to hit the WSS attenuation limits.
+          If the add path contains an internal amplifier 
+          this loss value should be based 
+          on worst case expected amplifier gain due to
+          ripple or gain uncertainty";        
+    }
+    leaf roadm-pmax {
+      type decimal64 {
+        fraction-digits 2;
       }
+      units dBm ;
+      description 
+        "This is the maximum (per carrier) power level 
+          permitted at the add block input ports,
+          that can be handled by the ROADM node. 
+          This may reflect either add amplifier power 
+          contraints or WSS adjustment limits.
+          Higher power transponders would need to have 
+          their launch power reduced 
+          to this value or lower";
+    }
+    leaf roadm-osnr {
+      type l0-types-ext:snr; 
+      description 
+        "Optical Signal-to-Noise Ratio (OSNR).
+          If the add path contains the ability to adjust the 
+          carrier power levels into an add path amplifier 
+          (if present) to a target value,
+          this reflects the OSNR contribution of the
+          add amplifier assuming this target value is obtained.
+          The worst case OSNR based on the input power and 
+          NF calculation method, and this value, should be used
+          (if both are defined).";
+    }
+    leaf roadm-noise-figure {
+      type decimal64 {
+        fraction-digits 5;
+      }
+      units "dB"; 
+      description 
+        "Noise Figure. If the add path contains an amplifier, 
+          this is the noise figure of that amplifier inferred
+          to the add port.
+          This permits add path OSNR calculation based 
+          on the input power levels to the add block
+          without knowing the ROADM path losses to 
+          the add amplifier.";
     }
   }
 
   grouping roadm-drop-path {
     description "roadm drop block path optical impairments";
-
-    container roadm-drop-path {
-      description "roadm optical impairment parameters 
-      per drop path";
-      
-      leaf roadm-pmd {
-        type decimal64 {
-          fraction-digits 8;
-          range "0..max";
-        }
-        units "ps/(km)^0.5"; 
-        description 
-          "Polarization Mode Dispersion";
+    leaf roadm-pmd {
+      type decimal64 {
+        fraction-digits 8;
+        range "0..max";
       }
-      leaf roadm-cd {
-        type decimal64 {
-          fraction-digits 5;
-        }
-        units "ps/nm"; 
-        description "Chromatic Dispersion";
-      }            
-      leaf roadm-pdl {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description "Polarization dependent loss";        
-      }      
-      leaf roadm-inband-crosstalk {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB;
-        description
-          "In-band crosstalk, or coherent crosstalk, can occur in
-           components that can have multiple same wavelength 
-           inputs,with the inputs either routed to different
-           output ports,or all but 1 blocked.
-           In the case of drop path it is the total 
-           of the ingress
-           to drop e.g. WSS and drop block crosstalk
-           contributions.";
+      units "ps/(km)^0.5"; 
+      description 
+        "Polarization Mode Dispersion";
+    }
+    leaf roadm-cd {
+      type decimal64 {
+        fraction-digits 5;
       }
-      leaf roadm-maxloss {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description 
-          "The net loss from the ROADM input,to the output 
-           of the drop block. 
-           If ROADM ingress to drop path includes an amplifier,
-           the amplifier gain reduces the net loss.  
-           This is before any additional drop path attenuation
-           that may be required 
-           due to drop amplifier power contraints.
-           The max value correspond to worst case expected loss,
-           including amplifier gain ripple or uncertainty. 
-           It is the maximum output power of the drop 
-           amplifier.";        
+      units "ps/nm"; 
+      description "Chromatic Dispersion";
+    }            
+    leaf roadm-pdl {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-minloss {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description 
-          "The net loss from the ROADM input, to the 
-           output of the drop block.
-           If this ROADM ingress to drop path includes 
-           an amplifier,the amplifier gain reduces the net loss.  
-           This is before any additional drop path attenuation 
-           that may be required due to drop amplifier power 
-           contraints.
-           The min value correspond to best case expected loss, 
-           including amplifier gain ripple or uncertainty.";        
+      units dB ;
+      description "Polarization dependent loss";        
+    }      
+    leaf roadm-inband-crosstalk {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-typloss {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dB ;
-        description 
-          "The net loss from the ROADM input, 
-           to the output of the drop block.
-           If this ROADM ingress to drop path 
-           includes an amplifier, 
-           the amplifier gain reduces the net loss.  
-           This is before any additional drop path 
-           attenuation 
-           that may be required due to drop amplifier
-           power contraints.
-           The typ value correspond to typical case 
-           expected loss.";        
+      units dB;
+      description
+        "In-band crosstalk, or coherent crosstalk, can occur in
+          components that can have multiple same wavelength 
+          inputs,with the inputs either routed to different
+          output ports,or all but 1 blocked.
+          In the case of drop path it is the total 
+          of the ingress
+          to drop e.g. WSS and drop block crosstalk
+          contributions.";
+    }
+    leaf roadm-maxloss {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-pmin {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dBm ;
-        description 
-          "If the drop path has additional loss
-           that is added, for example,
-           to hit target power levels into a 
-           drop path amplifier, or simply, to reduce the
-           power of a strong carrier
-           (due to ripple,for example), 
-           then the use of the ROADM input power levels and 
-           the above drop losses is not appropriate.
-           This parameter corresponds to the min per
-           carrier power levels 
-           expected at the output of the drop block.
-           A detail example of the comparison using
-           these parameters is 
-           detailed in section xxx of the document yyy."; 
+      units dB ;
+      description 
+        "The net loss from the ROADM input,to the output 
+          of the drop block. 
+          If ROADM ingress to drop path includes an amplifier,
+          the amplifier gain reduces the net loss.  
+          This is before any additional drop path attenuation
+          that may be required 
+          due to drop amplifier power contraints.
+          The max value correspond to worst case expected loss,
+          including amplifier gain ripple or uncertainty. 
+          It is the maximum output power of the drop 
+          amplifier.";        
+    }
+    leaf roadm-minloss {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-pmax {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dBm ;
-        description 
-          "If the drop path has additional loss that is added, 
-           for example, to hit target power levels into a 
-           drop path amplifier,or simply,to reduce the power 
-           of a strong carrier(due to ripple,for example), 
-           then the use of the ROADM input power levels and the 
-           above drop losses is not appropriate.
-           This parameter corresponds to the best case per 
-           carrier power levels expected at the output of the 
-           drop block.
-           A detail example of the comparison using 
-           these parameters 
-           is detailed in section xxx of the document yyy";        
+      units dB ;
+      description 
+        "The net loss from the ROADM input, to the 
+          output of the drop block.
+          If this ROADM ingress to drop path includes 
+          an amplifier,the amplifier gain reduces the net loss.  
+          This is before any additional drop path attenuation 
+          that may be required due to drop amplifier power 
+          contraints.
+          The min value correspond to best case expected loss, 
+          including amplifier gain ripple or uncertainty.";        
+    }
+    leaf roadm-typloss {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-ptyp {
-        type decimal64 {
-          fraction-digits 2;
-        }
-        units dBm ;
-        description 
-          "If the drop path has additional loss that is added,
-           for example, to hit target power levels into a 
-           drop path amplifier,or simply,to reduce the 
-           power of a strong carrier(due to ripple,for example), 
-           then the use of the ROADM input power levels and 
-           the above drop losses is not appropriate.
-           This parameter corresponds to the typical case
-           per carrier power levels expected 
-           at the output of the drop block.";        
+      units dB ;
+      description 
+        "The net loss from the ROADM input, 
+          to the output of the drop block.
+          If this ROADM ingress to drop path 
+          includes an amplifier, 
+          the amplifier gain reduces the net loss.  
+          This is before any additional drop path 
+          attenuation 
+          that may be required due to drop amplifier
+          power contraints.
+          The typ value correspond to typical case 
+          expected loss.";        
+    }
+    leaf roadm-pmin {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-osnr {
-        type l0-types-ext:snr; 
-        description 
-          "Optical Signal-to-Noise Ratio (OSNR).
-           Expected OSNR contribution of the drop path
-           amplifier(if present) 
-           for the case of additional drop path loss
-           (before this amplifier) 
-           in order to hit a target power level (per carrier).
-           If both, the OSNR based on the ROADM 
-           input power level
-           (Pcarrier = 
-           Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
-           and the input inferred NF(NF.drop), 
-           and this OSNR value, are defined, 
-           the minimum value between these two should be used";
+      units dBm ;
+      description 
+        "If the drop path has additional loss
+          that is added, for example,
+          to hit target power levels into a 
+          drop path amplifier, or simply, to reduce the
+          power of a strong carrier
+          (due to ripple,for example), 
+          then the use of the ROADM input power levels and 
+          the above drop losses is not appropriate.
+          This parameter corresponds to the min per
+          carrier power levels 
+          expected at the output of the drop block.
+          A detail example of the comparison using
+          these parameters is 
+          detailed in section xxx of the document yyy."; 
+    }
+    leaf roadm-pmax {
+      type decimal64 {
+        fraction-digits 2;
       }
-      leaf roadm-noise-figure {
-        type decimal64 {
-          fraction-digits 5;
-        }
-        units "dB"; 
-        description 
-          "Drop path Noise Figure. 
-           If the drop path contains an amplifier,
-           this is the noise figure
-           of that amplifier, inferred to the 
-           ROADM ingress port.
-           This permits to determine 
-           amplifier OSNR contribution 
-           without having to specify the 
-           ROADM node’s losses to that amplifier.
-           This applies for the case of no 
-           additional drop path loss, 
-           before the amplifier, in order to reduce the power
-           of the carriers to a target value";
+      units dBm ;
+      description 
+        "If the drop path has additional loss that is added, 
+          for example, to hit target power levels into a 
+          drop path amplifier,or simply,to reduce the power 
+          of a strong carrier(due to ripple,for example), 
+          then the use of the ROADM input power levels and the 
+          above drop losses is not appropriate.
+          This parameter corresponds to the best case per 
+          carrier power levels expected at the output of the 
+          drop block.
+          A detail example of the comparison using 
+          these parameters 
+          is detailed in section xxx of the document yyy";        
+    }
+    leaf roadm-ptyp {
+      type decimal64 {
+        fraction-digits 2;
       }
+      units dBm ;
+      description 
+        "If the drop path has additional loss that is added,
+          for example, to hit target power levels into a 
+          drop path amplifier,or simply,to reduce the 
+          power of a strong carrier(due to ripple,for example), 
+          then the use of the ROADM input power levels and 
+          the above drop losses is not appropriate.
+          This parameter corresponds to the typical case
+          per carrier power levels expected 
+          at the output of the drop block.";        
+    }
+    leaf roadm-osnr {
+      type l0-types-ext:snr; 
+      description 
+        "Optical Signal-to-Noise Ratio (OSNR).
+          Expected OSNR contribution of the drop path
+          amplifier(if present) 
+          for the case of additional drop path loss
+          (before this amplifier) 
+          in order to hit a target power level (per carrier).
+          If both, the OSNR based on the ROADM 
+          input power level
+          (Pcarrier = 
+          Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
+          and the input inferred NF(NF.drop), 
+          and this OSNR value, are defined, 
+          the minimum value between these two should be used";
+    }
+    leaf roadm-noise-figure {
+      type decimal64 {
+        fraction-digits 5;
+      }
+      units "dB"; 
+      description 
+        "Drop path Noise Figure. 
+          If the drop path contains an amplifier,
+          this is the noise figure
+          of that amplifier, inferred to the 
+          ROADM ingress port.
+          This permits to determine 
+          amplifier OSNR contribution 
+          without having to specify the 
+          ROADM node’s losses to that amplifier.
+          This applies for the case of no 
+          additional drop path loss, 
+          before the amplifier, in order to reduce the power
+          of the carriers to a target value";
     }
   }
 
@@ -2477,19 +2432,24 @@ module ietf-optical-impairment-topology {
       description
         "select the mode: channel power or power spectral density";
       case channel-power {
- /*       when "equalization-mode='channel-power'"; */
-        leaf nominal-channel-power{
+        when "/nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/OMS-attributes
+            /equalization-mode='carrier-power'";
+        leaf nominal-carrier-power{
           type decimal64 {
-              fraction-digits 1;
+              fraction-digits 2;
           }
           units dBm ;
           description
-            " Reference channel power after the ROADM or after 
-            the out-voa. ";
+            " Reference channel power. Same grouping is used for the
+            OMS power after the ROADM (input of the OMS) or after the
+            out-voa of each amplifier. ";
         }
       }
       case power-spectral-density{
- /*       when "equalization-mode='power-spectral-density'"; */
+        when "/nw:networks/nw:network/nt:link/tet:te
+            /tet:te-link-attributes/OMS-attributes
+            /equalization-mode='power-spectral-density'";
         leaf nominal-power-spectral-density{
           type decimal64 {
               fraction-digits 16;
@@ -2512,7 +2472,7 @@ module ietf-optical-impairment-topology {
     }
     leaf equalization-mode{
       type identityref {
-        base type-power-mode;
+        base l0-types-ext:type-power-mode;
       }
       mandatory true;
       description "equalization mode";
@@ -2520,61 +2480,51 @@ module ietf-optical-impairment-topology {
     uses power-param;
   }
 
-  grouping OTSiG {
+  grouping otsi-group {
     description "OTSiG definition , representing client
      digital information stream supported by 1 or more OTSi";
 
-     list otsi {
-       key "otsi-carrier-id";
-       config false;
-       description
-         "list of OTSi contained in 1 OTSiG.
+    list otsi {
+      key "otsi-carrier-id";
+      config false;
+      description
+        "list of OTSi contained in 1 OTSiG.
         The list could also be of only 1 element";
-       leaf otsi-carrier-id {
-         type int16;
-         description "OTSi carrier-id";
-       }
+      leaf otsi-carrier-id {
+        type int16;
+        description "OTSi carrier-id";
+      }
 
 /*any OTSi as signal generated by transceiver and*/
 /* attached to a transponder.*/ 
        
     
-       leaf transponder-ref { 
-            type leafref {
-              path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point" +
-                "/transponder/transponder-id";
-            }
-          description
-              "Reference to the configured transponder";
-       }
-       leaf transceiver-ref {
-            type leafref {
-              path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/"  
-               +"transponder[transponder-id=current()"
-               +"/../transponder-ref]/"
-               + "transceiver/transceiver-id" ;
-              }
-          description
-             "Reference to the configured transceiver " ;
-       }
-       leaf configured-mode { 
-         type leafref {
-           path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/"  
-               +"transponder[transponder-id=current()"
-               +"/../transponder-ref]/"+
-               "transceiver[transceiver-id=current()/"+
-               "../transceiver-ref]/supported-modes/"+
+      leaf transponder-ref { 
+        type leafref {
+          path "../../../../../transponder/transponder-id";
+        }
+        description
+          "Reference to the configured transponder";
+      }
+      leaf transceiver-ref {
+        type leafref {
+          path "deref(../transponder-ref)/../transceiver/" +
+               "transceiver-id";
+        }
+        description
+          "Reference to the configured transceiver " ;
+      }
+      leaf configured-mode { 
+        type leafref {
+          path "deref(../transceiver-ref)/../supported-modes/" +
                "supported-mode/mode-id";
-         }
-          description
-             "Reference to the configured mode for transceiver
-              compatibility approach";
-       }
-       uses l0-types-ext:common-transceiver-configured-param;
-     } // OTSi list
+        }
+        description
+          "Reference to the configured mode for transceiver
+           compatibility approach";
+      }
+      uses l0-types-ext:common-transceiver-configured-param;
+    } // OTSi list
   } // OTSiG grouping
 
   grouping media-channel-groups {
@@ -2596,32 +2546,39 @@ module ietf-optical-impairment-topology {
  // this grouping add both n.m values
         uses l0-types:flexi-grid-frequency-slot; 
 
-        leaf OTSiG-ref {
+        leaf otsi-group-ref {
           type leafref {
-           path "/nw:networks/nw:network/nw:node/tet:te" +
+            path "/nw:networks/nw:network/nw:node/tet:te" +
                 "/tet:tunnel-termination-point" +
                 "/otsi-group/otsi-group-id" ;
-
-          }
+            }
           description
-             "Reference to the otsi-group list to get otsi-group
-              identifier of the
-              OTSiG carried by this media channel 
-              that reports the transient stat";
+            "Reference to the otsi-group list to get otsi-group
+            identifier of the
+            OTSiG carried by this media channel 
+            that reports the transient stat";
         }
-        leaf OTSi-ref {
+        leaf otsi-ref {
           type leafref {
             path "/nw:networks/nw:network/nw:node/tet:te" +
                 "/tet:tunnel-termination-point/"  
                +"otsi-group[otsi-group-id=current()"
-               +"/../OTSiG-ref]/"
+               +"/../otsi-group-ref]/"
                + "otsi/otsi-carrier-id" ;
           }
           description
              "Reference to the otsi list supporting
              the related OTSiG to get otsi identifier";
         }
-
+        leaf delta-power{
+          type decimal64 {
+              fraction-digits 2;
+          }
+          units dB ;
+          description
+            " Deviation from the reference carrier power defined for
+            the OMS.";
+        }
       } // media channels list
     } // media-channel-groups list
   } // media media-channel-groups grouping
@@ -2666,7 +2623,7 @@ Concentratedloss)";
 /* Data nodes */
 
   augment "/nw:networks/nw:network/nw:network-types"
-   + "/tet:te-topology" {
+        + "/tet:te-topology" {
    description "optical-impairment topology augmented";
    container optical-impairment-topology {
      presence "indicates an impairment-aware topology of 
@@ -2676,74 +2633,165 @@ Concentratedloss)";
    }
   }
 
-  augment "/nw:networks/nw:network/nt:link/tet:te"
-   + "/tet:te-link-attributes"   {
-   when "/nw:networks/nw:network/nw:network-types"
-    +"/tet:te-topology/"
-    +"optical-imp-topo:optical-impairment-topology" {
+  augment "/nw:networks/nw:network/nw:node" {
+    when "../nw:network-types/tet:te-topology" +
+         "/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment.";
+    }
     description
-      "This augment is only valid for Optical Impairment.";
-   }
-   description "Optical Link augmentation for impairment data.";
-   container OMS-attributes {
-       config false;
-       description "OMS attributes";
-     uses oms-general-optical-params;
-     uses media-channel-groups;
-     uses oms-element;
-     }
+      "Node augmentation for optical impairments data.";
+    list transponder {
+      key "transponder-id";
+      config false;
+      description "list of transponder";
+      leaf transponder-id {
+        type uint32;
+        description "transponder identifier";
+      }
+
+      list transceiver {
+        key "transceiver-id";
+        config false;
+        description "list of transceiver related to a transponder";
+        leaf transceiver-id {
+          type uint32;
+          description "transceiver identifier";
+        }
+        leaf termination-type-capabilities {
+          type enumeration {
+            enum tunnel-only {
+              description
+                "The transceiver can only be used in an Optical
+                Tunnel termination configuration.";
+            }
+            enum 3r-only {
+              description
+                "The transceiver can only be used in a 3R
+                configuration.";
+            }
+            enum 3r-or-tunnel {
+              description
+                "The transceiver can be configure to be used either
+                in an Optical Tunnel termination configuration or in
+                a 3R configuration.";
+            }
+          }
+          description
+            "Describes whether the tranceiver can be used in an
+            Optical Tunnel termination configuration or in a 3R
+            configuration (or both).";
+        }
+        leaf supported-3r-mode {
+          when '(../termination-type-capabilities = "3r-only") or
+                (../termination-type-capabilities = "3r-or-tunnel")'
+                {
+            description
+              "Applies only when the tranceiver supports 3R
+              configuration.";
+          }
+          type enumeration {
+            enum unidir {
+              description
+                "Unidirectional 3R configuration.";
+            }
+            enum bidir {
+              description
+                "Bidirectional 3R configuration.";
+            }
+          }
+          description
+            "Describes the supported 3R configuration type."; 
+        }
+        leaf configured-termination-type {
+          type enumeration {
+            enum tunnel-termination {
+              description
+                "The transceiver is currently used in an Optical
+                Tunnel termination configuration.";
+            }
+            enum 3r-regeneration {
+              description
+                "The transceiver is currently used in a 3R
+                configuration.";
+            }
+          }
+          description
+            "Describes whether the current configuration of the
+            tranceiver is used in an Optical Tunnel termination
+            configuration or in a 3R configuration.
+            
+            If empty, it means that the transcevier is not used.";
+        }
+        uses l0-types-ext:transceiver-capabilities;
+      } // end of list of transceiver 
+    } // end list of transponder
+  }
+
+  augment "/nw:networks/nw:network/nt:link/tet:te"
+        + "/tet:te-link-attributes"   {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment.";
+    }
+    description "Optical Link augmentation for impairment data.";
+    container OMS-attributes {
+      config false;
+      description "OMS attributes";
+      uses oms-general-optical-params;
+      uses media-channel-groups;
+      uses oms-element;
+    }
   }
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
-   + "/tet:tunnel-termination-point" {
-   when "/nw:networks/nw:network/nw:network-types"
-    +"/tet:te-topology/optical-imp-topo:optical-impairment-topology"{
+        + "/tet:tunnel-termination-point" {
+    when "/nw:networks/nw:network/nw:network-types"
+       + "/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Impairment with
+         non-sliceable transponder model";
+    }
     description
-      "This augment is only valid for Impairment with non-sliceable
-       transponder model";
-   }
-   description
-     "Tunnel termination point augmentation for non-sliceable
-      transponder model.";
+      "Tunnel termination point augmentation for non-sliceable
+       transponder model.";
 
-     list otsi-group {
-         key "otsi-group-id";
-         config false;
-         description
-         "the list of possible OTSiG representing client digital
-          stream";
-
-         leaf otsi-group-id {
-            type int16;
-             description "index of otsi-group element";
-         }
-         uses OTSiG;
-     } // list of OTSiG
-
-     list transponder {
-       key "transponder-id";
-       config false;
-       description "list of transponder";
-       leaf transponder-id {
-         type uint32;
-         description "transponder identifier";
-       }
-
-       list transceiver {
-         key "transceiver-id";
-         config false;
-         description "list of transceiver related to a transponder";
-         leaf transceiver-id {
-           type uint32;
-           description "transceiver identifier";
-         }
-         uses l0-types-ext:transceiver-capabilities;
-       } // end of list of transceiver 
-
-
-     } // end list of transponder
-
-
+    list otsi-group {
+      key "otsi-group-id";
+      config false;
+      description
+        "the list of possible OTSiG representing client digital
+        stream";
+      leaf otsi-group-id {
+        type int16;
+        description "index of otsi-group element";
+      }
+      uses otsi-group;
+    } // list of OTSiG
+    list transceiver {
+      config false;
+      description
+        "The list of the tranceivers used by the TTP.";
+      leaf transponder-ref {
+        type leafref {
+          path "../../../../transponder/transponder-id";
+        }
+        description
+          "The reference to the transponder hosting the tranceiver
+          of the TTP.";
+      }
+      leaf tranceiver-ref {
+        type leafref {
+          path "deref(../transponder-ref)/../transceiver" +
+               "/transceiver-id";
+        }
+        description
+          "The reference to the tranceiver of the TTP.";
+      }
+    } // list of tranceivers
   } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
@@ -2778,8 +2826,8 @@ Concentratedloss)";
     list roadm-path-impairments {
       key "roadm-path-impairments-id";
       config false;
-      description "list of set of optical impairments related 
-      to ROADM ";
+      description
+        "The set of optical impairments related to a ROADM path.";
 
       leaf roadm-path-impairments-id {
         type uint32; 
@@ -2788,13 +2836,55 @@ Concentratedloss)";
       choice impairment-type {
         description "type path impairment";
         case roadm-express-path {
-          uses roadm-express-path; 
-        }  
+          list roadm-express-path {
+            description
+              "The list of optical impairments on a ROADM express
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
+            container frequency-range {
+              description
+                "The frequency range for which these optical
+                impairments apply.";
+              uses l0-types-ext:frequency-range;
+            }
+            uses roadm-express-path;
+          } 
+        }
         case roadm-add-path {
-          uses roadm-add-path; 
+          list roadm-add-path {
+            description
+              "The list of optical impairments on a ROADM add
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
+            container frequency-range {
+              description
+                "The frequency range for which these optical
+                impairments apply.";
+              uses l0-types-ext:frequency-range;
+            }
+            uses roadm-add-path; 
+          }
         }          
         case roadm-drop-path {
-          uses roadm-drop-path; 
+          list roadm-drop-path {
+            description
+              "The list of optical impairments on a ROADM add
+              path for different frequency ranges.
+              
+              Two elements in the list must not have the same range
+              or overlapping ranges.";
+            container frequency-range {
+              description
+                "The frequency range for which these optical
+                impairments apply.";
+              uses l0-types-ext:frequency-range;
+            }
+            uses roadm-drop-path; 
+          }
         }
       }
     } // list path impairments 
@@ -2968,8 +3058,9 @@ Concentratedloss)";
   } // augmentation local-link-connectivity
 }
 <CODE ENDS>
-]]></artwork>
-  </figure>
+]]>
+  </artwork></figure>
+  
   </section>
 
   <section title="Security Considerations" anchor="sect-5">
@@ -3035,6 +3126,7 @@ reference: RFC XXXX (TDB)
   
   <references title="Normative References">
   
+  &RFC2119;
   &RFC7950;
   &RFC8040;
   &RFC8341;
@@ -3055,8 +3147,9 @@ reference: RFC XXXX (TDB)
   &RFC8453;
   &I-D.ietf-ccamp-wson-yang;
   &I-D.ietf-ccamp-layer0-types;
+  &I-D.esdih-ccamp-layer0-types-ext;
   &I-D.ietf-ccamp-dwdm-if-param-yang;
-
+  
   <reference anchor="G.807">
    <front>
    <title>Generic functional architecture of the optical media network</title>
