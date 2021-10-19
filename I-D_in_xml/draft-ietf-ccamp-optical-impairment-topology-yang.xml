@@ -586,7 +586,17 @@ OTS Media Link represents a media link:
    In this document, we would avoid internal node details, but attempt
    to abstract as much as possible.
   </t>
-
+  
+  <t>
+   ILAs are placed at locations where the optical amplification of the
+   WDM signal is required on the OMS link between two ROADM nodes.
+   Geolocation information is already defined for TE nodes in
+   <xref target="RFC8795"/> and is also beneficial for ILAs. Therefore,
+   the same geolocation container has been added to the amplifier
+   element on an OMS link containing altitude, latitude, and longitude
+   as optional attributes.
+  </t>
+  
   <t>
    One modeling consideration of the ROADM internal is to model power
    parameter through the ROADM, factoring the output power from the

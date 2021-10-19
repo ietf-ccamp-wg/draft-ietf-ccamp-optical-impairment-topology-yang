@@ -91,7 +91,7 @@ Table of Contents
      2.5.  Transponders  . . . . . . . . . . . . . . . . . . . . . .  12
        2.5.1.  Standard Modes  . . . . . . . . . . . . . . . . . . .  12
        2.5.2.  Organizational Modes  . . . . . . . . . . . . . . . .  13
-       2.5.3.  Explicit Modes  . . . . . . . . . . . . . . . . . . .  14
+       2.5.3.  Explicit Modes  . . . . . . . . . . . . . . . . . . .  15
        2.5.4.  Transponder Capabilities and Current Configuration  .  15
      2.6.  3R Regenerators . . . . . . . . . . . . . . . . . . . . .  16
      2.7.  WSS/Filter  . . . . . . . . . . . . . . . . . . . . . . .  19
@@ -618,6 +618,13 @@ Lee, et al.              Expires April 28, 2022                [Page 11]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
 
 
+   ILAs are placed at locations where the optical amplification of the
+   WDM signal is required on the OMS link between two ROADM nodes.
+   Geolocation information is already defined for TE nodes in [RFC8795]
+   and is also beneficial for ILAs.  Therefore, the same geolocation
+   container has been added to the amplifier element on an OMS link
+   containing altitude, latitude, and longitude as optional attributes.
+
    One modeling consideration of the ROADM internal is to model power
    parameter through the ROADM, factoring the output power from the Pre-
    Amplifier minus the ROADM power loss would give the input power to
@@ -659,13 +666,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    an SDO organization.  Currently, the "Standard Modes" can only be
    referred to ITU-T G.698.2 [G.698.2] since G.698.2 is the only
    specification defining "Standard Modes" today.  Nothing is
-   precluding, however, to consider other specifications provided by any
-   other SDO in the Standard Mode context as soon as such sepcifications
-   will be available.  An application code as defined in ITU-T G.698.2
-   [G.698.2] is representing a standard ITU-T G.698.2 optical interface
-   specification towards the realization of transversely compatible DWDM
-   systems.  Two transceivers supporting the same application code and a
-   line system matching the constraints, defined in ITU-T G.698.2, for
 
 
 
@@ -674,6 +674,13 @@ Lee, et al.              Expires April 28, 2022                [Page 12]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
 
 
+   precluding, however, to consider other specifications provided by any
+   other SDO in the Standard Mode context as soon as such sepcifications
+   will be available.  An application code as defined in ITU-T G.698.2
+   [G.698.2] is representing a standard ITU-T G.698.2 optical interface
+   specification towards the realization of transversely compatible DWDM
+   systems.  Two transceivers supporting the same application code and a
+   line system matching the constraints, defined in ITU-T G.698.2, for
    that application code will interoperate.  As the characteristics are
    encoded in the application code, the YANG model in this document only
    defines a string, which represents that application code.
@@ -715,13 +722,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    attribute values typically cannot be configured independently and are
    therefore advertised as supported operational mode capabilities.  It
    is the responsibility of the organization to assign operational modes
-   and to ensure that operational modes are unique and not ambiguous
-   within the scope of the organization.
-
-   In addition to the transceiver properties subsumed by the operational
-   mode, optical power and carrier frequency related properties are
-   modeled separately, i.e., outside of the operational mode.  This
-   modeling approach allows transponders using different transceiver
 
 
 
@@ -730,6 +730,13 @@ Lee, et al.              Expires April 28, 2022                [Page 13]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
 
 
+   and to ensure that operational modes are unique and not ambiguous
+   within the scope of the organization.
+
+   In addition to the transceiver properties subsumed by the operational
+   mode, optical power and carrier frequency related properties are
+   modeled separately, i.e., outside of the operational mode.  This
+   modeling approach allows transponders using different transceiver
    variants (e.g. optical modules) with slightly different power and/or
    frequency range properties to interoperate without defining separate
    operational modes.  Different optical modules (pluggables) from
@@ -768,6 +775,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    related properties are not included in the operational mode
    definition.
 
+
+
+
+
+
+
+Lee, et al.              Expires April 28, 2022                [Page 14]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
+
+
 2.5.3.  Explicit Modes
 
    The explicit mode allows to encode, explicitly, any subset of
@@ -778,14 +796,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    of identical parameter definitions.  The explicit mode shall
    therefore be used with care, but it could be useful when no common
    Application Codes or Organizational Modes exist or the constraints of
-
-
-
-Lee, et al.              Expires April 28, 2022                [Page 14]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
-
-
    common Application Codes or Organizational Modes cannot be met by the
    line system.
 
@@ -824,6 +834,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
 
    The set of optical impairment limits, e.g., min OSNR, max PMD, max
    CD, max PDL, Q-factor limit, are explicitly defined for the explicit
+
+
+
+Lee, et al.              Expires April 28, 2022                [Page 15]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
+
+
    modes while they are defined implicitly for the application codes and
    organizational modes.
 
@@ -832,15 +850,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    mode or one or more application codes.  The "supported-mode"
    container may provide two different lists with pointers to
    application codes and organizational modes, respectively.
-
-
-
-
-
-Lee, et al.              Expires April 28, 2022                [Page 15]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
-
 
    The current transponder configuration describes the properties of the
    OTSi transmitted or received by the transceiver attached to a
@@ -881,6 +890,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    The 3R regeneartion compound function is illustrated in section 10.1
    of [G.798.1], and sections 10.3 and 10.4 provide examples of a ROADM
    architecture and a photonic cross-connect architecture including 3R
+
+
+
+Lee, et al.              Expires April 28, 2022                [Page 16]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
+
+
    regenerators.  Based on the provided functionality, 3R regenerators
    are considered as topological layer 0 entities because they are
    needed for layer 0 path computation in case the optical impairments
@@ -890,13 +907,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    regenerators, the corresponding layer 0 tunnel is subdivided into 2
    or more segments between the source transponder and the destination
    transponder terminating the layer 0 tunnel.
-
-
-
-Lee, et al.              Expires April 28, 2022                [Page 16]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
-
 
    3R regenerators are usually realized by a pair of optical
    transponders, which are described in Section 2.5 above.  If a pair of
@@ -936,16 +946,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
       the adjacent segment.  This configuration is also called cross-
       regeneration and each transceiver is operated in an uni-
       directional mode.
-
-
-
-
-
-
-
-
-
-
 
 
 
