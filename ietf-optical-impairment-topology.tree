@@ -7,7 +7,7 @@ module: ietf-optical-impairment-topology
        +--ro otsi-group-id    string
        +--ro otsi* [otsi-carrier-id]
           +--ro otsi-carrier-id           uint16
-          +--ro OTSi-carrier-frequency?   frequency-thz
+          +--ro otsi-carrier-frequency?   frequency-thz
           +--ro tx-channel-power?         dbm-t
           +--ro rx-channel-power?         dbm-t
           +--ro rx-total-power?           dbm-t
@@ -34,7 +34,7 @@ module: ietf-optical-impairment-topology
     |     |        |     |       frequency-thz
     |     |        |     +--ro max-central-frequency?
     |     |        |     |       frequency-thz
-    |     |        |     +--ro minimum-channel-spacing?
+    |     |        |     +--ro central-frequency-step?
     |     |        |     |       frequency-ghz
     |     |        |     +--ro tx-channel-power-min?      dbm-t
     |     |        |     +--ro tx-channel-power-max?      dbm-t
@@ -70,20 +70,16 @@ module: ietf-optical-impairment-topology
     |     |              |          uint8
     |     |              +--ro available-modulation-type?
     |     |              |       identityref
-    |     |              +--ro OTSi-carrier-bandwidth?
-    |     |              |       frequency-ghz
     |     |              +--ro min-OSNR?
     |     |              |       snr
     |     |              +--ro min-Q-factor?
     |     |              |       int32
     |     |              +--ro available-baud-rate?
     |     |              |       uint32
-    |     |              +--ro nyquist-spacing-factor?
-    |     |              |       decimal64
     |     |              +--ro roll-off?
     |     |              |       decimal64
-    |     |              +--ro xtalk-penalty?
-    |     |              |       int32
+    |     |              +--ro min-carrier-spacing?
+    |     |              |       frequency-ghz
     |     |              +--ro available-fec-type?
     |     |              |       identityref
     |     |              +--ro fec-code-rate?
@@ -94,7 +90,7 @@ module: ietf-optical-impairment-topology
     |     |              |       frequency-thz
     |     |              +--ro max-central-frequency?
     |     |              |       frequency-thz
-    |     |              +--ro minimum-channel-spacing?
+    |     |              +--ro central-frequency-step?
     |     |              |       frequency-ghz
     |     |              +--ro tx-channel-power-min?
     |     |              |       dbm-t
