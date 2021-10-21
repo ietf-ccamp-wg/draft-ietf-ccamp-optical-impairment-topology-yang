@@ -1,4 +1,3 @@
-
 # [A Yang Data Model for Optical Impairment-aware Topology](https://datatracker.ietf.org/doc/draft-ietf-ccamp-optical-impairment-topology-yang/)
 This is the working area for the [IETF CCAMP](https://datatracker.ietf.org/wg/ccamp/documents/) WG Internet-Draft, "A Yang Data Model for Optical Impairment-aware Topology".
 
