@@ -17,8 +17,9 @@
 <!ENTITY RFC8795 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8795.xml">
 <!ENTITY I-D.ietf-ccamp-wson-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-wson-yang.xml">
 <!ENTITY I-D.ietf-ccamp-layer0-types SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-layer0-types.xml">
-<!ENTITY I-D.esdih-ccamp-layer0-types-ext SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-esdih-ccamp-layer0-types-ext.xml">
+<!ENTITY I-D.ietf-ccamp-layer0-types-ext SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-ccamp-layer0-types-ext.xml">
 <!ENTITY I-D.ietf-ccamp-dwdm-if-param-yang SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml">
+<!ENTITY I-D.ietf-teas-te-topo-and-tunnel-modeling SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-teas-te-topo-and-tunnel-modeling.xml">
 ]>
 <rfc submissionType="IETF" docName="draft-ietf-ccamp-optical-impairment-topology-yang-08" 
      category="std" ipr="trust200902">
@@ -218,7 +219,7 @@
    <c><xref target="I-D.ietf-ccamp-layer0-types"/></c> 
    <c>l0-types-ext</c>
    <c>ietf-layer0-types-ext</c>
-   <c><xref target="I-D.esdih-ccamp-layer0-types-ext"/></c>
+   <c><xref target="I-D.ietf-ccamp-layer0-types-ext"/></c>
    <c>nw</c>
    <c>ietf-network</c>
    <c><xref target="RFC8345"/></c>
@@ -324,8 +325,8 @@
                               OMS Link
                  <-------------------------------->
 
-   PA: Pre-Amplifieror
-   BA: Booster Amplifier
+   PA: Pre-Amplifier (or ingress amplifier)
+   BA: Booster Amplifier (or egress amplifier)
    ILA: In-Line Amplifier
 ]]></artwork>
   </figure>
@@ -366,6 +367,18 @@ OTS Media Link represents a media link:
    For the sake of optical impairment evaluation OMS Media link can be
    also decomposed in a sequence of elements such as BA, fiber section,
    ILA, concentrated loss and PA.
+  </t>
+  
+  <t>
+   An OMS Media link is terminated on both ends by a link termination
+   point (LTP) as defined in <xref target="RFC8345"/>.
+   Links in optical transport networks are typically bidirectional but
+   have to be modeled as a pair of two unidirection links following the
+   <xref target="RFC8345"/> modeling approach.
+   Unlike TE links, which are unidirectional, the LTPs on either end
+   of the TE link pair forming the bidirectional link, are bidirectional
+   as described in
+   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/>.
   </t>
 
   <t>
@@ -618,9 +631,25 @@ OTS Media Link represents a media link:
   <t>
    A Transponder is the element that sends and receives the optical
    signal from a DWDM network. A transponder can comprise one or more
-   transceivers. A transceiver can be seen as a pair of transmitter
-   and receiver, as defined in ITU-T Recommendation G.698.2
-   <xref target="G.698.2"/>.
+   transceiver modules. A transceiver represents a transmitter/receiver
+   (Tx/Rx) pair as defined in ITU-T Recommendation G.698.2
+   <xref target="G.698.2"/>. In addition to the transceiver, which is
+   terminating an OTSi signal, a transponder typically provides
+   additional layer 1 functionality like for example aggregation
+   (multiplexing) of client layer signals, which is outside the scope
+   of this document addressing layer 0 aspects of transponders.
+  </t>
+  
+  <t>
+   The termination of an OTSi signal by a transceiver is modeled as a
+   tunnel termination point (TTP) as defined in
+   <xref target="RFC8345"/>.
+   Due to the fact that optical transport services (TE tunnels) are
+   typically bidirectional, a TTP is also modeled as a bidirectional
+   entity like the LTP described above. Moreover, a TTP can terminate
+   one or several OTSi signals (tunnels) as described in
+   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and my
+   therefore be associated with multiple transceiver modules.
   </t>
   
   <t>
@@ -3183,8 +3212,9 @@ reference: RFC XXXX (TDB)
   &RFC8453;
   &I-D.ietf-ccamp-wson-yang;
   &I-D.ietf-ccamp-layer0-types;
-  &I-D.esdih-ccamp-layer0-types-ext;
+  &I-D.ietf-ccamp-layer0-types-ext;
   &I-D.ietf-ccamp-dwdm-if-param-yang;
+  &I-D.ietf-teas-te-topo-and-tunnel-modeling;
   
   <reference anchor="G.807">
    <front>
