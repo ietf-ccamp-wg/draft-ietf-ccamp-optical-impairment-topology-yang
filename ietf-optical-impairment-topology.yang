@@ -738,7 +738,7 @@ module ietf-optical-impairment-topology {
               "The reference to the OMS link which the OMS elements
               belongs to.";
           }
-          leaf oms-element-ref {
+          leaf-list oms-element-ref {
             type leafref {
               path "../../../../../../../nt:link[nt:link-id="
                  + "current()/../link-ref]/tet:te/"
