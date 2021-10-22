@@ -380,7 +380,7 @@ OTS Media Link represents a media link:
    as described in
    <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and the
    pair of unidirectional links are connected to the same bidirectional
-   LPT on either end of the link pair.
+   LTP on either end of the link pair.
    
   </t>
 
@@ -645,14 +645,16 @@ OTS Media Link represents a media link:
   
   <t>
    The termination of an OTSi signal by a transceiver is modeled as a
-   tunnel termination point (TTP) as defined in
-   <xref target="RFC8345"/>.
+   function of the tunnel termination point (TTP) as defined in
+   <xref target="RFC8795"/>.
    Due to the fact that optical transport services (TE tunnels) are
    typically bidirectional, a TTP is also modeled as a bidirectional
    entity like the LTP described above. Moreover, a TTP can terminate
-   one or several OTSi signals (tunnels) as described in
-   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and may
-   therefore be associated with multiple transceiver modules.
+   one or several OTSiG signals (tunnels) as described in
+   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and each
+   OTSiG consists of one or multiple OTSi signals as described in
+   <xref target="sect-2.3.2"/>.
+   Therefore, a TTP may be associated with multiple transceiver modules.
   </t>
   
   <t>
