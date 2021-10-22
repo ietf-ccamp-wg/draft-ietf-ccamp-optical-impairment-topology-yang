@@ -68,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-10-18 {
+  revision 2021-10-22 {
     description
       "Initial Version";
     reference
@@ -996,7 +996,7 @@ module ietf-optical-impairment-topology {
       "Tunnel termination point augmentation for non-sliceable
        transponder model.";
 
-    list transceiver {
+    list ttp-transceiver {
       key "transponder-ref transceiver-ref";
       config false;
       description
@@ -1246,22 +1246,23 @@ module ietf-optical-impairment-topology {
       description "pointer to the list set of ROADM 
       optical impairments";
     }
-    list transceiver {
+    list llc-transceiver {
+      key "ttp-transponder-ref ttp-transceiver-ref";
       config false;
       description
         "The list of transceivers having a LLC different from the
         default LLC.";
-      leaf transponder-ref {
+      leaf ttp-transponder-ref {
         type leafref {
-          path "../../../transceiver/transponder-ref";
+          path "../../../ttp-transceiver/transponder-ref";
         }
         description
           "The reference to the transponder hosting the transceiver
           of this LLCL entry.";
       }
-      leaf transceiver-ref {
+      leaf ttp-transceiver-ref {
         type leafref {
-          path "../../../transceiver/transceiver-ref";
+          path "../../../ttp-transceiver/transceiver-ref";
         }
         description
           "The reference to the the transceiver of this LLCL entry.";

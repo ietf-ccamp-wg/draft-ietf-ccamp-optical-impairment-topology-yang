@@ -187,7 +187,7 @@ module: ietf-optical-impairment-topology
                    +--ro loss    decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
-    +--ro transceiver* [transponder-ref transceiver-ref]
+    +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
        |       -> ../../../../transponder/transponder-id
        +--ro transceiver-ref    leafref
@@ -260,11 +260,11 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
-    +--ro transceiver* []
-       +--ro transponder-ref?
-       |       -> ../../../transceiver/transponder-ref
-       +--ro transceiver-ref?
-       |       -> ../../../transceiver/transceiver-ref
+    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
+       +--ro ttp-transponder-ref
+       |       -> ../../../ttp-transceiver/transponder-ref
+       +--ro ttp-transceiver-ref
+       |       -> ../../../ttp-transceiver/transceiver-ref
        +--ro is-allowed?              boolean
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
