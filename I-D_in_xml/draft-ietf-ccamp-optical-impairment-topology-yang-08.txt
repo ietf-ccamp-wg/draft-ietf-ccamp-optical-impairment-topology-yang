@@ -406,7 +406,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    either end of the TE link pair forming the bidirectional link, are
    bidirectional as described in
    [I-D.ietf-teas-te-topo-and-tunnel-modeling] and the pair of
-   unidirectional links are connected to the same bidirectional LPT on
+   unidirectional links are connected to the same bidirectional LTP on
    either end of the link pair.
 
    [Editor's note: text below related to [G.807] needs to be revised!
@@ -653,19 +653,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    aspects of transponders.
 
    The termination of an OTSi signal by a transceiver is modeled as a
-   tunnel termination point (TTP) as defined in [RFC8345].  Due to the
-   fact that optical transport services (TE tunnels) are typically
-   bidirectional, a TTP is also modeled as a bidirectional entity like
-   the LTP described above.  Moreover, a TTP can terminate one or
-   several OTSi signals (tunnels) as described in
-   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and may therefore be
-   associated with multiple transceiver modules.
+   function of the tunnel termination point (TTP) as defined in
+   [RFC8795].  Due to the fact that optical transport services (TE
+   tunnels) are typically bidirectional, a TTP is also modeled as a
+   bidirectional entity like the LTP described above.  Moreover, a TTP
+   can terminate one or several OTSiG signals (tunnels) as described in
+   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and each OTSiG consists
+   of one or multiple OTSi signals as described in Section 2.3.2.
+   Therefore, a TTP may be associated with multiple transceiver modules.
 
    A transponder is typically characterized by its data/symbol rate and
    the maximum distance the signal can travel.  Other transponder
    properties are: carrier frequency for the optical channels, output
    power per channel, measured input power, modulation scheme, FEC, etc.
-
 
 
 
