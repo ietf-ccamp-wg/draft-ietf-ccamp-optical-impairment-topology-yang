@@ -405,7 +405,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    approach.  Unlike TE links, which are unidirectional, the LTPs on
    either end of the TE link pair forming the bidirectional link, are
    bidirectional as described in
-   [I-D.ietf-teas-te-topo-and-tunnel-modeling].
+   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and the pair of
+   unidirectional links are connected to the same bidirectional LPT on
+   either end of the link pair.
 
    [Editor's note: text below related to [G.807] needs to be revised!
    [G.807] is now in publication process.]
@@ -440,8 +442,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    including the spectrum occupied by each OTSi signal.  The model also
    defines a pointer (leafref) from the OTSi to the transceiver module
    terminating the OTSi signal.
-
-
 
 
 
@@ -658,7 +658,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    bidirectional, a TTP is also modeled as a bidirectional entity like
    the LTP described above.  Moreover, a TTP can terminate one or
    several OTSi signals (tunnels) as described in
-   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and my therefore be
+   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and may therefore be
    associated with multiple transceiver modules.
 
    A transponder is typically characterized by its data/symbol rate and

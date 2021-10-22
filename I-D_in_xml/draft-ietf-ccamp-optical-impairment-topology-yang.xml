@@ -378,7 +378,10 @@ OTS Media Link represents a media link:
    Unlike TE links, which are unidirectional, the LTPs on either end
    of the TE link pair forming the bidirectional link, are bidirectional
    as described in
-   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/>.
+   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and the
+   pair of unidirectional links are connected to the same bidirectional
+   LPT on either end of the link pair.
+   
   </t>
 
   <t>
@@ -648,7 +651,7 @@ OTS Media Link represents a media link:
    typically bidirectional, a TTP is also modeled as a bidirectional
    entity like the LTP described above. Moreover, a TTP can terminate
    one or several OTSi signals (tunnels) as described in
-   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and my
+   <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and may
    therefore be associated with multiple transceiver modules.
   </t>
   
