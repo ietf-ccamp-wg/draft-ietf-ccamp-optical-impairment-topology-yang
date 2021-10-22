@@ -34,7 +34,7 @@ module: ietf-optical-impairment-topology
     |     |        |     |       frequency-thz
     |     |        |     +--ro max-central-frequency?
     |     |        |     |       frequency-thz
-    |     |        |     +--ro minimum-channel-spacing?
+    |     |        |     +--ro central-frequency-step?
     |     |        |     |       frequency-ghz
     |     |        |     +--ro tx-channel-power-min?      dbm-t
     |     |        |     +--ro tx-channel-power-max?      dbm-t
@@ -70,20 +70,16 @@ module: ietf-optical-impairment-topology
     |     |              |          uint8
     |     |              +--ro available-modulation-type?
     |     |              |       identityref
-    |     |              +--ro otsi-carrier-bandwidth?
-    |     |              |       frequency-ghz
     |     |              +--ro min-OSNR?
     |     |              |       snr
     |     |              +--ro min-Q-factor?
     |     |              |       int32
     |     |              +--ro available-baud-rate?
     |     |              |       uint32
-    |     |              +--ro nyquist-spacing-factor?
-    |     |              |       decimal64
     |     |              +--ro roll-off?
     |     |              |       decimal64
-    |     |              +--ro xtalk-penalty?
-    |     |              |       int32
+    |     |              +--ro min-carrier-spacing?
+    |     |              |       frequency-ghz
     |     |              +--ro available-fec-type?
     |     |              |       identityref
     |     |              +--ro fec-code-rate?
@@ -94,7 +90,7 @@ module: ietf-optical-impairment-topology
     |     |              |       frequency-thz
     |     |              +--ro max-central-frequency?
     |     |              |       frequency-thz
-    |     |              +--ro minimum-channel-spacing?
+    |     |              +--ro central-frequency-step?
     |     |              |       frequency-ghz
     |     |              +--ro tx-channel-power-min?
     |     |              |       dbm-t
@@ -143,8 +139,16 @@ module: ietf-optical-impairment-topology
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
           +--ro oms-element-uid?          string
+          +--ro reverse-element-ref
+          |  +--ro link-ref?
+          |  |       -> ../../../../../../../nt:link/link-id
+          |  +--ro oms-element-ref*   leafref
           +--ro (element)
              +--:(amplifier)
+             |  +--ro geolocation
+             |  |  +--ro altitude?    int64
+             |  |  +--ro latitude?    geographic-coordinate-degree
+             |  |  +--ro longitude?   geographic-coordinate-degree
              |  +--ro amplifier
              |     +--ro type-variety    string
              |     +--ro operational
@@ -183,10 +187,10 @@ module: ietf-optical-impairment-topology
                    +--ro loss    decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
-    +--ro transceiver* []
-       +--ro transponder-ref?
+    +--ro ttp-transceiver* [transponder-ref transceiver-ref]
+       +--ro transponder-ref
        |       -> ../../../../transponder/transponder-id
-       +--ro tranceiver-ref?    leafref
+       +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
@@ -256,6 +260,14 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
+    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
+       +--ro ttp-transponder-ref
+       |       -> ../../../ttp-transceiver/transponder-ref
+       +--ro ttp-transceiver-ref
+       |       -> ../../../ttp-transceiver/transceiver-ref
+       +--ro is-allowed?              boolean
+       +--ro add-path-impairments?    leafref
+       +--ro drop-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities

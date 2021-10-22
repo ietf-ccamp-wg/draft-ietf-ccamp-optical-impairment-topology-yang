@@ -2,7 +2,7 @@ module ietf-optical-impairment-topology {
   yang-version 1.1;
 
   namespace "urn:ietf:params:xml"
-  +":ns:yang:ietf-optical-impairment-topology";
+          + ":ns:yang:ietf-optical-impairment-topology";
 
   prefix "optical-imp-topo";
 
@@ -68,7 +68,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-08-12 {
+  revision 2021-10-22 {
     description
       "Initial Version";
     reference
@@ -90,159 +90,6 @@ module ietf-optical-impairment-topology {
         config false;
         description "Identifier of the carrier";
       }
-    }
-  }
-
-  grouping optical-fiber-data {
-    description
-    "optical link (fiber) attributes with impairment data";
-    leaf fiber-type {
-      type l0-types-ext:fiber-type;
-      config false;
-      description "fiber-type";
-    }
-
-    leaf span-length {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "km";
-      config false;
-      description "the lenght of the fiber span in km";
-    }
-
-    leaf input-power {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "dBm";
-      config false;
-      description
-      "Average input power level estimated at the receiver
-         of the link";
-    }
-
-    leaf output-power {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "dBm";
-      description
-      "Mean launched power at the transmitter of the link";
-    }
-
-    leaf pmd {
-      type decimal64 {
-        fraction-digits 8;
-        range "0..max";
-      }
-      units "ps/(km)^0.5";
-      config false;
-      description
-      "Polarization Mode Dispersion";
-    }
-
-    leaf cd {
-      type decimal64 {
-        fraction-digits 5;
-      }
-      units "ps/nm/km";
-      config false;
-      description
-      "Cromatic Dispersion";
-    }
-
-    leaf osnr {
-      type l0-types-ext:snr; 
-      config false;
-      description
-      "Optical Signal-to-Noise Ratio (OSNR) estimated
-         at the receiver";
-    }
-
-    leaf sigma {
-      type decimal64 {
-        fraction-digits 5;
-      }
-      units "dB";
-      config false;
-      description
-      "sigma in the Gausian Noise Model";
-    }
-  }
-
-  grouping optical-channel-data {
-  description
-    "optical impairment data per channel/wavelength";
-  leaf bit-rate {
-    type decimal64 {
-      fraction-digits 8;
-        range "0..max";
-    }
-    units "Gbit/s";
-    config false;
-    description
-      "Gross bit rate";
-  }
-
-  leaf BER {
-    type decimal64 {
-      fraction-digits 18;
-      range "0..max";
-    }
-    config false;
-    description
-      "BER (Bit Error Rate)";
-  }
-
-  leaf ch-input-power {
-    type decimal64 {
-      fraction-digits 2;
-    }
-    units "dBm";
-    config false;
-    description
-      "Per channel average input power level
-      estimated at the receiver of the link";
-  }
-
-  leaf ch-pmd {
-    type decimal64 {
-        fraction-digits 8;
-      range "0..max";
-    }
-    units "ps/(km)^0.5";
-    config false;
-    description
-      "per channel Polarization Mode Dispersion";
-  }
-
-  leaf ch-cd {
-    type decimal64 {
-            fraction-digits 5;
-    }
-    units "ps/nm/km";
-    config false;
-          description
-      "per channel Cromatic Dispersion";
-  }
-
-  leaf ch-osnr {
-    type l0-types-ext:snr;
-    config false;
-    description
-      "per channel Optical Signal-to-Noise Ratio
-            (OSNR) estimated at the receiver";
-   }
-
-    leaf q-factor {
-    type decimal64 {
-      fraction-digits 5;
-    }
-    units "dB";
-    config false;
-      description
-      "q-factor estimated at the receiver";
     }
   }
 
@@ -878,35 +725,58 @@ module ietf-optical-impairment-topology {
           description
             "unique id of the element if it exists";
         }
-
-          choice element {
-            mandatory true;
-            description "OMS element type";
-            case amplifier {
-              uses amplifier-params ;
+        container reverse-element-ref {
+          description
+            "It contains references to the elements which are
+            associated with this element in the reverse
+            direction.";
+          leaf link-ref {
+            type leafref {
+              path "../../../../../../../nt:link/nt:link-id";
             }
-            case fiber {
-              uses fiber-params ;
-            }
-            case concentratedloss {
-              uses concentratedloss-params ;
-            }
+            description
+              "The reference to the OMS link which the OMS elements
+              belongs to.";
           }
-        
+          leaf-list oms-element-ref {
+            type leafref {
+              path "../../../../../../../nt:link[nt:link-id="
+                 + "current()/../link-ref]/tet:te/"
+                 + "tet:te-link-attributes/OMS-attributes/"
+                 + "OMS-elements/elt-index";
+            }
+            description
+              "The references to the OMS elements.";
+          }
+        }
+        choice element {
+          mandatory true;
+          description "OMS element type";
+          case amplifier {
+            uses tet:geolocation-container;
+            uses amplifier-params;
+          }
+          case fiber {
+            uses fiber-params;
+          }
+          case concentratedloss {
+            uses concentratedloss-params ;
+          }
+        }
     }
   }
 
   grouping otsi-ref {
     description
       "References to an OTSi.
-      This grouping is intended to be reused within the tranceiver's
-      list only.";
+      This grouping is intended to be reused within the
+      transceiver's list only.";
     leaf otsi-group-ref {
       type leafref {
         path "../../../../../otsi-group/otsi-group-id";
       }
       description
-        "The OTSi generated by the tranceiver's transmitter.";
+        "The OTSi generated by the transceiver's transmitter.";
     }
     leaf otsi-ref {
       type leafref {
@@ -914,7 +784,7 @@ module ietf-optical-impairment-topology {
              "current()/../otsi-group-ref]/otsi/otsi-carrier-id";
       }
       description
-        "The OTSi generated by the tranceiver's transmitter.";
+        "The OTSi generated by the transceiver's transmitter.";
     }
   }
 /* Data nodes */
@@ -1034,12 +904,12 @@ module ietf-optical-impairment-topology {
         }
         container outgoing-otsi {
           description
-            "The OTSi generated by the tranceiver's transmitter.";
+            "The OTSi generated by the transceiver's transmitter.";
           uses otsi-ref;
         }
         container incoming-otsi {
           description
-            "The OTSi generated by the tranceiver's transmitter.";
+            "The OTSi generated by the transceiver's transmitter.";
           uses otsi-ref;
         }
         leaf configured-termination-type {
@@ -1057,7 +927,7 @@ module ietf-optical-impairment-topology {
           }
           description
             "Describes whether the current configuration of the
-            tranceiver is used in an Optical Tunnel termination
+            transceiver is used in an Optical Tunnel termination
             configuration or in a 3R configuration.
             
             If empty, it means that the transcevier is not used.";
@@ -1126,27 +996,28 @@ module ietf-optical-impairment-topology {
       "Tunnel termination point augmentation for non-sliceable
        transponder model.";
 
-    list transceiver {
+    list ttp-transceiver {
+      key "transponder-ref transceiver-ref";
       config false;
       description
-        "The list of the tranceivers used by the TTP.";
+        "The list of the transceivers used by the TTP.";
       leaf transponder-ref {
         type leafref {
           path "../../../../transponder/transponder-id";
         }
         description
-          "The reference to the transponder hosting the tranceiver
+          "The reference to the transponder hosting the transceiver
           of the TTP.";
       }
-      leaf tranceiver-ref {
+      leaf transceiver-ref {
         type leafref {
           path "deref(../transponder-ref)/../transceiver" +
                "/transceiver-id";
         }
         description
-          "The reference to the tranceiver of the TTP.";
+          "The reference to the transceiver of the TTP.";
       }
-    } // list of tranceivers
+    } // list of transceivers
   } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
@@ -1374,6 +1245,53 @@ module ietf-optical-impairment-topology {
       config false;
       description "pointer to the list set of ROADM 
       optical impairments";
+    }
+    list llc-transceiver {
+      key "ttp-transponder-ref ttp-transceiver-ref";
+      config false;
+      description
+        "The list of transceivers having a LLC different from the
+        default LLC.";
+      leaf ttp-transponder-ref {
+        type leafref {
+          path "../../../ttp-transceiver/transponder-ref";
+        }
+        description
+          "The reference to the transponder hosting the transceiver
+          of this LLCL entry.";
+      }
+      leaf ttp-transceiver-ref {
+        type leafref {
+          path "../../../ttp-transceiver/transceiver-ref";
+        }
+        description
+          "The reference to the the transceiver of this LLCL entry.";
+      }
+      leaf is-allowed {
+        type boolean;
+        description
+          "'true' - connectivity from this transceiver is allowed;
+          'false' - connectivity from this transceiver is
+          disallowed.";
+      }
+      leaf add-path-impairments {
+        type leafref {
+          path "../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM optical
+        impairments";
+      }
+      leaf drop-path-impairments {
+        type leafref {
+          path "../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM 
+        optical impairments";
+      }
     }
   } // augmentation local-link-connectivities
 
