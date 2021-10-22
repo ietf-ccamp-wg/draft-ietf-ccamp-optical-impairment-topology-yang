@@ -373,8 +373,8 @@ OTS Media Link represents a media link:
    An OMS Media link is terminated on both ends by a link termination
    point (LTP) as defined in <xref target="RFC8345"/>.
    Links in optical transport networks are typically bidirectional but
-   have to be modeled as a pair of two unidirection links following the
-   <xref target="RFC8345"/> modeling approach.
+   have to be modeled as a pair of two unidirectional links following
+   the  <xref target="RFC8345"/> modeling approach.
    Unlike TE links, which are unidirectional, the LTPs on either end
    of the TE link pair forming the bidirectional link, are bidirectional
    as described in
@@ -1410,102 +1410,121 @@ module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
+  augment /nw:networks/nw:network:
+    +--ro otsi-group* [otsi-group-id]
+       +--ro otsi-group-id    string
+       +--ro otsi* [otsi-carrier-id]
+          +--ro otsi-carrier-id           uint16
+          +--ro otsi-carrier-frequency?   frequency-thz
+          +--ro tx-channel-power?         dbm-t
+          +--ro rx-channel-power?         dbm-t
+          +--ro rx-total-power?           dbm-t
   augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
-       +--ro transponder-id    uint32
-       +--ro transceiver* [transceiver-id]
-          +--ro transceiver-id                   uint32
-          +--ro termination-type-capabilities?   enumeration
-          +--ro supported-3r-mode?               enumeration
-          +--ro configured-termination-type?     enumeration
-          +--ro supported-modes
-             +--ro supported-mode* [mode-id]
-                +--ro mode-id                      string
-                +--ro (mode)
-                   +--:(G.698.2)
-                   |  +--ro standard-mode?         standard-mode
-                   +--:(organizational-mode)
-                   |  +--ro organizational-mode
-                   |     +--ro operational-mode?
-                   |     |       operational-mode
-                   |     +--ro organization-identifier?
-                   |     |       organization-identifier
-                   |     +--ro min-central-frequency?
-                   |     |       frequency-thz
-                   |     +--ro max-central-frequency?
-                   |     |       frequency-thz
-                   |     +--ro minimum-channel-spacing?
-                   |     |       frequency-ghz
-                   |     +--ro tx-channel-power-min?      dbm-t
-                   |     +--ro tx-channel-power-max?      dbm-t
-                   |     +--ro rx-channel-power-min?      dbm-t
-                   |     +--ro rx-channel-power-max?      dbm-t
-                   |     +--ro rx-total-power-max?        dbm-t
-                   +--:(explicit-mode)
-                      +--ro explicit-mode
-                         +--ro supported-modes
-                         |  +--ro supported-application-codes*
-                         |  |       -> ../../../mode-id
-                         |  +--ro supported-organizational-modes*
-                         |          -> ../../../mode-id
-                         +--ro line-coding-bitrate?
-                         |       identityref
-                         +--ro max-polarization-mode-dispersion?
-                         |       decimal64
-                         +--ro max-chromatic-dispersion?
-                         |       decimal64
-                         +--ro chromatic-and-polarization-dispersion-penalty* []
-                         |  +--ro chromatic-dispersion
-                         |  |       decimal64
-                         |  +--ro polarization-mode-dispersion
-                         |  |       decimal64
-                         |  +--ro penalty
-                         |          decimal64
-                         +--ro max-diff-group-delay?
-                         |       int32
-                         +--ro max-polarization-dependent-loss-penalty* []
-                         |  +--ro max-polarization-dependent-loss
-                         |  |       decimal64
-                         |  +--ro penalty
-                         |          uint8
-                         +--ro available-modulation-type?
-                         |       identityref
-                         +--ro otsi-carrier-bandwidth?
-                         |       frequency-ghz
-                         +--ro min-OSNR?
-                         |       snr
-                         +--ro min-Q-factor?
-                         |       int32
-                         +--ro available-baud-rate?
-                         |       uint32
-                         +--ro nyquist-spacing-factor?
-                         |       decimal64
-                         +--ro roll-off?
-                         |       decimal64
-                         +--ro xtalk-penalty?
-                         |       int32
-                         +--ro available-fec-type?
-                         |       identityref
-                         +--ro fec-code-rate?
-                         |       decimal64
-                         +--ro fec-threshold?
-                         |       decimal64
-                         +--ro min-central-frequency?
-                         |       frequency-thz
-                         +--ro max-central-frequency?
-                         |       frequency-thz
-                         +--ro minimum-channel-spacing?
-                         |       frequency-ghz
-                         +--ro tx-channel-power-min?
-                         |       dbm-t
-                         +--ro tx-channel-power-max?
-                         |       dbm-t
-                         +--ro rx-channel-power-min?
-                         |       dbm-t
-                         +--ro rx-channel-power-max?
-                         |       dbm-t
-                         +--ro rx-total-power-max?
-                                 dbm-t
+    |  +--ro transponder-id                   uint32
+    |  +--ro termination-type-capabilities?   enumeration
+    |  +--ro supported-3r-mode?               enumeration
+    |  +--ro transceiver* [transceiver-id]
+    |     +--ro transceiver-id                 uint32
+    |     +--ro supported-modes
+    |     |  +--ro supported-mode* [mode-id]
+    |     |     +--ro mode-id                      string
+    |     |     +--ro (mode)
+    |     |        +--:(G.698.2)
+    |     |        |  +--ro standard-mode?         standard-mode
+    |     |        +--:(organizational-mode)
+    |     |        |  +--ro organizational-mode
+    |     |        |     +--ro operational-mode?
+    |     |        |     |       operational-mode
+    |     |        |     +--ro organization-identifier?
+    |     |        |     |       organization-identifier
+    |     |        |     +--ro min-central-frequency?
+    |     |        |     |       frequency-thz
+    |     |        |     +--ro max-central-frequency?
+    |     |        |     |       frequency-thz
+    |     |        |     +--ro central-frequency-step?
+    |     |        |     |       frequency-ghz
+    |     |        |     +--ro tx-channel-power-min?      dbm-t
+    |     |        |     +--ro tx-channel-power-max?      dbm-t
+    |     |        |     +--ro rx-channel-power-min?      dbm-t
+    |     |        |     +--ro rx-channel-power-max?      dbm-t
+    |     |        |     +--ro rx-total-power-max?        dbm-t
+    |     |        +--:(explicit-mode)
+    |     |           +--ro explicit-mode
+    |     |              +--ro supported-modes
+    |     |              |  +--ro supported-application-codes*
+    |     |              |  |       -> ../../../mode-id
+    |     |              |  +--ro supported-organizational-modes*
+    |     |              |          -> ../../../mode-id
+    |     |              +--ro line-coding-bitrate?
+    |     |              |       identityref
+    |     |              +--ro max-polarization-mode-dispersion?
+    |     |              |       decimal64
+    |     |              +--ro max-chromatic-dispersion?
+    |     |              |       decimal64
+    |     |              +--ro chromatic-and-polarization-dispersion-penalty* []
+    |     |              |  +--ro chromatic-dispersion
+    |     |              |  |       decimal64
+    |     |              |  +--ro polarization-mode-dispersion
+    |     |              |  |       decimal64
+    |     |              |  +--ro penalty
+    |     |              |          decimal64
+    |     |              +--ro max-diff-group-delay?
+    |     |              |       int32
+    |     |              +--ro max-polarization-dependent-loss-penalty* []
+    |     |              |  +--ro max-polarization-dependent-loss
+    |     |              |  |       decimal64
+    |     |              |  +--ro penalty
+    |     |              |          uint8
+    |     |              +--ro available-modulation-type?
+    |     |              |       identityref
+    |     |              +--ro min-OSNR?
+    |     |              |       snr
+    |     |              +--ro min-Q-factor?
+    |     |              |       int32
+    |     |              +--ro available-baud-rate?
+    |     |              |       uint32
+    |     |              +--ro roll-off?
+    |     |              |       decimal64
+    |     |              +--ro min-carrier-spacing?
+    |     |              |       frequency-ghz
+    |     |              +--ro available-fec-type?
+    |     |              |       identityref
+    |     |              +--ro fec-code-rate?
+    |     |              |       decimal64
+    |     |              +--ro fec-threshold?
+    |     |              |       decimal64
+    |     |              +--ro min-central-frequency?
+    |     |              |       frequency-thz
+    |     |              +--ro max-central-frequency?
+    |     |              |       frequency-thz
+    |     |              +--ro central-frequency-step?
+    |     |              |       frequency-ghz
+    |     |              +--ro tx-channel-power-min?
+    |     |              |       dbm-t
+    |     |              +--ro tx-channel-power-max?
+    |     |              |       dbm-t
+    |     |              +--ro rx-channel-power-min?
+    |     |              |       dbm-t
+    |     |              +--ro rx-channel-power-max?
+    |     |              |       dbm-t
+    |     |              +--ro rx-total-power-max?
+    |     |                      dbm-t
+    |     +--ro configured-mode?
+    |     |       -> ../supported-modes/supported-mode/mode-id
+    |     +--ro outgoing-otsi
+    |     |  +--ro otsi-group-ref?
+    |     |  |       -> ../../../../../otsi-group/otsi-group-id
+    |     |  +--ro otsi-ref?         leafref
+    |     +--ro incoming-otsi
+    |     |  +--ro otsi-group-ref?
+    |     |  |       -> ../../../../../otsi-group/otsi-group-id
+    |     |  +--ro otsi-ref?         leafref
+    |     +--ro configured-termination-type?   enumeration
+    +--ro regen-group* [group-id]
+       +--ro group-id           uint32
+       +--ro regen-metric?      uint32
+       +--ro transponder-ref*   -> ../../transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
@@ -1521,14 +1540,23 @@ module: ietf-optical-impairment-topology
        |  +--ro media-channels* [flexi-n]
        |     +--ro flexi-n           l0-types:flexi-n
        |     +--ro flexi-m?          l0-types:flexi-m
-       |     +--ro otsi-group-ref?   leafref
+       |     +--ro otsi-group-ref?
+       |     |       -> /nw:networks/network/otsi-group/otsi-group-id
        |     +--ro otsi-ref?         leafref
        |     +--ro delta-power?      decimal64
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
           +--ro oms-element-uid?          string
+          +--ro reverse-element-ref
+          |  +--ro link-ref?
+          |  |       -> ../../../../../../../nt:link/link-id
+          |  +--ro oms-element-ref*   leafref
           +--ro (element)
              +--:(amplifier)
+             |  +--ro geolocation
+             |  |  +--ro altitude?    int64
+             |  |  +--ro latitude?    geographic-coordinate-degree
+             |  |  +--ro longitude?   geographic-coordinate-degree
              |  +--ro amplifier
              |     +--ro type-variety    string
              |     +--ro operational
@@ -1567,22 +1595,10 @@ module: ietf-optical-impairment-topology
                    +--ro loss    decimal64
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
-    +--ro otsi-group* [otsi-group-id]
-    |  +--ro otsi-group-id    int16
-    |  +--ro otsi* [otsi-carrier-id]
-    |     +--ro otsi-carrier-id           int16
-    |     +--ro transponder-ref?
-    |     |       -> ../../../../../transponder/transponder-id
-    |     +--ro transceiver-ref?          leafref
-    |     +--ro configured-mode?          leafref
-    |     +--ro otsi-carrier-frequency?   frequency-thz
-    |     +--ro tx-channel-power?         dbm-t
-    |     +--ro rx-channel-power?         dbm-t
-    |     +--ro rx-total-power?           dbm-t
-    +--ro transceiver* []
-       +--ro transponder-ref?
+    +--ro ttp-transceiver* [transponder-ref transceiver-ref]
+       +--ro transponder-ref
        |       -> ../../../../transponder/transponder-id
-       +--ro tranceiver-ref?    leafref
+       +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
@@ -1652,6 +1668,14 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
+    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
+       +--ro ttp-transponder-ref
+       |       -> ../../../ttp-transceiver/transponder-ref
+       +--ro ttp-transceiver-ref
+       |       -> ../../../ttp-transceiver/transceiver-ref
+       +--ro is-allowed?              boolean
+       +--ro add-path-impairments?    leafref
+       +--ro drop-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
@@ -1675,7 +1699,7 @@ module ietf-optical-impairment-topology {
   yang-version 1.1;
 
   namespace "urn:ietf:params:xml"
-  +":ns:yang:ietf-optical-impairment-topology";
+          + ":ns:yang:ietf-optical-impairment-topology";
 
   prefix "optical-imp-topo";
 
@@ -1741,7 +1765,7 @@ module ietf-optical-impairment-topology {
 // the format is (year-month-day)
 
 
-  revision 2021-07-05 {
+  revision 2021-10-22 {
     description
       "Initial Version";
     reference
@@ -1750,90 +1774,6 @@ module ietf-optical-impairment-topology {
   }
 
   // grouping
-
-  grouping transponder-attributes {
-    description "Configuration of an optical transponder";
-
-    leaf-list available-modulation-types {
-      type identityref {
-      base l0-types-ext:modulation;
-      }
-      config false;
-    description
-      "List of modulation types the OTSi supports";
-    }
-
-    leaf configured-modulation-type {
-      type identityref {
-      base l0-types-ext:modulation;
-      }
-    config false;
-      description
-      "Currently configured OTSi modulation type";
-    }
-
-    leaf-list available-baud-rates {
-      type uint32;
-        units Bd;
-      config false;
-      description
-        "list of available baud-rates. 
-         Baud-rate is the unit for
-         symbol rate or modulation rate 
-         in symbols per second or
-         pulses per second. 
-         It is the number of distinct symbol
-         changes (signal events) made to the 
-         transmission medium
-         per second in a digitally 
-         modulated signal or a line code";
-    }
-
-    leaf configured-baud-rate {
-      type uint32;
-      units Bd;
-    config false;
-      description "configured baud-rate";
-    }
-
-    leaf-list available-FEC-types {
-      type identityref {
-      base l0-types-ext:fec-type;
-      }
-      config false;
-      description "List determining all the available FEC";
-    }
-
-    leaf configured-FEC-type {
-      type identityref {
-      base l0-types-ext:fec-type;
-      }
-      config false;
-    description
-      "FEC type configured for the transponder";
-    }
-
-    leaf FEC-code-rate {
-      type decimal64 {
-      fraction-digits 8;
-      range "0..max";
-      }
-      config false;
-      description "FEC-code-rate";
-    }
-
-    leaf FEC-threshold {
-      type decimal64 {
-      fraction-digits 8;
-      range "0..max";
-      }
-      config false;
-    description
-        "Threshold on the BER, for which FEC 
-         is able to correct errors";
-    }
-
-  }
 
   grouping sliceable-transponder-attributes {
     description
@@ -1847,159 +1787,6 @@ module ietf-optical-impairment-topology {
         config false;
         description "Identifier of the carrier";
       }
-    }
-  }
-
-  grouping optical-fiber-data {
-    description
-    "optical link (fiber) attributes with impairment data";
-    leaf fiber-type {
-      type l0-types-ext:fiber-type;
-      config false;
-      description "fiber-type";
-    }
-
-    leaf span-length {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "km";
-      config false;
-      description "the lenght of the fiber span in km";
-    }
-
-    leaf input-power {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "dBm";
-      config false;
-      description
-      "Average input power level estimated at the receiver
-         of the link";
-    }
-
-    leaf output-power {
-      type decimal64 {
-        fraction-digits 2;
-      }
-      units "dBm";
-      description
-      "Mean launched power at the transmitter of the link";
-    }
-
-    leaf pmd {
-      type decimal64 {
-        fraction-digits 8;
-        range "0..max";
-      }
-      units "ps/(km)^0.5";
-      config false;
-      description
-      "Polarization Mode Dispersion";
-    }
-
-    leaf cd {
-      type decimal64 {
-        fraction-digits 5;
-      }
-      units "ps/nm/km";
-      config false;
-      description
-      "Cromatic Dispersion";
-    }
-
-    leaf osnr {
-      type l0-types-ext:snr; 
-      config false;
-      description
-      "Optical Signal-to-Noise Ratio (OSNR) estimated
-         at the receiver";
-    }
-
-    leaf sigma {
-      type decimal64 {
-        fraction-digits 5;
-      }
-      units "dB";
-      config false;
-      description
-      "sigma in the Gausian Noise Model";
-    }
-  }
-
-  grouping optical-channel-data {
-  description
-    "optical impairment data per channel/wavelength";
-  leaf bit-rate {
-    type decimal64 {
-      fraction-digits 8;
-        range "0..max";
-    }
-    units "Gbit/s";
-    config false;
-    description
-      "Gross bit rate";
-  }
-
-  leaf BER {
-    type decimal64 {
-      fraction-digits 18;
-      range "0..max";
-    }
-    config false;
-    description
-      "BER (Bit Error Rate)";
-  }
-
-  leaf ch-input-power {
-    type decimal64 {
-      fraction-digits 2;
-    }
-    units "dBm";
-    config false;
-    description
-      "Per channel average input power level
-      estimated at the receiver of the link";
-  }
-
-  leaf ch-pmd {
-    type decimal64 {
-        fraction-digits 8;
-      range "0..max";
-    }
-    units "ps/(km)^0.5";
-    config false;
-    description
-      "per channel Polarization Mode Dispersion";
-  }
-
-  leaf ch-cd {
-    type decimal64 {
-            fraction-digits 5;
-    }
-    units "ps/nm/km";
-    config false;
-          description
-      "per channel Cromatic Dispersion";
-  }
-
-  leaf ch-osnr {
-    type l0-types-ext:snr;
-    config false;
-    description
-      "per channel Optical Signal-to-Noise Ratio
-            (OSNR) estimated at the receiver";
-   }
-
-    leaf q-factor {
-    type decimal64 {
-      fraction-digits 5;
-    }
-    units "dB";
-    config false;
-      description
-      "q-factor estimated at the receiver";
     }
   }
 
@@ -2556,37 +2343,8 @@ module ietf-optical-impairment-topology {
         "list of OTSi contained in 1 OTSiG.
         The list could also be of only 1 element";
       leaf otsi-carrier-id {
-        type int16;
+        type uint16;
         description "OTSi carrier-id";
-      }
-
-/*any OTSi as signal generated by transceiver and*/
-/* attached to a transponder.*/ 
-       
-    
-      leaf transponder-ref { 
-        type leafref {
-          path "../../../../../transponder/transponder-id";
-        }
-        description
-          "Reference to the configured transponder";
-      }
-      leaf transceiver-ref {
-        type leafref {
-          path "deref(../transponder-ref)/../transceiver/" +
-               "transceiver-id";
-        }
-        description
-          "Reference to the configured transceiver " ;
-      }
-      leaf configured-mode { 
-        type leafref {
-          path "deref(../transceiver-ref)/../supported-modes/" +
-               "supported-mode/mode-id";
-        }
-        description
-          "Reference to the configured mode for transceiver
-           compatibility approach";
       }
       uses l0-types-ext:common-transceiver-configured-param;
     } // OTSi list
@@ -2613,10 +2371,8 @@ module ietf-optical-impairment-topology {
 
         leaf otsi-group-ref {
           type leafref {
-            path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point" +
-                "/otsi-group/otsi-group-id" ;
-            }
+            path "/nw:networks/nw:network/otsi-group/otsi-group-id";
+          }
           description
             "Reference to the otsi-group list to get otsi-group
             identifier of the
@@ -2625,10 +2381,9 @@ module ietf-optical-impairment-topology {
         }
         leaf otsi-ref {
           type leafref {
-            path "/nw:networks/nw:network/nw:node/tet:te" +
-                "/tet:tunnel-termination-point/"  
-               +"otsi-group[otsi-group-id=current()"
-               +"/../otsi-group-ref]/"
+            path "/nw:networks/nw:network/"  
+               + "otsi-group[otsi-group-id=current()"
+               + "/../otsi-group-ref]/"
                + "otsi/otsi-carrier-id" ;
           }
           description
@@ -2660,31 +2415,75 @@ module ietf-optical-impairment-topology {
           description
             "ordered list of Index of OMS element 
             (whether it's a Fiber, an EDFA or a
-Concentratedloss)";
+            Concentratedloss)";
         }
         leaf oms-element-uid {
           type string;
           description
             "unique id of the element if it exists";
         }
-
-          choice element {
-            mandatory true;
-            description "OMS element type";
-            case amplifier {
-              uses amplifier-params ;
+        container reverse-element-ref {
+          description
+            "It contains references to the elements which are
+            associated with this element in the reverse
+            direction.";
+          leaf link-ref {
+            type leafref {
+              path "../../../../../../../nt:link/nt:link-id";
             }
-            case fiber {
-              uses fiber-params ;
-            }
-            case concentratedloss {
-              uses concentratedloss-params ;
-            }
+            description
+              "The reference to the OMS link which the OMS elements
+              belongs to.";
           }
-        
+          leaf-list oms-element-ref {
+            type leafref {
+              path "../../../../../../../nt:link[nt:link-id="
+                 + "current()/../link-ref]/tet:te/"
+                 + "tet:te-link-attributes/OMS-attributes/"
+                 + "OMS-elements/elt-index";
+            }
+            description
+              "The references to the OMS elements.";
+          }
+        }
+        choice element {
+          mandatory true;
+          description "OMS element type";
+          case amplifier {
+            uses tet:geolocation-container;
+            uses amplifier-params;
+          }
+          case fiber {
+            uses fiber-params;
+          }
+          case concentratedloss {
+            uses concentratedloss-params ;
+          }
+        }
     }
   }
 
+  grouping otsi-ref {
+    description
+      "References to an OTSi.
+      This grouping is intended to be reused within the
+      transceiver's list only.";
+    leaf otsi-group-ref {
+      type leafref {
+        path "../../../../../otsi-group/otsi-group-id";
+      }
+      description
+        "The OTSi generated by the transceiver's transmitter.";
+    }
+    leaf otsi-ref {
+      type leafref {
+        path "../../../../../otsi-group[otsi-group-id=" +
+             "current()/../otsi-group-ref]/otsi/otsi-carrier-id";
+      }
+      description
+        "The OTSi generated by the transceiver's transmitter.";
+    }
+  }
 /* Data nodes */
 
   augment "/nw:networks/nw:network/nw:network-types"
@@ -2696,6 +2495,30 @@ Concentratedloss)";
      description
      "Container to identify impairment-aware topology type";
    }
+  }
+
+  augment "/nw:networks/nw:network" {
+    when "nw:network-types/tet:te-topology" +
+         "/optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment.";
+    }
+    description
+      "Network augmentation for optical impairments data.";
+    list otsi-group {
+      key "otsi-group-id";
+      config false;
+      description
+        "the list of possible OTSiG representing client digital
+        stream";
+      leaf otsi-group-id {
+        type string;
+        description
+          "A network-wide unique identifier of otsi-group element.
+          It could be structured e.g., as an URI or as an UUID.";
+      }
+      uses otsi-group;
+    } // list of OTSiG
   }
 
   augment "/nw:networks/nw:network/nw:node" {
@@ -2714,7 +2537,51 @@ Concentratedloss)";
         type uint32;
         description "transponder identifier";
       }
-
+      leaf termination-type-capabilities {
+        type enumeration {
+          enum tunnel-only {
+            description
+              "The transponder can only be used in an Optical
+              Tunnel termination configuration.";
+          }
+          enum 3r-only {
+            description
+              "The transponder can only be used in a 3R
+              configuration.";
+          }
+          enum 3r-or-tunnel {
+            description
+              "The transponder can be configure to be used either
+              in an Optical Tunnel termination configuration or in
+              a 3R configuration.";
+          }
+        }
+        description
+          "Describes whether the transponder can be used in an
+          Optical Tunnel termination configuration or in a 3R
+          configuration (or both).";
+      }
+      leaf supported-3r-mode {
+        when '(../termination-type-capabilities = "3r-only") or
+              (../termination-type-capabilities = "3r-or-tunnel")'
+              {
+          description
+            "Applies only when the transponder supports 3R
+            configuration.";
+        }
+        type enumeration {
+          enum unidir {
+            description
+              "Unidirectional 3R configuration.";
+          }
+          enum bidir {
+            description
+              "Bidirectional 3R configuration.";
+          }
+        }
+        description
+          "Describes the supported 3R configuration type."; 
+      }
       list transceiver {
         key "transceiver-id";
         config false;
@@ -2723,50 +2590,24 @@ Concentratedloss)";
           type uint32;
           description "transceiver identifier";
         }
-        leaf termination-type-capabilities {
-          type enumeration {
-            enum tunnel-only {
-              description
-                "The transceiver can only be used in an Optical
-                Tunnel termination configuration.";
-            }
-            enum 3r-only {
-              description
-                "The transceiver can only be used in a 3R
-                configuration.";
-            }
-            enum 3r-or-tunnel {
-              description
-                "The transceiver can be configure to be used either
-                in an Optical Tunnel termination configuration or in
-                a 3R configuration.";
-            }
+        uses l0-types-ext:transceiver-capabilities;
+        leaf configured-mode {
+          type leafref {
+            path "../supported-modes/supported-mode/mode-id";
           }
           description
-            "Describes whether the tranceiver can be used in an
-            Optical Tunnel termination configuration or in a 3R
-            configuration (or both).";
+            "Reference to the configured mode for transceiver
+            compatibility approach.";
         }
-        leaf supported-3r-mode {
-          when '(../termination-type-capabilities = "3r-only") or
-                (../termination-type-capabilities = "3r-or-tunnel")'
-                {
-            description
-              "Applies only when the tranceiver supports 3R
-              configuration.";
-          }
-          type enumeration {
-            enum unidir {
-              description
-                "Unidirectional 3R configuration.";
-            }
-            enum bidir {
-              description
-                "Bidirectional 3R configuration.";
-            }
-          }
+        container outgoing-otsi {
           description
-            "Describes the supported 3R configuration type."; 
+            "The OTSi generated by the transceiver's transmitter.";
+          uses otsi-ref;
+        }
+        container incoming-otsi {
+          description
+            "The OTSi generated by the transceiver's transmitter.";
+          uses otsi-ref;
         }
         leaf configured-termination-type {
           type enumeration {
@@ -2783,14 +2624,42 @@ Concentratedloss)";
           }
           description
             "Describes whether the current configuration of the
-            tranceiver is used in an Optical Tunnel termination
+            transceiver is used in an Optical Tunnel termination
             configuration or in a 3R configuration.
             
             If empty, it means that the transcevier is not used.";
         }
-        uses l0-types-ext:transceiver-capabilities;
       } // end of list of transceiver 
     } // end list of transponder
+    list regen-group {
+      key "group-id";
+      config false;
+      description
+        "List of 3R groups.
+        Any 3R group represent a group of transponder in which an a
+        an electrical connectivity is either in place or could be
+        dynamically provided, to associated transponders used for 3R
+        regeneration.";
+      leaf group-id {
+        type uint32;
+        description
+          "Group identifier used an index to access elements in the
+          list of 3R groups.";
+      }
+      leaf regen-metric {
+        type uint32;
+        description
+          "The cost permits choice among different group of
+          transponders during path computation";
+      }
+      leaf-list transponder-ref {
+        type leafref {
+          path "../../transponder/transponder-id";
+        }
+        description
+          "The list of transponder belonging to this 3R group.";
+      }
+    } // end 3R-group
   }
 
   augment "/nw:networks/nw:network/nt:link/tet:te"
@@ -2824,39 +2693,28 @@ Concentratedloss)";
       "Tunnel termination point augmentation for non-sliceable
        transponder model.";
 
-    list otsi-group {
-      key "otsi-group-id";
+    list ttp-transceiver {
+      key "transponder-ref transceiver-ref";
       config false;
       description
-        "the list of possible OTSiG representing client digital
-        stream";
-      leaf otsi-group-id {
-        type int16;
-        description "index of otsi-group element";
-      }
-      uses otsi-group;
-    } // list of OTSiG
-    list transceiver {
-      config false;
-      description
-        "The list of the tranceivers used by the TTP.";
+        "The list of the transceivers used by the TTP.";
       leaf transponder-ref {
         type leafref {
           path "../../../../transponder/transponder-id";
         }
         description
-          "The reference to the transponder hosting the tranceiver
+          "The reference to the transponder hosting the transceiver
           of the TTP.";
       }
-      leaf tranceiver-ref {
+      leaf transceiver-ref {
         type leafref {
           path "deref(../transponder-ref)/../transceiver" +
                "/transceiver-id";
         }
         description
-          "The reference to the tranceiver of the TTP.";
+          "The reference to the transceiver of the TTP.";
       }
-    } // list of tranceivers
+    } // list of transceivers
   } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
@@ -3085,6 +2943,53 @@ Concentratedloss)";
       description "pointer to the list set of ROADM 
       optical impairments";
     }
+    list llc-transceiver {
+      key "ttp-transponder-ref ttp-transceiver-ref";
+      config false;
+      description
+        "The list of transceivers having a LLC different from the
+        default LLC.";
+      leaf ttp-transponder-ref {
+        type leafref {
+          path "../../../ttp-transceiver/transponder-ref";
+        }
+        description
+          "The reference to the transponder hosting the transceiver
+          of this LLCL entry.";
+      }
+      leaf ttp-transceiver-ref {
+        type leafref {
+          path "../../../ttp-transceiver/transceiver-ref";
+        }
+        description
+          "The reference to the the transceiver of this LLCL entry.";
+      }
+      leaf is-allowed {
+        type boolean;
+        description
+          "'true' - connectivity from this transceiver is allowed;
+          'false' - connectivity from this transceiver is
+          disallowed.";
+      }
+      leaf add-path-impairments {
+        type leafref {
+          path "../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM optical
+        impairments";
+      }
+      leaf drop-path-impairments {
+        type leafref {
+          path "../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM 
+        optical impairments";
+      }
+    }
   } // augmentation local-link-connectivities
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -3121,8 +3026,7 @@ Concentratedloss)";
       impairments";
     }
   } // augmentation local-link-connectivity
-}
-<CODE ENDS>
+}<CODE ENDS>
 ]]>
   </artwork></figure>
   
