@@ -231,8 +231,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
    +-------------+--------------------------+--------------------------+
    | optical-    | ietf-optical-impairment- | [RFCXXXX]                |
    | imp-topo    | topology                 |                          |
-   | layer0-type | ietf-layer0-types        | [I-D.ietf-ccamp-layer0-t |
-   | s           |                          | ypes]                    |
+   | layer0-type | ietf-layer0-types        | [RFC9093]                |
+   | s           |                          |                          |
    | l0-types-   | ietf-layer0-types-ext    | [I-D.ietf-ccamp-layer0-t |
    | ext         |                          | ypes-ext]                |
    | nw          | ietf-network             | [RFC8345]                |
@@ -3450,22 +3450,22 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2021
               DOI 10.17487/RFC8453, August 2018,
               <https://www.rfc-editor.org/info/rfc8453>.
 
-   [I-D.ietf-ccamp-wson-yang]
-              Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
-              YANG Data Model for Wavelength Switched Optical Networks
-              (WSONs)", draft-ietf-ccamp-wson-yang-28 (work in
-              progress), December 2020.
+   [RFC9093]  Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
+              YANG Data Model for Layer 0 Types", RFC 9093,
+              DOI 10.17487/RFC9093, August 2021,
+              <https://www.rfc-editor.org/info/rfc9093>.
 
-   [I-D.ietf-ccamp-layer0-types]
-              Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
-              YANG Data Model for Layer 0 Types", draft-ietf-ccamp-
-              layer0-types-09 (work in progress), December 2020.
+   [RFC9094]  Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
+              YANG Data Model for Wavelength Switched Optical Networks
+              (WSONs)", RFC 9094, DOI 10.17487/RFC9094, August 2021,
+              <https://www.rfc-editor.org/info/rfc9094>.
 
    [I-D.ietf-ccamp-layer0-types-ext]
               Beller, D., Belotti, S., Zheng, H., Busi, I., and E. L.
               Rouzic, "A YANG Data Model for Layer 0 Types - Revision
               2", draft-ietf-ccamp-layer0-types-ext-00 (work in
               progress), August 2021.
+
 
 
 
