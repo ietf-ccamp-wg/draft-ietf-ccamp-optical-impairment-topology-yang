@@ -134,7 +134,7 @@ module: ietf-optical-impairment-topology
        |     +--ro flexi-m?          l0-types:flexi-m
        |     +--ro otsi-group-ref?
        |     |       -> /nw:networks/network/otsi-group/otsi-group-id
-       |     +--ro otsi-ref?         leafref
+       |     +--ro otsi-ref*         leafref
        |     +--ro delta-power?      decimal64
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
@@ -260,17 +260,17 @@ module: ietf-optical-impairment-topology
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
-    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
-       +--ro ttp-transponder-ref
-       |       -> ../../../ttp-transceiver/transponder-ref
-       +--ro ttp-transceiver-ref
-       |       -> ../../../ttp-transceiver/transceiver-ref
-       +--ro is-allowed?              boolean
-       +--ro add-path-impairments?    leafref
-       +--ro drop-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
+    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
+       +--ro ttp-transponder-ref
+       |       -> ../../../../ttp-transceiver/transponder-ref
+       +--ro ttp-transceiver-ref
+       |       -> ../../../../ttp-transceiver/transceiver-ref
+       +--ro is-allowed?              boolean
+       +--ro add-path-impairments?    leafref
+       +--ro drop-path-impairments?   leafref
