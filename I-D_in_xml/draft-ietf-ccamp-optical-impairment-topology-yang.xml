@@ -62,7 +62,7 @@
   </address>
   </author>
 
-  <author initials="D." surname="Beller" fullname="Dieter Beller">
+  <author initials="D." surname="Beller" fullname="Dieter Beller" role="editor">
   <organization>Nokia</organization>
   <address><email>Dieter.Beller@nokia.com</email>
   </address>
@@ -140,8 +140,8 @@
   </t>
 
   <t>
-   This document augments the generic TE topology draft
-   <xref target="RFC8795"/> where possible.
+   This document augments the generic TE topology YANG model defined
+   in <xref target="RFC8795"/> where possible.
   </t>
 
   <t>
@@ -158,8 +158,8 @@
   </t>
 
   <t>
-   The following terms are defined in <xref target="RFC7950"/> and 
-   are not redefined here:
+   The following terms are defined in <xref target="RFC7950"/> and are
+   not redefined here:
   </t>
 
   <t><list style="symbols"><?rfc subcompact="yes"?>
@@ -172,8 +172,8 @@
   </list></t>
 
   <t>
-   The following terms are defined in <xref target="RFC6241"/> and are not
-   redefined here:
+   The following terms are defined in <xref target="RFC6241"/> and are
+   not redefined here:
   </t>
 
   <t><list style="symbols"><?rfc subcompact="yes"?>
@@ -185,6 +185,33 @@
   <t>
    The terminology for describing YANG data models is found in
    <xref target="RFC7950"/>.
+  </t>
+  
+  <t>
+   The term ROADM in this document refers to the term "multi-degree
+   reconfigurable optical add/drop multiplexer (MD-ROADM)" as defined
+   in <xref target="G.672"/>.  It does not include local optical
+   transponders, which can be co-located in the same physical device
+   (managed entity).
+  </t>
+  
+  <t>
+   The term WDM-node refers to a physical device, which is managed as
+   a single network element. 
+  </t>
+  
+  <t>
+   The term WDM-TE-node refers to those parts of a WDM-node (physical
+   device) that are modeled as a TE-node as defined in
+   <xref target="RFC8795"/>, which may include a ROADM and/or multiple
+   local optical transponders(OTs). Hence, a WDM-TE-node may only
+   contain OTs.
+  </t>
+
+  <t>
+   The term "WDM-TE-network" refers to a set of WDM-TE-nodes as defined
+   above that are interconnected via TE-links carrying WDM signals.
+   These TE-links may include optical amplifiers.
   </t>
 
   </section>
@@ -284,10 +311,11 @@
   </figure>
   
   <t>
-   The models developed in this document is an abstracted YANG model
-   that may be used in the interfaces between the MDSC and the Optical
-   Domain Controller (aka MPI) and between the Optical Domain
-   Controller and the Optical Device (aka SBI) in <xref target="Figure-1"/>.
+   The topology model developed in this document is an abstracted
+   topology YANG model that can be used at the interfaces between the
+   MDSC and the Optical Domain Controller (aka MPI) and between the
+   Optical Domain Controller and the Optical Device (aka SBI) in
+   <xref target="Figure-1"/>.
    It is not intended to support a detailed low-level DWDM interface
    model. DWDM interface model is supported by the models presented in
    <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/>.
@@ -295,11 +323,11 @@
   
   </section>
 
-  <section title="Transport Data Plane" anchor="sect-2.2">
+  <section title="Optical Transport Network Data Plane" anchor="sect-2.2">
   <t>
-   This section provides the description of the reference optical
-   network architecture and its relevant components to support optical
-   impairment-aware path computation.
+   This section provides the description of the optical transport
+   network reference architecture and its relevant components to
+   support optical impairment-aware path computation.
   </t>
 
   <t>
@@ -309,74 +337,82 @@
   <figure title="Reference Architecture for Optical Transport Network"
    anchor="Figure-2"><artwork><![CDATA[
   +-------------------+                      +-------------------+
-  |     ROADM Node    |                      |     ROADM Node    |
+  |      WDM-Node     |                      |      WDM-Node     |
   |                   |                      |                   |
   | PA  +-------+ BA  |         ILA          | PA  +-------+ BA  |
-  | +-+ | WSS/  | +-+ |  _____  +--+  _____  | +-+ |  WSS/ | +-+ |
---|-| |-|Filter |-| |-|-()____)-|  |-()____)-|-| |-|Filter |-| |-|--
+  | +-+ |       | +-+ |  _____  +--+  _____  | +-+ |       | +-+ |
+--|-| |-| ROADM |-| |-|-()____)-|  |-()____)-|-| |-| ROADM |-| |-|--
   | +-+ |       | +-+ |         +--+         | +-+ |       | +-+ |
   |     +-------+     | optical              |     +-------+     |
   |       | | |       |  fiber               |       | | |       |
   |       o o o       |                      |       o o o       |
+  |    local          |                      |    local          |
   |    transponders   |                      |    transponders   |
   +-------------------+                      +-------------------+
-                      OTS Link       OTS Link
+                      
+                       OTS MCG        OTS MCG
                      <--------->    <--------->
-                              OMS Link
+                         OMS MCG = TE-link
                  <-------------------------------->
 
-   PA: Pre-Amplifier (or ingress amplifier)
    BA: Booster Amplifier (or egress amplifier)
+   PA: Pre-Amplifier (or ingress amplifier)
    ILA: In-Line Amplifier
+   MCG: Media Channel Group
 ]]></artwork>
   </figure>
   
   <t>
-   BA (on the left side ROADM) is the ingress Amplifier and PA (on the
-   right side ROADM is the egress amplifier for the OMS link shown in
-   <xref target="Figure-2"/>.
+   BA (on the left side WDM-TE-node) is the engress Amplifier and PA
+   (on the right side WDM-TE-node is the ingress amplifier for the OMS
+   Media Channel Group (MCG) <xref target="Figure-2"/>.
   </t>
   
   </section>
 
-  <section title="OMS Media Links" anchor="sect-2.3">
+  <section title="OMS Media Channel Group" anchor="sect-2.3">
   <t>
-   According to <xref target="G.872"/>, OMS Media Link represents a media
-   link between two ROADMs. Specifically, it originates at the ROADM's
-   Filter in the source ROADM and terminates at the ROADM's Filter in the
-   destination ROADM.
+   According to <xref target="G.807"/> and <xref target="G.872"/>, an
+   OMS Media Channel Group (MCG) represents a topological construct
+   between two WDM-TE-nodes.
+   In TE-topolgy terms, an OMS MCG corresponds to a WDM TE-link
+   interconnecting two WDM-TE-nodes.
+   Specifically, it originates at the ROADM in the source WDM-TE-node
+   and terminates at the ROADM in the destination ROADM including the
+   Booster Amplifier (BA) and the Pre-Amplifier in the WDM-TE-nodes as
+   well as In-Line Amplifiers (ILAs).
   </t>
 
   <figure><artwork><![CDATA[
-OTS Media Link represents a media link:
+OTS Media Channel Group represents a link:
 
-  (i)  between ROADM's BA and ILA;
- (ii)  between a pair of ILAs;
-(iii)  between ILA and ROADM's PA.
+  (i)  between a WDM-TE-node's BA and the adjacent ILA,
+ (ii)  between a pair of ILAs,
+(iii)  between an ILA and the adjacent WDM-TE-node's PA.
 ]]></artwork>
   </figure>
   
   <t>
-   OMS Media link can be decomposed in a sequence of OTS links type
-   (i), (ii), and (iii) as discussed above. OMS Media link would give
-   an abstracted view of impairment data (e.g., power, OSNR, etc.) to
-   the network controller.
+   An OMS MCG can be decomposed into a sequence of OTS MCGs of type
+   (i), (ii), and (iii) as listed above. An OMS MCG (TE-link) provides
+   the optical impairment data for its elements defined in the layer-0
+   topology YANG model and can be retrieved by a network controller.
   </t>
 
   <t>
-   For the sake of optical impairment evaluation OMS Media link can be
-   also decomposed in a sequence of elements such as BA, fiber section,
-   ILA, concentrated loss and PA.
+   For the sake of optical impairment modeling, an OMS MCG can also be
+   decomposed into a sequence of elements such as BA, fiber section,
+   ILA, concentrated loss, and PA.
   </t>
   
   <t>
-   An OMS Media link is terminated on both ends by a link termination
-   point (LTP) as defined in <xref target="RFC8345"/>.
+   An OMS MCG is terminated on both ends by a link termination point
+   (LTP) as defined in <xref target="RFC8345"/>.
    Links in optical transport networks are typically bidirectional but
    have to be modeled as a pair of two unidirectional links following
    the  <xref target="RFC8345"/> modeling approach.
-   Unlike TE links, which are unidirectional, the LTPs on either end
-   of the TE link pair forming the bidirectional link, are bidirectional
+   Unlike TE-links, which are unidirectional, the LTPs on either end
+   of the TE-link pair forming the bidirectional link, are bidirectional
    as described in
    <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and the
    pair of unidirectional links are connected to the same bidirectional
@@ -386,7 +422,7 @@ OTS Media Link represents a media link:
 
   <t>
    [Editor's note: text below related to <xref target="G.807"/> needs to
-   be revised! <xref target="G.807"/> is now in publication process.]
+   be revised based on the published <xref target="G.807"/> revision!]
   </t>
 
   <section title="Optical Tributary Signal (OTSi)" anchor="sect-2.3.1">
@@ -1149,14 +1185,14 @@ OTS Media Link represents a media link:
 
   </section>
 
-  <section title="ROADM Node Architectures" anchor="sect-2.9">
+  <section title="WDM-TE-Node Architectures" anchor="sect-2.9">
   <t>
-   The ROADM node architectures in today's dense wavelength division
+   The WDM-TE-node architectures in today's dense wavelength division
    multiplexing (DWDM) networks can be categorized as follows:
   </t>
 
   <t><list style="symbols"><!--<?rfc subcompact="yes"?>-->
-   <t>Integrated ROADM architecture with integrated optical transponders</t>
+   <t>WDM-TE-node architecture with integrated optical transponders</t>
 
    <t>Integrated ROADM architecture with integrated optical transponders
       and single channel add/drop ports for remote optical transponders</t>
@@ -1213,13 +1249,14 @@ OTS Media Link represents a media link:
   <figure align="center" title="ROADM Architectiure with Integrated Transponders"
    anchor="Figure-6"><artwork><![CDATA[
             . . . . . . . . . . . . . . . . . .
+            .           WDM-TE-Node           .
       +-----.-------------------------------- .-----+
-      |     .              ROADM              .     |
+      |     .             WDM-Node            .     |
       |     .   /|  +-----------------+  |\   .     |
  Line |     .  / |--|                 |--| \  .     | Line
  WEST |  /| . |  |--|                 |--|  | . |\  | EAST
-------+-/ |-.-|  |--|       OCX       |--|  |-.-| \-+-----
-------+-\ |-.-|  |--|                 |--|  |-.-| /-+-----
+------+-/ |-.-|  |--|  photonic       |--|  |-.-| \-+-----
+------+-\ |-.-|  |--|  cross-connect  |--|  |-.-| /-+-----
       |  \| . |  |--|                 |--|  | . |/  |
       |     .  \ |--|                 |--| /  .     |
       |     .   \|  +-----------------+  |/   .     |
@@ -1231,7 +1268,7 @@ OTS Media Link represents a media link:
       |     .      | |   | |   | |   | |      .     |
       +-----.------+-+---+-+---+-+---+-+------.-----+
             . . . .|.| . |.| . |.| . |.|. . . .
-                   | |   | |   | |   | |     TE Node
+                   | |   | |   | |   | |
                      Client Interfaces
 ]]></artwork>
   </figure>
@@ -1264,14 +1301,14 @@ OTS Media Link represents a media link:
   <figure align="center" title="ROADM Architectiure with Remote Transponders"
    anchor="Figure-7"><artwork><![CDATA[
             . . . . . . . . . . . . . . . . . .
-            .       Abstracted ROADM          .
+            .           WDM-TE-Node           .
       +-----.-------------------------------- .-----+
-      |     .              ROADM              .     |
+      |     .            WDM-Node             .     |
       |     .   /|  +-----------------+  |\   .     |
  Line |     .  / |--|                 |--| \  .     | Line
  WEST |  /| . |  |--|                 |--|  | . |\  | EAST
-------+-/ |-.-|  |--|       OCX       |--|  |-.-| \-+-----
-------+-\ |-.-|  |--|                 |--|  |-.-| /-+-----
+------+-/ |-.-|  |--|  photonic       |--|  |-.-| \-+-----
+------+-\ |-.-|  |--|  cross-connect  |--|  |-.-| /-+-----
       |  \| . |  |--|                 |--|  | . |/  |
       |     .  \ |--|                 |--| /  .     |
       |     .   \|  +-----------------+  |/   .     |
@@ -1283,7 +1320,7 @@ OTS Media Link represents a media link:
             .     | T | | T | | T | | T |     .
             .     +---+ +---+ +---+ +---+     .
             . . . .|.| . |.| . |.| . |.|. . . .
-                   | |   | |   | |   | |     TE Node
+                   | |   | |   | |   | |     
                      Client Interfaces
 ]]></artwork>
   </figure>
@@ -1317,8 +1354,8 @@ OTS Media Link represents a media link:
 
   <figure align="center" title="Disaggregated ROADM Architecture with Remote Transponders"
    anchor="Figure-8"><artwork><![CDATA[
-           . . . . . . . . . . . . . . . . . .
-           .        Abstracted ROADM          .
+           . . . . . . . . . . . . . . . . .  .
+           .            WDM-TE-Node           .
      +-----.----------+            +----------.-----+
      | Degree 1       |            |       Degree 2 |
 Line |     .  +-----+ |            + +-----+  .     | Line
@@ -1349,7 +1386,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
              .   | T | | T | | T | | T |   .
              .   +---+ +---+ +---+ +---+   .
              . . .|.| . |.| . |.| . |.|. . .
-                  | |   | |   | |   | |     TE Node
+                  | |   | |   | |   | |
                     Client Interfaces
 ]]></artwork>
   </figure>
@@ -3164,6 +3201,16 @@ reference: RFC XXXX (TDB)
   &I-D.ietf-ccamp-dwdm-if-param-yang;
   &I-D.ietf-teas-te-topo-and-tunnel-modeling;
   
+  <reference anchor="G.672">
+   <front>
+   <title>Characteristics of multi-degree reconfigurable optical add/drop multiplexers</title>
+   <author>
+   </author>
+   <date month="October" year="2020"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.672"/>
+  </reference>
+
   <reference anchor="G.807">
    <front>
    <title>Generic functional architecture of the optical media network</title>
@@ -3171,7 +3218,7 @@ reference: RFC XXXX (TDB)
    </author>
    <date month="February" year="2020"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.807 - in publication process"/>
+   <seriesInfo name="ITU-T" value="Recommendation G.807"/>
   </reference>
   
   <reference anchor="G.709">
@@ -3209,7 +3256,7 @@ reference: RFC XXXX (TDB)
    <title>Architecture of optical transport networks</title>
    <author>
    </author>
-   <date month="January" year="2017"/>
+   <date month="December" year="2019"/>
    </front>
    <seriesInfo name="ITU-T" value="Recommendation G.872"/>
   </reference>
