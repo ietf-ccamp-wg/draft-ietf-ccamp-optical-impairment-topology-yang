@@ -370,22 +370,17 @@
   
   </section>
 
-  <section title="OMS Media Channel Group" anchor="sect-2.3">
+  <section title="OTS and OMS Media Channel Group" anchor="sect-2.3">
+  
+  
   <t>
    According to <xref target="G.807"/> and <xref target="G.872"/>, an
-   OMS Media Channel Group (MCG) represents a topological construct
-   between two WDM-TE-nodes.
-   In TE-topolgy terms, an OMS MCG corresponds to a WDM TE-link
-   interconnecting two WDM-TE-nodes.
-   Specifically, it originates at the ROADM in the source WDM-TE-node
-   and terminates at the ROADM in the destination ROADM including the
-   Booster Amplifier (BA) and the Pre-Amplifier in the WDM-TE-nodes as
-   well as In-Line Amplifiers (ILAs).
+   OTS Media Channel Group (MCG) represents a topological construct
+   between two adjacent amplifiers, such as:
   </t>
-
-  <figure><artwork><![CDATA[
-OTS Media Channel Group represents a link:
-
+  
+  <figure>
+  <artwork><![CDATA[
   (i)  between a WDM-TE-node's BA and the adjacent ILA,
  (ii)  between a pair of ILAs,
 (iii)  between an ILA and the adjacent WDM-TE-node's PA.
@@ -393,17 +388,37 @@ OTS Media Channel Group represents a link:
   </figure>
   
   <t>
-   An OMS MCG can be decomposed into a sequence of OTS MCGs of type
-   (i), (ii), and (iii) as listed above. An OMS MCG (TE-link) provides
-   the optical impairment data for its elements defined in the layer-0
-   topology YANG model and can be retrieved by a network controller.
+   According to <xref target="G.807"/> and <xref target="G.872"/>, an
+   OMS Media Channel Group (MCG) represents a topological construct
+   between two WDM-TE-nodes.
+  </t>
+  
+  <t>
+   Specifically, it originates at the ROADM in the source WDM-TE-node
+   and terminates at the ROADM in the destination WDM-TE-node including
+   the Booster Amplifier (BA) and the Pre-Amplifier (PA) in the
+   WDM-TE-nodes as well as the In-Line Amplifiers (ILAs) between the
+   two WDM-TE-nodes.
+  </t>
+  
+  <t>
+   An OMS MCG can be decomposed into a sequence of OTS MCGs and
+   amplifiers.
   </t>
 
   <t>
-   For the sake of optical impairment modeling, an OMS MCG can also be
-   decomposed into a sequence of elements such as BA, fiber section,
-   ILA, concentrated loss, and PA.
+   An OMS MCG can be described as a sequence of elements such as BA,
+   fiber section, ILA, PA, and concentrated loss wherever there is an
+   insertion loss caused for example by a fiber connector.
   </t>
+
+  <t>
+   In TE-topology terms, the OMS MCG is modeled as a WDM TE-link
+   interconnecting two WDM-TE-nodes, and is providing optical
+   impairment data for its elements defined in the layer-0 topology
+   YANG model, which can be retrieved by a network controller.
+  </t>
+
   
   <t>
    An OMS MCG is terminated on both ends by a link termination point
