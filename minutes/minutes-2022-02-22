@@ -1,0 +1,107 @@
+# YANG model for Optical Impairment aware Topology weekly (February 22nd,2022)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- []Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- []Jan Kundrat
+
+
+
+## Discussion
+
+
+### Review APs (action point) 
+
+#### AP OTSi global unique identification: Dieter to propose text
+##### status: ON GOING
+##### issue #88 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/88
+
+To be addressed in the new version update for IETF 113. 
+
+#### AP on discovery: AP @Italo  to add specific issue to clarify how the link between external shelf and ROADM is discovered
+##### status: ON GOING
+
+Italo said he will add the issue by this week.
+
+
+### issues on agenda
+
+#### Initial proposal for RFC9093-bis
+Initial proposal from RFC9093-bis text merging text from RFC9093 and draft-ietf-ccamp-layer0-types-ext-01
+
+see https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/blob/rfc9093-bis/draft-ietf-ccamp-rfc9093-bis.txt
+
+#### issue#101 :Replace OMS/OTS link with OMS/OTS Media Channel Group (see: ITU-T Recommendations G.872 and G.807
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/101
+
+**Dieter updated text/figure addressing both open issues**
+#101 and #26 :Terminology: being explicit about ROADM
+
+see https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/commit/53daa05f9eea98bc47f601bf43f8c6596ada8434
+
+**Dieter: Section 2.3 update based on comments from @ggrammel and the related discussion in the meeting on Feb 15**
+
+see https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/blob/I-D-09-prep/I-D_in_xml/draft-ietf-ccamp-optical-impairment-topology-yang-09.txt
+
+No further comments on the modifications during the meeting. 
+Gert asked to look also at figure 2 in section 2.2,and the picture seems aligned with  requested modifications. If not further comments by next call ,
+we can consider close the issue. 
+
+#### issue#102 : copropagating raman
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/102
+
+The agreement was to add "pump-power", "frequency" and "direction" attributes as described in Gert's comment
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/102#issue-1126058417
+
+#### AP @Esther: to check with PoliTO at TIP-OOPT-PSE WG possible description of pump-power and frequency.
+##### status : on-going 
+
+post meeting note: Esther provided the proposed description of the attributes that she sent to PoliTO for revision.
+
+#### issue#24 : Model alignment with 400G-ZR
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24
+
+It has been held a meeting on the subject on Thursday 17th with the basic feedback reported in github
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24#issuecomment-1047696081
+
+
+* There was a common agreement that the model is already suitable for any pluggable , no needs to have a specific model to cover 400G ZR+
+* ZR+ is specified in OpenROADM , and as such it can be managed as an “MSA” fora organizational mode, see section 2.5.2 that already mention 
+"fora" as part of organizational mode case.
+* We need to be sure that this MSA organizational mode can be a superset of the list of explicit attributes. 
+Need to be check the list of needed parameters for ZR+ (Gabriele)
+* There could be an OTN compatibility issue for ZR+ that has to be verified. This could be an issue in case of 3R.
+Not only for ZR+ we could consider the opportunity to add an attribute to provide information regarding digital compatibility.
+
+Gert commented in particular about the fourth point on compatibility and 
+put the question if the model already could support case like in one end ZR+ and the other end another type tranceiver OTN compliant.
+
+Gabriele said that in case a package could host both ZR(C-FEC) and ZR+(O-FEC) these are clearly uncompatible and would require 2 different operational modes.
+But the model can already provide this capability. 
+Italo raised a use case in which 2 operational modes could be different just for framing ,OTN vs Ethernet.
+The question was if in this case operational modes could be enough to characterize transceiver.
+Gert said in this case analog parameters are equal but digital ones. Theoretically optical path is pemitted since analog parameters are the same.
+In general:
+* The model with operational modes seems providing already way to manage compatibility issues
+* We should probably digging more in scenario with 3R, but also in this case seems that operational mode could be enough.
+* Client information are input of path computation, and are not part of the topology model. We can suppose that other model already provided this information.
+* In case of zr+ we can add sentence to specify to be careful about operational modes e.g. you could have zr+-ethernet and zr+-otn
+* The way happens ODUflex ODUCn mapping is an input to path computation. Maybe operational mode could be not sufficient. 
+AP @Italo to check with ITU guys.
+
+
+## next meeting: March 01st 2022
