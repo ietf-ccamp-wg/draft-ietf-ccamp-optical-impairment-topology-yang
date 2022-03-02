@@ -7,10 +7,10 @@ module: ietf-optical-impairment-topology
        +--ro otsi-group-id    string
        +--ro otsi* [otsi-carrier-id]
           +--ro otsi-carrier-id           uint16
-          +--ro otsi-carrier-frequency?   frequency-thz
-          +--ro tx-channel-power?         dbm-t
-          +--ro rx-channel-power?         dbm-t
-          +--ro rx-total-power?           dbm-t
+          +--ro otsi-carrier-frequency?   union
+          +--ro tx-channel-power?         union
+          +--ro rx-channel-power?         union
+          +--ro rx-total-power?           union
   augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
     |  +--ro transponder-id                   uint32
@@ -50,24 +50,26 @@ module: ietf-optical-impairment-topology
     |     |              |          -> ../../../mode-id
     |     |              +--ro line-coding-bitrate?
     |     |              |       identityref
+    |     |              +--ro bitrate?
+    |     |              |       uint16
     |     |              +--ro max-polarization-mode-dispersion?
     |     |              |       decimal64
     |     |              +--ro max-chromatic-dispersion?
     |     |              |       decimal64
     |     |              +--ro chromatic-and-polarization-dispersion-penalty* []
     |     |              |  +--ro chromatic-dispersion
-    |     |              |  |       decimal64
+    |     |              |  |       union
     |     |              |  +--ro polarization-mode-dispersion
-    |     |              |  |       decimal64
+    |     |              |  |       union
     |     |              |  +--ro penalty
-    |     |              |          decimal64
+    |     |              |          union
     |     |              +--ro max-diff-group-delay?
     |     |              |       int32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
-    |     |              |  |       decimal64
+    |     |              |  |       power-in-db-or-null
     |     |              |  +--ro penalty
-    |     |              |          uint8
+    |     |              |          union
     |     |              +--ro available-modulation-type?
     |     |              |       identityref
     |     |              +--ro min-OSNR?
@@ -124,9 +126,10 @@ module: ietf-optical-impairment-topology
        +--ro equalization-mode                       identityref
        +--ro (power-param)?
        |  +--:(channel-power)
-       |  |  +--ro nominal-carrier-power?            decimal64
+       |  |  +--ro nominal-carrier-power?
+       |  |          l0-types-ext:power-in-dbm-or-null
        |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?   decimal64
+       |     +--ro nominal-power-spectral-density?   union
        +--ro media-channel-group* [i]
        |  +--ro i                 int16
        |  +--ro media-channels* [flexi-n]
@@ -135,10 +138,11 @@ module: ietf-optical-impairment-topology
        |     +--ro otsi-group-ref?
        |     |       -> /nw:networks/network/otsi-group/otsi-group-id
        |     +--ro otsi-ref*         leafref
-       |     +--ro delta-power?      decimal64
+       |     +--ro delta-power?
+       |             l0-types-ext:power-in-dbm-or-null
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
-          +--ro oms-element-uid?          string
+          +--ro oms-element-uid?          union
           +--ro reverse-element-ref
           |  +--ro link-ref?
           |  |       -> ../../../../../../../nt:link/link-id
@@ -159,32 +163,47 @@ module: ietf-optical-impairment-topology
              |           |  +--ro lower-frequency    frequency-thz
              |           |  +--ro upper-frequency    frequency-thz
              |           +--ro actual-gain
-             |           |       decimal64
+             |           |       l0-types-ext:power-in-db-or-null
              |           +--ro tilt-target
-             |           |       decimal64
+             |           |       l0-types-ext:decimal-2-digits-or-null
              |           +--ro out-voa
-             |           |       decimal64
+             |           |       l0-types-ext:power-in-db-or-null
              |           +--ro in-voa
-             |           |       decimal64
+             |           |       l0-types-ext:power-in-db-or-null
+             |           +--ro total-output-power
+             |           |       l0-types-ext:power-in-db-or-null
              |           +--ro (power-param)?
-             |              +--:(channel-power)
-             |              |  +--ro nominal-carrier-power?
-             |              |          decimal64
-             |              +--:(power-spectral-density)
-             |                 +--ro nominal-power-spectral-density?
-             |                         decimal64
+             |           |  +--:(channel-power)
+             |           |  |  +--ro nominal-carrier-power?
+             |           |  |          l0-types-ext:power-in-dbm-or-null
+             |           |  +--:(power-spectral-density)
+             |           |     +--ro nominal-power-spectral-density?
+             |           |             union
+             |           +--ro raman-direction?
+             |           |       enumeration
+             |           +--ro raman-pump* []
+             |              +--ro frequency?
+             |              |       l0-types-ext:frequency-thz
+             |              +--ro power?
+             |                      l0-types-ext:decimal-2-digits-or-null
              +--:(fiber)
              |  +--ro fiber
              |     +--ro type-variety    string
-             |     +--ro length          decimal64
-             |     +--ro loss-coef       decimal64
-             |     +--ro total-loss      decimal64
-             |     +--ro pmd?            decimal64
-             |     +--ro conn-in?        decimal64
-             |     +--ro conn-out?       decimal64
+             |     +--ro length
+             |     |       l0-types-ext:decimal-2-digits-or-null
+             |     +--ro loss-coef
+             |     |       l0-types-ext:decimal-2-digits-or-null
+             |     +--ro total-loss
+             |     |       l0-types-ext:power-in-db-or-null
+             |     +--ro pmd?
+             |     |       l0-types-ext:decimal-2-digits-or-null
+             |     +--ro conn-in?
+             |     |       l0-types-ext:power-in-db-or-null
+             |     +--ro conn-out?
+             |             l0-types-ext:power-in-db-or-null
              +--:(concentratedloss)
                 +--ro concentratedloss
-                   +--ro loss    decimal64
+                   +--ro loss    l0-types-ext:power-in-db-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
@@ -205,41 +224,58 @@ module: ietf-optical-impairment-topology
           |     +--ro frequency-range
           |     |  +--ro lower-frequency    frequency-thz
           |     |  +--ro upper-frequency    frequency-thz
-          |     +--ro roadm-pmd?                decimal64
-          |     +--ro roadm-cd?                 decimal64
-          |     +--ro roadm-pdl?                decimal64
-          |     +--ro roadm-inband-crosstalk?   decimal64
-          |     +--ro roadm-maxloss?            decimal64
+          |     +--ro roadm-pmd?                union
+          |     +--ro roadm-cd?                 union
+          |     +--ro roadm-pdl?
+          |     |       l0-types-ext:power-in-db-or-null
+          |     +--ro roadm-inband-crosstalk?
+          |     |       l0-types-ext:power-in-db-or-null
+          |     +--ro roadm-maxloss?
+          |             l0-types-ext:power-in-db-or-null
           +--:(roadm-add-path)
           |  +--ro roadm-add-path* []
           |     +--ro frequency-range
           |     |  +--ro lower-frequency    frequency-thz
           |     |  +--ro upper-frequency    frequency-thz
-          |     +--ro roadm-pmd?                decimal64
-          |     +--ro roadm-cd?                 decimal64
-          |     +--ro roadm-pdl?                decimal64
-          |     +--ro roadm-inband-crosstalk?   decimal64
-          |     +--ro roadm-maxloss?            decimal64
-          |     +--ro roadm-pmax?               decimal64
-          |     +--ro roadm-osnr?               l0-types-ext:snr
-          |     +--ro roadm-noise-figure?       decimal64
+          |     +--ro roadm-pmd?                union
+          |     +--ro roadm-cd?                 union
+          |     +--ro roadm-pdl?
+          |     |       l0-types-ext:power-in-db-or-null
+          |     +--ro roadm-inband-crosstalk?
+          |     |       l0-types-ext:power-in-db-or-null
+          |     +--ro roadm-maxloss?
+          |     |       l0-types-ext:power-in-db-or-null
+          |     +--ro roadm-pmax?
+          |     |       l0-types-ext:power-in-dbm-or-null
+          |     +--ro roadm-osnr?
+          |     |       l0-types-ext:snr-or-null
+          |     +--ro roadm-noise-figure?       union
           +--:(roadm-drop-path)
              +--ro roadm-drop-path* []
                 +--ro frequency-range
                 |  +--ro lower-frequency    frequency-thz
                 |  +--ro upper-frequency    frequency-thz
-                +--ro roadm-pmd?                decimal64
-                +--ro roadm-cd?                 decimal64
-                +--ro roadm-pdl?                decimal64
-                +--ro roadm-inband-crosstalk?   decimal64
-                +--ro roadm-maxloss?            decimal64
-                +--ro roadm-minloss?            decimal64
-                +--ro roadm-typloss?            decimal64
-                +--ro roadm-pmin?               decimal64
-                +--ro roadm-pmax?               decimal64
-                +--ro roadm-ptyp?               decimal64
-                +--ro roadm-osnr?               l0-types-ext:snr
-                +--ro roadm-noise-figure?       decimal64
+                +--ro roadm-pmd?                union
+                +--ro roadm-cd?                 union
+                +--ro roadm-pdl?
+                |       l0-types-ext:power-in-db-or-null
+                +--ro roadm-inband-crosstalk?
+                |       l0-types-ext:power-in-db-or-null
+                +--ro roadm-maxloss?
+                |       l0-types-ext:power-in-db-or-null
+                +--ro roadm-minloss?
+                |       l0-types-ext:power-in-db-or-null
+                +--ro roadm-typloss?
+                |       l0-types-ext:power-in-db-or-null
+                +--ro roadm-pmin?
+                |       l0-types-ext:power-in-dbm-or-null
+                +--ro roadm-pmax?
+                |       l0-types-ext:power-in-dbm-or-null
+                +--ro roadm-ptyp?
+                |       l0-types-ext:power-in-dbm-or-null
+                +--ro roadm-osnr?
+                |       l0-types-ext:snr-or-null
+                +--ro roadm-noise-figure?       union
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
     +--ro roadm-path-impairments?   leafref
