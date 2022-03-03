@@ -2,16 +2,16 @@
 
 
 
-CCAMP Working Group                                               Y. Lee
-Internet-Draft                                       Samsung Electronics
+CCAMP Working Group                                       D. Beller, Ed.
+Internet-Draft                                                     Nokia
 Intended status: Standards Track                            E. Le Rouzic
 Expires: September 8, 2022                                        Orange
-                                                                V. Lopez
+                                                              S. Belotti
                                                                    Nokia
                                                            G. Galimberti
                                                                    Cisco
-                                                          D. Beller, Ed.
-                                                                   Nokia
+                                                                 I. Busi
+                                                     Huawei Technologies
                                                           March 07, 2022
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 1]
+Beller, et al.          Expires September 8, 2022               [Page 1]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 2]
+Beller, et al.          Expires September 8, 2022               [Page 2]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -165,7 +165,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 3]
+Beller, et al.          Expires September 8, 2022               [Page 3]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -221,7 +221,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 4]
+Beller, et al.          Expires September 8, 2022               [Page 4]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -277,7 +277,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 5]
+Beller, et al.          Expires September 8, 2022               [Page 5]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -333,7 +333,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 6]
+Beller, et al.          Expires September 8, 2022               [Page 6]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -389,7 +389,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 7]
+Beller, et al.          Expires September 8, 2022               [Page 7]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -445,7 +445,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 8]
+Beller, et al.          Expires September 8, 2022               [Page 8]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -501,7 +501,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022               [Page 9]
+Beller, et al.          Expires September 8, 2022               [Page 9]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -557,7 +557,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 10]
+Beller, et al.          Expires September 8, 2022              [Page 10]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -613,7 +613,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 11]
+Beller, et al.          Expires September 8, 2022              [Page 11]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -661,22 +661,30 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    consume more power and are usually more expensive than EDFAs.
 
    Raman amplifiers are distributed amplifiers where an optical pump
-   signal is injected in opposite direction to the optical signal that
-   is amplified (backward pump).  Injecting the pump signal in the same
-   directions as the optical signal that is amplified (forward pump) is
-   currently not considered.  Due to the distributed nature of the Raman
-   amplifier it is difficult to clearly separate the amplifier from the
+   signal is injected typically in opposite direction to the optical
+   signal that is amplified (backward pump, counter-propagating pump
+   light).  Injecting the optical pump signal in the same direction is
+   also possible (forward pump, co-propagating pump light).  For optical
+   amplifiers, the YANG model defines Raman pump light attributes
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 12]
+Beller, et al.          Expires September 8, 2022              [Page 12]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
-   fiber span into which the pump signal is injected.  From a topology
-   modeling perspective, the Raman amplifier is modeled as two OMS line
-   elements:
+   describing the direction (raman-direction) with respect to the signal
+   that is amplified and optical frequency and power for the pump light
+   source(s) contained in the raman-pump list.  These Raman amplifier-
+   specific attributes are optional as they are only applicable to Raman
+   amplifiers.  For determining the optical amplifier type, i.e., to
+   figure out whether an optical amplifier is a Raman amplifier, the
+   type-variety attribute is used.  Due to the distributed nature of the
+   Raman amplifier it is difficult to clearly separate the amplifier
+   from the fiber span into which the pump signal is injected.  From a
+   topology modeling perspective, the Raman amplifier is modeled as two
+   OMS line elements:
 
    1.  a passive fiber element accounting for the fiber loss only and
        not the resulting loss including the Raman gain
@@ -714,6 +722,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    in the YANG model described in Section 3 needs further clarification
    and refinement.]
 
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 13]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    A Transponder is the element that sends and receives the optical
    signal from a DWDM network.  A transponder can comprise one or more
    transceiver modules.  A transceiver represents a transmitter/receiver
@@ -721,15 +737,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    In addition to the transceiver, which is terminating an OTSi signal,
    a transponder typically provides additional layer 1 functionality
    like for example aggregation (multiplexing) of client layer signals,
-
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 13]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
-
    which is outside the scope of this document addressing layer 0
    aspects of transponders.
 
@@ -771,20 +778,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    other SDO in the Standard Mode context as soon as such sepcifications
    will be available.  An application code as defined in ITU-T G.698.2
    [G.698.2] is representing a standard ITU-T G.698.2 optical interface
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 14]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    specification towards the realization of transversely compatible DWDM
    systems.  Two transceivers supporting the same application code and a
    line system matching the constraints, defined in ITU-T G.698.2, for
    that application code will interoperate.  As the characteristics are
    encoded in the application code, the YANG model in this document only
    defines a string, which represents that application code.
-
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 14]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
 
 2.5.2.  Organizational Modes
 
@@ -826,6 +833,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    and to ensure that operational modes are unique and not ambiguous
    within the scope of the organization.
 
+
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 15]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    In addition to the transceiver properties subsumed by the operational
    mode, optical power and carrier frequency related properties are
    modeled separately, i.e., outside of the operational mode.  This
@@ -834,14 +850,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    frequency range properties to interoperate without defining separate
    operational modes.  Different optical modules (pluggables) from
    different suppliers typically have slightly different input and
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 15]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
-
    output power ranges or may have slightly different carrier frequency
    tuning ranges.
 
@@ -882,21 +890,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    parameters e.g., FEC type, Modulation type, etc, to enable a
    controller entity to check for interoperability by means outside of
    this draft.  It shall be noted that using the explicit encoding does
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 16]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    not guarantee interoperability between two transceivers even in case
    of identical parameter definitions.  The explicit mode shall
    therefore be used with care, but it could be useful when no common
    Application Codes or Organizational Modes exist or the constraints of
    common Application Codes or Organizational Modes cannot be met by the
    line system.
-
-
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 16]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
 
 2.5.4.  Transponder Capabilities and Current Configuration
 
@@ -939,20 +946,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    It is possible that the set of parameter values defined for an
    explicit mode may also be represented in form of an organizational
    mode or one or more application codes.  The "supported-mode"
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 17]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    container may provide two different lists with pointers to
    application codes and organizational modes, respectively.
 
    The current transponder configuration describes the properties of the
    OTSi transmitted or received by the transceiver attached to a
    specific transponder port.
-
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 17]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
 
    Each OTSi has the following three pointer attributes modeled as
    leafrefs:
@@ -995,6 +1002,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    make it impossible to find an optically feasible end-to-end path from
    the source transponder to the destination transponder without 3R
    regeneration.  When an end-to-end path includes one or more 3R
+
+
+
+Beller, et al.          Expires September 8, 2022              [Page 18]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
+
+
    regenerators, the corresponding layer 0 tunnel is subdivided into 2
    or more segments between the source transponder and the destination
    transponder terminating the layer 0 tunnel.
@@ -1002,14 +1017,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
    3R regenerators are usually realized by a pair of optical
    transponders, which are described in Section 2.5 above.  If a pair of
    optical transponders is used to perform a 3R regeneratator function,
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 18]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
-
-
    two different configurations are possible involving the pair of
    optical transceivers of the two optical transponders:
 
@@ -1054,14 +1061,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-
-
-
-
-
-
-
-Lee, et al.             Expires September 8, 2022              [Page 19]
+Beller, et al.          Expires September 8, 2022              [Page 19]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1117,7 +1117,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 20]
+Beller, et al.          Expires September 8, 2022              [Page 20]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 21]
+Beller, et al.          Expires September 8, 2022              [Page 21]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 22]
+Beller, et al.          Expires September 8, 2022              [Page 22]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 23]
+Beller, et al.          Expires September 8, 2022              [Page 23]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1341,7 +1341,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 24]
+Beller, et al.          Expires September 8, 2022              [Page 24]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1397,7 +1397,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 25]
+Beller, et al.          Expires September 8, 2022              [Page 25]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1453,7 +1453,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 26]
+Beller, et al.          Expires September 8, 2022              [Page 26]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1509,7 +1509,7 @@ module: ietf-optical-impairment-topology
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 27]
+Beller, et al.          Expires September 8, 2022              [Page 27]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1565,7 +1565,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 28]
+Beller, et al.          Expires September 8, 2022              [Page 28]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1621,7 +1621,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 29]
+Beller, et al.          Expires September 8, 2022              [Page 29]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1677,7 +1677,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 30]
+Beller, et al.          Expires September 8, 2022              [Page 30]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1733,7 +1733,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 31]
+Beller, et al.          Expires September 8, 2022              [Page 31]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1789,7 +1789,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 32]
+Beller, et al.          Expires September 8, 2022              [Page 32]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1845,7 +1845,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 33]
+Beller, et al.          Expires September 8, 2022              [Page 33]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1901,7 +1901,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 34]
+Beller, et al.          Expires September 8, 2022              [Page 34]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -1957,7 +1957,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 35]
+Beller, et al.          Expires September 8, 2022              [Page 35]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2013,7 +2013,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 36]
+Beller, et al.          Expires September 8, 2022              [Page 36]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2069,7 +2069,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 37]
+Beller, et al.          Expires September 8, 2022              [Page 37]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2125,7 +2125,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 38]
+Beller, et al.          Expires September 8, 2022              [Page 38]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2181,7 +2181,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 39]
+Beller, et al.          Expires September 8, 2022              [Page 39]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2237,7 +2237,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 40]
+Beller, et al.          Expires September 8, 2022              [Page 40]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2293,7 +2293,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 41]
+Beller, et al.          Expires September 8, 2022              [Page 41]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2349,7 +2349,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 42]
+Beller, et al.          Expires September 8, 2022              [Page 42]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2405,7 +2405,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 43]
+Beller, et al.          Expires September 8, 2022              [Page 43]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2461,7 +2461,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 44]
+Beller, et al.          Expires September 8, 2022              [Page 44]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2517,7 +2517,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 45]
+Beller, et al.          Expires September 8, 2022              [Page 45]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2573,7 +2573,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 46]
+Beller, et al.          Expires September 8, 2022              [Page 46]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2629,7 +2629,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 47]
+Beller, et al.          Expires September 8, 2022              [Page 47]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2685,7 +2685,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 48]
+Beller, et al.          Expires September 8, 2022              [Page 48]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2741,7 +2741,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 49]
+Beller, et al.          Expires September 8, 2022              [Page 49]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2797,7 +2797,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 50]
+Beller, et al.          Expires September 8, 2022              [Page 50]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2853,7 +2853,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 51]
+Beller, et al.          Expires September 8, 2022              [Page 51]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2909,7 +2909,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 52]
+Beller, et al.          Expires September 8, 2022              [Page 52]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -2965,7 +2965,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 53]
+Beller, et al.          Expires September 8, 2022              [Page 53]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3021,7 +3021,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 54]
+Beller, et al.          Expires September 8, 2022              [Page 54]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3077,7 +3077,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 55]
+Beller, et al.          Expires September 8, 2022              [Page 55]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3133,7 +3133,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 56]
+Beller, et al.          Expires September 8, 2022              [Page 56]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3189,7 +3189,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 57]
+Beller, et al.          Expires September 8, 2022              [Page 57]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3245,7 +3245,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 58]
+Beller, et al.          Expires September 8, 2022              [Page 58]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3301,7 +3301,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 59]
+Beller, et al.          Expires September 8, 2022              [Page 59]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3357,7 +3357,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 60]
+Beller, et al.          Expires September 8, 2022              [Page 60]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3413,7 +3413,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 61]
+Beller, et al.          Expires September 8, 2022              [Page 61]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3469,7 +3469,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 62]
+Beller, et al.          Expires September 8, 2022              [Page 62]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3525,7 +3525,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 63]
+Beller, et al.          Expires September 8, 2022              [Page 63]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3581,7 +3581,7 @@ Appendix A.  Contributors
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 64]
+Beller, et al.          Expires September 8, 2022              [Page 64]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3594,16 +3594,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 Appendix B.  Additional Authors
 
+   Young Lee
+   Samsung Electronics
+
+   Email: younglee.tx@gmail.com
+
+
    Haomian Zheng
    Huawei Technologies
 
    Email: zhenghaomian@huawei.com
-
-
-   Italo Busi
-   Huawei Technologies
-
-   Email: Italo.Busi@huawei.com
 
 
    Nicola Sambo
@@ -3630,14 +3630,14 @@ Appendix B.  Additional Authors
    Email: julien.meuric@orange.com
 
 
-   Sergio Belotti
+   Victor Lopez
    Nokia
 
-   Email: Sergio.belotti@nokia.com
+   Email: Victor.Lopez@nokia.com
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 65]
+Beller, et al.          Expires September 8, 2022              [Page 65]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
@@ -3656,10 +3656,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2022
 
 Authors' Addresses
 
-   Young Lee
-   Samsung Electronics
+   Dieter Beller (editor)
+   Nokia
 
-   Email: younglee.tx@gmail.com
+   Email: Dieter.Beller@nokia.com
 
 
    Esther Le Rouzic
@@ -3668,10 +3668,10 @@ Authors' Addresses
    Email: esther.lerouzic@orange.com
 
 
-   Victor Lopez
+   Sergio Belotti
    Nokia
 
-   Email: Victor.Lopez@nokia.com
+   Email: Sergio.Belotti@nokia.com
 
 
    G. Galimberti
@@ -3680,12 +3680,10 @@ Authors' Addresses
    Email: ggalimbe@cisco.com
 
 
-   Dieter Beller (editor)
-   Nokia
+   Italo Busi
+   Huawei Technologies
 
-   Email: Dieter.Beller@nokia.com
-
-
+   Email: Italo.Busi@huawei.com
 
 
 
@@ -3693,4 +3691,6 @@ Authors' Addresses
 
 
 
-Lee, et al.             Expires September 8, 2022              [Page 66]
+
+
+Beller, et al.          Expires September 8, 2022              [Page 66]

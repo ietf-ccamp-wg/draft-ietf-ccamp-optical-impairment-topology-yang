@@ -38,21 +38,21 @@
   <title abbrev="Opt. Impairment-Aware Topo YANG Model">
    A YANG Data Model for Optical Impairment-aware Topology</title>
   
-  <author initials="Y." surname="Lee" fullname="Young Lee">
-  <organization>Samsung Electronics</organization>
-  <address><email>younglee.tx@gmail.com</email>
+  <author initials="D." surname="Beller" fullname="Dieter Beller" role="editor">
+  <organization>Nokia</organization>
+  <address><email>Dieter.Beller@nokia.com</email>
   </address>
   </author>
-
+  
   <author initials="E." surname="Le Rouzic" fullname="Esther Le Rouzic">
   <organization>Orange</organization>
   <address><email>esther.lerouzic@orange.com</email>
   </address>
   </author>
   
-  <author initials="V." surname="Lopez" fullname="Victor Lopez">
+  <author initials="S." surname="Belotti" fullname="Sergio Belotti">
   <organization>Nokia</organization>
-  <address><email>Victor.Lopez@nokia.com</email>
+  <address><email>Sergio.Belotti@nokia.com</email>
   </address>
   </author>
 
@@ -61,13 +61,13 @@
   <address><email>ggalimbe@cisco.com</email>
   </address>
   </author>
-
-  <author initials="D." surname="Beller" fullname="Dieter Beller" role="editor">
-  <organization>Nokia</organization>
-  <address><email>Dieter.Beller@nokia.com</email>
+  
+  <author initials="I." surname="Busi" fullname="Italo Busi">
+  <organization>Huawei Technologies</organization>
+  <address><email>Italo.Busi@huawei.com</email>
   </address>
   </author>
-
+     
   <date year="2022" month="March" day="07" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
@@ -656,14 +656,22 @@
   
   <t>
    Raman amplifiers are distributed amplifiers where an optical pump
-   signal is injected in opposite direction to the optical signal that
-   is amplified (backward pump). Injecting the pump signal in the same
-   directions as the optical signal that is amplified (forward pump) is
-   currently not considered. Due to the distributed nature of the
-   Raman amplifier it is difficult to clearly separate the amplifier
-   from the fiber span into which the pump signal is injected.
-   From a topology modeling perspective, the Raman amplifier is modeled
-   as two OMS line elements:
+   signal is injected typically in opposite direction to the optical
+   signal that is amplified (backward pump, counter-propagating pump
+   light). Injecting the optical pump signal in the same direction is
+   also possible (forward pump, co-propagating pump light).
+   For optical amplifiers, the YANG model defines Raman pump light
+   attributes describing the direction (raman-direction) with respect
+   to the signal that is amplified and optical frequency and power for
+   the pump light source(s) contained in the raman-pump list. These   
+   Raman amplifier-specific attributes are optional as they are only
+   applicable to Raman amplifiers. For determining the optical amplifier
+   type, i.e., to figure out whether an optical amplifier is a Raman
+   amplifier, the type-variety attribute is used.
+   Due to the distributed nature of the Raman amplifier it is difficult
+   to clearly separate the amplifier from the fiber span into which the
+   pump signal is injected. From a topology modeling perspective, the
+   Raman amplifier is modeled as two OMS line elements:
   </t>
   
   <t>
@@ -3315,12 +3323,12 @@ reference: RFC XXXX (TDB)
   <section title="Additional Authors" anchor="sect-10">
   
   <?rfc needLines="4" ?>
-  <t>Haomian Zheng<vspace blankLines="0" />Huawei Technologies</t>
-  <t>Email: zhenghaomian@huawei.com<vspace blankLines="1" /></t>
+  <t>Young Lee<vspace blankLines="0" />Samsung Electronics</t>
+  <t>Email: younglee.tx@gmail.com<vspace blankLines="1" /></t>
   
   <?rfc needLines="4" ?>
-  <t>Italo Busi<vspace blankLines="0" />Huawei Technologies</t>
-  <t>Email: Italo.Busi@huawei.com<vspace blankLines="1" /></t>
+  <t>Haomian Zheng<vspace blankLines="0" />Huawei Technologies</t>
+  <t>Email: zhenghaomian@huawei.com<vspace blankLines="1" /></t>
   
   <?rfc needLines="4" ?>
   <t>Nicola Sambo<vspace blankLines="0" />Scuola Superiore Sant'Anna</t>
@@ -3339,8 +3347,8 @@ reference: RFC XXXX (TDB)
   <t>Email: julien.meuric@orange.com<vspace blankLines="1" /></t>
   
   <?rfc needLines="4" ?>
-  <t>Sergio Belotti<vspace blankLines="0" />Nokia</t>
-  <t>Email: Sergio.belotti@nokia.com<vspace blankLines="1" /></t>
+  <t>Victor Lopez<vspace blankLines="0" />Nokia</t>
+  <t>Email: Victor.Lopez@nokia.com<vspace blankLines="1" /></t>
   
   <?rfc needLines="4" ?>
   <t>Griseri Enrico<vspace blankLines="0" />Nokia</t>
