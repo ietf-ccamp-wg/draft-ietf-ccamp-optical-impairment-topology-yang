@@ -166,7 +166,8 @@ module ietf-optical-impairment-topology {
             type enumeration {
               enum co-propagating {
                 description
-                  "It means that the optical pumps are injected in
+                  "co-propagating indicates that optical pump light is injected in
+                  the same direction as the optical signal ... 
                   the same direction to the optical signal that is
                   amplified (forward pump).";
               }
