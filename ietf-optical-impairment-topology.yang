@@ -170,7 +170,7 @@ module ietf-optical-impairment-topology {
                   the same direction to the optical signal that is
                   amplified (forward pump).";
               }
-              enum contra-propagating {
+              enum counter-propagating {
                 description
                   "It means that optical pumps are injected in
                   opposite direction to the optical signal that is
