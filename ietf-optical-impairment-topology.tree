@@ -122,12 +122,12 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
-       +--ro generalized-snr?                        l0-types-ext:snr
+       +--ro generalized-snr?                        l0-types:snr
        +--ro equalization-mode                       identityref
        +--ro (power-param)?
        |  +--:(channel-power)
        |  |  +--ro nominal-carrier-power?
-       |  |          l0-types-ext:power-in-dbm-or-null
+       |  |          l0-types:power-in-dbm-or-null
        |  +--:(power-spectral-density)
        |     +--ro nominal-power-spectral-density?   union
        +--ro media-channel-group* [i]
@@ -138,8 +138,7 @@ module: ietf-optical-impairment-topology
        |     +--ro otsi-group-ref?
        |     |       -> /nw:networks/network/otsi-group/otsi-group-id
        |     +--ro otsi-ref*         leafref
-       |     +--ro delta-power?
-       |             l0-types-ext:power-in-dbm-or-null
+       |     +--ro delta-power?      l0-types:power-in-dbm-or-null
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
           +--ro oms-element-uid?          union
@@ -163,47 +162,43 @@ module: ietf-optical-impairment-topology
              |           |  +--ro lower-frequency    frequency-thz
              |           |  +--ro upper-frequency    frequency-thz
              |           +--ro actual-gain
-             |           |       l0-types-ext:power-in-db-or-null
+             |           |       l0-types:power-in-db-or-null
              |           +--ro tilt-target
-             |           |       l0-types-ext:decimal-2-digits-or-null
+             |           |       l0-types:decimal-2-digits-or-null
              |           +--ro out-voa
-             |           |       l0-types-ext:power-in-db-or-null
+             |           |       l0-types:power-in-db-or-null
              |           +--ro in-voa
-             |           |       l0-types-ext:power-in-db-or-null
+             |           |       l0-types:power-in-db-or-null
              |           +--ro total-output-power
-             |           |       l0-types-ext:power-in-db-or-null
+             |           |       l0-types:power-in-db-or-null
              |           +--ro (power-param)?
              |           |  +--:(channel-power)
              |           |  |  +--ro nominal-carrier-power?
-             |           |  |          l0-types-ext:power-in-dbm-or-null
+             |           |  |          l0-types:power-in-dbm-or-null
              |           |  +--:(power-spectral-density)
              |           |     +--ro nominal-power-spectral-density?
              |           |             union
              |           +--ro raman-direction?
              |           |       enumeration
              |           +--ro raman-pump* []
-             |              +--ro frequency?
-             |              |       l0-types-ext:frequency-thz
+             |              +--ro frequency?   l0-types:frequency-thz
              |              +--ro power?
-             |                      l0-types-ext:decimal-2-digits-or-null
+             |                      l0-types:decimal-2-digits-or-null
              +--:(fiber)
              |  +--ro fiber
              |     +--ro type-variety    string
              |     +--ro length
-             |     |       l0-types-ext:decimal-2-digits-or-null
+             |     |       l0-types:decimal-2-digits-or-null
              |     +--ro loss-coef
-             |     |       l0-types-ext:decimal-2-digits-or-null
-             |     +--ro total-loss
-             |     |       l0-types-ext:power-in-db-or-null
+             |     |       l0-types:decimal-2-digits-or-null
+             |     +--ro total-loss      l0-types:power-in-db-or-null
              |     +--ro pmd?
-             |     |       l0-types-ext:decimal-2-digits-or-null
-             |     +--ro conn-in?
-             |     |       l0-types-ext:power-in-db-or-null
-             |     +--ro conn-out?
-             |             l0-types-ext:power-in-db-or-null
+             |     |       l0-types:decimal-2-digits-or-null
+             |     +--ro conn-in?        l0-types:power-in-db-or-null
+             |     +--ro conn-out?       l0-types:power-in-db-or-null
              +--:(concentratedloss)
                 +--ro concentratedloss
-                   +--ro loss    l0-types-ext:power-in-db-or-null
+                   +--ro loss    l0-types:power-in-db-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
@@ -227,11 +222,11 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-pmd?                union
           |     +--ro roadm-cd?                 union
           |     +--ro roadm-pdl?
-          |     |       l0-types-ext:power-in-db-or-null
+          |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types-ext:power-in-db-or-null
+          |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-maxloss?
-          |             l0-types-ext:power-in-db-or-null
+          |             l0-types:power-in-db-or-null
           +--:(roadm-add-path)
           |  +--ro roadm-add-path* []
           |     +--ro frequency-range
@@ -240,15 +235,14 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-pmd?                union
           |     +--ro roadm-cd?                 union
           |     +--ro roadm-pdl?
-          |     |       l0-types-ext:power-in-db-or-null
+          |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types-ext:power-in-db-or-null
+          |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-maxloss?
-          |     |       l0-types-ext:power-in-db-or-null
+          |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-pmax?
-          |     |       l0-types-ext:power-in-dbm-or-null
-          |     +--ro roadm-osnr?
-          |     |       l0-types-ext:snr-or-null
+          |     |       l0-types:power-in-dbm-or-null
+          |     +--ro roadm-osnr?               l0-types:snr-or-null
           |     +--ro roadm-noise-figure?       union
           +--:(roadm-drop-path)
              +--ro roadm-drop-path* []
@@ -258,23 +252,22 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-pmd?                union
                 +--ro roadm-cd?                 union
                 +--ro roadm-pdl?
-                |       l0-types-ext:power-in-db-or-null
+                |       l0-types:power-in-db-or-null
                 +--ro roadm-inband-crosstalk?
-                |       l0-types-ext:power-in-db-or-null
+                |       l0-types:power-in-db-or-null
                 +--ro roadm-maxloss?
-                |       l0-types-ext:power-in-db-or-null
+                |       l0-types:power-in-db-or-null
                 +--ro roadm-minloss?
-                |       l0-types-ext:power-in-db-or-null
+                |       l0-types:power-in-db-or-null
                 +--ro roadm-typloss?
-                |       l0-types-ext:power-in-db-or-null
+                |       l0-types:power-in-db-or-null
                 +--ro roadm-pmin?
-                |       l0-types-ext:power-in-dbm-or-null
+                |       l0-types:power-in-dbm-or-null
                 +--ro roadm-pmax?
-                |       l0-types-ext:power-in-dbm-or-null
+                |       l0-types:power-in-dbm-or-null
                 +--ro roadm-ptyp?
-                |       l0-types-ext:power-in-dbm-or-null
-                +--ro roadm-osnr?
-                |       l0-types-ext:snr-or-null
+                |       l0-types:power-in-dbm-or-null
+                +--ro roadm-osnr?               l0-types:snr-or-null
                 +--ro roadm-noise-figure?       union
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
