@@ -40,9 +40,8 @@ urls = [(official_yang_repo, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
         (official_yang_repo, 'standard/ietf/RFC/ietf-network-topology@2018-02-26.yang'),
         (official_yang_repo, 'standard/ietf/RFC/ietf-inet-types@2013-07-15.yang'),
         (official_yang_repo, 'standard/ietf/RFC/ietf-te-types@2020-06-10.yang'),
-        (official_yang_repo, 'experimental/ietf-extracted-YANG-modules/ietf-layer0-types@2020-12-29.yang'),
         (official_yang_repo, 'standard/ietf/RFC/ietf-te-topology@2020-08-06.yang'),
-        (layer0ext_repo, 'ietf-layer0-types-ext.yang')]
+        (layer0ext_repo, 'ietf-layer0-types.yang')]
 # TODO automatically retrieve list of versions based on listing in the github
 
 for url in urls:
