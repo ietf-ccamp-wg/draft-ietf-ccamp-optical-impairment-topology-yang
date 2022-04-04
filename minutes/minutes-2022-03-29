@@ -67,7 +67,8 @@ there would be issues with our model.
 The conclusion of the discussion was:
 * the model already owns the tool to manage these scenarios but the way to use it is not trivial.
 * Need to add to the draft a description of the use cases reported in the slides and to describe how the model address them.
-* Probably an Appendix of the drfat should be added for this purpose and an editorial issue for this scope
+* Probably an Appendix of the drfat should be added for this purpose
+* We can consider close this issue and in parallel open an editorial issue to describe procedure to address the scanrios described in the slides uplaoded .
 * One of the issue to consider is the spectrum allocation on link bundle
 * need to open another issue in the context of the L0 tunnel (both WSON and flexgrid) on how to model the mapping 
 between OTSi and the related component link in case of bundle (how to report which component link is used by which OTSi)
