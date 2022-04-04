@@ -1,0 +1,101 @@
+# YANG model for Optical Impairment aware Topology weekly (March 29th,2022)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [] Gabriele Galimberti 
+- [] Yuji Tochio
+- [X]Enrico Griseri
+- [X] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- []Jan Kundrat
+
+
+
+## Discussion
+
+
+### Review APs (action point) 
+
+#### AP OTSi global unique identification: Dieter to propose text
+##### status: ON GOING
+##### issue #88 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/88
+ 
+
+#### AP on discovery: AP @Italo  to add specific issue to clarify how the link between external shelf and ROADM is discovered
+##### status: done
+added issue #106 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/106
+
+### issues on agenda
+
+#### Feedback from IETF-113
+##### Optical Impairments Topology
+The basic comment is from Robert Wilton (Cisco) who has judged our solution for "empty" type
+"an overengineering" and sugested to raise the issue and question to NETMOD. 
+Italo further explained that the problem we are facing is the need to distinguish the case where the 
+attribute should not be reported from the case where the attribute should be reported but the value to report is unknown.
+
+Daniele Ceccarelli suggested to raise the question to other WGs and Netmod in particular.
+
+##### Layer0 types ext
+There was general consensus to go ahead to RFC-bis .
+
+#### issue #106 Issues with external OTs managed as independent TE nodes 
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/106
+
+We reviewed the package uploaded by Italo about the external shelf of transponders connected to a WDM-node.
+The slides shows 4 scenarios with different connectivity constraints between transponder/transceivers in the external shelf and the port degree in the WDN-node. 
+For any scenarios is shown
+* the physical characteristics
+* single TE-node abstraction (the connectivities between transceiver output port LTP  and add/drop port LTP on WDM-node are hidden) solution 
+per-TTP (all transceivers belonging to a transponder have the same connectivities towards the port of degree on the WDM-node) and 
+per-transceiver (when the connectivity between transceivers belonging to a transponder and port degree on the WDM-node are different)
+* 2 WDM-nodes solution
+
+The aim of this set of slides is to go more into details when external OTs are managed as independent TE nodes and to further assess whether 
+there would be issues with our model.
+
+The conclusion of the discussion was:
+* the model already owns the tool to manage these scenarios but the way to use it is not trivial.
+* Need to add to the draft a description of the use cases reported in the slides and to describe how the model address them.
+* Probably an Appendix of the drfat should be added for this purpose and an editorial issue for this scope
+* One of the issue to consider is the spectrum allocation on link bundle
+* need to open another issue in the context of the L0 tunnel (both WSON and flexgrid) on how to model the mapping 
+between OTSi and the related component link in case of bundle (how to report which component link is used by which OTSi)
+
+
+#### issue#24 : Model alignment with 400G-ZR
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24
+
+* There was a common agreement that the model is already suitable for any pluggable , no needs to have a specific model to cover 400G ZR+
+* ZR+ is specified in OpenROADM , and as such it can be managed as an “MSA” fora organizational mode, 
+see section 2.5.2 that already mention for a as part of organizational mode case.
+* We need to be sure that this MSA organizational mode can be a superset of the list of explicit attributes. 
+Need to be check the list of needed parameters for ZR+ (Gabriele)
+* There could be an OTN compatibility issue for ZR+ that has to be verified. 
+This could be an issue in case of 3R. Not only for ZR+ we could consider the opportunity to add an attribute to provide information regarding digital compatibility.
+
+In general:
+* The model with operational modes seems providing already way to manage compatibility issues
+* We should probably digging more in scenario with 3R, but also in this case seems that operational mode could be enough.
+* Client information are input of path computation, and are not part of the topology model. We can suppose that other model already provided this information.
+* In case of zr+ we can add sentence to specify to be careful about operational modes e.g. you could have zr+-ethernet and zr+-otn
+* The way happens ODUflex ODUCn mapping is an input to path computation. Maybe operational mode could be not sufficient. 
+AP @Italo to check with ITU guys.
+
+Gabriele was out of the meeting and we decided to wait for him 
+to analyse more carefully his comment on
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24#issuecomment-1054238457 before closing eventually the issue
+
+
+
+## next meeting: April 5th 2022
