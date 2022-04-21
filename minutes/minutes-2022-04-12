@@ -1,0 +1,163 @@
+# YANG model for Optical Impairment aware Topology weekly (April 12th,2022)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [] Aihua Guo
+- [] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- []Enrico Griseri
+- [X] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [x] Igor Bryskin
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- []Jan Kundrat
+
+## Admin
+
+### Review APs (action point) 
+
+#### AP OTSi global unique identification: Dieter to propose text
+##### status: ON GOING
+##### issue #88 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/88
+
+### Closed Issues
+
+#### issue #106 Issues with external OTs managed as independent TE nodes 
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/106
+
+We closed this issue and open issue #108 
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/108
+
+editorial issue to describe procedure to address the scenarios described in the slides uplaoded
+
+### Next calls
+- no call next week due to Easter holidays
+- next call on April 26th 
+
+
+## Discussion
+
+### issues on agenda
+
+
+#### issue #107 "Optical protection switching requires additional parameters "
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/107
+
+Esther presented the scenario of Optical protection and a possible model enhancement to manage the protection.
+See https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/files/8398878/Issue.for.optical.protection.switching.representation.pptx
+
+The first question raised during the discussion was if splitter has to be considered and where is.
+Two cases: Splitter is physically part of WDM-node or the Splitter is  on TXP 
+
+Julien: only one direction is shown for convenience in the slide but the other direction is a mirror of the one shown. 
+
+Gabriele: if the selector is an optical switch the criteria is the power,input-power. A threshold is setup due to some noise, to avoid false switching.
+The power in both ports of selector is expecting to be the same.
+
+Gabriele: The selector should belong to OLS.  
+Julien: you could have both cases: selector can belong to TXP or to OLS
+
+Gabriele: anyway the first issue raised in the slide it is not an issue
+since even if TXP is outside the NW the end points are on splitter and selector
+
+Dieter: splitter + roadm same te-node
+
+Gabriele/Gert: 2 possibilities protection group or transceiver shadow
+Gert: the wavelenght should be the same at tx and rx
+Italo: OTSi 1,2 3, must be on the same frequency. 
+
+No conclusion the issue needs more anlysis. 
+
+Post meeting note: Gert provided an update to the slides adding the
+"transceiver shadow case
+" https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/files/8420961/Issue.for.optical.protection.switching.representation.2.pptx
+
+We continued the discussion about protection.
+Gert pointed out that we can have 3 and not 2 cases as mentioned in the previous MoM: 
+* TXP+splitter/selector as single node
+* WDM-node + splitter/selector as single node
+* splitter/selector as a separate node
+
+Dieter disagreed to have a splitter/selector as separate element.
+Gert said that the real problemis not the splitter but the selector , it is an active element, only 1 OTSi is selected,how can be represented that? 
+Sergio said why do not consider splitter/selector as separate element but instead consider the "contribution" provided , 
+e.g. OSNR at the ADD ports of add/drop block. So adding new attribute to the list of already present ROADM add part , attributes.
+Italo said we need to consider the "lifecicle" for the OTSi 1,2,3 of the drawn in slide 1. 
+In the topology model we said that we need to consider the interference between new OTSi and the OTSi already in the spectrum 
+but after the selector we could have OTSi 1 or 3 depending on the status of the selector and this can change. 
+Path computation should verify the optical impairments in both conditions.
+
+Gert said to take care of OTSiG as well.
+
+AP @Italo/Sergio to summarize issues we recognize and to be addressed to model protection.
+
+Uploaded the new version of slides with slide "for discussion".
+
+
+#### issue#24 : Model alignment with 400G-ZR
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24
+
+* There was a common agreement that the model is already suitable for any pluggable , no needs to have a specific model to cover 400G ZR+
+* ZR+ is specified in OpenROADM , and as such it can be managed as an “MSA” fora organizational mode, see section 2.5.2 that already mention 
+for a as part of organizational mode case.
+* We need to be sure that this MSA organizational mode can be a superset of the list of explicit attributes. 
+Need to be check the list of needed parameters for ZR+ (Gabriele)
+* There could be an OTN compatibility issue for ZR+ that has to be verified. 
+This could be an issue in case of 3R. Not only for ZR+ we could consider the opportunity to add an attribute to provide information regarding 
+digital compatibility.
+
+In general:
+* The model with operational modes seems providing already way to manage compatibility issues
+* We should probably digging more in scenario with 3R, but also in this case seems that operational mode could be enough.
+* Client information are input of path computation, and are not part of the topology model. We can suppose that other model already provided this information.
+* In case of zr+ we can add sentence to specify to be careful about operational modes e.g. you could have zr+-ethernet and zr+-otn
+* The way happens ODUflex ODUCn mapping is an input to path computation. Maybe operational mode could be not sufficient. 
+AP @Italo to check with ITU guys.
+
+Gabriele was out of the meeting and we decided to wait for him to analyse more carefully his comment on
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/24#issuecomment-1054238457 before closing eventually the issue
+
+We went through the comment from Gabriele to understand if we can or not consider the issue closed.
+Gabriele explains a bit the difference between the models 400ZR, OpenZR+. Both do not support OTN, 
+as instead is supported by OpenROADM with client traffic (100-400 GbE & OTN).
+
+We should add an attribute representing the fact that the same application code support more than 1 line-coding. 
+This an an impact in case operational mode is used for transponder (same application code but possible different line coding, no interworking).
+Need to define new identities in YANG to represent the different line-coding applicable to the same application code.
+
+AP @Italo/Gabriele/Sergio need to understand how to structure the attribute 
+
+About the list of both Transmitter Opt. spec and Receiver Opt. Spec. 
+there is different opinion about the needs to includes new attributes as indicated by Gabriele:
+
+Transmitter
+
+* Tx output power with transmit disabled ?
+* Inband (IB) OSNR ?
+* Out-of-band (OOB) OSNR ?
+* Transmitter polarization dependent power difference ?
+* X-Y skew ?
+* 
+Receiver Opt. specs.
+
+* PMD (avg) tolerance
+* Peak PDL tolerance
+
+Tx output power with transmit disabled is the case in which there is no transmit signal but noise that can have impact for crosstalk.
+If you haven't filter the noise is impacting all the sprectrum.
+Dieter: is it important for path computation ?
+Gabriele: if you consider optical feasibility yes ?
+Dieter: I have still concerns if this attribute can be used as constraints in path computation
+Igor: maybe is not path computation constraints but optmization.
+
+AP @Gabriele/Sergio to check internally with optical expert the real impact for topology model 
+
+
+
