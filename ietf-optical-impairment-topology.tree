@@ -8,9 +8,7 @@ module: ietf-optical-impairment-topology
        +--ro otsi* [otsi-carrier-id]
           +--ro otsi-carrier-id           uint16
           +--ro otsi-carrier-frequency?   union
-          +--ro tx-channel-power?         union
-          +--ro rx-channel-power?         union
-          +--ro rx-total-power?           union
+          +--ro nmc-path-id*              uint16
   augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
     |  +--ro transponder-id                   uint32
@@ -34,7 +32,7 @@ module: ietf-optical-impairment-topology
     |     |        |     |       frequency-thz
     |     |        |     +--ro max-central-frequency?
     |     |        |     |       frequency-thz
-    |     |        |     +--ro central-frequency-step?
+    |     |        |     +--ro transceiver-tunability?
     |     |        |     |       frequency-ghz
     |     |        |     +--ro tx-channel-power-min?      dbm-t
     |     |        |     +--ro tx-channel-power-max?      dbm-t
@@ -56,19 +54,20 @@ module: ietf-optical-impairment-topology
     |     |              |       decimal64
     |     |              +--ro max-chromatic-dispersion?
     |     |              |       decimal64
-    |     |              +--ro chromatic-and-polarization-dispersion-penalty* []
-    |     |              |  +--ro chromatic-dispersion
-    |     |              |  |       union
+    |     |              +--ro chromatic-dispersion-penalty* []
+    |     |              |  +--ro chromatic-dispersion    union
+    |     |              |  +--ro penalty-value           union
+    |     |              +--ro polarization-dispersion-penalty* []
     |     |              |  +--ro polarization-mode-dispersion
     |     |              |  |       union
-    |     |              |  +--ro penalty
+    |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
     |     |              |       int32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
-    |     |              |  +--ro penalty
+    |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro available-modulation-type?
     |     |              |       identityref
@@ -92,7 +91,7 @@ module: ietf-optical-impairment-topology
     |     |              |       frequency-thz
     |     |              +--ro max-central-frequency?
     |     |              |       frequency-thz
-    |     |              +--ro central-frequency-step?
+    |     |              +--ro transceiver-tunability?
     |     |              |       frequency-ghz
     |     |              +--ro tx-channel-power-min?
     |     |              |       dbm-t
@@ -106,6 +105,9 @@ module: ietf-optical-impairment-topology
     |     |                      dbm-t
     |     +--ro configured-mode?
     |     |       -> ../supported-modes/supported-mode/mode-id
+    |     +--ro tx-channel-power?              union
+    |     +--ro rx-channel-power?              union
+    |     +--ro rx-total-power?                union
     |     +--ro outgoing-otsi
     |     |  +--ro otsi-group-ref?
     |     |  |       -> ../../../../../otsi-group/otsi-group-id
@@ -137,7 +139,9 @@ module: ietf-optical-impairment-topology
        |     +--ro flexi-m?          l0-types:flexi-m
        |     +--ro otsi-group-ref?
        |     |       -> /nw:networks/network/otsi-group/otsi-group-id
-       |     +--ro otsi-ref*         leafref
+       |     +--ro otsi-ref* []
+       |     |  +--ro otsi-carrier-ref?   leafref
+       |     |  +--ro nmc-path-ref*       leafref
        |     +--ro delta-power?      l0-types:power-in-dbm-or-null
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
@@ -303,3 +307,4 @@ module: ietf-optical-impairment-topology
        +--ro is-allowed?              boolean
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
+
