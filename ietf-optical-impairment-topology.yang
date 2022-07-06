@@ -78,7 +78,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2022-06-29 {
+  revision 2022-07-06 {
     description
       "Initial Version";
     reference
