@@ -444,7 +444,7 @@
    LTP on either end of the link pair.
   </t>
 
- <section title="Optical Tributary Signal (OTSi)" anchor="sect-2.3.1">
+ <section title="Optical Tributary Signal (OTSi)" anchor="OTSi">
   <t>
    The OTSi is defined in ITU-T Recommendation G.959.1, section 3.2.4
    <xref target="G.959.1"/>. The YANG model defined below assumes that
@@ -481,11 +481,18 @@
    including the spectrum occupied by each OTSi signal. The model also
    defines a pointer (leafref) from the OTSi to the transceiver module
    terminating the OTSi signal.   
-  </t>  
+  </t>
+  
+  <t>
+   The OTSi signals in the YANG model are described by augmenting the
+   network and each OTSi signal is uniquely identified by its
+   otsi-carrier-id, which is unique within the scope the OTSiG [see
+   <xref target="OTSiG" /> below] the OTSi belongs to.
+  </t>
 
   </section>
 
-  <section title="Optical Tributary Signal Group (OTSiG)" anchor="sect-2.3.2">
+  <section title="Optical Tributary Signal Group (OTSiG)" anchor="OTSiG">
   <t>
    The OTSiG is defined in ITU-T Recommendation G.807 <xref target="G.807"/>
    as a "set of optical tributary signals (OTSi) that supports a single
@@ -506,6 +513,13 @@
    different OTSi's may not exceed a certain limit. Example: a 400Gbps
    client signal may be carried by 4 OTSi's where each OTSi carries
    100Gbps of client traffic.
+  </t>
+  
+  <t>
+   All OTSiGs are described in the YANG model by augmenting the network
+   and each OTSiG is uniquely identified by its otsi-group-id, which is
+   unique within the network. Each OTSiG also contains a list of the
+   OTSi signals belonging to the OTSiG.
   </t>
 
   <figure align="center" title="MC Example containing all 4 OTSi signals of an OTSiG"
@@ -530,7 +544,7 @@
 
   </section>
   
-  <section title="Media Channel (MC)" anchor="sect-2.3.3">
+  <section title="Media Channel (MC)" anchor="MC">
     
   <t>
    <xref target="G.807"/> defines a "media channel" as "A media
@@ -758,7 +772,7 @@
    one or several OTSiG signals (tunnels) as described in
    <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and each
    OTSiG consists of one or multiple OTSi signals as described in
-   <xref target="sect-2.3.2"/>.
+   <xref target="OTSiG"/>.
    Therefore, a TTP may be associated with multiple transceiver modules.
   </t>
   

@@ -467,6 +467,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
    defines a pointer (leafref) from the OTSi to the transceiver module
    terminating the OTSi signal.
 
+   The OTSi signals in the YANG model are described by augmenting the
+   network and each OTSi signal is uniquely identified by its otsi-
+   carrier-id, which is unique within the scope the OTSiG [see
+   Section 2.3.2 below] the OTSi belongs to.
+
 2.3.2.  Optical Tributary Signal Group (OTSiG)
 
    The OTSiG is defined in ITU-T Recommendation G.807 [G.807] as a "set
@@ -487,15 +492,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
    certain limit.  Example: a 400Gbps client signal may be carried by 4
    OTSi's where each OTSi carries 100Gbps of client traffic.
 
-
-
-
-
-
-
-
-
-
+   All OTSiGs are described in the YANG model by augmenting the network
+   and each OTSiG is uniquely identified by its otsi-group-id, which is
+   unique within the network.  Each OTSiG also contains a list of the
+   OTSi signals belonging to the OTSiG.
 
 
 
