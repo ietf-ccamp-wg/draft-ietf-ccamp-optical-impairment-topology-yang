@@ -33,18 +33,18 @@ IETF_DIR = TEST_DIR / 'tests'
 # git.Repo.clone_from('https://github.com/YangModels/yang.git', temp_dir, branch='master', depth=1)
 # case 2 download only usefull files:
 
-official_yang_repo = 'https://raw.githubusercontent.com/YangModels/yang/master/'
-layer0ext_repo = 'https://raw.githubusercontent.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/master/'
-urls = [(official_yang_repo, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-yang-types@2013-07-15.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-network-topology@2018-02-26.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-inet-types@2013-07-15.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-te-types@2020-06-10.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-te-topology@2020-08-06.yang'),
-        (layer0ext_repo, 'ietf-layer0-types.yang')]
+OFFICIAL_YANG_REPO = 'https://raw.githubusercontent.com/YangModels/yang/master/'
+LAYER0EXT_REPO = 'https://raw.githubusercontent.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/master/'
+URLS = [(OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-yang-types@2013-07-15.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-network-topology@2018-02-26.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-inet-types@2013-07-15.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-te-types@2020-06-10.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-te-topology@2020-08-06.yang'),
+        (LAYER0EXT_REPO, 'ietf-layer0-types.yang')]
 # TODO automatically retrieve list of versions based on listing in the github
 
-for url in urls:
+for url in URLS:
     base_name, file = url
     filename = file.split('/')[-1]
     try:
@@ -75,7 +75,7 @@ def test_yang_tree():
     assert expected == tree, "YANG tree rendering differs"
 
     # remove downloaded yang files
-    for url in urls:
-        base_name, file = url
-        filename = file.split('/')[-1]
-        unlink(f'{IETF_DIR}/{filename}')
+    for link in URLS:
+        _, fil = link
+        file_name = fil.split('/')[-1]
+        unlink(f'{IETF_DIR}/{file_name}')
