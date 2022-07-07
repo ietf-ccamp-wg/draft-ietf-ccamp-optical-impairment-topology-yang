@@ -58,7 +58,8 @@ for url in urls:
 def test_pyang():
     """ first compile the yang with pyang
     """
-    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE],
+                         stdout=subprocess.PIPE, check=True)
     if res.returncode != 0:
         assert False, f'pyang failed: exit code {res.returncode}'
 
@@ -66,10 +67,12 @@ def test_pyang():
 def test_yang_tree():
     """ check that the tree is consistent with the yang
     """
-    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE],
+                         stdout=subprocess.PIPE, check=True)
     treefile = Path(YANG_FILE).with_suffix('.tree')
-    tree = open(treefile, 'r').read()
-    assert res.stdout.decode('utf-8') == tree, "YANG tree rendering differs"
+    tree = '\n'.join([s for s in open(treefile, 'r').read().splitlines() if s])
+    expected = '\n'.join([s for s in res.stdout.decode('utf-8').splitlines() if s])
+    assert expected == tree, "YANG tree rendering differs"
 
     # remove downloaded yang files
     for url in urls:
