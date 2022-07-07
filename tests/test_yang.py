@@ -33,18 +33,18 @@ IETF_DIR = TEST_DIR / 'tests'
 # git.Repo.clone_from('https://github.com/YangModels/yang.git', temp_dir, branch='master', depth=1)
 # case 2 download only usefull files:
 
-official_yang_repo = 'https://raw.githubusercontent.com/YangModels/yang/master/'
-layer0ext_repo = 'https://raw.githubusercontent.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/master/'
-urls = [(official_yang_repo, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-yang-types@2013-07-15.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-network-topology@2018-02-26.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-inet-types@2013-07-15.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-te-types@2020-06-10.yang'),
-        (official_yang_repo, 'standard/ietf/RFC/ietf-te-topology@2020-08-06.yang'),
-        (layer0ext_repo, 'ietf-layer0-types.yang')]
+OFFICIAL_YANG_REPO = 'https://raw.githubusercontent.com/YangModels/yang/master/'
+LAYER0EXT_REPO = 'https://raw.githubusercontent.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/master/'
+URLS = [(OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-yang-types@2013-07-15.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-network-topology@2018-02-26.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-inet-types@2013-07-15.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-te-types@2020-06-10.yang'),
+        (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-te-topology@2020-08-06.yang'),
+        (LAYER0EXT_REPO, 'ietf-layer0-types.yang')]
 # TODO automatically retrieve list of versions based on listing in the github
 
-for url in urls:
+for url in URLS:
     base_name, file = url
     filename = file.split('/')[-1]
     try:
@@ -58,7 +58,8 @@ for url in urls:
 def test_pyang():
     """ first compile the yang with pyang
     """
-    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE],
+                         stdout=subprocess.PIPE, check=True)
     if res.returncode != 0:
         assert False, f'pyang failed: exit code {res.returncode}'
 
@@ -66,13 +67,15 @@ def test_pyang():
 def test_yang_tree():
     """ check that the tree is consistent with the yang
     """
-    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE], stdout=subprocess.PIPE)
+    res = subprocess.run(['pyang', '-f', 'tree', '--tree-line-length', '69', '-p', IETF_DIR, YANG_FILE],
+                         stdout=subprocess.PIPE, check=True)
     treefile = Path(YANG_FILE).with_suffix('.tree')
-    tree = open(treefile, 'r').read()
-    assert res.stdout.decode('utf-8') == tree, "YANG tree rendering differs"
+    tree = '\n'.join([s for s in open(treefile, 'r').read().splitlines() if s])
+    expected = '\n'.join([s for s in res.stdout.decode('utf-8').splitlines() if s])
+    assert expected == tree, "YANG tree rendering differs"
 
     # remove downloaded yang files
-    for url in urls:
-        base_name, file = url
-        filename = file.split('/')[-1]
-        unlink(f'{IETF_DIR}/{filename}')
+    for link in URLS:
+        _, fil = link
+        file_name = fil.split('/')[-1]
+        unlink(f'{IETF_DIR}/{file_name}')
