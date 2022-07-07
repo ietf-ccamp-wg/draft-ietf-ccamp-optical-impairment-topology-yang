@@ -1562,6 +1562,68 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   </section>
 
+  <section title="Protection Architectures" anchor="Prot">
+  
+  <t>
+   The YANG model defined in this document supports the following
+   protection architectures:
+  </t>
+    
+  <t><list style="symbols"><?rfc subcompact="yes"?>
+   <t>End-to-end OTSi protection</t>
+   <t>OMS MCG protection = TE-link protection between adjacent
+   WDM-TE-nodes</t>
+  <?rfc subcompact="no"?>
+  </list></t>
+
+  <t>
+   [Editor's note: this section is still work in progress]
+  </t>
+ 
+  <section title="End-to-end OTSi protection" anchor="OTSi_prot">
+  
+  <t>
+   End-to-end OTSi protection is a protection architecture where an OTSi
+   signal is end-to-end protected. This protection architecture requires
+   dedicated photonic protection functions that are typically provided by
+   dedicated protection hardware. These photonic protection functions
+   are a photonic splitter function splitting the OTSi signal in transmit
+   direction and a photonic selector function selecting the OTSi signal
+   in receive direction from one of the two protection legs between the
+   protection functions terminating the OTSi protection. This end-to-end
+   photonic protection architecture is a 1+1 protection  scheme.
+  </t>
+  
+  <t>
+   In case of end-to-end OTSi protection, there are two network media
+   channel paths associated with the OTSi signal. In the YANG model,
+   this is modeled as a leaf list of the otsi providing the nmc-path-id
+   for the two network media channel paths associated with the
+   protected otsi.
+  </t>
+  
+  <t>
+   [Editor's note: this section is still work in progress]
+  </t>
+  
+  </section>
+
+  <section title="OMS MCG protection" anchor="link_prot">
+  
+  <t>
+   OMS MCG protection is a protection architecture where a TE-link
+   between two adjacent WDM-TE-nodes is protected. This is a local
+   protection scheme, which can be modeled as a TE-link property.
+  </t>
+  
+  <t>
+   [Editor's note: this section is still work in progress]
+  </t>
+  
+  </section>
+
+  </section>
+
   </section>
 
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
@@ -1581,9 +1643,7 @@ module: ietf-optical-impairment-topology
        +--ro otsi* [otsi-carrier-id]
           +--ro otsi-carrier-id           uint16
           +--ro otsi-carrier-frequency?   union
-          +--ro tx-channel-power?         union
-          +--ro rx-channel-power?         union
-          +--ro rx-total-power?           union
+          +--ro nmc-path-id*              uint16
   augment /nw:networks/nw:network/nw:node:
     +--ro transponder* [transponder-id]
     |  +--ro transponder-id                   uint32
@@ -1607,7 +1667,7 @@ module: ietf-optical-impairment-topology
     |     |        |     |       frequency-thz
     |     |        |     +--ro max-central-frequency?
     |     |        |     |       frequency-thz
-    |     |        |     +--ro central-frequency-step?
+    |     |        |     +--ro transceiver-tunability?
     |     |        |     |       frequency-ghz
     |     |        |     +--ro tx-channel-power-min?      dbm-t
     |     |        |     +--ro tx-channel-power-max?      dbm-t
@@ -1629,19 +1689,20 @@ module: ietf-optical-impairment-topology
     |     |              |       decimal64
     |     |              +--ro max-chromatic-dispersion?
     |     |              |       decimal64
-    |     |              +--ro chromatic-and-polarization-dispersion-penalty* []
-    |     |              |  +--ro chromatic-dispersion
-    |     |              |  |       union
+    |     |              +--ro chromatic-dispersion-penalty* []
+    |     |              |  +--ro chromatic-dispersion    union
+    |     |              |  +--ro penalty-value           union
+    |     |              +--ro polarization-dispersion-penalty* []
     |     |              |  +--ro polarization-mode-dispersion
     |     |              |  |       union
-    |     |              |  +--ro penalty
+    |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
     |     |              |       int32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
-    |     |              |  +--ro penalty
+    |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro available-modulation-type?
     |     |              |       identityref
@@ -1665,7 +1726,7 @@ module: ietf-optical-impairment-topology
     |     |              |       frequency-thz
     |     |              +--ro max-central-frequency?
     |     |              |       frequency-thz
-    |     |              +--ro central-frequency-step?
+    |     |              +--ro transceiver-tunability?
     |     |              |       frequency-ghz
     |     |              +--ro tx-channel-power-min?
     |     |              |       dbm-t
@@ -1679,6 +1740,9 @@ module: ietf-optical-impairment-topology
     |     |                      dbm-t
     |     +--ro configured-mode?
     |     |       -> ../supported-modes/supported-mode/mode-id
+    |     +--ro tx-channel-power?              union
+    |     +--ro rx-channel-power?              union
+    |     +--ro rx-total-power?                union
     |     +--ro outgoing-otsi
     |     |  +--ro otsi-group-ref?
     |     |  |       -> ../../../../../otsi-group/otsi-group-id
@@ -1710,7 +1774,9 @@ module: ietf-optical-impairment-topology
        |     +--ro flexi-m?          l0-types:flexi-m
        |     +--ro otsi-group-ref?
        |     |       -> /nw:networks/network/otsi-group/otsi-group-id
-       |     +--ro otsi-ref*         leafref
+       |     +--ro otsi-ref* []
+       |     |  +--ro otsi-carrier-ref?   leafref
+       |     |  +--ro nmc-path-ref*       leafref
        |     +--ro delta-power?      l0-types:power-in-dbm-or-null
        +--ro OMS-elements* [elt-index]
           +--ro elt-index                 uint16
@@ -1917,7 +1983,10 @@ module ietf-optical-impairment-topology {
     "IETF CCAMP Working Group";
 
   contact
-    "Editor:   Young Lee <younglee.tx@gmail.com>
+    "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
+     WG List: <mailto:ccamp@ietf.org>
+
+     Editor:   Young Lee <younglee.tx@gmail.com>
      Editor:   Haomian Zheng <zhenghaomian@huawei.com>
      Editor:   Nicola Sambo <nicosambo@gmail.com>
      Editor:   Victor Lopez <victor.lopezalvarez@telefonica.com>
@@ -1954,21 +2023,19 @@ module ietf-optical-impairment-topology {
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Simplified BSD
+     to the license terms contained in, the Revised BSD
      License set forth in Section 4.c of the IETF Trust's Legal
      Provisions Relating to IETF Documents
-     (http://trustee.ietf.org/license-info).
+     (https://trustee.ietf.org/license-info).
+
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
 // RFC Ed.: replace XXXX with actual RFC number and remove
 // this note
-
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-
-
-  revision 2022-03-07 {
+  revision 2022-07-06 {
     description
       "Initial Version";
     reference
@@ -2036,7 +2103,9 @@ module ietf-optical-impairment-topology {
           leaf tilt-target {
             type l0-types:decimal-2-digits-or-null;
             mandatory true ;
-            description "..";
+            description
+              "The tilt target defined between lower and upper
+              frequency of the amplifier frequency range.";
           }
           leaf out-voa {
             type l0-types:power-in-db-or-null;
@@ -2457,7 +2526,7 @@ module ietf-optical-impairment-topology {
           This permits to determine 
           amplifier OSNR contribution 
           without having to specify the 
-          ROADM node's losses to that amplifier.
+          ROADM node’s losses to that amplifier.
           This applies for the case of no 
           additional drop path loss, 
           before the amplifier, in order to reduce the power
@@ -2546,7 +2615,29 @@ module ietf-optical-impairment-topology {
         type uint16;
         description "OTSi carrier-id";
       }
-      uses l0-types:common-transceiver-configured-param;
+      leaf otsi-carrier-frequency {
+        type union {
+          type l0-types:frequency-thz;
+          type empty;
+        }
+        description
+          "OTSi carrier frequency, equivalent to the
+          actual configured transmitter frequency";
+      }
+      leaf-list nmc-path-id {
+        type uint16;
+        description
+          "The list of the possible Network Media Channel (NMC) paths
+          associated with the OTSi which have different optical
+          impairments.
+
+          This list is meaningful in case the OTSi can be associated
+          with multiple NMC paths
+          (e.g., when OPS protection is configured).
+          
+          The list can be empty when the OTSi has only one
+          NMC path.";
+      }
     } // OTSi list
   } // OTSiG grouping
 
@@ -2579,18 +2670,35 @@ module ietf-optical-impairment-topology {
             OTSiG carried by this media channel 
             that reports the transient stat";
         }
-        leaf-list otsi-ref {
-          type leafref {
-            path "/nw:networks/nw:network/"  
-               + "otsi-group[otsi-group-id=current()"
-               + "/../otsi-group-ref]/"
-               + "otsi/otsi-carrier-id" ;
-          }
+        list otsi-ref {
           description
-             "Reference to the otsi list supporting
-             the related OTSiG to get otsi identifier";
+            "The list of references to the OTSis and their NMC paths
+            within the OTSiG carried by this media channel.";
+          leaf otsi-carrier-ref {
+            type leafref {
+              path "/nw:networks/nw:network/"  
+                + "otsi-group[otsi-group-id=current()"
+                + "/../../otsi-group-ref]/"
+                + "otsi/otsi-carrier-id" ;
+            }
+            description
+              "Reference to the OTSi within the OTSiG carried
+              by this media channel.";
+          }
+          leaf-list nmc-path-ref {
+            type leafref {
+              path "/nw:networks/nw:network/"  
+                + "otsi-group[otsi-group-id=current()"
+                + "/../../otsi-group-ref]/"
+                + "otsi[otsi-carrier-id=current()"
+                + "/../otsi-carrier-ref]/nmc-path-id" ;
+            }
+            description
+              "References to the NMC paths of this OTSi which are
+              routed through this media channel.";
+          }
         }
-        leaf delta-power{
+        leaf delta-power {
           type l0-types:power-in-dbm-or-null;
           description
             " Deviation from the reference carrier power defined for
@@ -2799,6 +2907,7 @@ module ietf-optical-impairment-topology {
             "Reference to the configured mode for transceiver
             compatibility approach.";
         }
+        uses l0-types:common-transceiver-configured-param;
         container outgoing-otsi {
           description
             "The OTSi generated by the transceiver's transmitter.";
