@@ -6,5 +6,6 @@ from setuptools import setup, find_packages
 
 
 setup(
-    install_requires=list(open('requirements.txt'))
+    install_requires=list(open('requirements.txt')),
+    py_modules=[]
 )
