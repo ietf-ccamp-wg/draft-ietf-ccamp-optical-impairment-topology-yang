@@ -990,8 +990,9 @@
   <t><list style="symbols"><?rfc subcompact="yes"?>
    <t>Supported transmitter tuning range with min/max nominal carrier
       frequency [f_tx_min, f_tx_max]</t>
-   <t>Supported transmitter tunability grid, the distance between two
-      adjacent carrier frequencies (in GHz)</t>
+   <t>Supported transmitter tunability describing the transmitter's
+      frequency fine tuning steps (the minimum distance between two
+      adjacent carrier frequencies in GHz)</t>
    <t>Supported transmitter power range [p_tx-min, p_tx_max]</t>
    <t>Supported receiver channel power range [p_rx-min, p_rx_max]</t>
    <t>Supported maximum total power, rx power for all channels fed

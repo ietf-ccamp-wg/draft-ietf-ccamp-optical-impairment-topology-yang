@@ -926,8 +926,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
    o  Supported transmitter tuning range with min/max nominal carrier
       frequency [f_tx_min, f_tx_max]
-   o  Supported transmitter tunability grid, the distance between two
-      adjacent carrier frequencies (in GHz)
+   o  Supported transmitter tunability describing the transmitter's
+      frequency fine tuning steps (the minimum distance between two
+      adjacent carrier frequencies in GHz)
    o  Supported transmitter power range [p_tx-min, p_tx_max]
    o  Supported receiver channel power range [p_rx-min, p_rx_max]
    o  Supported maximum total power, rx power for all channels fed into
@@ -945,7 +946,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
    It is possible that the set of parameter values defined for an
    explicit mode may also be represented in form of an organizational
-   mode or one or more application codes.  The "supported-mode"
 
 
 
@@ -954,6 +954,7 @@ Beller, et al.          Expires January 12, 2023               [Page 17]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
 
+   mode or one or more application codes.  The "supported-mode"
    container may provide two different lists with pointers to
    application codes and organizational modes, respectively.
 
@@ -1001,7 +1002,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
    needed for layer 0 path computation in case the optical impairments
    make it impossible to find an optically feasible end-to-end path from
    the source transponder to the destination transponder without 3R
-   regeneration.  When an end-to-end path includes one or more 3R
 
 
 
@@ -1010,6 +1010,7 @@ Beller, et al.          Expires January 12, 2023               [Page 18]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
 
+   regeneration.  When an end-to-end path includes one or more 3R
    regenerators, the corresponding layer 0 tunnel is subdivided into 2
    or more segments between the source transponder and the destination
    transponder terminating the layer 0 tunnel.
@@ -1057,7 +1058,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
       where the receiver may operate at a different optical frequency as
       the transmitter.  The transceiver mode is a property of the
       transceiver and is applied to the transmitter and the receiver.
-      Therefore, the transceiver mode is the same for the two segments
 
 
 
@@ -1066,6 +1066,7 @@ Beller, et al.          Expires January 12, 2023               [Page 19]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
 
+      Therefore, the transceiver mode is the same for the two segments
       on the two sides of the 3R regenaretor realised by two
       transceivers operated in the uni-directional mode.
 
@@ -1113,7 +1114,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
    The supported-termination-type attribute describes whether the
    optical transponder can be used as tunnel terminating transponder
-   only, as 3R regenerator only, or whether it can support both
 
 
 
@@ -1122,6 +1122,7 @@ Beller, et al.          Expires January 12, 2023               [Page 20]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
 
 
+   only, as 3R regenerator only, or whether it can support both
    functions.  The supported-3r-mode attrbute describes the
    configuration of the transponder pair forming the 3R regeneartor as
    described above.
@@ -1169,7 +1170,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2022
    presents the WDM-TE-node representing the disaggregated WDM-node in
    the same way as an integrated WDM-TE-node with local optical
    transponders if the optical transponder subsystems and the add/drop
-
 
 
 
