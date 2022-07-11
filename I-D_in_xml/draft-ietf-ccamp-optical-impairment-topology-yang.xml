@@ -1571,7 +1571,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
     
   <t><list style="symbols"><?rfc subcompact="yes"?>
-   <t>End-to-end OTSi protection</t>
+   <t>Individual OTSi protection</t>
    <t>OMS MCG protection = TE-link protection between adjacent
    WDM-TE-nodes</t>
   <?rfc subcompact="no"?>
@@ -1581,26 +1581,30 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    [Editor's note: this section is still work in progress]
   </t>
  
-  <section title="End-to-end OTSi protection" anchor="OTSi_prot">
+  <section title="Individual OTSi Protection" anchor="OTSi_prot">
   
   <t>
-   End-to-end OTSi protection is a protection architecture where an OTSi
-   signal is end-to-end protected. This protection architecture requires
-   dedicated photonic protection functions that are typically provided by
-   dedicated protection hardware. These photonic protection functions
-   are a photonic splitter function splitting the OTSi signal in transmit
-   direction and a photonic selector function selecting the OTSi signal
-   in receive direction from one of the two protection legs between the
-   protection functions terminating the OTSi protection. This end-to-end
-   photonic protection architecture is a 1+1 protection  scheme.
+   Individual OTSi protection is a protection architecture where an
+   individual OTSi signal is protected as defined in Appendix III of
+   ITU-T Recommendation G.873.1 <xref target ="G.873.1"/>. This
+   protection architecture requires dedicated photonic protection
+   functions that are typically provided by dedicated protection
+   hardware. These photonic protection functions are a photonic
+   splitter function splitting the OTSi signal in transmit direction
+   and a photonic selector function selecting the OTSi signal in
+   receive direction from one of the two protection legs between the
+   protection functions terminating the individual OTSi protection.
+   This individual OTSi protection scheme can be considered as a
+   photonic 1+1 protection scheme (1+1 sub-network connection
+   protection (SNCP) in ITU-T terminology).
   </t>
   
   <t>
-   In case of end-to-end OTSi protection, there are two network media
+   In case of individual OTSi protection, there are two network media
    channel paths associated with the OTSi signal. In the YANG model,
    this is modeled as a leaf list of the otsi providing the nmc-path-id
    for the two network media channel paths associated with the
-   protected otsi.
+   individually protected otsi.
   </t>
   
   <t>
@@ -3512,7 +3516,17 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T" value="Recommendation G.798.1"/>
   </reference>
-
+  
+  <reference anchor="G.873.1">
+   <front>
+   <title>Optical transport network: Linear protection</title>
+   <author>
+   </author>
+   <date month="October" year="2017"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.873.1"/>
+  </reference>
+  
   </references>
     
   <section title="Contributors" anchor="sect-9">
