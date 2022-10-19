@@ -18,6 +18,10 @@ module ietf-optical-impairment-topology {
     prefix "tet";
   }
 
+  import ietf-te-types {
+    prefix "te-types";
+  }
+
   import ietf-layer0-types {
     prefix "l0-types";
   }
@@ -78,7 +82,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2022-07-06 {
+  revision 2022-10-19 {
     description
       "Initial Version";
     reference
@@ -86,7 +90,20 @@ module ietf-optical-impairment-topology {
        Optical Networks";
   }
 
-  // grouping
+  /*
+   * Identities
+   */
+
+  identity otsi-protection {
+    base te-types:lsp-protection-type;
+    description
+      "Individual OTSi(G) protection LSP protection type.";
+    reference
+      "ITU-T G.873.1 v5.2 (02/2022): Optical transport network: 
+      Linear protection";
+  }
+
+  // groupings
 
   grouping sliceable-transponder-attributes {
     description
@@ -839,12 +856,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:network-types"
         + "/tet:te-topology" {
-   description "optical-impairment topology augmented";
-   container optical-impairment-topology {
-     presence "indicates an impairment-aware topology of 
-     optical networks";
-     description
-     "Container to identify impairment-aware topology type";
+    description "optical-impairment topology augmented";
+    container optical-impairment-topology {
+      presence
+        "Indicates an impairment-aware topology of optical networks";
+      description
+        "Container to identify impairment-aware topology type";
    }
   }
 
@@ -852,7 +869,8 @@ module ietf-optical-impairment-topology {
     when "nw:network-types/tet:te-topology" +
          "/optical-imp-topo:optical-impairment-topology" {
       description
-        "This augment is only valid for Optical Impairment.";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description
       "Network augmentation for optical impairments data.";
@@ -1016,11 +1034,11 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nt:link/tet:te"
         + "/tet:te-link-attributes"   {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
-        "This augment is only valid for Optical Impairment.";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description "Optical Link augmentation for impairment data.";
     container OMS-attributes {
@@ -1034,8 +1052,7 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Impairment with
@@ -1070,26 +1087,42 @@ module ietf-optical-impairment-topology {
   } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
-   + "/tet:tunnel-termination-point" {
-   when "/nw:networks/nw:network/nw:network-types"
-    +"/tet:te-topology/"
-    + "optical-imp-topo:optical-impairment-topology" {
-    description
-      "This augment is only valid for optical impairment
+        + "/tet:tunnel-termination-point" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for optical impairment
        with sliceable transponder model";
-   }
-   description
-     "Tunnel termination point augmentation for sliceable
+    }
+    description
+      "Tunnel termination point augmentation for sliceable
       transponder model.";
-   uses sliceable-transponder-attributes;
+    uses sliceable-transponder-attributes;
+  }
+
+  // Should this leaf be moved to te-topology?
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
+    when "../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment 
+        topology";
+    }
+    description
+      "Augment LTP";
+    leaf protection-type {
+      type identityref {
+        base te-types:lsp-protection-type;
+      }
+      description
+        "The protection type that this LTP is capable of.";
+    }
   }
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology"
+    when "../../../nw:network-types/tet:te-topology"
        + "/optical-imp-topo:optical-impairment-topology" {
-
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -1167,14 +1200,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices"{
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
     }  
-    
     description
       "Augment default TE node connectivity matrix information 
       source.";
@@ -1192,18 +1223,15 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment
          topology ";
     }
-    
     description
       "Augment TE node connectivity matrix entry information 
       source.";
-
     leaf roadm-path-impairments {
       type leafref {
         path "../../../../tet:te-node-attributes/"
@@ -1216,14 +1244,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
     }  
-    
     description
       "Augment default TE node connectivity matrix.";
     leaf roadm-path-impairments {
@@ -1242,17 +1268,14 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/"
         + "tet:connectivity-matrices/tet:connectivity-matrix" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
     }
-
     description
       "Augment TE node connectivity matrix entry.";
-
     leaf roadm-path-impairments {
       type leafref {
         path "../../../roadm-path-impairments/"
@@ -1265,16 +1288,121 @@ module ietf-optical-impairment-topology {
   } // augmentation connectivity-matrix
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for 
+        Optical Impairment topology ";
+    }
+    description
+      "Augment the attributes for the 'from' LTP for the TE node 
+      connectivity matrix entry.";
+    list additional-ltp {
+      when "derived-from-or-self(../../../../../../"
+         + "nt:termination-point[nt:tp-id=current()/../tet:tp-ref]/"
+         + "optical-imp-topo:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only to 'from' LTPs that support 
+          individual OTSi(G) protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the 'from' LTP of this connectivity 
+        matrix entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can reach 
+        the 'to' LTP of this connectivity matrix entry can be 
+        selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to the potential secondary LTP that can be 
+          selected when the 'from' LTP of this connectivity matrix 
+          entry is selected as a working LTP";
+      }
+      leaf roadm-path-impairments {
+        type leafref {
+          path "../../../../../../../tet:te/tet:te-node-attributes/"
+             + "roadm-path-impairments/roadm-path-impairments-id";
+        }
+        config false;
+        description
+          "Pointer to ROADM optical impairments of the ROADM path 
+          between the secondary LTP and the 'to' LTP of this 
+          connectivity matrix entry.";
+      }    
+    }
+  } // augmentation connectivity-matrix from
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for 
+        Optical Impairment topology ";
+    }
+    description
+      "Augment the attributes for the 'to' LTP for the TE node 
+      connectivity matrix entry.";
+    list additional-ltp {
+      when "derived-from-or-self(../../../../../../"
+         + "nt:termination-point[nt:tp-id=current()/../tet:tp-ref]/"
+         + "optical-imp-topo:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only to 'to' LTPs that support 
+          individual OTSi(G) protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the 'from' LTP of this connectivity 
+        matrix entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can reach 
+        the 'to' LTP of this connectivity matrix entry can be 
+        selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to the potential secondary LTP that can be 
+          selected when the 'from' LTP of this connectivity matrix 
+          entry is selected as a working LTP";
+      }
+      leaf roadm-path-impairments {
+        type leafref {
+          path "../../../../../../../tet:te/tet:te-node-attributes/"
+             + "roadm-path-impairments/roadm-path-impairments-id";
+        }
+        config false;
+        description
+          "Pointer to ROADM optical impairments of the ROADM path 
+          between the secondary LTP and the 'to' LTP of this 
+          connectivity matrix entry.";
+      }    
+    }
+  } // augmentation connectivity-matrix to
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities" {
-
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
       "This augment is only valid for Optical Impairment topology ";
     }
-
     description
       "Augment default TTP LLC.";
     leaf add-path-impairments {
@@ -1301,15 +1429,12 @@ module ietf-optical-impairment-topology {
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity" {
-
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for
          Optical Impairment topology ";
     }
-    
     description
       "Augment TTP LLC entry.";
     leaf add-path-impairments {
@@ -1375,6 +1500,32 @@ module ietf-optical-impairment-topology {
         config false;
         description "pointer to the list set of ROADM 
         optical impairments";
+      }
+    }
+    list additional-ltp {
+      when "derived-from-or-self(../../../tet:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only to TTPs that support individual 
+          OTSi(G) protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the LTP associated with this LLCP 
+        entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can be 
+        reached by this TTP can be selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to potential secondary LTP that can be 
+          selected when the LTP associated with this LLCP entry is 
+          selected as a working LTP";
       }
     }
   } // augmentation local-link-connectivity
