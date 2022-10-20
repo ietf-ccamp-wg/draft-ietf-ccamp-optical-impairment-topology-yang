@@ -325,4 +325,6 @@ module: ietf-optical-impairment-topology
     |  +--ro drop-path-impairments?   leafref
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
-               -> ../../../../../../nt:termination-point/tp-id
+       |       -> ../../../../../../nt:termination-point/tp-id
+       +--ro add-path-impairments?    leafref
+       +--ro drop-path-impairments?   leafref

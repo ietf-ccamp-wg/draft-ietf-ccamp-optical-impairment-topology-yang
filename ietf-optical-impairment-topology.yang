@@ -82,7 +82,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2022-10-19 {
+  revision 2022-10-20 {
     description
       "Initial Version";
     reference
@@ -1526,6 +1526,24 @@ module ietf-optical-impairment-topology {
           "The reference to potential secondary LTP that can be 
           selected when the LTP associated with this LLCP entry is 
           selected as a working LTP";
+      }
+      leaf add-path-impairments {
+        type leafref {
+          path "../../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM optical
+        impairments";
+      }
+      leaf drop-path-impairments {
+        type leafref {
+          path "../../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM 
+        optical impairments";
       }
     }
   } // augmentation local-link-connectivity
