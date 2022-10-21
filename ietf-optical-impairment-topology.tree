@@ -63,7 +63,7 @@ module: ietf-optical-impairment-topology
     |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
-    |     |              |       int32
+    |     |              |       uint32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
@@ -86,6 +86,14 @@ module: ietf-optical-impairment-topology
     |     |              +--ro fec-code-rate?
     |     |              |       decimal64
     |     |              +--ro fec-threshold?
+    |     |              |       decimal64
+    |     |              +--ro in-band-osnr?
+    |     |              |       snr
+    |     |              +--ro out-of-band-osnr?
+    |     |              |       snr
+    |     |              +--ro tx-polarization-power-difference?
+    |     |              |       power-in-db
+    |     |              +--ro polarization-skew?
     |     |              |       decimal64
     |     |              +--ro min-central-frequency?
     |     |              |       frequency-thz

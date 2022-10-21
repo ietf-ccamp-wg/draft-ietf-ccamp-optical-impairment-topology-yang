@@ -82,7 +82,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2022-10-20 {
+  revision 2022-10-21 {
     description
       "Initial Version";
     reference
@@ -1301,12 +1301,14 @@ module ietf-optical-impairment-topology {
       connectivity matrix entry.";
     list additional-ltp {
       when "derived-from-or-self(../../../../../../"
-         + "nt:termination-point[nt:tp-id=current()/../tet:tp-ref]/"
+         + "nt:termination-point"
+         + "[nt:tp-id=current()/../../tet:to/tet:tp-ref]/"
          + "optical-imp-topo:protection-type,"
          + "'optical-imp-topo:otsi-protection')" {
         description
-          "This list applies only to 'from' LTPs that support 
-          individual OTSi(G) protection.";
+          "This list applies only when the 'to' LTP for this 
+          connectivity matrix entry supports individual OTSi(G) 
+          protection.";
       }
       key "ltp-ref";
       config false;
@@ -1335,8 +1337,8 @@ module ietf-optical-impairment-topology {
         config false;
         description
           "Pointer to ROADM optical impairments of the ROADM path 
-          between the secondary LTP and the 'to' LTP of this 
-          connectivity matrix entry.";
+          between this secondary 'from' LTP and the 'to' LTP of 
+          this connectivity matrix entry.";
       }    
     }
   } // augmentation connectivity-matrix from
@@ -1355,30 +1357,32 @@ module ietf-optical-impairment-topology {
       connectivity matrix entry.";
     list additional-ltp {
       when "derived-from-or-self(../../../../../../"
-         + "nt:termination-point[nt:tp-id=current()/../tet:tp-ref]/"
+         + "nt:termination-point"
+         + "[nt:tp-id=current()/../../tet:from/tet:tp-ref]/"
          + "optical-imp-topo:protection-type,"
          + "'optical-imp-topo:otsi-protection')" {
         description
-          "This list applies only to 'to' LTPs that support 
-          individual OTSi(G) protection.";
+          "This list applies only when the 'from' LTP for this 
+          connectivity matrix entry supports individual OTSi(G) 
+          protection.";
       }
       key "ltp-ref";
       config false;
       description
         "The restricted list of the potential secondary LTPs that 
-        can be selected when the 'from' LTP of this connectivity 
+        can be selected when the 'to' LTP of this connectivity 
         matrix entry is selected as a working LTP.
         
-        If this list is empty, all the other LTPs that can reach 
-        the 'to' LTP of this connectivity matrix entry can be 
-        selected as secondary LTPs.";
+        If this list is empty, all the other LTPs that can be 
+        reached from the 'from' LTP of this connectivity matrix 
+        entry can be selected as secondary LTPs.";
       leaf ltp-ref {
         type leafref {
           path "../../../../../../../nt:termination-point/nt:tp-id";
         }
         description
           "The reference to the potential secondary LTP that can be 
-          selected when the 'from' LTP of this connectivity matrix 
+          selected when the 'to' LTP of this connectivity matrix 
           entry is selected as a working LTP";
       }
       leaf roadm-path-impairments {
@@ -1389,8 +1393,8 @@ module ietf-optical-impairment-topology {
         config false;
         description
           "Pointer to ROADM optical impairments of the ROADM path 
-          between the secondary LTP and the 'to' LTP of this 
-          connectivity matrix entry.";
+          between the 'from' LTP of this connectivity matrix entry 
+          and this secondary LTP.";
       }    
     }
   } // augmentation connectivity-matrix to
