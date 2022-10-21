@@ -63,7 +63,7 @@ module: ietf-optical-impairment-topology
     |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
-    |     |              |       int32
+    |     |              |       uint32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
@@ -86,6 +86,14 @@ module: ietf-optical-impairment-topology
     |     |              +--ro fec-code-rate?
     |     |              |       decimal64
     |     |              +--ro fec-threshold?
+    |     |              |       decimal64
+    |     |              +--ro in-band-osnr?
+    |     |              |       snr
+    |     |              +--ro out-of-band-osnr?
+    |     |              |       snr
+    |     |              +--ro tx-polarization-power-difference?
+    |     |              |       power-in-db
+    |     |              +--ro polarization-skew?
     |     |              |       decimal64
     |     |              +--ro min-central-frequency?
     |     |              |       frequency-thz
@@ -213,6 +221,8 @@ module: ietf-optical-impairment-topology
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
        +--ro carrier-id    uint32
+  augment /nw:networks/nw:network/nw:node/nt:termination-point:
+    +--rw protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
@@ -289,6 +299,20 @@ module: ietf-optical-impairment-topology
             /tet:connectivity-matrix:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from:
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to:
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
@@ -300,11 +324,15 @@ module: ietf-optical-impairment-topology
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
     +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
-       +--ro ttp-transponder-ref
-       |       -> ../../../../ttp-transceiver/transponder-ref
-       +--ro ttp-transceiver-ref
-       |       -> ../../../../ttp-transceiver/transceiver-ref
-       +--ro is-allowed?              boolean
+    |  +--ro ttp-transponder-ref
+    |  |       -> ../../../../ttp-transceiver/transponder-ref
+    |  +--ro ttp-transceiver-ref
+    |  |       -> ../../../../ttp-transceiver/transceiver-ref
+    |  +--ro is-allowed?              boolean
+    |  +--ro add-path-impairments?    leafref
+    |  +--ro drop-path-impairments?   leafref
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../nt:termination-point/tp-id
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
-
