@@ -1547,11 +1547,11 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   </section>
 
-  <section title="Protection Architectures" anchor="Prot">
+  <section title="Optical Protection Architectures" anchor="Prot">
   
   <t>
    The YANG model defined in this document supports the following
-   protection architectures:
+   optical protection architectures:
   </t>
     
   <t><list style="symbols"><?rfc subcompact="yes"?>
@@ -1569,15 +1569,16 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    Individual OTSi protection is a protection architecture where an
-   individual OTSi signal is protected as defined in Appendix III of
-   ITU-T Recommendation G.873.1 <xref target ="G.873.1"/>. This
-   protection architecture requires dedicated photonic protection
-   functions that are typically provided by dedicated protection
-   hardware. These photonic protection functions are a photonic
-   splitter function splitting the OTSi signal in transmit direction
-   and a photonic selector function selecting the OTSi signal in
-   receive direction from one of the two protection legs between the
-   protection functions terminating the individual OTSi protection.
+   individual OTSi signal is protected as described in Appendix III of
+   ITU-T Recommendation G.873.1 <xref target ="G.873.1"/>. 
+   This protection architecture requires dedicated photonic protection
+   functions in the optical domain that are typically provided by
+   dedicated protection hardware. These photonic protection functions
+   are a photonic splitter function splitting the OTSi signal in
+   transmit direction and a photonic selector function selecting the
+   OTSi signal in receive direction from one of the two protection
+   legs between the two protection functions terminating the individual
+   OTSi protection.
    This individual OTSi protection scheme can be considered as a
    photonic 1+1 protection scheme (1+1 sub-network connection
    protection (SNCP) in ITU-T terminology).
@@ -1591,9 +1592,192 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    individually protected otsi.
   </t>
   
+  <t>Individual OTSi protection use cases:</t>
+    <ol type="(%i)">
+      <li>OT and OTSi protection function are an integral part of the WDM-TE-node</li>
+      <li>OT and OTSi protection/ROADM functions are in two adjecent WDM-TE-node (remote OT)</li>
+      <li>OT and OTSi protection function are both in an adjecent WDM-TE-node (protected remote OT)</li>
+    </ol>
+  
   <t>
-   [Editor's note: this section is still work in progress]
+   The different use cases are described in following sub-sections and
+   examples are provided how these uses cases can be modeled properly
+   using the optical impairment aware TE-topology YANG data model.
   </t>
+  
+  <section>
+    <name>OT and the protection function are an integral part of the WDM-TE-node</name>
+  
+    <t>
+     Use case (i)
+    </t>
+    
+    <figure align="center" title="OT and OTSi protection function are an
+    integral part of the WDM-TE-node (transmit diection)" anchor="Figure-11">
+    <artwork><![CDATA[
+                            WDM-TE-Node
+   +---------------------------------------------------------+
+   |                                       ROADM             |
+   |      Local OT        Splitter    +--------------+       |
+   |   +------------+    +--------+   |              |       |
+   |   |         TTP|    |     ---o-->o------\       | LTP 1 |
+   |   |       +----|    |    /   |   |       \------o-------o->
+ --o-->|       | Tx |--->+---o    |   |              |       |
+   |   |       +----|    |    \   |   |              |       |
+ <-o---|       | Rx |    |     ---o-->o---\          |       |
+   |   |       +----|    +--------+   |    \         | LTP 2 |
+   |   |            |                 |     \        o-------o->
+   |   +------------+        internal |      \       |       |
+   |                         AD ports o       \      |       |
+   |                                  |        \     |       |
+   |                                  |         \    | LTP 3 |
+   |                                  |          \---o-------o->
+   |                                  o              |       |
+   |                                  |              |       |
+   |                                  +--------------+       |
+   +---------------------------------------------------------+
+   
+]]>  </artwork>
+    </figure>
+
+    <figure align="center" title="OT and OTSI protection function are an
+    integral part of the WDM-TE-node (receive diection)" anchor="Figure-12">
+    <artwork><![CDATA[
+                            WDM-TE-Node
+   +---------------------------------------------------------+
+   |      Local OT                                           |
+   |   +------------+                      ROADM             |
+   |   |            |     Selector    +--------------+       |
+   |   |       +----|    +--------+   |              |       |
+ --o-->|       | Tx |    |     ---o<--o------\       | LPT 1 |
+   |   |       +----|    |    /   |   |       \------o-------o<-
+ <-o---|       | Rx |<---+---o    |   |              |       |
+   |   |       +----|    |    \   |   |              |       |
+   |   |         TTP|    |     ---o<--o---\          |       |
+   |   +------------+    +--------+   |    \         | LTP 2 |
+   |                                  |     \        o-------o<-
+   |                         internal |      \       |       |
+   |                         AD ports o       \      |       |
+   |                                  |        \     |       |
+   |                                  |         \    | LTP 3 |
+   |                                  |          \---o-------o<-
+   |                                  o              |       |
+   |                                  |              |       |
+   |                                  +--------------+       |
+   +---------------------------------------------------------+
+   
+]]>  </artwork>
+    </figure>
+  
+  </section>
+  
+  <section>
+    <name>OT and OTSi protection/ROADM functions are in two adjecent WDM-TE-node (remote OT)</name>
+  
+    <t>
+     Use case (ii)
+    </t>
+  
+    <figure align="center" title="OT and OTSi protection/ROADM functions are in
+     two adjecent WDM-TE-node (remote OT, transmit direction)" anchor="Figure-13">
+    <artwork><![CDATA[
+
+      WDM-TE-Node 1                      WDM-TE-Node 2
+   +----------------+      +---------------------------------------+
+   |                |      |                     ROADM             |
+   |      Remote OT |      |    Selector    +--------------+       |
+   |   +------------+      |   +--------+   |              |       |
+   |   |         TTP|      |   |     ---o-->o------\       | LTP 1 |
+   |   |       +----|      |LTP|    /   |   |       \------o-------o->
+ --o-->|       | Tx o----->o-->+---o    |   |              |       |
+   |   |       +----|      |   |    \   |   |              |       |
+ <-o---|       | Rx o      |   |     ---o-->o---\          |       |
+   |   |       +----|      |   +--------+   |    \         | LTP 2 |
+   |   |            |      |                |     \        o-------o->
+   |   +------------+      |LTP             |      \       |       |
+   |                |      o----------------o       \      |       |
+   |                |      |                |        \     |       |
+   |                |      |unprot. AD LTPs |         \    | LTP 3 |
+   |                |      |                |          \---o-------o->
+   |                |      o----------------o              |       |
+   |                |      |LTP             |              |       |
+   |                |      |                +--------------+       |
+   +----------------+      +---------------------------------------+
+   
+]]>  </artwork>
+    </figure>
+  
+  
+    <figure align="center" title="OT and OTSi protection/ROADM functions are in
+     two adjecent WDM-TE-node (remote OT, receive diection)" anchor="Figure-14">
+    <artwork><![CDATA[
+
+      WDM-TE-Node 1                      WDM-TE-Node 2
+   +----------------+      +---------------------------------------+
+   |      Remote OT |      |                                       |
+   |   +------------+      |                     ROADM             |
+   |   |            |      |    Selector    +--------------+       |
+   |   |       +----|      |   +--------+   |              |       |
+ --o-->|       | Tx o      |   |     ---o<--o------\       | LTP 1 |
+   |   |       +----|      |LTP|    /   |   |       \------o-------o<-
+ <-o---|       | Rx o<-----o<--+---o    |   |              |       |
+   |   |       +----|      |   |    \   |   |              |       |
+   |   |         TTP|      |   |     ---o<--o---\          |       |
+   |   +------------+      |   +--------+   |    \         | LTP 2 |
+   |                |      |                |     \        o-------o<-
+   |                |      |LTP             |      \       |       |
+   |                |      o----------------o       \      |       |
+   |                |      |                |        \     |       |
+   |                |      |unprot. AD LTPs |         \    | LTP 3 |
+   |                |      |                |          \---o-------o<-
+   |                |      o----------------o              |       |
+   |                |      |LTP             |              |       |
+   |                |      |                +--------------+       |
+   +----------------+      +---------------------------------------+
+      
+]]>  </artwork>
+    </figure>
+  
+  </section>
+
+  <section>
+    <name>OT and protection function are both in an adjecent WDM-TE-node (protected remote OT)</name>
+  
+    <t>
+     Use case (iii)
+    </t>
+  
+  
+    <figure align="center" title="OT and OTSI protection function are both
+    in an adjecent WDM-TE-node (protected remote OT, transmit diection)" anchor="Figure-15">
+    <artwork><![CDATA[
+
+           WDM-TE-Node 1                        WDM-TE-Node 2
+   +-----------------------------+      +---------------------------+
+   |      protected              |      |         ROADM             |
+   |      remote OT      Splitter|      |    +--------------+       |
+   |   +------------+   +--------+      |LPT |              |       |
+   |   |         TTP|   |     ---o----->o----o------\       | LTP 1 |
+   |   |       +----|   |    /   |      |    |       \------o-------o->
+ --o-->|       | Tx o-->+---o    |      |    |              |       |
+   |   |       +----|   |    \   |      |    |              |       |
+ <-o---|       | Rx |   |     ---o----->o----o---\          |       |
+   |   |       +----|   +--------+      |LTP |    \         | LTP 2 |
+   |   |            |            |      |    |     \        o-------o->
+   |   +------------+            |      |    |      \       |       |
+   |                             |      o----o       \      |       |
+   |                             |      |AD  |        \     |       |
+   |                             |      |LTPs|         \    | LTP 3 |
+   |                             |      |    |          \---o-------o->
+   |                             |      o----o              |       |
+   |                             |      |    |              |       |
+   |                             |      |    +--------------+       |
+   +-----------------------------+      +---------------------------+
+   
+]]>  </artwork>
+    </figure>
+
+  </section>
   
   </section>
 
@@ -1621,7 +1805,8 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    [Editor's note: tree view below always has to be updated before submitting a new revision!]
   </t>
   
-  <figure><artwork><![CDATA[
+  <sourcecode name="ietf-optical-impairment-topolog.tree" type="text" markers="false">
+    <![CDATA[  
 module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
@@ -1687,7 +1872,7 @@ module: ietf-optical-impairment-topology
     |     |              |  +--ro penalty-value
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
-    |     |              |       int32
+    |     |              |       uint32
     |     |              +--ro max-polarization-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
@@ -1710,6 +1895,14 @@ module: ietf-optical-impairment-topology
     |     |              +--ro fec-code-rate?
     |     |              |       decimal64
     |     |              +--ro fec-threshold?
+    |     |              |       decimal64
+    |     |              +--ro in-band-osnr?
+    |     |              |       snr
+    |     |              +--ro out-of-band-osnr?
+    |     |              |       snr
+    |     |              +--ro tx-polarization-power-difference?
+    |     |              |       power-in-db
+    |     |              +--ro polarization-skew?
     |     |              |       decimal64
     |     |              +--ro min-central-frequency?
     |     |              |       frequency-thz
@@ -1837,6 +2030,8 @@ module: ietf-optical-impairment-topology
             /tet:tunnel-termination-point:
     +--ro sliceable-transponder-list* [carrier-id]
        +--ro carrier-id    uint32
+  augment /nw:networks/nw:network/nw:node/nt:termination-point:
+    +--rw protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
@@ -1913,6 +2108,20 @@ module: ietf-optical-impairment-topology
             /tet:connectivity-matrix:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:from:
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
+            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:connectivity-matrix/tet:to:
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro roadm-path-impairments?   leafref
+  augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities:
     +--ro add-path-impairments?    leafref
@@ -1924,15 +2133,21 @@ module: ietf-optical-impairment-topology
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
     +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
-       +--ro ttp-transponder-ref
-       |       -> ../../../../ttp-transceiver/transponder-ref
-       +--ro ttp-transceiver-ref
-       |       -> ../../../../ttp-transceiver/transceiver-ref
-       +--ro is-allowed?              boolean
+    |  +--ro ttp-transponder-ref
+    |  |       -> ../../../../ttp-transceiver/transponder-ref
+    |  +--ro ttp-transceiver-ref
+    |  |       -> ../../../../ttp-transceiver/transceiver-ref
+    |  +--ro is-allowed?              boolean
+    |  +--ro add-path-impairments?    leafref
+    |  +--ro drop-path-impairments?   leafref
+    +--ro additional-ltp* [ltp-ref]
+       +--ro ltp-ref
+       |       -> ../../../../../../nt:termination-point/tp-id
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
-]]>
-  </artwork></figure>
+    ]]>
+  </sourcecode>
+
 
   </section>
 
@@ -1941,9 +2156,9 @@ module: ietf-optical-impairment-topology
   <t>
    [Editor's note: YANG code below always has to be updated before submitting a new revision!]
   </t>
-  
-  <figure><artwork><![CDATA[
-<CODE BEGINS>
+
+  <sourcecode name="ietf-optical-impairment-topology.yang" type="yang" markers="true">
+    <![CDATA[
 module ietf-optical-impairment-topology {
   yang-version 1.1;
 
@@ -1962,6 +2177,10 @@ module ietf-optical-impairment-topology {
 
   import ietf-te-topology {
     prefix "tet";
+  }
+
+  import ietf-te-types {
+    prefix "te-types";
   }
 
   import ietf-layer0-types {
@@ -2024,7 +2243,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2022-07-06 {
+  revision 2022-10-21 {
     description
       "Initial Version";
     reference
@@ -2032,7 +2251,20 @@ module ietf-optical-impairment-topology {
        Optical Networks";
   }
 
-  // grouping
+  /*
+   * Identities
+   */
+
+  identity otsi-protection {
+    base te-types:lsp-protection-type;
+    description
+      "Individual OTSi(G) protection LSP protection type.";
+    reference
+      "ITU-T G.873.1 v5.2 (02/2022): Optical transport network: 
+      Linear protection";
+  }
+
+  // groupings
 
   grouping sliceable-transponder-attributes {
     description
@@ -2515,7 +2747,7 @@ module ietf-optical-impairment-topology {
           This permits to determine 
           amplifier OSNR contribution 
           without having to specify the 
-          ROADM node’s losses to that amplifier.
+          ROADM node's losses to that amplifier.
           This applies for the case of no 
           additional drop path loss, 
           before the amplifier, in order to reduce the power
@@ -2785,12 +3017,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:network-types"
         + "/tet:te-topology" {
-   description "optical-impairment topology augmented";
-   container optical-impairment-topology {
-     presence "indicates an impairment-aware topology of 
-     optical networks";
-     description
-     "Container to identify impairment-aware topology type";
+    description "optical-impairment topology augmented";
+    container optical-impairment-topology {
+      presence
+        "Indicates an impairment-aware topology of optical networks";
+      description
+        "Container to identify impairment-aware topology type";
    }
   }
 
@@ -2798,7 +3030,8 @@ module ietf-optical-impairment-topology {
     when "nw:network-types/tet:te-topology" +
          "/optical-imp-topo:optical-impairment-topology" {
       description
-        "This augment is only valid for Optical Impairment.";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description
       "Network augmentation for optical impairments data.";
@@ -2962,11 +3195,11 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nt:link/tet:te"
         + "/tet:te-link-attributes"   {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
-        "This augment is only valid for Optical Impairment.";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description "Optical Link augmentation for impairment data.";
     container OMS-attributes {
@@ -2980,8 +3213,7 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Impairment with
@@ -3016,26 +3248,42 @@ module ietf-optical-impairment-topology {
   } // end of augment
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
-   + "/tet:tunnel-termination-point" {
-   when "/nw:networks/nw:network/nw:network-types"
-    +"/tet:te-topology/"
-    + "optical-imp-topo:optical-impairment-topology" {
-    description
-      "This augment is only valid for optical impairment
+        + "/tet:tunnel-termination-point" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for optical impairment
        with sliceable transponder model";
-   }
-   description
-     "Tunnel termination point augmentation for sliceable
+    }
+    description
+      "Tunnel termination point augmentation for sliceable
       transponder model.";
-   uses sliceable-transponder-attributes;
+    uses sliceable-transponder-attributes;
+  }
+
+  // Should this leaf be moved to te-topology?
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
+    when "../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment 
+        topology";
+    }
+    description
+      "Augment LTP";
+    leaf protection-type {
+      type identityref {
+        base te-types:lsp-protection-type;
+      }
+      description
+        "The protection type that this LTP is capable of.";
+    }
   }
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology"
+    when "../../../nw:network-types/tet:te-topology"
        + "/optical-imp-topo:optical-impairment-topology" {
-
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -3113,14 +3361,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices"{
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
     }  
-    
     description
       "Augment default TE node connectivity matrix information 
       source.";
@@ -3138,18 +3384,15 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment
          topology ";
     }
-    
     description
       "Augment TE node connectivity matrix entry information 
       source.";
-
     leaf roadm-path-impairments {
       type leafref {
         path "../../../../tet:te-node-attributes/"
@@ -3162,14 +3405,12 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
     }  
-    
     description
       "Augment default TE node connectivity matrix.";
     leaf roadm-path-impairments {
@@ -3188,17 +3429,14 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/"
         + "tet:connectivity-matrices/tet:connectivity-matrix" {
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
     }
-
     description
       "Augment TE node connectivity matrix entry.";
-
     leaf roadm-path-impairments {
       type leafref {
         path "../../../roadm-path-impairments/"
@@ -3211,16 +3449,125 @@ module ietf-optical-impairment-topology {
   } // augmentation connectivity-matrix
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:from" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for 
+        Optical Impairment topology ";
+    }
+    description
+      "Augment the attributes for the 'from' LTP for the TE node 
+      connectivity matrix entry.";
+    list additional-ltp {
+      when "derived-from-or-self(../../../../../../"
+         + "nt:termination-point"
+         + "[nt:tp-id=current()/../../tet:to/tet:tp-ref]/"
+         + "optical-imp-topo:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only when the 'to' LTP for this 
+          connectivity matrix entry supports individual OTSi(G) 
+          protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the 'from' LTP of this connectivity 
+        matrix entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can reach 
+        the 'to' LTP of this connectivity matrix entry can be 
+        selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to the potential secondary LTP that can be 
+          selected when the 'from' LTP of this connectivity matrix 
+          entry is selected as a working LTP";
+      }
+      leaf roadm-path-impairments {
+        type leafref {
+          path "../../../../../../../tet:te/tet:te-node-attributes/"
+             + "roadm-path-impairments/roadm-path-impairments-id";
+        }
+        config false;
+        description
+          "Pointer to ROADM optical impairments of the ROADM path 
+          between this secondary 'from' LTP and the 'to' LTP of 
+          this connectivity matrix entry.";
+      }    
+    }
+  } // augmentation connectivity-matrix from
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
+        + "tet:te-node-attributes/tet:connectivity-matrices/"
+        + "tet:connectivity-matrix/tet:to" {
+    when "../../../../../../nw:network-types/tet:te-topology/"
+       + "optical-imp-topo:optical-impairment-topology" {
+      description
+        "This augment is only valid for 
+        Optical Impairment topology ";
+    }
+    description
+      "Augment the attributes for the 'to' LTP for the TE node 
+      connectivity matrix entry.";
+    list additional-ltp {
+      when "derived-from-or-self(../../../../../../"
+         + "nt:termination-point"
+         + "[nt:tp-id=current()/../../tet:from/tet:tp-ref]/"
+         + "optical-imp-topo:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only when the 'from' LTP for this 
+          connectivity matrix entry supports individual OTSi(G) 
+          protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the 'to' LTP of this connectivity 
+        matrix entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can be 
+        reached from the 'from' LTP of this connectivity matrix 
+        entry can be selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to the potential secondary LTP that can be 
+          selected when the 'to' LTP of this connectivity matrix 
+          entry is selected as a working LTP";
+      }
+      leaf roadm-path-impairments {
+        type leafref {
+          path "../../../../../../../tet:te/tet:te-node-attributes/"
+             + "roadm-path-impairments/roadm-path-impairments-id";
+        }
+        config false;
+        description
+          "Pointer to ROADM optical impairments of the ROADM path 
+          between the 'from' LTP of this connectivity matrix entry 
+          and this secondary LTP.";
+      }    
+    }
+  } // augmentation connectivity-matrix to
+
+  augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities" {
-
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
       "This augment is only valid for Optical Impairment topology ";
     }
-
     description
       "Augment default TTP LLC.";
     leaf add-path-impairments {
@@ -3247,15 +3594,12 @@ module ietf-optical-impairment-topology {
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity" {
-
-    when "/nw:networks/nw:network/nw:network-types"
-       + "/tet:te-topology/"
+    when "../../../../../nw:network-types/tet:te-topology/"
        + "optical-imp-topo:optical-impairment-topology" {
       description
         "This augment is only valid for
          Optical Impairment topology ";
     }
-    
     description
       "Augment TTP LLC entry.";
     leaf add-path-impairments {
@@ -3323,11 +3667,54 @@ module ietf-optical-impairment-topology {
         optical impairments";
       }
     }
+    list additional-ltp {
+      when "derived-from-or-self(../../../tet:protection-type,"
+         + "'optical-imp-topo:otsi-protection')" {
+        description
+          "This list applies only to TTPs that support individual 
+          OTSi(G) protection.";
+      }
+      key "ltp-ref";
+      config false;
+      description
+        "The restricted list of the potential secondary LTPs that 
+        can be selected when the LTP associated with this LLCP 
+        entry is selected as a working LTP.
+        
+        If this list is empty, all the other LTPs that can be 
+        reached by this TTP can be selected as secondary LTPs.";
+      leaf ltp-ref {
+        type leafref {
+          path "../../../../../../nt:termination-point/nt:tp-id";
+        }
+        description
+          "The reference to potential secondary LTP that can be 
+          selected when the LTP associated with this LLCP entry is 
+          selected as a working LTP";
+      }
+      leaf add-path-impairments {
+        type leafref {
+          path "../../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM optical
+        impairments";
+      }
+      leaf drop-path-impairments {
+        type leafref {
+          path "../../../../../tet:te-node-attributes/"
+          + "roadm-path-impairments/roadm-path-impairments-id" ;
+        }
+        config false;
+        description "pointer to the list set of ROADM 
+        optical impairments";
+      }
+    }
   } // augmentation local-link-connectivity
 }
-<CODE ENDS>
-]]>
-  </artwork></figure>
+    ]]>
+  </sourcecode>
   
   </section>
 
@@ -3533,7 +3920,15 @@ reference: RFC XXXX (TDB)
   
   </references>
     
-
+  <section anchor="JSON Examples" numbered="true">
+  <name>JSON Code examples for Optical Protection Uses Cases</name>
+  <t>
+   List of JSON use cases TBA
+  </t> 
+  
+  </section>
+  
+  
   <section anchor="Contributors" numbered="false">
   <name>Contributors</name>
     <t>Thanks to all of the contributors.</t>
