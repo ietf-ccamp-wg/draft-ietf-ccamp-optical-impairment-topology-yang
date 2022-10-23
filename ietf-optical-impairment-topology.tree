@@ -64,7 +64,7 @@ module: ietf-optical-impairment-topology
     |     |              |          union
     |     |              +--ro max-diff-group-delay?
     |     |              |       uint32
-    |     |              +--ro max-polarization-dependent-loss-penalty* []
+    |     |              +--ro max-pol-dependent-loss-penalty* []
     |     |              |  +--ro max-polarization-dependent-loss
     |     |              |  |       power-in-db-or-null
     |     |              |  +--ro penalty-value
