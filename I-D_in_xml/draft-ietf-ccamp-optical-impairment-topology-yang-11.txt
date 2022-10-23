@@ -114,20 +114,20 @@ Beller, et al.            Expires 27 April 2023                 [Page 2]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-       2.10.2.  OMS MCG protection . . . . . . . . . . . . . . . . .  34
-   3.  YANG Model (Tree Structure) . . . . . . . . . . . . . . . . .  34
-   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  41
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  74
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  74
-   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  75
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  75
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  75
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  75
-   Appendix A.  JSON Code examples for Optical Protection Uses
-           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  78
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  78
-   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  78
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  79
+       2.10.2.  OMS MCG protection . . . . . . . . . . . . . . . . .  36
+   3.  YANG Model (Tree Structure) . . . . . . . . . . . . . . . . .  36
+   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  43
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  76
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  76
+   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  77
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  77
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  77
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  77
+   Appendix A.  JSON Code Examples for Optical Protection Uses
+           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  80
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  80
+   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  80
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  81
 
 1.  Introduction
 
@@ -1614,10 +1614,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    scheme (1+1 sub-network connection protection (SNCP) in ITU-T
    terminology).
 
-
-
-
-
+   In order to achieve short protection switching times, it is necessary
+   that the OTSi signals of the two legs are identical in terms of
+   wavelength, modulation format, FEC, etc., which means no receiver
+   configuration changes when a protection switch at the selector occurs
 
 
 
@@ -1625,6 +1625,10 @@ Beller, et al.            Expires 27 April 2023                [Page 29]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
+
+   selecting the other leg.  This is important when 3R regenerators are
+   needed between the two end-points terminating the protected segment,
+   which typically is end-to-end.
 
    In case of individual OTSi protection, there are two network media
    channel paths associated with the OTSi signal.  In the YANG model,
@@ -1637,43 +1641,39 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    (i)    OT and OTSi protection function are an integral part of the
           WDM-TE-node
 
-   (ii)   OT and OTSi protection/ROADM functions are in two adjecent
+   (ii)   OT and OTSi protection/ROADM functions are in two adjacent
           WDM-TE-node (remote OT)
 
-   (iii)  OT and OTSi protection function are both in an adjecent WDM-
+   (iii)  OT and OTSi protection function are both in an adjacent WDM-
           TE-node (protected remote OT)
 
    The different use cases are described in following sub-sections and
    examples are provided how these uses cases can be modeled properly
    using the optical impairment aware TE-topology YANG data model.
 
-2.10.1.1.  OT and the protection function are an integral part of the
+2.10.1.1.  OT and OTSi protection function are an integral part of the
            WDM-TE-node
 
-   Use case (i)
+   This use case is based on the architecture illustrated in Figure 8
+   and the following entities are all integral parts of the WDM-TE-node:
 
-                                 WDM-TE-Node
-        +---------------------------------------------------------+
-        |                                       ROADM             |
-        |      Local OT        Splitter    +--------------+       |
-        |   +------------+    +--------+   |              |       |
-        |   |         TTP|    |     ---o-->o------\       | LTP 1 |
-        |   |       +----|    |    /   |   |       \------o-------o->
-      --o-->|       | Tx |--->+---o    |   |              |       |
-        |   |       +----|    |    \   |   |              |       |
-      <-o---|       | Rx |    |     ---o-->o---\          |       |
-        |   |       +----|    +--------+   |    \         | LTP 2 |
-        |   |            |                 |     \        o-------o->
-        |   +------------+        internal |      \       |       |
-        |                         AD ports o       \      |       |
-        |                                  |        \     |       |
-        |                                  |         \    | LTP 3 |
-        |                                  |          \---o-------o->
-        |                                  o              |       |
-        |                                  |              |       |
-        |                                  +--------------+       |
-        +---------------------------------------------------------+
+   *  Local optical transponder
 
+   *  Splitter/selector protection function
+
+   *  ROADM function
+
+   Figure 11 illustrates such a WDM-TE-node configuration in transmit/
+   forward direction where the protection function is an optical
+   splitter and Figure 12 illustrates the same WDM-TE-node configuration
+   in receive/reverse direction where the protection function is an
+   optical selector selecting one of the two incoming OTSi signals and
+   switching to the other incoming OTSi signal when the optical power of
+   the selected OTSi signal drops below a pre-defined threshold.
+
+   The TE-topology YANG model has been augmented to describe this
+   protection architecture.  The already existing optional protection-
+   type leaf of the TTP associated with the optical transceiver is used
 
 
 
@@ -1682,40 +1682,40 @@ Beller, et al.            Expires 27 April 2023                [Page 30]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-      Figure 11: OT and OTSi protection function are an integral part
-                  of the WDM-TE- node (transmit diection)
+   to indicate whether the TTP is protected, i.e., whether it is
+   connected to a protection function or whether it is unprotected,
+   i.e., whether it is directly connected to an add-drop port of the
+   ROADM function in the WDM-TE-node.
 
-                                 WDM-TE-Node
-        +---------------------------------------------------------+
-        |      Local OT                                           |
-        |   +------------+                      ROADM             |
-        |   |            |     Selector    +--------------+       |
-        |   |       +----|    +--------+   |              |       |
-      --o-->|       | Tx |    |     ---o<--o------\       | LPT 1 |
-        |   |       +----|    |    /   |   |       \------o-------o<-
-      <-o---|       | Rx |<---+---o    |   |              |       |
-        |   |       +----|    |    \   |   |              |       |
-        |   |         TTP|    |     ---o<--o---\          |       |
-        |   +------------+    +--------+   |    \         | LTP 2 |
-        |                                  |     \        o-------o<-
-        |                         internal |      \       |       |
-        |                         AD ports o       \      |       |
-        |                                  |        \     |       |
-        |                                  |         \    | LTP 3 |
-        |                                  |          \---o-------o<-
-        |                                  o              |       |
-        |                                  |              |       |
-        |                                  +--------------+       |
-        +---------------------------------------------------------+
+   For unprotected TTPs associated with an optical transceiver, the
+   local-link-connectivity list describes the potential connectivity
+   between the TTP and the LTPs of the WDM-TE-node that are the local
+   end-points of the TE-links (OMS MCGs) interconnecting the WDM-TE-node
+   with its neighbors, also often called degrees of the WDM-TE-node as
+   opposed to its add-drop ports.
+
+   For protected TTPs, the local-link-connectivity list has been
+   augmented such that is is capable of describing the potential
+   connectivity not only between the TTP and a single LTP a (unprotected
+   case) but is now capable to describe the potential connectivity to
+   additional LTPs including the related optical impairments.  If the
+   optical impairments are the same for all local-link-connectivity list
+   entries for a particular TTP, which is usually the case, the optical
+   impairments shall be omitted for the additional LTPs leading to a
+   more compact topology description.  If the optical impairments are
+   different, however, they can be described for each additional LTP
+   entry separately.
+
+   A local-link-connectivity list example for a protected TTP in JSON
+   format is provided in Appendix A.
 
 
-      Figure 12: OT and OTSI protection function are an integral part
-                   of the WDM-TE- node (receive diection)
 
-2.10.1.2.  OT and OTSi protection/ROADM functions are in two adjecent
-           WDM-TE-node (remote OT)
 
-   Use case (ii)
+
+
+
+
 
 
 
@@ -1738,31 +1738,31 @@ Beller, et al.            Expires 27 April 2023                [Page 31]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-        WDM-TE-Node 1                      WDM-TE-Node 2
-     +----------------+      +---------------------------------------+
-     |                |      |                     ROADM             |
-     |      Remote OT |      |    Selector    +--------------+       |
-     |   +------------+      |   +--------+   |              |       |
-     |   |         TTP|      |   |     ---o-->o------\       | LTP 1 |
-     |   |       +----|      |LTP|    /   |   |       \------o-------o->
-   --o-->|       | Tx o----->o-->+---o    |   |              |       |
-     |   |       +----|      |   |    \   |   |              |       |
-   <-o---|       | Rx o      |   |     ---o-->o---\          |       |
-     |   |       +----|      |   +--------+   |    \         | LTP 2 |
-     |   |            |      |                |     \        o-------o->
-     |   +------------+      |LTP             |      \       |       |
-     |                |      o----------------o       \      |       |
-     |                |      |                |        \     |       |
-     |                |      |unprot. AD LTPs |         \    | LTP 3 |
-     |                |      |                |          \---o-------o->
-     |                |      o----------------o              |       |
-     |                |      |LTP             |              |       |
-     |                |      |                +--------------+       |
-     +----------------+      +---------------------------------------+
+                                 WDM-TE-Node
+        +---------------------------------------------------------+
+        |                                       ROADM             |
+        |      Local OT        Splitter    +--------------+       |
+        |   +------------+    +--------+   |              |       |
+        |   |         TTP|    |     ---o-->o------\       | LTP 1 |
+        |   |       +----|    |    /   |   |       \------o-------o->
+      --o-->|       | Tx o--->o---o    |   |              |       |
+        |   |       +----|    |    \   |   |              |       |
+      <-o---|       | Rx o    |     ---o-->o---\          |       |
+        |   |       +----|    +--------+   |    \         | LTP 2 |
+        |   |            |                 |     \        o-------o->
+        |   +------------+        internal |      \       |       |
+        |                         AD ports o       \      |       |
+        |                                  |        \     |       |
+        |                                  |         \    | LTP 3 |
+        |                                  |          \---o-------o->
+        |                                  o              |       |
+        |                                  |              |       |
+        |                                  +--------------+       |
+        +---------------------------------------------------------+
 
 
-       Figure 13: OT and OTSi protection/ROADM functions are in two
-          adjecent WDM-TE- node (remote OT, transmit direction)
+      Figure 11: OT and OTSi protection function are an integral part
+                  of the WDM-TE- node (transmit direction)
 
 
 
@@ -1794,7 +1794,119 @@ Beller, et al.            Expires 27 April 2023                [Page 32]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-        WDM-TE-Node 1                      WDM-TE-Node 2
+                                 WDM-TE-Node
+        +---------------------------------------------------------+
+        |      Local OT                                           |
+        |   +------------+                      ROADM             |
+        |   |            |     Selector    +--------------+       |
+        |   |       +----|    +--------+   |              |       |
+      --o-->|       | Tx o    |     ---o<--o------\       | LPT 1 |
+        |   |       +----|    |    /   |   |       \------o-------o<-
+      <-o---|       | Rx o<---o---o    |   |              |       |
+        |   |       +----|    |    \   |   |              |       |
+        |   |         TTP|    |     ---o<--o---\          |       |
+        |   +------------+    +--------+   |    \         | LTP 2 |
+        |                                  |     \        o-------o<-
+        |                         internal |      \       |       |
+        |                         AD ports o       \      |       |
+        |                                  |        \     |       |
+        |                                  |         \    | LTP 3 |
+        |                                  |          \---o-------o<-
+        |                                  o              |       |
+        |                                  |              |       |
+        |                                  +--------------+       |
+        +---------------------------------------------------------+
+
+
+      Figure 12: OT and OTSI protection function are an integral part
+                  of the WDM-TE- node (receive direction)
+
+2.10.1.2.  OT and OTSi protection/ROADM functions are in two adjacent
+           WDM-TE-node (remote OT)
+
+   This use case is based on the architecture illustrated in Figure 9
+   where the optical transponder is not part of the WDM-TE-node
+   containing the ROADM function (WDM-TE-Node-2) but is part of a
+   separate WDM-TE-node (WDM-TE-Node-1) containing one or more optical
+   transponders (remote OTs).  WDM-TE-Node-2 contains:
+
+   *  Splitter/selector protection function
+
+   *  ROADM function
+
+   Figure 13 illustrates such a network configuration in transmit/
+   forward direction showing the two WDM-TE-nodes where the protection
+   function is the optical splitter in WDM-TE-Node-2 and Figure 14
+   illustrates the same network configuration in receive/reverse
+   direction where the protection function is the optical selector in
+   WDM-TE-Node-2 selecting one of the two incoming OTSi signals and
+   switching to the other incoming OTSi signal when the optical power of
+   the selected OTSi signal drops below a pre-defined threshold.
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 33]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+   In the network configuration shown in Figure 13 and Figure 14,
+   respectively, the two WDM-TE-nodes are interconnected via a TE-link
+   carrying a single OTSi signal.  An add-drop LTP represents the end of
+   the TE-link in WDM-TE-Node-2.  Similar to the protected TTP in
+   Section 2.10.1.1, the existing optional protection-type leaf is used
+   to indicate whether the add-drop LTP is connected to a protection
+   function or whether it is directly connected to an add-drop port of
+   the ROADM function inside WDM-TE-Node-2 (unprotected add-drop LTP).
+
+   For protected LTPs, the connectivity-matrix has been augmented such
+   that it is capable of describing the potential connectivity not only
+   from an add-drop LTP to a single line LTP (unprotected case) but is
+   now capable to describe the potential connectivity to additional line
+   LTPs (protected case) including the related optical impairments.  If
+   the optical impairments are the same from the protected ad-drop LTP
+   to all line LTPs, which is usually the case, the optical impairments
+   shall be omitted for the additional LTPs leading to a more compact
+   connectivity matrix description.  If the optical impairments are
+   different, however, they can be described for each additional LTP
+   separately.
+
+        WDM-TE-Node-1                      WDM-TE-Node-2
+     +----------------+      +---------------------------------------+
+     |                |      |                     ROADM             |
+     |      Remote OT |      |    Selector    +--------------+       |
+     |   +------------+      |   +--------+   |              |       |
+     |   |         TTP|      |AD |     ---o-->o------\       | LTP 1 |
+     |   |       +----|      |LTP|    /   |   |       \------o-------o->
+   --o-->|       | Tx o----->o-->o---o    |   |              |       |
+     |   |       +----|      |   |    \   |   |              |       |
+   <-o---|       | Rx o      |   |     ---o-->o---\          |       |
+     |   |       +----|      |   +--------+   |    \         | LTP 2 |
+     |   |            |      |                |     \        o-------o->
+     |   +------------+      |AD LTP          |      \       |       |
+     |                |      o----------------o       \      |       |
+     |                |      |                |        \     |       |
+     |                |      |unprot. AD LTPs |         \    | LTP 3 |
+     |                |      |                |          \---o-------o->
+     |                |      o----------------o              |       |
+     |                |      |AD LTP          |              |       |
+     |                |      |                +--------------+       |
+     +----------------+      +---------------------------------------+
+
+
+       Figure 13: OT and OTSi protection/ROADM functions are in two
+          adjacent WDM-TE- node (remote OT, transmit direction)
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 34]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+        WDM-TE-Node-1                      WDM-TE-Node-2
      +----------------+      +---------------------------------------+
      |      Remote OT |      |                                       |
      |   +------------+      |                     ROADM             |
@@ -1802,7 +1914,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
      |   |       +----|      |   +--------+   |              |       |
    --o-->|       | Tx o      |   |     ---o<--o------\       | LTP 1 |
      |   |       +----|      |LTP|    /   |   |       \------o-------o<-
-   <-o---|       | Rx o<-----o<--+---o    |   |              |       |
+   <-o---|       | Rx o<-----o<--o---o    |   |              |       |
      |   |       +----|      |   |    \   |   |              |       |
      |   |         TTP|      |   |     ---o<--o---\          |       |
      |   +------------+      |   +--------+   |    \         | LTP 2 |
@@ -1819,9 +1931,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
        Figure 14: OT and OTSi protection/ROADM functions are in two
-           adjecent WDM-TE- node (remote OT, receive diection)
+           adjacent WDM-TE- node (remote OT, receive direction)
 
-2.10.1.3.  OT and protection function are both in an adjecent WDM-TE-
+2.10.1.3.  OT and protection function are both in an adjacent WDM-TE-
            node (protected remote OT)
 
    Use case (iii)
@@ -1845,21 +1957,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 33]
+Beller, et al.            Expires 27 April 2023                [Page 35]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-            WDM-TE-Node 1                        WDM-TE-Node 2
+            WDM-TE-Node-1                        WDM-TE-Node-2
     +-----------------------------+      +---------------------------+
     |      protected              |      |         ROADM             |
     |      remote OT      Splitter|      |    +--------------+       |
     |   +------------+   +--------+      |LPT |              |       |
     |   |         TTP|   |     ---o----->o----o------\       | LTP 1 |
     |   |       +----|   |    /   |      |    |       \------o-------o->
-  --o-->|       | Tx o-->+---o    |      |    |              |       |
+  --o-->|       | Tx o-->o---o    |      |    |              |       |
     |   |       +----|   |    \   |      |    |              |       |
-  <-o---|       | Rx |   |     ---o----->o----o---\          |       |
+  <-o---|       | Rx o   |     ---o----->o----o---\          |       |
     |   |       +----|   +--------+      |LTP |    \         | LTP 2 |
     |   |            |            |      |    |     \        o-------o->
     |   +------------+            |      |    |      \       |       |
@@ -1874,7 +1986,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
        Figure 15: OT and OTSI protection function are both in an
-     adjecent WDM-TE-node (protected remote OT, transmit diection)
+     adjacent WDM-TE-node (protected remote OT, transmit direction)
 
 2.10.2.  OMS MCG protection
 
@@ -1901,7 +2013,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 34]
+Beller, et al.            Expires 27 April 2023                [Page 36]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -1957,7 +2069,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 35]
+Beller, et al.            Expires 27 April 2023                [Page 37]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -1971,7 +2083,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
        |     |              |          union
        |     |              +--ro max-diff-group-delay?
        |     |              |       uint32
-       |     |              +--ro max-polarization-dependent-loss-penalty* []
+       |     |              +--ro max-pol-dependent-loss-penalty* []
        |     |              |  +--ro max-polarization-dependent-loss
        |     |              |  |       power-in-db-or-null
        |     |              |  +--ro penalty-value
@@ -2013,7 +2125,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 36]
+Beller, et al.            Expires 27 April 2023                [Page 38]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2069,7 +2181,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 37]
+Beller, et al.            Expires 27 April 2023                [Page 39]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2125,7 +2237,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 38]
+Beller, et al.            Expires 27 April 2023                [Page 40]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2181,7 +2293,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 39]
+Beller, et al.            Expires 27 April 2023                [Page 41]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2237,7 +2349,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 40]
+Beller, et al.            Expires 27 April 2023                [Page 42]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2293,7 +2405,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 41]
+Beller, et al.            Expires 27 April 2023                [Page 43]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2349,7 +2461,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 42]
+Beller, et al.            Expires 27 April 2023                [Page 44]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2405,7 +2517,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 43]
+Beller, et al.            Expires 27 April 2023                [Page 45]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2461,7 +2573,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 44]
+Beller, et al.            Expires 27 April 2023                [Page 46]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2517,7 +2629,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 45]
+Beller, et al.            Expires 27 April 2023                [Page 47]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2573,7 +2685,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 46]
+Beller, et al.            Expires 27 April 2023                [Page 48]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2629,7 +2741,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 47]
+Beller, et al.            Expires 27 April 2023                [Page 49]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2685,7 +2797,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 48]
+Beller, et al.            Expires 27 April 2023                [Page 50]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2741,7 +2853,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 49]
+Beller, et al.            Expires 27 April 2023                [Page 51]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2797,7 +2909,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 50]
+Beller, et al.            Expires 27 April 2023                [Page 52]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2853,7 +2965,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 51]
+Beller, et al.            Expires 27 April 2023                [Page 53]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2909,7 +3021,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 52]
+Beller, et al.            Expires 27 April 2023                [Page 54]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2965,7 +3077,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 53]
+Beller, et al.            Expires 27 April 2023                [Page 55]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3021,7 +3133,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 54]
+Beller, et al.            Expires 27 April 2023                [Page 56]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3077,7 +3189,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 55]
+Beller, et al.            Expires 27 April 2023                [Page 57]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3133,7 +3245,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 56]
+Beller, et al.            Expires 27 April 2023                [Page 58]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3189,7 +3301,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 57]
+Beller, et al.            Expires 27 April 2023                [Page 59]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3245,7 +3357,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 58]
+Beller, et al.            Expires 27 April 2023                [Page 60]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3301,7 +3413,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 59]
+Beller, et al.            Expires 27 April 2023                [Page 61]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3357,7 +3469,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 60]
+Beller, et al.            Expires 27 April 2023                [Page 62]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3413,7 +3525,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 61]
+Beller, et al.            Expires 27 April 2023                [Page 63]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3469,7 +3581,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 62]
+Beller, et al.            Expires 27 April 2023                [Page 64]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3525,7 +3637,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 63]
+Beller, et al.            Expires 27 April 2023                [Page 65]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3581,7 +3693,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 64]
+Beller, et al.            Expires 27 April 2023                [Page 66]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3637,7 +3749,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 65]
+Beller, et al.            Expires 27 April 2023                [Page 67]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3693,7 +3805,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 66]
+Beller, et al.            Expires 27 April 2023                [Page 68]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3749,7 +3861,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 67]
+Beller, et al.            Expires 27 April 2023                [Page 69]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3805,7 +3917,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 68]
+Beller, et al.            Expires 27 April 2023                [Page 70]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3861,7 +3973,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 69]
+Beller, et al.            Expires 27 April 2023                [Page 71]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3917,7 +4029,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 70]
+Beller, et al.            Expires 27 April 2023                [Page 72]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3973,7 +4085,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 71]
+Beller, et al.            Expires 27 April 2023                [Page 73]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4029,7 +4141,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 72]
+Beller, et al.            Expires 27 April 2023                [Page 74]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4085,7 +4197,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 73]
+Beller, et al.            Expires 27 April 2023                [Page 75]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4141,7 +4253,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 74]
+Beller, et al.            Expires 27 April 2023                [Page 76]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4197,7 +4309,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 75]
+Beller, et al.            Expires 27 April 2023                [Page 77]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4253,7 +4365,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 76]
+Beller, et al.            Expires 27 April 2023                [Page 78]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4309,7 +4421,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 77]
+Beller, et al.            Expires 27 April 2023                [Page 79]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4336,7 +4448,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    [G.873.1]  "Optical transport network: Linear protection",
               ITU-T Recommendation G.873.1, October 2017.
 
-Appendix A.  JSON Code examples for Optical Protection Uses Cases
+Appendix A.  JSON Code Examples for Optical Protection Uses Cases
 
    List of JSON use cases TBA
 
@@ -4365,7 +4477,7 @@ Additional Authors
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 78]
+Beller, et al.            Expires 27 April 2023                [Page 80]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4421,7 +4533,7 @@ Authors' Addresses
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 79]
+Beller, et al.            Expires 27 April 2023                [Page 81]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4477,4 +4589,4 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 80]
+Beller, et al.            Expires 27 April 2023                [Page 82]
