@@ -126,8 +126,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    Appendix A.  JSON Code Examples for Optical Protection Uses
            Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  80
    Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  80
-   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  80
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  81
+   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  81
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  82
 
 1.  Introduction
 
@@ -1658,9 +1658,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    and the following entities are all integral parts of the WDM-TE-node:
 
    *  Local optical transponder
-
    *  Splitter/selector protection function
-
    *  ROADM function
 
    Figure 11 illustrates such a WDM-TE-node configuration in transmit/
@@ -1671,9 +1669,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    switching to the other incoming OTSi signal when the optical power of
    the selected OTSi signal drops below a pre-defined threshold.
 
-   The TE-topology YANG model has been augmented to describe this
-   protection architecture.  The already existing optional protection-
-   type leaf of the TTP associated with the optical transceiver is used
+
+
+
+
+
 
 
 
@@ -1682,6 +1682,9 @@ Beller, et al.            Expires 27 April 2023                [Page 30]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
+   The TE-topology YANG model has been augmented to describe this
+   protection architecture.  The already existing optional protection-
+   type leaf of the TTP associated with the optical transceiver is used
    to indicate whether the TTP is protected, i.e., whether it is
    connected to a protection function or whether it is unprotected,
    i.e., whether it is directly connected to an add-drop port of the
@@ -1730,9 +1733,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-
-
-
 Beller, et al.            Expires 27 April 2023                [Page 31]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
@@ -1742,17 +1742,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
         +---------------------------------------------------------+
         |                                       ROADM             |
         |      Local OT        Splitter    +--------------+       |
-        |   +------------+    +--------+   |              |       |
+        |   +------------+    +--------+   |              | Line  |
         |   |         TTP|    |     ---o-->o------\       | LTP 1 |
         |   |       +----|    |    /   |   |       \------o-------o->
       --o-->|       | Tx o--->o---o    |   |              |       |
         |   |       +----|    |    \   |   |              |       |
-      <-o---|       | Rx o    |     ---o-->o---\          |       |
+      <-o---|       | Rx o    |     ---o-->o---\          | Line  |
         |   |       +----|    +--------+   |    \         | LTP 2 |
         |   |            |                 |     \        o-------o->
         |   +------------+        internal |      \       |       |
         |                         AD ports o       \      |       |
-        |                                  |        \     |       |
+        |                                  |        \     | Line  |
         |                                  |         \    | LTP 3 |
         |                                  |          \---o-------o->
         |                                  o              |       |
@@ -1799,17 +1799,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
         |      Local OT                                           |
         |   +------------+                      ROADM             |
         |   |            |     Selector    +--------------+       |
-        |   |       +----|    +--------+   |              |       |
+        |   |       +----|    +--------+   |              | Line  |
       --o-->|       | Tx o    |     ---o<--o------\       | LPT 1 |
         |   |       +----|    |    /   |   |       \------o-------o<-
       <-o---|       | Rx o<---o---o    |   |              |       |
         |   |       +----|    |    \   |   |              |       |
-        |   |         TTP|    |     ---o<--o---\          |       |
+        |   |         TTP|    |     ---o<--o---\          | Line  |
         |   +------------+    +--------+   |    \         | LTP 2 |
         |                                  |     \        o-------o<-
         |                         internal |      \       |       |
         |                         AD ports o       \      |       |
-        |                                  |        \     |       |
+        |                                  |        \     | Line  |
         |                                  |         \    | LTP 3 |
         |                                  |          \---o-------o<-
         |                                  o              |       |
@@ -1831,7 +1831,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    transponders (remote OTs).  WDM-TE-Node-2 contains:
 
    *  Splitter/selector protection function
-
    *  ROADM function
 
    Figure 13 illustrates such a network configuration in transmit/
@@ -1842,6 +1841,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    WDM-TE-Node-2 selecting one of the two incoming OTSi signals and
    switching to the other incoming OTSi signal when the optical power of
    the selected OTSi signal drops below a pre-defined threshold.
+
 
 
 
@@ -1875,17 +1875,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
      +----------------+      +---------------------------------------+
      |                |      |                     ROADM             |
      |      Remote OT |      |    Selector    +--------------+       |
-     |   +------------+      |   +--------+   |              |       |
+     |   +------------+      |   +--------+   |              | Line  |
      |   |         TTP|      |AD |     ---o-->o------\       | LTP 1 |
      |   |       +----|      |LTP|    /   |   |       \------o-------o->
    --o-->|       | Tx o----->o-->o---o    |   |              |       |
      |   |       +----|      |   |    \   |   |              |       |
-   <-o---|       | Rx o      |   |     ---o-->o---\          |       |
+   <-o---|       | Rx o      |   |     ---o-->o---\          | Line  |
      |   |       +----|      |   +--------+   |    \         | LTP 2 |
      |   |            |      |                |     \        o-------o->
      |   +------------+      |AD LTP          |      \       |       |
      |                |      o----------------o       \      |       |
-     |                |      |                |        \     |       |
+     |                |      |                |        \     | Line  |
      |                |      |unprot. AD LTPs |         \    | LTP 3 |
      |                |      |                |          \---o-------o->
      |                |      o----------------o              |       |
@@ -1911,21 +1911,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
      |      Remote OT |      |                                       |
      |   +------------+      |                     ROADM             |
      |   |            |      |    Selector    +--------------+       |
-     |   |       +----|      |   +--------+   |              |       |
+     |   |       +----|      |   +--------+   |              | Line  |
    --o-->|       | Tx o      |   |     ---o<--o------\       | LTP 1 |
-     |   |       +----|      |LTP|    /   |   |       \------o-------o<-
+     |   |       +----|      |   |    /   |   |       \------o-------o<-
    <-o---|       | Rx o<-----o<--o---o    |   |              |       |
-     |   |       +----|      |   |    \   |   |              |       |
-     |   |         TTP|      |   |     ---o<--o---\          |       |
+     |   |       +----|      |AD |    \   |   |              |       |
+     |   |         TTP|      |LTP|     ---o<--o---\          | Line  |
      |   +------------+      |   +--------+   |    \         | LTP 2 |
      |                |      |                |     \        o-------o<-
-     |                |      |LTP             |      \       |       |
+     |                |      |AD LTP          |      \       |       |
      |                |      o----------------o       \      |       |
-     |                |      |                |        \     |       |
+     |                |      |                |        \     | Line  |
      |                |      |unprot. AD LTPs |         \    | LTP 3 |
      |                |      |                |          \---o-------o<-
      |                |      o----------------o              |       |
-     |                |      |LTP             |              |       |
+     |                |      |AD LTP          |              |       |
      |                |      |                +--------------+       |
      +----------------+      +---------------------------------------+
 
@@ -1936,21 +1936,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 2.10.1.3.  OT and protection function are both in an adjacent WDM-TE-
            node (protected remote OT)
 
-   Use case (iii)
+   The use case illustrated in Figure 15 is similar to the use case in
+   Section 2.10.1.1.  The difference compared to use case (i) is that
+   WDM-TE-Node-1 does not contain the ROADM function but contains:
 
+   *  Optical transponder function including the transceiver
+   *  Splitter/selector protection function
 
-
-
-
-
-
-
-
-
-
-
-
-
+   WDM-TE-Node-1 can be a data center device or a router router device
+   that supporting 1+1 OTSi protection for its OTs while WDM-TE-Node-2
+   is a WDM-TE-node providing add-drop ports for remote OTs as depicted
+   in Figure 9.  WDM-TE-Node-1 and WDM-TE-Node-2 are interconnected via
+   two separate TE-links, each carrying a single OTSi signal.  The
+   protection configuration for the protected TTP in WDM-TE-Node-1 can
+   be described in the same way as for use case (i) using the local-
+   link-connectivity list.
 
 
 
@@ -1966,17 +1966,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
     +-----------------------------+      +---------------------------+
     |      protected              |      |         ROADM             |
     |      remote OT      Splitter|      |    +--------------+       |
-    |   +------------+   +--------+      |LPT |              |       |
+    |   +------------+   +--------+      |AD  |              | Line  |
     |   |         TTP|   |     ---o----->o----o------\       | LTP 1 |
-    |   |       +----|   |    /   |      |    |       \------o-------o->
+    |   |       +----|   |    /LTP|      |LTP |       \------o-------o->
   --o-->|       | Tx o-->o---o    |      |    |              |       |
-    |   |       +----|   |    \   |      |    |              |       |
-  <-o---|       | Rx o   |     ---o----->o----o---\          |       |
-    |   |       +----|   +--------+      |LTP |    \         | LTP 2 |
-    |   |            |            |      |    |     \        o-------o->
+    |   |       +----|   |    \   |      |AD  |              |       |
+  <-o---|       | Rx o   |     ---o----->o----o---\          | Line  |
+    |   |       +----|   |     LTP|      |LTP |    \         | LTP 2 |
+    |   |            |   +--------+      |    |     \        o-------o->
     |   +------------+            |      |    |      \       |       |
     |                             |      o----o       \      |       |
-    |                             |      |AD  |        \     |       |
+    |                             |      |AD  |        \     | Line  |
     |                             |      |LTPs|         \    | LTP 3 |
     |                             |      |    |          \---o-------o->
     |                             |      o----o              |       |
@@ -4450,7 +4450,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 Appendix A.  JSON Code Examples for Optical Protection Uses Cases
 
-   List of JSON use cases TBA
+   [Editor's note: JSON examples for optical protection use cases TBA!
+
+   (1)  JSON example for use case in Section 2.10.1.1
+
+   [Editor's note: UC (i) JSON example TBA]
+
+   (2)  JSON example for use case in Section 2.10.1.2
+
+   [Editor's note: UC (ii) JSON example TBA]
+
+   (3)  JSON example for use case in Section 2.10.1.3
+
+   [Editor's note: UC (iii) JSON example TBA]
 
 Contributors
 
@@ -4459,6 +4471,15 @@ Contributors
    Aihua Guo
    Huawei Technologies
    Email: aguo@futurewei.com
+
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 80]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    Jonas Martensson
@@ -4471,15 +4492,6 @@ Additional Authors
    Young Lee
    Samsung Electronics
    Email: younglee.tx@gmail.com
-
-
-
-
-
-
-Beller, et al.            Expires 27 April 2023                [Page 80]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    Haomian Zheng
@@ -4517,6 +4529,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    Email: Enrico.Griseri@nokia.com
 
 
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 81]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
    Gert Grammel
    Juniper
    Email: ggrammel@juniper.net
@@ -4527,15 +4548,6 @@ Authors' Addresses
    Dieter Beller (editor)
    Nokia
    Email: Dieter.Beller@nokia.com
-
-
-
-
-
-
-Beller, et al.            Expires 27 April 2023                [Page 81]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    Esther Le Rouzic
@@ -4556,18 +4568,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    Italo Busi
    Huawei Technologies
    Email: Italo.Busi@huawei.com
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1623,7 +1623,8 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    This use case is based on the architecture illustrated in
    <xref target="Figure-6"/> and the following entities are all integral
    parts of the WDM-TE-node:
-    <ul spacing="normal">
+   
+    <ul spacing="compact">
       <li>Local optical transponder</li>
       <li>Splitter/selector protection function</li>
       <li>ROADM function</li>
@@ -1684,17 +1685,17 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    +---------------------------------------------------------+
    |                                       ROADM             |
    |      Local OT        Splitter    +--------------+       |
-   |   +------------+    +--------+   |              |       |
+   |   +------------+    +--------+   |              | Line  |
    |   |         TTP|    |     ---o-->o------\       | LTP 1 |
    |   |       +----|    |    /   |   |       \------o-------o->
  --o-->|       | Tx o--->o---o    |   |              |       |
    |   |       +----|    |    \   |   |              |       |
- <-o---|       | Rx o    |     ---o-->o---\          |       |
+ <-o---|       | Rx o    |     ---o-->o---\          | Line  |
    |   |       +----|    +--------+   |    \         | LTP 2 |
    |   |            |                 |     \        o-------o->
    |   +------------+        internal |      \       |       |
    |                         AD ports o       \      |       |
-   |                                  |        \     |       |
+   |                                  |        \     | Line  |
    |                                  |         \    | LTP 3 |
    |                                  |          \---o-------o->
    |                                  o              |       |
@@ -1713,17 +1714,17 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    |      Local OT                                           |
    |   +------------+                      ROADM             |
    |   |            |     Selector    +--------------+       |
-   |   |       +----|    +--------+   |              |       |
+   |   |       +----|    +--------+   |              | Line  |
  --o-->|       | Tx o    |     ---o<--o------\       | LPT 1 |
    |   |       +----|    |    /   |   |       \------o-------o<-
  <-o---|       | Rx o<---o---o    |   |              |       |
    |   |       +----|    |    \   |   |              |       |
-   |   |         TTP|    |     ---o<--o---\          |       |
+   |   |         TTP|    |     ---o<--o---\          | Line  |
    |   +------------+    +--------+   |    \         | LTP 2 |
    |                                  |     \        o-------o<-
    |                         internal |      \       |       |
    |                         AD ports o       \      |       |
-   |                                  |        \     |       |
+   |                                  |        \     | Line  |
    |                                  |         \    | LTP 3 |
    |                                  |          \---o-------o<-
    |                                  o              |       |
@@ -1736,7 +1737,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   </section>
   
-  <section anchor="UC (ii)">
+  <section anchor="Protection UC (ii)">
     <name>OT and OTSi protection/ROADM functions are in two adjacent
     WDM-TE-node (remote OT)</name>
   
@@ -1746,7 +1747,8 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    of the WDM-TE-node containing the ROADM function (WDM-TE-Node-2) but
    is part of a separate WDM-TE-node (WDM-TE-Node-1) containing one or
    more optical transponders (remote OTs). WDM-TE-Node-2 contains:
-    <ul spacing="normal">
+   
+    <ul spacing="compact">
       <li>Splitter/selector protection function</li>
       <li>ROADM function</li>
     </ul>
@@ -1796,17 +1798,17 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    +----------------+      +---------------------------------------+
    |                |      |                     ROADM             |
    |      Remote OT |      |    Selector    +--------------+       |
-   |   +------------+      |   +--------+   |              |       |
+   |   +------------+      |   +--------+   |              | Line  |
    |   |         TTP|      |AD |     ---o-->o------\       | LTP 1 |
    |   |       +----|      |LTP|    /   |   |       \------o-------o->
  --o-->|       | Tx o----->o-->o---o    |   |              |       |
    |   |       +----|      |   |    \   |   |              |       |
- <-o---|       | Rx o      |   |     ---o-->o---\          |       |
+ <-o---|       | Rx o      |   |     ---o-->o---\          | Line  |
    |   |       +----|      |   +--------+   |    \         | LTP 2 |
    |   |            |      |                |     \        o-------o->
    |   +------------+      |AD LTP          |      \       |       |
    |                |      o----------------o       \      |       |
-   |                |      |                |        \     |       |
+   |                |      |                |        \     | Line  |
    |                |      |unprot. AD LTPs |         \    | LTP 3 |
    |                |      |                |          \---o-------o->
    |                |      o----------------o              |       |
@@ -1827,21 +1829,21 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    |      Remote OT |      |                                       |
    |   +------------+      |                     ROADM             |
    |   |            |      |    Selector    +--------------+       |
-   |   |       +----|      |   +--------+   |              |       |
+   |   |       +----|      |   +--------+   |              | Line  |
  --o-->|       | Tx o      |   |     ---o<--o------\       | LTP 1 |
-   |   |       +----|      |LTP|    /   |   |       \------o-------o<-
+   |   |       +----|      |   |    /   |   |       \------o-------o<-
  <-o---|       | Rx o<-----o<--o---o    |   |              |       |
-   |   |       +----|      |   |    \   |   |              |       |
-   |   |         TTP|      |   |     ---o<--o---\          |       |
+   |   |       +----|      |AD |    \   |   |              |       |
+   |   |         TTP|      |LTP|     ---o<--o---\          | Line  |
    |   +------------+      |   +--------+   |    \         | LTP 2 |
    |                |      |                |     \        o-------o<-
-   |                |      |LTP             |      \       |       |
+   |                |      |AD LTP          |      \       |       |
    |                |      o----------------o       \      |       |
-   |                |      |                |        \     |       |
+   |                |      |                |        \     | Line  |
    |                |      |unprot. AD LTPs |         \    | LTP 3 |
    |                |      |                |          \---o-------o<-
    |                |      o----------------o              |       |
-   |                |      |LTP             |              |       |
+   |                |      |AD LTP          |              |       |
    |                |      |                +--------------+       |
    +----------------+      +---------------------------------------+
       
@@ -1850,12 +1852,29 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   </section>
 
-  <section>
+  <section anchor="Protection UC (iii)">
     <name>OT and protection function are both in an adjacent WDM-TE-node
     (protected remote OT)</name>
   
   <t>
-   Use case (iii)
+   The use case illustrated in <xref target="Figure-15"/> is similar to
+   the use case in <xref target="Protection UC (i)"/>. The difference
+   compared to use case (i) is  that WDM-TE-Node-1 does not contain the
+   ROADM function but contains:
+   
+    <ul spacing="compact">
+      <li>Optical transponder function including the transceiver</li>
+      <li>Splitter/selector protection function</li>
+    </ul>
+   
+   WDM-TE-Node-1 can be a data center device or a router router device
+   that supporting 1+1 OTSi protection for its OTs while WDM-TE-Node-2
+   is a WDM-TE-node providing add-drop ports for remote OTs as depicted
+   in <xref target="Figure-7"/>. WDM-TE-Node-1 and WDM-TE-Node-2 are
+   interconnected via two separate TE-links, each carrying a single
+   OTSi signal. The protection configuration for the protected TTP in
+   WDM-TE-Node-1 can be described in the same way as for use case (i)
+   using the local-link-connectivity list.
   </t>
   
   
@@ -1867,17 +1886,17 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    +-----------------------------+      +---------------------------+
    |      protected              |      |         ROADM             |
    |      remote OT      Splitter|      |    +--------------+       |
-   |   +------------+   +--------+      |LPT |              |       |
+   |   +------------+   +--------+      |AD  |              | Line  |
    |   |         TTP|   |     ---o----->o----o------\       | LTP 1 |
-   |   |       +----|   |    /   |      |    |       \------o-------o->
+   |   |       +----|   |    /LTP|      |LTP |       \------o-------o->
  --o-->|       | Tx o-->o---o    |      |    |              |       |
-   |   |       +----|   |    \   |      |    |              |       |
- <-o---|       | Rx o   |     ---o----->o----o---\          |       |
-   |   |       +----|   +--------+      |LTP |    \         | LTP 2 |
-   |   |            |            |      |    |     \        o-------o->
+   |   |       +----|   |    \   |      |AD  |              |       |
+ <-o---|       | Rx o   |     ---o----->o----o---\          | Line  |
+   |   |       +----|   |     LTP|      |LTP |    \         | LTP 2 |
+   |   |            |   +--------+      |    |     \        o-------o->
    |   +------------+            |      |    |      \       |       |
    |                             |      o----o       \      |       |
-   |                             |      |AD  |        \     |       |
+   |                             |      |AD  |        \     | Line  |
    |                             |      |LTPs|         \    | LTP 3 |
    |                             |      |    |          \---o-------o->
    |                             |      o----o              |       |
@@ -4033,9 +4052,34 @@ reference: RFC XXXX (TDB)
     
   <section anchor="JSON Examples" numbered="true">
   <name>JSON Code Examples for Optical Protection Uses Cases</name>
+  
   <t>
-   List of JSON use cases TBA
-  </t> 
+   [Editor's note: JSON examples for optical protection use cases TBA!
+  </t>
+  
+  <ol type="(%d)" group="JSON examples">
+    <li>JSON example for use case in  <xref target="Protection UC (i)"/></li>
+  </ol>
+  
+  <t>
+  [Editor's note: UC (i) JSON example TBA]
+  </t>
+  
+  <ol type="(%d)" group="JSON examples">
+    <li>JSON example for use case in  <xref target="Protection UC (ii)"/></li>
+  </ol>
+  
+  <t>
+   [Editor's note: UC (ii) JSON example TBA]
+  </t>
+  
+  <ol type="(%d)" group="JSON examples">
+    <li>JSON example for use case in  <xref target="Protection UC (iii)"/></li>
+  </ol>
+  
+  <t>
+   [Editor's note: UC (iii) JSON example TBA]
+  </t>
   
   </section>
   
