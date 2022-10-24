@@ -1767,13 +1767,19 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    In the network configuration shown in <xref target="Figure-13"/> and
    <xref target="Figure-14"/>, respectively, the two WDM-TE-nodes are
-   interconnected via a TE-link carrying a single OTSi signal. An
-   add-drop LTP represents the end of the TE-link in WDM-TE-Node-2.
+   interconnected via a TE-link only carrying a single OTSi signal.
+   This TE-link interconnects the remote OT with an add-drop port of
+   WDM-TE-Node-2 and in the following the qualifier "add-drop" is used
+   to refer to that LTP as opposed to the line LTPs representing degrees
+   of WDM-TE-Node-2.
    Similar to the protected TTP in <xref target="Protection UC (i)"/>,
-   the existing optional protection-type leaf is used to indicate whether
-   the add-drop LTP is connected to a protection function or whether it
-   is directly connected to an add-drop port of the ROADM function inside
-   WDM-TE-Node-2 (unprotected add-drop LTP).
+   the optional protection-type leaf is used to indicate whether the
+   add-drop LTP is connected to a protection function and then to two
+   line LTPs via the ROADM function inside WDM-TE-Node-2 or whether it
+   is connected to a single line LTP via the ROADM function inside
+   WDM-TE-Node-2 (unprotected add-drop LTP). While the protection-type
+   attribute was already defined for the TTP, the YANG model has been
+   augmented to also support this optional attribute for the LTP.
   </t>
   
   <t>
@@ -1936,7 +1942,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
   
   <sourcecode name="ietf-optical-impairment-topolog.tree" type="text" markers="false">
-    <![CDATA[  
+    <![CDATA[
 module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
@@ -4058,27 +4064,355 @@ reference: RFC XXXX (TDB)
   </t>
   
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in  <xref target="Protection UC (i)"/></li>
+    <li>JSON example for use case in  <xref target="Protection UC (i)"/>:</li>
   </ol>
   
   <t>
-  [Editor's note: UC (i) JSON example TBA]
+  [Editor's note: The JSON example below needs to be updated and aligned
+  with <xref target="Figure-11"/> and <xref target="Figure-12"/>.]
   </t>
+  
+  <sourcecode type="json" markers="false">
+    <![CDATA[
+{
+  "roadm-path-impairments": [
+    {
+      "roadm-path-impairments-id": 1,
+      "roadm-add-path":
+      "Add path impairments from TTP 1 or TTP 2 to any LTPs."
+    },
+    {
+      "roadm-path-impairments-id": 2,
+      "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
+       to LTP 1 or LTP 3, through AD1."
+    },
+    {
+      "roadm-path-impairments-id": 3,
+      "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
+       to LTP 1 or LTP 2, through AD2."
+    }
+  ],
+  "tunnel-termination-point": [
+    {
+      "tunnel-tp-id": 1,
+      "protection-type": "ops-protection",
+      "local-link-connectivities": {
+        "is-allowed": true,
+        "add-path-impairments": 1
+      }
+    },
+    {
+      "tunnel-tp-id": 2,
+      "local-link-connectivities": {
+        "is-allowed": true,
+        "add-path-impairments": 1,
+        "local-link-connectivity": [
+          {
+            "link-tp-ref": "LTP-1",
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-2",
+                "link-tp-ref": "LTP-3"
+              }
+            ]
+          },
+          {
+            "link-tp-ref": "LTP-2",
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "link-tp-ref": "LTP-3"
+              }
+            ]
+          },
+          {
+            "link-tp-ref": "LTP-3",
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "link-tp-ref": "LTP-2"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tunnel-tp-id": 3,
+      "protection-type": "ops-protection",
+      "local-link-connectivities": {
+        "is-allowed": false,
+        "local-link-connectivity": [
+          {
+            "link-tp-ref": "LTP-1",
+            "is-allowed": true,
+            "add-path-impairments": 2,
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "add-path-impairments": 3
+              },
+              {
+                "link-tp-ref": "LTP-2",
+                "add-path-impairments": 3
+              }
+            ]
+          },
+          {
+            "link-tp-ref": "LTP-3",
+            "is-allowed": true,
+            "add-path-impairments": 2,
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "add-path-impairments": 3
+              },
+              {
+                "link-tp-ref": "LTP-2",
+                "add-path-impairments": 3
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "tunnel-tp-id": 4,
+      "protection-type": "ops-protection",
+      "local-link-connectivities": {
+        "is-allowed": false,
+        "local-link-connectivity": [
+          {
+            "link-tp-ref": "LTP-1",
+            "is-allowed": true,
+            "add-path-impairments": 2,
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "add-path-impairments": 3
+              },
+              {
+                "link-tp-ref": "LTP-2",
+                "add-path-impairments": 3
+              }
+            ]
+          },
+          {
+            "link-tp-ref": "LTP-2",
+            "is-allowed": true,
+            "add-path-impairments": 3,
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "add-path-impairments": 2
+              },
+              {
+                "link-tp-ref": "LTP-3",
+                "add-path-impairments": 2
+              }
+            ]
+          },
+          {
+            "link-tp-ref": "LTP-3",
+            "is-allowed": true,
+            "add-path-impairments": 2,
+            "additional-ltp": [
+              {
+                "link-tp-ref": "LTP-1",
+                "add-path-impairments": 3
+              },
+              {
+                "link-tp-ref": "LTP-2",
+                "add-path-impairments": 3
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+    ]]>
+  </sourcecode>
+
   
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in  <xref target="Protection UC (ii)"/></li>
+    <li>JSON example for use case in  <xref target="Protection UC (ii)"/>
+    with connectivity constraints:</li>
   </ol>
   
   <t>
-   [Editor's note: UC (ii) JSON example TBA]
+  [Editor's note: UC (ii) JSON example below needs to be updated and aligned with
+  <xref target="Figure-13"/> and <xref target="Figure-14"/>.]
   </t>
+  
+  <sourcecode type="json" markers="false">
+    <![CDATA[
+{
+  "roadm-path-impairments": [
+    {
+      "roadm-path-impairments-id": 1,
+      "roadm-add-path":
+      "Add path impairments from LTP 10 to LTP 1 or LTP 2 or LTP 3."
+    },
+    {
+      "roadm-path-impairments-id": 2,
+      "roadm-add-path":
+      "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
+       through AD1."
+    },
+    {
+      "roadm-path-impairments-id": 3,
+      "roadm-add-path":
+      "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 2,
+      through AD2."
+    }
+  ],
+
+  "connectivity-matrix"[
+    { 
+      "id": 1,
+      "from": {
+        "tp-ref" : 20
+      },
+      "to" :  {
+        "tp-ref" : 1,       
+        "additional-ltp": [
+           {
+              "link-tp-ref": 1,
+              "roadm-path-impairments": 3
+           },
+           {
+              "link-tp-ref": 2,
+              "roadm-path-impairments": 3
+           }
+        ]
+      },
+      "is-allowed": true,
+      "roadm-path-impairments": 2
+    },
+    {
+      "id": 2,
+      "from": {
+        "tp-ref" : 20
+      },
+      "to" :  {
+        "tp-ref" : 3,        
+        "additional-ltp": [
+           {
+              "link-tp-ref": 1,
+              "roadm-path-impairments": 3
+           },
+           {
+              "link-tp-ref": 2,
+              "roadm-path-impairments": 3
+           }
+        ]
+      },
+      "is-allowed": true,
+      "roadm-path-impairments": 2
+    },
+    {
+      "id": 3,
+      "from": {
+        "tp-ref" : 30
+      },
+      "to" :  {
+        "tp-ref" : 1,        
+        "additional-ltp": [
+           {
+              "link-tp-ref": 1,
+              "roadm-path-impairments": 2
+           },
+           {
+              "link-tp-ref": 2,
+              "roadm-path-impairments": 2            
+
+           }
+        ]
+      },
+      "is-allowed": true,
+      "roadm-path-impairments": 2
+    },
+    {
+      "id": 4,
+      "from": {
+        "tp-ref" : 30
+      },
+      "to" :  {
+        "tp-ref" : 2,        
+        "additional-ltp": [
+           {
+            "link-tp-ref": 1,
+            "roadm-path-impairments": 2
+           },
+           {
+            "link-tp-ref": 3,
+            "roadm-path-impairments": 2            
+
+           }
+        ]
+      },      
+      "is-allowed": true,
+      "roadm-path-impairments": 3
+    },
+    {
+      "id": 5,
+      "from": {
+        "tp-ref" : 30
+      },
+      "to" :  {
+        "tp-ref" : 3,        
+        "additional-ltp": [
+           {
+            "link-tp-ref": 1,
+            "roadm-path-impairments": 3
+           },
+           {
+            "link-tp-ref": 2,
+            "roadm-path-impairments": 3            
+
+           }
+        ]
+      },      
+      "is-allowed": true,
+      "roadm-path-impairments": 2
+    },
+    {
+      "id": 6,
+      "from": {
+        "tp-ref" : 40
+      },
+      "to" :  {
+        "tp-ref" : 1        
+      },      
+      "is-allowed": true,
+      "roadm-path-impairments": 3
+    },
+    {
+      "id": 7,
+      "from": {
+        "tp-ref" : 40
+      },
+      "to" :  {
+        "tp-ref" : 2,        
+      },      
+      "is-allowed": true,
+      "roadm-path-impairments": 3
+    }    
+
+  ]
+}
+    ]]>
+  </sourcecode>
+
   
   <ol type="(%d)" group="JSON examples">
     <li>JSON example for use case in  <xref target="Protection UC (iii)"/></li>
   </ol>
   
   <t>
-   [Editor's note: UC (iii) JSON example TBA]
+   [Editor's note: UC (iii) JSON example TBA!]
   </t>
   
   </section>

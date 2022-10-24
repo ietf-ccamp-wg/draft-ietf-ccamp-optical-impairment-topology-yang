@@ -114,20 +114,20 @@ Beller, et al.            Expires 27 April 2023                 [Page 2]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
-       2.10.2.  OMS MCG protection . . . . . . . . . . . . . . . . .  36
-   3.  YANG Model (Tree Structure) . . . . . . . . . . . . . . . . .  36
-   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  43
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  76
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  76
-   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  77
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  77
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  77
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  77
+       2.10.2.  OMS MCG protection . . . . . . . . . . . . . . . . .  37
+   3.  YANG Model (Tree Structure) . . . . . . . . . . . . . . . . .  37
+   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  44
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  77
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  77
+   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  78
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  78
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  78
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  78
    Appendix A.  JSON Code Examples for Optical Protection Uses
-           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  80
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  80
-   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  81
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  82
+           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  81
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  88
+   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  88
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  89
 
 1.  Introduction
 
@@ -1852,12 +1852,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
    In the network configuration shown in Figure 13 and Figure 14,
    respectively, the two WDM-TE-nodes are interconnected via a TE-link
-   carrying a single OTSi signal.  An add-drop LTP represents the end of
-   the TE-link in WDM-TE-Node-2.  Similar to the protected TTP in
-   Section 2.10.1.1, the existing optional protection-type leaf is used
-   to indicate whether the add-drop LTP is connected to a protection
-   function or whether it is directly connected to an add-drop port of
-   the ROADM function inside WDM-TE-Node-2 (unprotected add-drop LTP).
+   only carrying a single OTSi signal.  This TE-link interconnects the
+   remote OT with an add-drop port of WDM-TE-Node-2 and in the following
+   the qualifier "add-drop" is used to refer to that LTP as opposed to
+   the line LTPs representing degrees of WDM-TE-Node-2.  Similar to the
+   protected TTP in Section 2.10.1.1, the optional protection-type leaf
+   is used to indicate whether the add-drop LTP is connected to a
+   protection function and then to two line LTPs via the ROADM function
+   inside WDM-TE-Node-2 or whether it is connected to a single line LTP
+   via the ROADM function inside WDM-TE-Node-2 (unprotected add-drop
+   LTP).  While the protection-type attribute was already defined for
+   the TTP, the YANG model has been augmented to also support this
+   optional attribute for the LTP.
 
    For protected LTPs, the connectivity-matrix has been augmented such
    that it is capable of describing the potential connectivity not only
@@ -1870,6 +1876,35 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
    connectivity matrix description.  If the optical impairments are
    different, however, they can be described for each additional LTP
    separately.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 34]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
 
         WDM-TE-Node-1                      WDM-TE-Node-2
      +----------------+      +---------------------------------------+
@@ -1901,7 +1936,28 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 34]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 35]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -1957,7 +2013,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 35]
+Beller, et al.            Expires 27 April 2023                [Page 36]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2013,7 +2069,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 36]
+Beller, et al.            Expires 27 April 2023                [Page 37]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2069,7 +2125,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 37]
+Beller, et al.            Expires 27 April 2023                [Page 38]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2125,7 +2181,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 38]
+Beller, et al.            Expires 27 April 2023                [Page 39]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2181,7 +2237,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 39]
+Beller, et al.            Expires 27 April 2023                [Page 40]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2237,7 +2293,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 40]
+Beller, et al.            Expires 27 April 2023                [Page 41]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2293,7 +2349,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 41]
+Beller, et al.            Expires 27 April 2023                [Page 42]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2349,7 +2405,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 42]
+Beller, et al.            Expires 27 April 2023                [Page 43]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2405,7 +2461,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 43]
+Beller, et al.            Expires 27 April 2023                [Page 44]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2461,7 +2517,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 44]
+Beller, et al.            Expires 27 April 2023                [Page 45]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2517,7 +2573,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 45]
+Beller, et al.            Expires 27 April 2023                [Page 46]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2573,7 +2629,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 46]
+Beller, et al.            Expires 27 April 2023                [Page 47]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2629,7 +2685,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 47]
+Beller, et al.            Expires 27 April 2023                [Page 48]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2685,7 +2741,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 48]
+Beller, et al.            Expires 27 April 2023                [Page 49]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2741,7 +2797,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 49]
+Beller, et al.            Expires 27 April 2023                [Page 50]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2797,7 +2853,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 50]
+Beller, et al.            Expires 27 April 2023                [Page 51]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2853,7 +2909,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 51]
+Beller, et al.            Expires 27 April 2023                [Page 52]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2909,7 +2965,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 52]
+Beller, et al.            Expires 27 April 2023                [Page 53]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -2965,7 +3021,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 53]
+Beller, et al.            Expires 27 April 2023                [Page 54]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3021,7 +3077,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 54]
+Beller, et al.            Expires 27 April 2023                [Page 55]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3077,7 +3133,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 55]
+Beller, et al.            Expires 27 April 2023                [Page 56]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3133,7 +3189,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 56]
+Beller, et al.            Expires 27 April 2023                [Page 57]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3189,7 +3245,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 57]
+Beller, et al.            Expires 27 April 2023                [Page 58]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3245,7 +3301,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 58]
+Beller, et al.            Expires 27 April 2023                [Page 59]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3301,7 +3357,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 59]
+Beller, et al.            Expires 27 April 2023                [Page 60]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3357,7 +3413,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 60]
+Beller, et al.            Expires 27 April 2023                [Page 61]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3413,7 +3469,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 61]
+Beller, et al.            Expires 27 April 2023                [Page 62]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3469,7 +3525,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 62]
+Beller, et al.            Expires 27 April 2023                [Page 63]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3525,7 +3581,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 63]
+Beller, et al.            Expires 27 April 2023                [Page 64]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3581,7 +3637,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 64]
+Beller, et al.            Expires 27 April 2023                [Page 65]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3637,7 +3693,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 65]
+Beller, et al.            Expires 27 April 2023                [Page 66]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3693,7 +3749,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 66]
+Beller, et al.            Expires 27 April 2023                [Page 67]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3749,7 +3805,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 67]
+Beller, et al.            Expires 27 April 2023                [Page 68]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3805,7 +3861,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 68]
+Beller, et al.            Expires 27 April 2023                [Page 69]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3861,7 +3917,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 69]
+Beller, et al.            Expires 27 April 2023                [Page 70]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3917,7 +3973,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 70]
+Beller, et al.            Expires 27 April 2023                [Page 71]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -3973,7 +4029,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 71]
+Beller, et al.            Expires 27 April 2023                [Page 72]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4029,7 +4085,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 72]
+Beller, et al.            Expires 27 April 2023                [Page 73]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4085,7 +4141,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 73]
+Beller, et al.            Expires 27 April 2023                [Page 74]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4141,7 +4197,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 74]
+Beller, et al.            Expires 27 April 2023                [Page 75]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4197,7 +4253,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 75]
+Beller, et al.            Expires 27 April 2023                [Page 76]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4253,7 +4309,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 76]
+Beller, et al.            Expires 27 April 2023                [Page 77]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4309,7 +4365,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 77]
+Beller, et al.            Expires 27 April 2023                [Page 78]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4365,7 +4421,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 78]
+Beller, et al.            Expires 27 April 2023                [Page 79]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4421,7 +4477,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 79]
+Beller, et al.            Expires 27 April 2023                [Page 80]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
@@ -4452,17 +4508,390 @@ Appendix A.  JSON Code Examples for Optical Protection Uses Cases
 
    [Editor's note: JSON examples for optical protection use cases TBA!
 
-   (1)  JSON example for use case in Section 2.10.1.1
+   (1)  JSON example for use case in Section 2.10.1.1:
 
-   [Editor's note: UC (i) JSON example TBA]
+   [Editor's note: The JSON example below needs to be updated and
+   aligned with Figure 11 and Figure 12.]
 
-   (2)  JSON example for use case in Section 2.10.1.2
+   {
+     "roadm-path-impairments": [
+       {
+         "roadm-path-impairments-id": 1,
+         "roadm-add-path":
+         "Add path impairments from TTP 1 or TTP 2 to any LTPs."
+       },
+       {
+         "roadm-path-impairments-id": 2,
+         "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
+          to LTP 1 or LTP 3, through AD1."
+       },
+       {
+         "roadm-path-impairments-id": 3,
+         "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
+          to LTP 1 or LTP 2, through AD2."
+       }
 
-   [Editor's note: UC (ii) JSON example TBA]
+
+
+Beller, et al.            Expires 27 April 2023                [Page 81]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+     ],
+     "tunnel-termination-point": [
+       {
+         "tunnel-tp-id": 1,
+         "protection-type": "ops-protection",
+         "local-link-connectivities": {
+           "is-allowed": true,
+           "add-path-impairments": 1
+         }
+       },
+       {
+         "tunnel-tp-id": 2,
+         "local-link-connectivities": {
+           "is-allowed": true,
+           "add-path-impairments": 1,
+           "local-link-connectivity": [
+             {
+               "link-tp-ref": "LTP-1",
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-2",
+                   "link-tp-ref": "LTP-3"
+                 }
+               ]
+             },
+             {
+               "link-tp-ref": "LTP-2",
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "link-tp-ref": "LTP-3"
+                 }
+               ]
+             },
+             {
+               "link-tp-ref": "LTP-3",
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "link-tp-ref": "LTP-2"
+                 }
+               ]
+             }
+           ]
+         }
+       },
+       {
+         "tunnel-tp-id": 3,
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 82]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+         "protection-type": "ops-protection",
+         "local-link-connectivities": {
+           "is-allowed": false,
+           "local-link-connectivity": [
+             {
+               "link-tp-ref": "LTP-1",
+               "is-allowed": true,
+               "add-path-impairments": 2,
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "add-path-impairments": 3
+                 },
+                 {
+                   "link-tp-ref": "LTP-2",
+                   "add-path-impairments": 3
+                 }
+               ]
+             },
+             {
+               "link-tp-ref": "LTP-3",
+               "is-allowed": true,
+               "add-path-impairments": 2,
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "add-path-impairments": 3
+                 },
+                 {
+                   "link-tp-ref": "LTP-2",
+                   "add-path-impairments": 3
+                 }
+               ]
+             }
+           ]
+         }
+       },
+       {
+         "tunnel-tp-id": 4,
+         "protection-type": "ops-protection",
+         "local-link-connectivities": {
+           "is-allowed": false,
+           "local-link-connectivity": [
+             {
+               "link-tp-ref": "LTP-1",
+               "is-allowed": true,
+               "add-path-impairments": 2,
+               "additional-ltp": [
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 83]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "add-path-impairments": 3
+                 },
+                 {
+                   "link-tp-ref": "LTP-2",
+                   "add-path-impairments": 3
+                 }
+               ]
+             },
+             {
+               "link-tp-ref": "LTP-2",
+               "is-allowed": true,
+               "add-path-impairments": 3,
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "add-path-impairments": 2
+                 },
+                 {
+                   "link-tp-ref": "LTP-3",
+                   "add-path-impairments": 2
+                 }
+               ]
+             },
+             {
+               "link-tp-ref": "LTP-3",
+               "is-allowed": true,
+               "add-path-impairments": 2,
+               "additional-ltp": [
+                 {
+                   "link-tp-ref": "LTP-1",
+                   "add-path-impairments": 3
+                 },
+                 {
+                   "link-tp-ref": "LTP-2",
+                   "add-path-impairments": 3
+                 }
+               ]
+             }
+           ]
+         }
+       }
+     ]
+   }
+
+   (2)  JSON example for use case in Section 2.10.1.2 with connectivity
+        constraints:
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 84]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+   [Editor's note: UC (ii) JSON example below needs to be updated and
+   aligned with Figure 13 and Figure 14.]
+
+   {
+     "roadm-path-impairments": [
+       {
+         "roadm-path-impairments-id": 1,
+         "roadm-add-path":
+         "Add path impairments from LTP 10 to LTP 1 or LTP 2 or LTP 3."
+       },
+       {
+         "roadm-path-impairments-id": 2,
+         "roadm-add-path":
+         "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
+          through AD1."
+       },
+       {
+         "roadm-path-impairments-id": 3,
+         "roadm-add-path":
+         "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 2,
+         through AD2."
+       }
+     ],
+
+     "connectivity-matrix"[
+       {
+         "id": 1,
+         "from": {
+           "tp-ref" : 20
+         },
+         "to" :  {
+           "tp-ref" : 1,
+           "additional-ltp": [
+              {
+                 "link-tp-ref": 1,
+                 "roadm-path-impairments": 3
+              },
+              {
+                 "link-tp-ref": 2,
+                 "roadm-path-impairments": 3
+              }
+           ]
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 2
+       },
+       {
+         "id": 2,
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 85]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+         "from": {
+           "tp-ref" : 20
+         },
+         "to" :  {
+           "tp-ref" : 3,
+           "additional-ltp": [
+              {
+                 "link-tp-ref": 1,
+                 "roadm-path-impairments": 3
+              },
+              {
+                 "link-tp-ref": 2,
+                 "roadm-path-impairments": 3
+              }
+           ]
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 2
+       },
+       {
+         "id": 3,
+         "from": {
+           "tp-ref" : 30
+         },
+         "to" :  {
+           "tp-ref" : 1,
+           "additional-ltp": [
+              {
+                 "link-tp-ref": 1,
+                 "roadm-path-impairments": 2
+              },
+              {
+                 "link-tp-ref": 2,
+                 "roadm-path-impairments": 2
+
+              }
+           ]
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 2
+       },
+       {
+         "id": 4,
+         "from": {
+           "tp-ref" : 30
+         },
+         "to" :  {
+           "tp-ref" : 2,
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 86]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+           "additional-ltp": [
+              {
+               "link-tp-ref": 1,
+               "roadm-path-impairments": 2
+              },
+              {
+               "link-tp-ref": 3,
+               "roadm-path-impairments": 2
+
+              }
+           ]
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 3
+       },
+       {
+         "id": 5,
+         "from": {
+           "tp-ref" : 30
+         },
+         "to" :  {
+           "tp-ref" : 3,
+           "additional-ltp": [
+              {
+               "link-tp-ref": 1,
+               "roadm-path-impairments": 3
+              },
+              {
+               "link-tp-ref": 2,
+               "roadm-path-impairments": 3
+
+              }
+           ]
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 2
+       },
+       {
+         "id": 6,
+         "from": {
+           "tp-ref" : 40
+         },
+         "to" :  {
+           "tp-ref" : 1
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 3
+       },
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 87]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
+
+
+       {
+         "id": 7,
+         "from": {
+           "tp-ref" : 40
+         },
+         "to" :  {
+           "tp-ref" : 2,
+         },
+         "is-allowed": true,
+         "roadm-path-impairments": 3
+       }
+
+     ]
+   }
 
    (3)  JSON example for use case in Section 2.10.1.3
 
-   [Editor's note: UC (iii) JSON example TBA]
+   [Editor's note: UC (iii) JSON example TBA!]
 
 Contributors
 
@@ -4471,15 +4900,6 @@ Contributors
    Aihua Guo
    Huawei Technologies
    Email: aguo@futurewei.com
-
-
-
-
-
-
-Beller, et al.            Expires 27 April 2023                [Page 80]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    Jonas Martensson
@@ -4502,6 +4922,12 @@ Additional Authors
    Nicola Sambo
    Scuola Superiore Sant'Anna
    Email: nicosambo@gmail.com
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 88]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    Giovanni Martinelli
@@ -4529,15 +4955,6 @@ Additional Authors
    Email: Enrico.Griseri@nokia.com
 
 
-
-
-
-
-Beller, et al.            Expires 27 April 2023                [Page 81]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
-
-
    Gert Grammel
    Juniper
    Email: ggrammel@juniper.net
@@ -4558,6 +4975,15 @@ Authors' Addresses
    Sergio Belotti
    Nokia
    Email: Sergio.Belotti@nokia.com
+
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 89]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2022
 
 
    G. Galimberti
@@ -4589,4 +5015,26 @@ Authors' Addresses
 
 
 
-Beller, et al.            Expires 27 April 2023                [Page 82]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 27 April 2023                [Page 90]
