@@ -347,9 +347,16 @@
   </figure>
   
   <t>
-   BA (on the left side WDM-TE-node) is the engress Amplifier and PA
-   (on the right side WDM-TE-node is the ingress amplifier for the OMS
-   Media Channel Group (MCG) <xref target="Figure-2"/>.
+   According to <xref target="G.807"/>, an
+   OMS Media Channel Group (MCG) represents "a unidirectional 
+   point-to-point management/control abstraction that represents a set 
+   of one or more media channels that are co-routed. A media channel 
+   group (MCG) is bounded by a pair of media ports." 
+  </t>
+  
+  <t>
+   The OMS Media Channel Group (MCG) <xref target="Figure-2"/> 
+   corresponds to the TE-Link connecting the two ROADM devices.
   </t>
   
   </section>
@@ -358,7 +365,7 @@
   
   
   <t>
-   According to <xref target="G.807"/> and <xref target="G.872"/>, an
+   According to <xref target="G.807"/>, an
    OTS Media Channel Group (MCG) represents a topological construct
    between two adjacent amplifiers, such as:
   </t>
@@ -371,29 +378,25 @@
 ]]></artwork>
   </figure>
   
-  <t>
-   According to <xref target="G.807"/> and <xref target="G.872"/>, an
-   OMS Media Channel Group (MCG) represents a topological construct
-   between two WDM-TE-nodes.
-  </t>
+
   
   <t>
-   Specifically, it originates at the ROADM in the source WDM-TE-node
-   and terminates at the ROADM in the destination WDM-TE-node including
-   the Booster Amplifier (BA) and the Pre-Amplifier (PA) in the
-   WDM-TE-nodes as well as the In-Line Amplifiers (ILAs) between the
+   in contrast, <xref target="G.807"/> describes an OMS MCG as "The 
+   topological relationship between the media port on a filter or coupler
+   where a set of media channels are aggregated and the media port on a 
+   filter or coupler where one or more media channel is added to or removed 
+   from that aggregate."
+
+   An OMS MCG originates at the ROADM in the source 
+   WDM-TE-node and terminates at the ROADM in the destination WDM-TE-node 
+   traversing the Booster Amplifier (BA) and the Pre-Amplifier (PA) in
+   the WDM-TE-nodes as well as the In-Line Amplifiers (ILAs) between the
    two WDM-TE-nodes.
   </t>
   
   <t>
    An OMS MCG can be decomposed into a sequence of OTS MCGs and
    amplifiers.
-  </t>
-
-  <t>
-   An OMS MCG can be described as a sequence of elements such as BA,
-   fiber section, ILA, PA, and concentrated loss wherever there is an
-   insertion loss caused for example by a fiber connector.
   </t>
 
   <t>
@@ -411,13 +414,13 @@
    for a WDM TE-link between WDM-TE-nodes (OMS MCG). In this scenario,
    the node containing the remote optical transponders can be
    considered as WDM-TE-node with termination capability only and no
-   no switching capabilities.
+   switching capabilities.
   </t>
   
   <t>
-   An OMS MCG is terminated on both ends by a link termination point
+   An WDM TE-link is terminated on both ends by a link termination point
    (LTP) as defined in <xref target="RFC8345"/>.
-   Links in optical transport networks are typically bidirectional but
+   Links in optical transport networks can have different impairments and 
    have to be modeled as a pair of two unidirectional links following
    the  <xref target="RFC8345"/> modeling approach.
    Unlike TE-links, which are unidirectional, the LTPs on either end
@@ -431,7 +434,10 @@
  <section title="Optical Tributary Signal (OTSi)" anchor="OTSi">
   <t>
    The OTSi is defined in ITU-T Recommendation G.959.1, section 3.2.4
-   <xref target="G.959.1"/>. The YANG model defined below assumes that
+   <xref target="G.959.1"/> as "Optical signal that is placed within a 
+   network media channel for transport across the optical network." 
+   
+   The YANG model defined below assumes that
    a single OTSi consists of a single modulated optical carrier. This
    single modulated optical carrier conveys digital information.
    Characteristics of the OTSi signal are modulation scheme (e.g. QPSK,
@@ -541,12 +547,13 @@
   </t>
 
   <t>
-   The MC is an end-to-end topological network construct and can be
-   considered as an "optical pipe" with a well-defined frequency slot
-   between one or more optical transmitters each generating an OTSi and
-   the corresponding optical receivers terminating the OTSi's. If the
-   MC carries more than one OTSi, it is assumed that these OTSi's
-   belong to the same OTSiG.
+   <xref target="G.807"/> defines a "network media channel" as "a 
+   type of media channel that is formed by the serial concatenation 
+   of all the media channels between an optical tributary signal 
+   (OTSi) modulator and an OTSi demodulator. An NMC may exist without 
+   a continuous wave or a signal being present." 
+   The NMC is a topological network construct and can be
+   considered as an "optical pipe".  
   </t>
 
   <figure align="center" title="Figure Caption TBA" anchor="Figure-4"><artwork><![CDATA[
@@ -572,7 +579,7 @@
    of the MC following the flexible grid definition in
    <xref target="G.694.1"/>. In this model, the effective frequency
    slot as defined in <xref target="G.807"/> is equal to the frequency
-   slot of this end-to-end MC. It is also assumed that ROADM devices
+   slot of this MC. It is also assumed that ROADM devices
    can switch MCs.
    For various reasons (e.g. differential delay), it is preferred to
    use a single MC for all OTSi's of the same OTSiG. It may however not
@@ -584,9 +591,12 @@
 
   <section title="Media Channel Group (MCG)" anchor="sect-2.3.4">
   <t>
-   The definition of the MCG is currently work in progress in ITU-T and
-   is defined in section 7.1.3 of the new ITU-T draft Recommendation
-   G.807 (still work in progress) [G.807]. The YANG model below assumes
+   The definition of the MCG is currently under work in ITU-T the 
+   current draft definition defines the media channel group as 
+   "A unidirectional point to point management/control abstraction 
+   that represents a set of one or more media channels that are 
+   co-routed."
+   The YANG model below assumes
    that the MCG is a logical grouping of one or more MCs that are used
    to to carry all OTSi's belonging to the same OTSiG.
   </t>
@@ -737,7 +747,7 @@
   <t>
    A Transponder is the element that sends and receives the optical
    signal from a DWDM network. A transponder can comprise one or more
-   transceiver modules. A transceiver represents a transmitter/receiver
+   transceivers. A transceiver represents a transmitter/receiver
    (Tx/Rx) pair as defined in ITU-T Recommendation G.698.2
    <xref target="G.698.2"/>. In addition to the transceiver, which is
    terminating an OTSi signal, a transponder typically provides
@@ -757,7 +767,7 @@
    <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and each
    OTSiG consists of one or multiple OTSi signals as described in
    <xref target="OTSiG"/>.
-   Therefore, a TTP may be associated with multiple transceiver modules.
+   Therefore, a TTP may be associated with multiple transceivers.
   </t>
   
   <t>
@@ -856,7 +866,7 @@
    An operational mode is a transceiver preset (a configuration with
    well-defined parameter values) subsuming several transceiver properties
    defined by the optical interface specification - these properties are
-   not provided for anoperational mode and are therefore not defined in the
+   not provided for a noperational mode and are therefore not defined in the
    YANG model. Examples of these properties are:
   </t>
 
@@ -1061,7 +1071,7 @@
   </t>
 
   <t>
-   The 3R regeneartion compound function is illustrated in section 10.1
+   The 3R regeneration compound function is illustrated in section 10.1
    of <xref target="G.798.1"/>, and sections 10.3 and 10.4 provide
    examples of a ROADM architecture and a photonic cross-connect
    architecture including 3R regenerators.
@@ -1486,11 +1496,11 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="sect-2.3.4"/>. These MCs can be established between two
    line ports of the ROADM or between a line port and an Add/Drop port of
    the ROADM. The Add/Drop ports of a ROADM are those ports to which optical
-   transponders are connected. Typically, this is a single channel signal
-   (single OTSi), but principally this could also be a group of OTSi
-   signals. The optical impairments associated with these MCs are different
-   and the paths of the MCs inside the ROADM node can be categorized as
-   follows:
+   transponders are connected. Typically, Transponders deal with a single 
+   channel signal (single OTSi), but principally this could also be a group 
+   of OTSi signals (OTSiG). The optical impairments associated with these MCs 
+   are different and the paths of the MCs inside the ROADM node can be 
+   categorized as follows:
   </t>
   
   <t><list style="symbols"><!-- <?rfc subcompact="yes"?> -->
@@ -1596,7 +1606,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    In case of individual OTSi protection, there are two network media
-   channel paths associated with the OTSi signal. In the YANG model,
+   channel (NMC) paths associated with the OTSi signal. In the YANG model,
    this is modeled as a leaf list of the otsi providing the nmc-path-id
    for the two network media channel paths associated with the
    individually protected otsi.
@@ -1767,7 +1777,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    In the network configuration shown in <xref target="Figure-13"/> and
    <xref target="Figure-14"/>, respectively, the two WDM-TE-nodes are
-   interconnected via a TE-link only carrying a single OTSi signal.
+   interconnected via a TE-link carrying a single OTSi signal.
    This TE-link interconnects the remote OT with an add-drop port of
    WDM-TE-Node-2 and in the following the qualifier "add-drop" is used
    to refer to that LTP as opposed to the line LTPs representing degrees
