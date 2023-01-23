@@ -347,16 +347,11 @@
   </figure>
   
   <t>
-   According to <xref target="G.807"/>, an
-   OMS Media Channel Group (MCG) represents "a unidirectional 
+   According to <xref target="G.807"/>, a
+   Media Channel Group (MCG) represents "a unidirectional 
    point-to-point management/control abstraction that represents a set 
    of one or more media channels that are co-routed. A media channel 
    group (MCG) is bounded by a pair of media ports." 
-  </t>
-  
-  <t>
-   The OMS Media Channel Group (MCG) <xref target="Figure-2"/> 
-   corresponds to the TE-Link connecting the two ROADM devices.
   </t>
   
   </section>
@@ -381,17 +376,17 @@
 
   
   <t>
-   in contrast, <xref target="G.807"/> describes an OMS MCG as "The 
+   <xref target="G.807"/> describes an OMS MCG as "The 
    topological relationship between the media port on a filter or coupler
    where a set of media channels are aggregated and the media port on a 
    filter or coupler where one or more media channel is added to or removed 
    from that aggregate."
 
    An OMS MCG originates at the ROADM in the source 
-   WDM-TE-node and terminates at the ROADM in the destination WDM-TE-node 
+   WDM-node and terminates at the ROADM in the destination WDM-node 
    traversing the Booster Amplifier (BA) and the Pre-Amplifier (PA) in
-   the WDM-TE-nodes as well as the In-Line Amplifiers (ILAs) between the
-   two WDM-TE-nodes.
+   the WDM-nodes as well as the In-Line Amplifiers (ILAs) between the
+   two WDM-nodes.
   </t>
   
   <t>
