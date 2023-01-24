@@ -415,7 +415,7 @@
   <t>
    An WDM TE-link is terminated on both ends by a link termination point
    (LTP) as defined in <xref target="RFC8345"/>.
-   Links in optical transport networks can have different impairments and 
+   Links in optical transport networks are typically bidirectional but can have different impairments in the two directions. Therefore they 
    have to be modeled as a pair of two unidirectional links following
    the  <xref target="RFC8345"/> modeling approach.
    Unlike TE-links, which are unidirectional, the LTPs on either end
@@ -430,7 +430,7 @@
   <t>
    The OTSi is defined in ITU-T Recommendation G.959.1, section 3.2.4
    <xref target="G.959.1"/> as "Optical signal that is placed within a 
-   network media channel for transport across the optical network." 
+   network media channel for transport across the optical network. This may consist of a single modulated optical carrier or a group of modulated optical carriers or subcarriers." 
    
    The YANG model defined below assumes that
    a single OTSi consists of a single modulated optical carrier. This
