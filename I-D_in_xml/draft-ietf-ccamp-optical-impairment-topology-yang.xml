@@ -542,6 +542,15 @@
   </t>
 
   <t>
+      The MC is an end-to-end topological network construct and can be
+   considered as an "optical pipe" with a well-defined frequency slot
+   between one or more optical transmitters each generating an OTSi and
+   the corresponding optical receivers terminating the OTSi's. If the
+   MC carries more than one OTSi, it is assumed that these OTSi's
+   belong to the same OTSiG.    
+   </t>
+   
+   <t>
    <xref target="G.807"/> defines a "network media channel" as "a 
    type of media channel that is formed by the serial concatenation 
    of all the media channels between an optical tributary signal 
@@ -586,8 +595,7 @@
 
   <section title="Media Channel Group (MCG)" anchor="sect-2.3.4">
   <t>
-   The definition of the MCG is currently under work in ITU-T the 
-   current draft definition defines the media channel group as 
+   ITU-T [G.807] defines the Media Channel Group MCG as
    "A unidirectional point to point management/control abstraction 
    that represents a set of one or more media channels that are 
    co-routed."
@@ -861,7 +869,7 @@
    An operational mode is a transceiver preset (a configuration with
    well-defined parameter values) subsuming several transceiver properties
    defined by the optical interface specification - these properties are
-   not provided for a noperational mode and are therefore not defined in the
+   not provided for an operational mode and are therefore not defined in the
    YANG model. Examples of these properties are:
   </t>
 
@@ -1491,7 +1499,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="sect-2.3.4"/>. These MCs can be established between two
    line ports of the ROADM or between a line port and an Add/Drop port of
    the ROADM. The Add/Drop ports of a ROADM are those ports to which optical
-   transponders are connected. Typically, Transponders deal with a single 
+   transponders are connected. Typically, Add/Drop ports deal with a single 
    channel signal (single OTSi), but principally this could also be a group 
    of OTSi signals (OTSiG). The optical impairments associated with these MCs 
    are different and the paths of the MCs inside the ROADM node can be 
