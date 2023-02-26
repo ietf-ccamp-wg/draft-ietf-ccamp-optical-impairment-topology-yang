@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-11"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-12"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -51,7 +51,7 @@
   </address>
   </author>
      
-  <date year="2022" month="October" day="24" />
+  <date year="2023" month="March" day="13" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -308,6 +308,7 @@
   </section>
 
   <section title="Optical Transport Network Data Plane" anchor="sect-2.2">
+ 
   <t>
    This section provides the description of the optical transport
    network reference architecture and its relevant components to
@@ -321,7 +322,7 @@
   <figure title="Reference Architecture for Optical Transport Network"
    anchor="Figure-2"><artwork><![CDATA[
   +-------------------+                      +-------------------+
-  |      WDM-Node     |                      |      WDM-Node     |
+  |     WDM-Node 1    |                      |     WDM-Node 2    |
   |                   |                      |                   |
   | PA  +-------+ BA  |         ILA          | PA  +-------+ BA  |
   | +-+ |       | +-+ |  _____  +--+  _____  | +-+ |       | +-+ |
@@ -345,20 +346,25 @@
    MCG: Media Channel Group
 ]]></artwork>
   </figure>
+
+  <t>
+   BA (WDM-node 1) is the egress Amplifier and PA (WDM-node 2) is the
+   ingress amplifier for the OMS Media Channel Group (MCG) in the
+   direction from left to right in <xref target="Figure-2"/>.
+  </t>
   
   <t>
-   According to <xref target="G.807"/>, a
-   Media Channel Group (MCG) represents "a unidirectional 
-   point-to-point management/control abstraction that represents a set 
-   of one or more media channels that are co-routed. A media channel 
-   group (MCG) is bounded by a pair of media ports." 
+   According to <xref target="G.807"/>, a Media Channel Group (MCG)
+   represents "a unidirectional point-to-point management/control
+   abstraction that represents a set of one or more media channels that
+   are co-routed. A media channel group (MCG) is bounded by a pair of
+   media ports." 
   </t>
   
   </section>
 
   <section title="OTS and OMS Media Channel Group" anchor="sect-2.3">
-  
-  
+   
   <t>
    According to <xref target="G.807"/>, an
    OTS Media Channel Group (MCG) represents a topological construct
@@ -373,25 +379,32 @@
 ]]></artwork>
   </figure>
   
-
+  <t>
+   <xref target="G.807"/> defines an OMS MCG as "The topological
+   relationship between the media port on a filter or coupler where a
+   set of media channels are aggregated and the media port on a filter
+   or coupler where one or more media channel is added to or removed 
+   from that aggregate. All of the media channels that are represented
+   by the OMS MCG must be carried over the same serial concatenation of
+   OTS MCGs and amplifiers."
+  </t>
   
   <t>
-   <xref target="G.807"/> describes an OMS MCG as "The 
-   topological relationship between the media port on a filter or coupler
-   where a set of media channels are aggregated and the media port on a 
-   filter or coupler where one or more media channel is added to or removed 
-   from that aggregate."
-
-   An OMS MCG originates at the ROADM in the source 
-   WDM-node and terminates at the ROADM in the destination WDM-node 
-   traversing the Booster Amplifier (BA) and the Pre-Amplifier (PA) in
-   the WDM-nodes as well as the In-Line Amplifiers (ILAs) between the
-   two WDM-nodes.
+   An OMS MCG originates at the ROADM in the source WDM-node and
+   terminates at the ROADM in the destination WDM-node traversing the
+   Booster Amplifier (BA) and the Pre-Amplifier (PA) in the WDM-nodes
+   as well as the In-Line Amplifiers (ILAs) between the two WDM-nodes.
   </t>
   
   <t>
    An OMS MCG can be decomposed into a sequence of OTS MCGs and
    amplifiers.
+  </t>
+  
+  <t>
+   An OMS MCG traverses as a sequence of elements such as BA, fiber
+   section, ILA, PA, and concentrated loss wherever there is an
+   insertion loss caused for example by a fiber connector.
   </t>
 
   <t>
@@ -413,11 +426,13 @@
   </t>
   
   <t>
-   An WDM TE-link is terminated on both ends by a link termination point
+   A WDM TE-link is terminated on both ends by a link termination point
    (LTP) as defined in <xref target="RFC8345"/>.
-   Links in optical transport networks are typically bidirectional but can have different impairments in the two directions. Therefore they 
-   have to be modeled as a pair of two unidirectional links following
-   the  <xref target="RFC8345"/> modeling approach.
+   Links between WDM nodes in optical transport networks are typically
+   bidirectional.
+   Generally, they have different impairments in the two directions and
+   hence they have to be modeled as a pair of two unidirectional
+   TE-links following the  <xref target="RFC8345"/> modeling approach.
    Unlike TE-links, which are unidirectional, the LTPs on either end
    of the TE-link pair forming the bidirectional link, are bidirectional
    as described in
@@ -430,7 +445,9 @@
   <t>
    The OTSi is defined in ITU-T Recommendation G.959.1, section 3.2.4
    <xref target="G.959.1"/> as "Optical signal that is placed within a 
-   network media channel for transport across the optical network. This may consist of a single modulated optical carrier or a group of modulated optical carriers or subcarriers." 
+   network media channel for transport across the optical network. This
+   may consist of a single modulated optical carrier or a group of
+   modulated optical carriers or subcarriers."
    
    The YANG model defined below assumes that
    a single OTSi consists of a single modulated optical carrier. This
@@ -540,27 +557,34 @@
    of an MC (i.e., frequency slot or effective frequency slot),
    without representing topology.
   </t>
-
+  
   <t>
-      The MC is an end-to-end topological network construct and can be
-   considered as an "optical pipe" with a well-defined frequency slot
-   between one or more optical transmitters each generating an OTSi and
-   the corresponding optical receivers terminating the OTSi's. If the
-   MC carries more than one OTSi, it is assumed that these OTSi's
-   belong to the same OTSiG.    
-   </t>
-   
-   <t>
-   <xref target="G.807"/> defines a "network media channel" as "a 
-   type of media channel that is formed by the serial concatenation 
-   of all the media channels between an optical tributary signal 
-   (OTSi) modulator and an OTSi demodulator. An NMC may exist without 
-   a continuous wave or a signal being present." 
-   The NMC is a topological network construct and can be
-   considered as an "optical pipe".  
+   In this document, an end-to-end MC is defined as a type of MC,
+   which is formed by the serial concatenation of all the MCs from
+   source Transceiver media ports to destination transceiver media
+   ports.
+   This end-to-end MC is defined across all the ROADM nodes along the
+   end-to-end optical path with the same nominal central frequency n
+   and frequency slot of width m, which represents the effective
+   frequency slot of the end-to-end MC.
+   An end-to-end MC can carry a single OTSi, or multiple OTSi signals
+   belonging to the same OTSiG.
   </t>
 
-  <figure align="center" title="Figure Caption TBA" anchor="Figure-4"><artwork><![CDATA[
+  <t>
+   <xref target="G.807 Amd1"/> defines a "network media channel (NMC)"
+   as "a type of media channel that is formed by the serial
+   concatenation of all media channels between the media port of a
+   modulator and the media port of a demodulator". The modulator and
+   demodulator are integral functions of a transceiver and their media
+   ports do not necessarily coincide with the media port of the 
+   transceiver, which is associated with the transceiver's physical
+   optical port. Due to this difference, the end-to-end MC is defined
+   above and is used in this document.
+  </t>
+
+  <figure align="center" title="Figure Caption TBA" anchor="Figure-4">
+   <artwork><![CDATA[
                                  m=8
   +-------------------------------X-------------------------------+
   |                               |                               |
@@ -1499,7 +1523,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="sect-2.3.4"/>. These MCs can be established between two
    line ports of the ROADM or between a line port and an Add/Drop port of
    the ROADM. The Add/Drop ports of a ROADM are those ports to which optical
-   transponders are connected. Typically, Add/Drop ports deal with a single 
+   transponders are connected. Typically, add/drop ports deal with a single 
    channel signal (single OTSi), but principally this could also be a group 
    of OTSi signals (OTSiG). The optical impairments associated with these MCs 
    are different and the paths of the MCs inside the ROADM node can be 
@@ -1608,11 +1632,11 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
   
   <t>
-   In case of individual OTSi protection, there are two network media
-   channel (NMC) paths associated with the OTSi signal. In the YANG model,
-   this is modeled as a leaf list of the otsi providing the nmc-path-id
-   for the two network media channel paths associated with the
-   individually protected otsi.
+   In case of individual OTSi protection, there are two end-to-end MC
+   paths associated with the OTSi signal. In the YANG model, this is
+   modeled as a leaf list of the otsi providing the e2e-mc-path-id for
+   the two end-to-end MC paths associated with the individually
+   protected otsi.
   </t>
   
   <t>Individual OTSi protection use cases:</t>
@@ -3995,7 +4019,17 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T" value="Recommendation G.807"/>
   </reference>
   
-  <reference anchor="G.709">
+  <reference anchor="G.807 Amd1">
+   <front>
+   <title>Generic functional architecture of the optical media network Amendment 1</title>
+   <author>
+   </author>
+   <date month="January" year="2021"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.807 Amendment 1"/>
+  </reference>
+  
+   <reference anchor="G.709">
    <front>
    <title>Interfaces for the Optical Transport Network (OTN)</title>
    <author>
@@ -4430,6 +4464,149 @@ reference: RFC XXXX (TDB)
   
   </section>
   
+  <section anchor="Remote OT configuration" numbered="true">
+  <name>Optical Transponders in a Remote Shelf (Remote OTs)</name>
+  
+  <t>
+   <xref target="Figure-Appendix-B"/> describes an example where the
+   optical transponders and the ROADM are located in a different
+   WDM-TE-nodes.
+  </t>
+  
+  <figure align="center" title="Optical Transponders in a Remote Shelf
+  (Remote OTs)" anchor="Figure-Appendix-B">
+    <artwork><![CDATA[
+
+      WDM-TE-Node-1                    WDM-TE-Node-2
+   +----------------+           +--------------------------+
+   |     Remote OTs |           |         ROADM            |
+   |   +------------+           |     +------------+       |
+   |   |            |           | AD  |            |       |
+   |   |       +----|           | LTP |            | Line  |
+ --o-->|       | Tx o---------->o---->o            | LTP 1 |
+   |   | OT 1  +----|           |     |            o-------o<--->
+ <-o---|       | Rx o<----------o<----o            |       |
+   |   |       +----|           | AD  |            |       |
+   |   |            |           | LTP |            |       |
+   |   +------------+           |     |            |       |
+   |                |           |     |            | Line  |
+   |   +------------+           |     |            | LTP 2 |
+   |   |            |           | AD  |            o-------o<--->
+   |   |       +----|           | LTPs|            |       |
+ --o-->|       | Tx o---------->o---->o            |       |
+   |   |       +----|           |     |            |       |
+ <-o---|       | Rx o<----------o<----o            |       |
+   |   | OT 2  +----|           |     |            | Line  |     
+ --o-->|       | Tx o---------->o---->o            | LTP 3 |
+   |   |       +----|           |     |            o-------o<--->
+ <-o---|       | Rx o<----------o<----o            |       |
+   |   |       +----|           |     |            |       |
+   |   |            |           |     |            |       |
+   |   +------------+           |     +------------+       |
+   |                |           |                          |
+   +----------------+           +--------------------------+
+   
+]]> </artwork>
+  </figure>
+
+  <t>
+   As described in <xref target="sect-2.3" />, the external shelf can
+   be modeled as WDM-TE-Node with termination capability only (not
+   switching) and the add/drop link between remote an optical
+   transceiver and a ROADM add/drop port can be modeled as a WDM
+   TE-link with the same optical impairments as those defined for a
+   WDM TE-link between WDM-TE-nodes (OMS MCG).
+  </t>
+  
+  <t>
+   [Editor's note: define the add/drop TE-link and bundled add/drop
+    TE-link. Should we add the definition of line TE-link for the
+    TE-link between ROADMs?]
+  </t>
+  
+  <t>
+   If the two WDM-TE-Nodes are reported in different network topology
+   instances, the plug-id attribute, defined in [RFC8795], can be used
+   to discover the adjacency for add/drop TE-Links.
+  </t>
+  
+  <t>
+   It is worth noting that there are no standard protocols for
+   automatic discovery of the adjacency between an external transceiver
+   and a ROADM add/drop port and therefore the information reported in
+   the plug-id can be either statically configured or provided through
+   vendor-specific discovery mechanisms.
+  </t>
+  
+  <t>
+   Each add/drop TE-link carries a single OTSi between the transceiver
+   and ROADM add/drop port and one or more OTSis in the reverse
+   direction (between the ROADM add/drop and the transceiver).
+  </t>
+
+  <t>
+   Depending on control architecture (e.g., when the two WDM-TE-Nodes
+   are reported in different network topology instances by different
+   controllers), the controller reporting the WDM-TE-Node, abstracting
+   the external OT shelf, may be not able to provide the information
+   about the e2e-MC configuration (i.e.,flexi-n and flexi-m) nor of all
+   the received OTSis, within the e2e-MCs, besided the configured
+   incoming OTSi, since the e2e-MC configuration depends on how the
+   ROADM network is configured and the remote OT shelf is not aware of
+   that.
+  </t>
+
+  <t>
+   In this case only the incoming-otsi and outgoing-otsi can be
+   reported within an e2e-MC with an unspecified frequency-slot (i.e.,
+   without reporting flexi-n and flexi-m configuration of the e2e-MC).
+  </t>
+  
+  <t>
+   When an OTSiG has more than one OTSi, its OTSis are carried by
+   different parallel add/drop TE-links. In order to represent the fact
+   that these OTSis are co-routed, the add/drop TE-links are bundled
+   together in a bundled add/drop TE-Link. The finest granularity for
+   the bundled add/drop TE-Link is the set of all the add/drop TE-links
+   terminating on the same OT.
+  </t>
+
+  <t>
+   For example, in <xref target="Figure-Appendix-B"/>, it is possible
+   to define two bundled add/drop TE-links, one for OT1 and one for OT2
+   or just one add/drop TE-link both OTs.
+  </t>
+
+  <t>
+   The model for bundled TE-Link and of its relationship with its
+   component TE-Links is already defined in the bundled-links container
+   of [RFC8795].
+  </t>
+
+  <t>
+   In the general case, the optical impairments and connectivity
+   constraints are reported for each add/drop TE-link and therefore no
+   optical impairements are reported in the bundled add/drop TE-link
+   that is use just to model the co-routing aspects of the OTSis
+   belonging to the same OTSiG.
+  </t>
+
+  <t>
+   The per-transceiver Local Link Connectivity (LLC) is used in the
+   WDM-TE-Node which abstracts the remote OT shelf (e.g., WDM-TE-Node-1
+   in <xref target="Figure-Appendix-B"/>), to represent the association
+   between each transceiver and each LTP terminating the add/drop
+   TE-link which models the transceiver port.
+  </t>
+
+  <t>
+   The connectivity matrix in the WDM-TE-Node which abstract the edge
+   ROADM (e.g., WDM-TE-Node-2 in <xref target="Figure-Appendix-B"/>)
+   references the LTPs terminating the add/drop TE-links which models
+   the ROADM add/drop ports.
+  </t>
+
+  </section>
   
   <section anchor="Contributors" numbered="false">
   <name>Contributors</name>
