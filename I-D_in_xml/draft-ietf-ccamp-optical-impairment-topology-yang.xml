@@ -63,7 +63,7 @@
    optimal paths through the network. The determination of appropriate
    paths is known as Impairment-Aware Routing and Wavelength Assignment
    (IA-RWA) for WSON, while it is known as Impairment-Aware Routing and
-   Spectrum Assigment (IA-RSA) for SSON.
+   Spectrum Assigbment (IA-RSA) for SSON.
   </t>
 
   <t>
@@ -402,7 +402,7 @@
   </t>
   
   <t>
-   An OMS MCG traverses as a sequence of elements such as BA, fiber
+   An OMS MCG traverses a sequence of elements such as BA, fiber
    section, ILA, PA, and concentrated loss wherever there is an
    insertion loss caused for example by a fiber connector.
   </t>
@@ -427,12 +427,12 @@
   
   <t>
    A WDM TE-link is terminated on both ends by a link termination point
-   (LTP) as defined in <xref target="RFC8345"/>.
+   (LTP) as defined in <xref target="RFC8795"/>.
    Links between WDM nodes in optical transport networks are typically
    bidirectional.
    Generally, they have different impairments in the two directions and
    hence they have to be modeled as a pair of two unidirectional
-   TE-links following the  <xref target="RFC8345"/> modeling approach.
+   TE-links following the  <xref target="RFC8795"/> modeling approach.
    Unlike TE-links, which are unidirectional, the LTPs on either end
    of the TE-link pair forming the bidirectional link, are bidirectional
    as described in
@@ -1954,7 +1954,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   </section>
 
-  <section title="OMS MCG protection" anchor="link_prot">
+  <section title="OMS MCG protection" anchor="TE-link_prot">
   
   <t>
    OMS MCG protection is a protection architecture where a TE-link
@@ -1965,6 +1965,43 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    [Editor's note: this section is still work in progress]
   </t>
+  
+  <figure align="center" title="Two WDM-TE-Nodes with a protected
+   and an unprotected OMS MCG (TE-link)" anchor="OMS_MCG_prot">
+    <artwork><![CDATA[
+
+         WDM-TE-Node-1                     WDM-TE-Node-2
+   +-----------------------+         +-----------------------+
+   |     ROADM     Splitter|         |Selector     ROADM     |
+   |   +-------+   +-------+  prot.  +-------+   +-------+   |
+   |   |       |   |    -->o-------->o-->    |   |       |   |
+   |   |       |   |   /   |         |   \   |   |       |   |
+   |   |       o-->o--o    |         |    o--o-->o       |   |
+   |   |       |   |   \   |         |   /   |   |       |   |
+   |   |       |   |    -->o-------->o-->    |   |       |   |
+   |   |       |   +-------+         +-------+   |       |   |
+   |   |       |   Selector| Line 1  |Splitter   |       |   |
+   |   |       |   +-------+         +-------+   |       |   |
+   |   |       |   |    <--o<--------o<--    |   |       |   |
+   |   |       |   |   /   |         |   \   |   |       |   |
+   |   |       o<--o--o    |         |    o--o<--o       |   |
+   |   |       |   |   \   |         |   /   |   |       |   |
+   |   |       |   |    <--o<--------o<--    |   |       |   |
+   |   |       |   +-------+ TE-link +-------+   |       |   |
+   |   |       |           |         |           |       |   |
+   |   |       |           | unprot. |           |       |   |     
+   |   |       o---------->o-------->o---------->o       |   |
+   |   |       |           | Line 2  |           |       |   |
+   |   |       o<----------o<--------o<----------o       |   |
+   |   |       |           | TE-link |           |       |   |
+   |   |       |           |         |           |       |   |
+   |   +-------+           |         |           +-------+   |
+   |                       |         |                       |
+   +-----------------------+         +-----------------------+
+   
+]]> </artwork>
+  </figure>
+
   
   </section>
 
@@ -4512,7 +4549,7 @@ reference: RFC XXXX (TDB)
   <t>
    As described in <xref target="sect-2.3" />, the external shelf can
    be modeled as WDM-TE-Node with termination capability only (not
-   switching) and the add/drop link between remote an optical
+   switching) and the add/drop link between a remote optical
    transceiver and a ROADM add/drop port can be modeled as a WDM
    TE-link with the same optical impairments as those defined for a
    WDM TE-link between WDM-TE-nodes (OMS MCG).
@@ -4550,7 +4587,7 @@ reference: RFC XXXX (TDB)
    controllers), the controller reporting the WDM-TE-Node, abstracting
    the external OT shelf, may be not able to provide the information
    about the e2e-MC configuration (i.e.,flexi-n and flexi-m) nor of all
-   the received OTSis, within the e2e-MCs, besided the configured
+   the received OTSis, within the e2e-MCs, besides the configured
    incoming OTSi, since the e2e-MC configuration depends on how the
    ROADM network is configured and the remote OT shelf is not aware of
    that.
@@ -4578,16 +4615,16 @@ reference: RFC XXXX (TDB)
   </t>
 
   <t>
-   The model for bundled TE-Link and of its relationship with its
-   component TE-Links is already defined in the bundled-links container
-   of [RFC8795].
+   The model for a bundled add/drop TE-Link and the relationship with
+   its component TE-Links is already defined in the bundled-links
+   container of [RFC8795].
   </t>
 
   <t>
    In the general case, the optical impairments and connectivity
    constraints are reported for each add/drop TE-link and therefore no
-   optical impairements are reported in the bundled add/drop TE-link
-   that is use just to model the co-routing aspects of the OTSis
+   optical impairments are reported in the bundled add/drop TE-link
+   that is used just to model the co-routing aspects of the OTSis
    belonging to the same OTSiG.
   </t>
 
