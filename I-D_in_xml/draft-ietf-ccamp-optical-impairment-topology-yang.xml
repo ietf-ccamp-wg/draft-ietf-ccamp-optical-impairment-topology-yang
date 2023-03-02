@@ -63,7 +63,7 @@
    optimal paths through the network. The determination of appropriate
    paths is known as Impairment-Aware Routing and Wavelength Assignment
    (IA-RWA) for WSON, while it is known as Impairment-Aware Routing and
-   Spectrum Assigbment (IA-RSA) for SSON.
+   Spectrum Assignment (IA-RSA) for SSON.
   </t>
 
   <t>
@@ -196,6 +196,14 @@
    The term "WDM-TE-network" refers to a set of WDM-TE-nodes as defined
    above that are interconnected via TE-links carrying WDM signals.
    These TE-links may include optical amplifiers.
+  </t>
+
+  <t>
+   The term "add/drop TE-link" needs to be defined here!
+  </t>
+
+  <t>
+   The term "bundled add/drop TE-link" needs to be defined here!
   </t>
 
   </section>
@@ -4556,8 +4564,8 @@ reference: RFC XXXX (TDB)
   </t>
   
   <t>
-   [Editor's note: define the add/drop TE-link and bundled add/drop
-    TE-link. Should we add the definition of line TE-link for the
+   [Editor's note: define the "add/drop TE-link" and "bundled add/drop
+    TE-link". Should we add the definition of line TE-link for the
     TE-link between ROADMs?]
   </t>
   
@@ -4586,17 +4594,18 @@ reference: RFC XXXX (TDB)
    are reported in different network topology instances by different
    controllers), the controller reporting the WDM-TE-Node, abstracting
    the external OT shelf, may be not able to provide the information
-   about the e2e-MC configuration (i.e.,flexi-n and flexi-m) nor of all
-   the received OTSis, within the e2e-MCs, besides the configured
-   incoming OTSi, since the e2e-MC configuration depends on how the
-   ROADM network is configured and the remote OT shelf is not aware of
-   that.
+   about the end-to-end MC configuration (i.e.,flexi-n and flexi-m)
+   nor of all the received OTSis, within the end-to-end MC, besides the
+   configured incoming OTSi, since the end-to-end MC configuration
+   depends on how the ROADM network is configured and the remote OT
+   shelf is not aware of that.
   </t>
 
   <t>
    In this case only the incoming-otsi and outgoing-otsi can be
-   reported within an e2e-MC with an unspecified frequency-slot (i.e.,
-   without reporting flexi-n and flexi-m configuration of the e2e-MC).
+   reported within anend-to-end MC with an unspecified frequency-slot
+   (i.e., without reporting flexi-n and flexi-m configuration of the
+   end-to-end MC).
   </t>
   
   <t>
