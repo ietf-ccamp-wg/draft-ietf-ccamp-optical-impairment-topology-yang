@@ -1965,13 +1965,32 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <section title="OMS MCG protection" anchor="TE-link_prot">
   
   <t>
-   OMS MCG protection is a protection architecture where a TE-link
-   between two adjacent WDM-TE-nodes is protected. This is a local
-   protection scheme, which can be modeled as a TE-link property.
+   [Editor's note: this section is still work in progress]
   </t>
   
   <t>
-   [Editor's note: this section is still work in progress]
+   OMS MCG protection is a 1+1 protection architecture where a TE-link
+   between two adjacent WDM-TE-nodes is 1+1 protected. Such a 1+1
+   protected TE-link composed of an underlying primary and secondary
+   TE-link is shown in <xref target="OMS_MCG_prot"/> together with an
+   unprotected TE-link between the two adjacent WDM-TE-Nodes.
+  </t>
+  
+  <t>
+   1+1 OMS MCG protection is a local protection scheme, which can be
+   modeled based on TE-link properties already defined in
+   <xref target="RFC8795"/>. The 1+1 protected TE-link is associated
+   with the two underlying TE-links forming the 1+1 protection group
+   together with the splitter/combiner functions in the adjacent
+   WDM-TE-Nodes. The splitter/combiner functions are not modeled as
+   separate entities in the model.
+  </t>
+  
+  <t>
+   Alternatively, it is also possible to model the 1+1 OMS MCG
+   protection as single protected TE-link abstracting the two
+   underlying physical links and the splitter/combiner functions in
+   the two adjacent WDM-TE-Nodes.
   </t>
   
   <figure align="center" title="Two WDM-TE-Nodes with a protected
@@ -1983,17 +2002,17 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    |     ROADM     Splitter|         |Selector     ROADM     |
    |   +-------+   +-------+  prot.  +-------+   +-------+   |
    |   |       |   |    -->o-------->o-->    |   |       |   |
-   |   |       |   |   /   |         |   \   |   |       |   |
+   |   |       |   |   /   |  prim.  |   \   |   |       |   |
    |   |       o-->o--o    |         |    o--o-->o       |   |
-   |   |       |   |   \   |         |   /   |   |       |   |
+   |   |       |   |   \   |  second.|   /   |   |       |   |
    |   |       |   |    -->o-------->o-->    |   |       |   |
    |   |       |   +-------+         +-------+   |       |   |
    |   |       |   Selector| Line 1  |Splitter   |       |   |
    |   |       |   +-------+         +-------+   |       |   |
    |   |       |   |    <--o<--------o<--    |   |       |   |
-   |   |       |   |   /   |         |   \   |   |       |   |
+   |   |       |   |   /   |  prim.  |   \   |   |       |   |
    |   |       o<--o--o    |         |    o--o<--o       |   |
-   |   |       |   |   \   |         |   /   |   |       |   |
+   |   |       |   |   \   |  second.|   /   |   |       |   |
    |   |       |   |    <--o<--------o<--    |   |       |   |
    |   |       |   +-------+ TE-link +-------+   |       |   |
    |   |       |           |         |           |       |   |
@@ -2009,14 +2028,100 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    
 ]]> </artwork>
   </figure>
+  
+  <section title="OMS MCG Protection Modeled as Protected TE-link with
+  underlying TE-links" anchor="abstr_TE-link_prot">
+  
+  <t>
+   [Editor's note: this sub-section is still work in progress]
+  </t>
 
+  <t>
+   This modeling approach models the 1+1 protected TE-link as an
+   additional TE-link entity on top of the primary and secondary
+   TE-link between the two adjacent WDM-TE-Nodes terminating the
+   1+1 OMS MCG protection group formed by these two TE-links and the
+   splitter/combiner functions in the two nodes. This protected
+   TE-link is associated with underlying primary and secondary TE-links
+   forming the 1+1 protection group. The following "te-link-attributes"
+   already defined in <xref target="RFC8795"/> and
+   <xref target="RFC8776"/> are used:
+   
+    <ul spacing="compact">
+      <li>"underlay": the presence of this container is indicating that
+        an underlying protection scheme exists</li>
+      <li>"enabled": (boolean) is set to 'true'</li>
+      <li>"primary-path": is referencing the primary OMS MCG (TE-link)
+      </li>
+      <li>"backup-path": is referencing the secondary OMS MCG (TE-link)
+      </li>
+      <li>"link-protection-type" (identityref) set to
+        'link-protection-1-plus-1' as defined in
+        <xref target="RFC8776"/>
+      </li>
+    </ul>
+  </t>
+  
+  <t>
+   The optical impairments for the underlying primary and secondary
+   TE-link can be described as for unprotected TE-links. It may also be
+   possible to only describe the optical impairments for the 1+1
+   protected TE-link. In this case the optical impairments of the worse
+   of the two underlying TE-links shall be used. This should be 
+   sufficient as input for path computation (worst case optical
+   feasibility consideration).
+  </t>
+  
+  <t>
+   Any optical impairments imposed by the splitter and combiner
+   functions are included in the optical impairments of the ROADM
+   functions in the two adjacent WDM-TE-Nodes (connectivity matrix and
+   LLCL, respectively).
+  </t>
   
   </section>
-
+  
+  <section title="OMS MCG Protection Modeled as Single Protected TE-link"
+  anchor="Single_TE-link_prot">
+  
+  <t>
+   [[Editor's note: this sub-section is still work in progress]
+  </t>
+  
+  <t>
+   This modeling approach abstracts the two physical links carrying the
+   same OMS MCG and the splitter/combiner functions in the two
+   WDM-TE-Nodes forming the protection group into a single TE-link. If
+   this modeling approach is used the "te-link-attributes" already
+   defined in <xref target="RFC8795"/> and <xref target="RFC8776"/> are
+   used as follows:
+   
+    <ul spacing="compact">
+      <li>"underlay": this container must not be present</li>
+      <li>"link-protection-type" (identityref) set to
+      'link-protection-1-plus-1' as defined in <xref target="RFC8776"/>
+      </li>
+    </ul>
+   
+   The optical impairments exposed for this 1+1 protected TE-link are
+   typically based on the optical impairments of the worse of the two
+   underlying physical links. The optical impairments imposed by the
+   splitter and combiner functions can also be taken into account as
+   optical impairments of the 1+1 protected TE-link. It may also be
+   possible to model the optical impairments imposed by the splitter
+   and combiner functions as contribution to the optical impairments of
+   the ROADM functions in the two adjacent WDM-TE-Nodes (connectivity
+   matrix and LLCL, respectively)
+  </t>
+  
   </section>
-
+  
   </section>
-
+  
+  </section>
+  
+  </section>
+  
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
   
   <t>
@@ -4006,6 +4111,8 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
+  
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8776.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8795.xml"/>
 
@@ -4571,8 +4678,9 @@ reference: RFC XXXX (TDB)
   
   <t>
    If the two WDM-TE-Nodes are reported in different network topology
-   instances, the plug-id attribute, defined in [RFC8795], can be used
-   to discover the adjacency for add/drop TE-Links.
+   instances, the plug-id attribute, defined in 
+   <xref target="RFC8795"/>, can be used to discover the adjacency for
+   add/drop TE-links.
   </t>
   
   <t>
@@ -4612,8 +4720,8 @@ reference: RFC XXXX (TDB)
    When an OTSiG has more than one OTSi, its OTSis are carried by
    different parallel add/drop TE-links. In order to represent the fact
    that these OTSis are co-routed, the add/drop TE-links are bundled
-   together in a bundled add/drop TE-Link. The finest granularity for
-   the bundled add/drop TE-Link is the set of all the add/drop TE-links
+   together in a bundled add/drop TE-link. The finest granularity for
+   the bundled add/drop TE-link is the set of all the add/drop TE-links
    terminating on the same OT.
   </t>
 
@@ -4624,9 +4732,9 @@ reference: RFC XXXX (TDB)
   </t>
 
   <t>
-   The model for a bundled add/drop TE-Link and the relationship with
-   its component TE-Links is already defined in the bundled-links
-   container of [RFC8795].
+   The model for a bundled add/drop TE-link and the relationship with
+   its component TE-links is already defined in the bundled-links
+   container of <xref target="RFC8795"/>.
   </t>
 
   <t>
