@@ -1983,14 +1983,21 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    with the two underlying TE-links forming the 1+1 protection group
    together with the splitter/combiner functions in the adjacent
    WDM-TE-Nodes. The splitter/combiner functions are not modeled as
-   separate entities in the model.
+   separate entities in the model. Any optical impairments imposed by
+   the splitter and combiner functions are included in the optical
+   impairments of the ROADM functions in the two adjacent WDM-TE-Nodes
+   (connectivity matrix and LLCL, respectively).
   </t>
   
   <t>
    Alternatively, it is also possible to model the 1+1 OMS MCG
    protection as single protected TE-link abstracting the two
-   underlying physical links and the splitter/combiner functions in
-   the two adjacent WDM-TE-Nodes.
+   underlying physical links as well as the splitter/combiner functions
+   in the two adjacent WDM-TE-Nodes. Similarly, are any optical
+   impairments imposed by the splitter and combiner functions
+   included in the optical impairments of the ROADM functions in the
+   two adjacent WDM-TE-Nodes (connectivity matrix and LLCL,
+   respectively).
   </t>
   
   <figure align="center" title="Two WDM-TE-Nodes with a protected
@@ -2045,7 +2052,32 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    TE-link is associated with underlying primary and secondary TE-links
    forming the 1+1 protection group. The following "te-link-attributes"
    already defined in <xref target="RFC8795"/> and
-   <xref target="RFC8776"/> are used:
+   <xref target="RFC8776"/> can be used for modeling the 1+1 protected
+   TE-link ("te-link-attributes" augmentation copied from
+   <xref target="RFC8795"/>:
+   
+  <sourcecode name="TE-topology subtree" type="text" markers="false">
+  <![CDATA[
+  augment /nw:networks/nw:network/nt:link:
+  +--rw te!
+     +--rw te-link-attributes
+     |  ....................
+     |  +--rw underlay {te-topology-hierarchy}?
+     |  |  +--rw enabled?                     boolean
+     |  |  +--rw primary-path
+     |  |  |  +--rw network-ref?    leafref
+     |  |  |     ....................
+     |  |  +--rw backup-path* [index]
+     |  |  |  +--rw index           uint32
+     |  |  |  +--rw network-ref?    leafref
+     |  |  |     ....................
+     |  |  +--rw protection-type?             identityref
+  ]]>
+  </sourcecode>
+  
+  <t>
+   These attributes are used as follows:
+  </t>
    
     <ul spacing="compact">
       <li>"underlay": the presence of this container is indicating that
