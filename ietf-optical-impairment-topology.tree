@@ -118,8 +118,7 @@ module: ietf-optical-impairment-topology
     |        |              |       dbm-t
     |        |              +--ro rx-total-power-max?
     |        |                      dbm-t
-    |        +--ro configured-mode?
-    |        |       -> ../supported-modes/supported-mode/mode-id
+    |        +--ro configured-mode?               union
     |        +--ro tx-channel-power?              union
     |        +--ro rx-channel-power?              union
     |        +--ro rx-total-power?                union
@@ -130,92 +129,99 @@ module: ietf-optical-impairment-topology
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
     |        +--ro configured-termination-type?   enumeration
-    +--ro regen-group* [group-id]
-       +--ro group-id           uint32
-       +--ro regen-metric?      uint32
-       +--ro transponder-ref*
-               -> ../../transponders/transponder/transponder-id
+    +--rw regen-groups!
+       +--ro regen-group* [group-id]
+          +--ro group-id           uint32
+          +--ro regen-metric?      uint32
+          +--ro transponder-ref*
+                  -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
        +--ro generalized-snr?                        l0-types:snr
-       +--ro equalization-mode                       identityref
+       +--ro equalization-mode?                      identityref
        +--ro (power-param)?
        |  +--:(channel-power)
        |  |  +--ro nominal-carrier-power?
        |  |          l0-types:power-in-dbm-or-null
        |  +--:(power-spectral-density)
        |     +--ro nominal-power-spectral-density?   union
-       +--ro media-channel-group* [i]
-       |  +--ro i                 int16
-       |  +--ro media-channels* []
-       |     +--ro flexi-n?          l0-types:flexi-n
-       |     +--ro flexi-m?          l0-types:flexi-m
-       |     +--ro otsi-group-ref?   leafref
-       |     +--ro otsi-ref* []
-       |     |  +--ro otsi-carrier-ref?   leafref
-       |     |  +--ro e2e-mc-path-ref*    leafref
-       |     +--ro delta-power?      l0-types:power-in-dbm-or-null
-       +--ro OMS-elements* [elt-index]
-          +--ro elt-index                 uint16
-          +--ro oms-element-uid?          union
-          +--ro reverse-element-ref
-          |  +--ro link-ref?
-          |  |       -> ../../../../../../../nt:link/link-id
-          |  +--ro oms-element-ref*   leafref
-          +--ro (element)
-             +--:(amplifier)
-             |  +--ro geolocation
-             |  |  +--ro altitude?    int64
-             |  |  +--ro latitude?    geographic-coordinate-degree
-             |  |  +--ro longitude?   geographic-coordinate-degree
-             |  +--ro amplifier
-             |     +--ro type-variety    string
-             |     +--ro operational
-             |        +--ro amplifier-element* []
-             |           +--ro name?
-             |           |       string
-             |           +--ro frequency-range
-             |           |  +--ro lower-frequency    frequency-thz
-             |           |  +--ro upper-frequency    frequency-thz
-             |           +--ro actual-gain
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro tilt-target
-             |           |       l0-types:decimal-2-digits-or-null
-             |           +--ro out-voa
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro in-voa
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro total-output-power
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro (power-param)?
-             |           |  +--:(channel-power)
-             |           |  |  +--ro nominal-carrier-power?
-             |           |  |          l0-types:power-in-dbm-or-null
-             |           |  +--:(power-spectral-density)
-             |           |     +--ro nominal-power-spectral-density?
-             |           |             union
-             |           +--ro raman-direction?
-             |           |       enumeration
-             |           +--ro raman-pump* []
-             |              +--ro frequency?   l0-types:frequency-thz
-             |              +--ro power?
-             |                      l0-types:decimal-2-digits-or-null
-             +--:(fiber)
-             |  +--ro fiber
-             |     +--ro type-variety    string
-             |     +--ro length
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro loss-coef
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro total-loss      l0-types:power-in-db-or-null
-             |     +--ro pmd?
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro conn-in?        l0-types:power-in-db-or-null
-             |     +--ro conn-out?       l0-types:power-in-db-or-null
-             +--:(concentratedloss)
-                +--ro concentratedloss
-                   +--ro loss    l0-types:power-in-db-or-null
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+       |        +--ro otsi-group-ref?   leafref
+       |        +--ro otsi-ref* []
+       |        |  +--ro otsi-carrier-ref?   leafref
+       |        |  +--ro e2e-mc-path-ref*    leafref
+       |        +--ro delta-power?      l0-types:power-in-dbm-or-null
+       +--ro OMS-elements!
+          +--ro OMS-element* [elt-index]
+             +--ro elt-index                 uint16
+             +--ro oms-element-uid?          union
+             +--ro reverse-element-ref
+             |  +--ro link-ref?
+             |  |       -> ../../../../../../../../nt:link/link-id
+             |  +--ro oms-element-ref*   leafref
+             +--ro (element)
+                +--:(amplifier)
+                |  +--ro geolocation
+                |  |  +--ro altitude?    int64
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
+                |  +--ro amplifier
+                |     +--ro type-variety    string
+                |     +--ro operational
+                |        +--ro amplifier-element* []
+                |           +--ro name?
+                |           |       string
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
+                |           +--ro actual-gain
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro tilt-target
+                |           |       l0-types:decimal-2-digits-or-null
+                |           +--ro out-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro in-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro total-output-power
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro (power-param)?
+                |           |  +--:(channel-power)
+                |           |  |  +--ro nominal-carrier-power?
+                |           |  |          l0-types:power-in-dbm-or-null
+                |           |  +--:(power-spectral-density)
+                |           |     +--ro nominal-power-spectral-density?
+                |           |             union
+                |           +--ro raman-direction?
+                |           |       enumeration
+                |           +--ro raman-pump* []
+                |              +--ro frequency?
+                |              |       l0-types:frequency-thz
+                |              +--ro power?
+                |                      l0-types:decimal-2-digits-or-null
+                +--:(fiber)
+                |  +--ro fiber
+                |     +--ro type-variety    string
+                |     +--ro length
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro loss-coef
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro total-loss
+                |     |       l0-types:power-in-db-or-null
+                |     +--ro pmd?
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro conn-in?
+                |     |       l0-types:power-in-db-or-null
+                |     +--ro conn-out?
+                |             l0-types:power-in-db-or-null
+                +--:(concentratedloss)
+                   +--ro concentratedloss
+                      +--ro loss    l0-types:power-in-db-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
