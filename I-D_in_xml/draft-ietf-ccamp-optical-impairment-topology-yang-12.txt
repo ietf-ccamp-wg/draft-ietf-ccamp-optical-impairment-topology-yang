@@ -238,9 +238,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    above that are interconnected via TE-links carrying WDM signals.
    These TE-links may include optical amplifiers.
 
-   The term "add/drop TE-link" needs to be defined here!
+   The term "add/drop TE-link" refers to a TE-link modeling the media
+   channel between the optical port of a remote optical transponder (OT)
+   and an add/drop port of the adjacent WDM-node.  The add/drop TE-link
+   typically carries a single OTSi signal (modulated optical carrier).
 
-   The term "bundled add/drop TE-link" needs to be defined here!
+   The term "bundled add/drop TE-link" refers to the TE-link bundling
+   concept as defined in [RFC8795].  Multiple component links, add/drop
+   TE-links in this case, are bundled into a single bundled add/drop TE-
+   Link.
 
 1.2.  Tree Diagram
 
@@ -253,12 +259,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    In this document, names of data nodes and other data model objects
    are prefixed using the standard prefix associated with the
    corresponding YANG imported modules, as shown in Table 1.
-
-
-
-
-
-
 
 
 
@@ -5137,15 +5137,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    impairments as those defined for a WDM TE-link between WDM-TE-nodes
    (OMS MCG).
 
-   [Editor's note: define the "add/drop TE-link" and "bundled add/drop
-   TE-link".  Should we add the definition of line TE-link for the TE-
-   link between ROADMs?]
-
    If the two WDM-TE-Nodes are reported in different network topology
    instances, the plug-id attribute, defined in [RFC8795], can be used
    to discover the adjacency for add/drop TE-links.
 
-
+   It is worth noting that there are no standard protocols for automatic
+   discovery of the adjacency between an external transceiver and a
+   ROADM add/drop port and therefore the information reported in the
+   plug-id can be either statically configured or provided through
+   vendor-specific discovery mechanisms.
 
 
 
@@ -5153,12 +5153,6 @@ Beller, et al.          Expires 14 September 2023              [Page 92]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
-
-   It is worth noting that there are no standard protocols for automatic
-   discovery of the adjacency between an external transceiver and a
-   ROADM add/drop port and therefore the information reported in the
-   plug-id can be either statically configured or provided through
-   vendor-specific discovery mechanisms.
 
    Each add/drop TE-link carries a single OTSi between the transceiver
    and ROADM add/drop port and one or more OTSis in the reverse
@@ -5200,6 +5194,12 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    is used just to model the co-routing aspects of the OTSis belonging
    to the same OTSiG.
 
+   The per-transceiver Local Link Connectivity (LLC) is used in the WDM-
+   TE-Node which abstracts the remote OT shelf (e.g., WDM-TE-Node-1 in
+   Figure 17), to represent the association between each transceiver and
+   each LTP terminating the add/drop TE-link which models the
+   transceiver port.
+
 
 
 
@@ -5209,12 +5209,6 @@ Beller, et al.          Expires 14 September 2023              [Page 93]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
-
-   The per-transceiver Local Link Connectivity (LLC) is used in the WDM-
-   TE-Node which abstracts the remote OT shelf (e.g., WDM-TE-Node-1 in
-   Figure 17), to represent the association between each transceiver and
-   each LTP terminating the add/drop TE-link which models the
-   transceiver port.
 
    The connectivity matrix in the WDM-TE-Node which abstract the edge
    ROADM (e.g., WDM-TE-Node-2 in Figure 17) references the LTPs
@@ -5257,7 +5251,13 @@ Additional Authors
    Email: giomarti@cisco.com
 
 
+   Jean-Luc Auge
+   Orange
+   Email: jeanluc.auge@orange.com
 
+
+   Julien Meuric
+   Orange
 
 
 
@@ -5266,13 +5266,6 @@ Beller, et al.          Expires 14 September 2023              [Page 94]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-   Jean-Luc Auge
-   Orange
-   Email: jeanluc.auge@orange.com
-
-
-   Julien Meuric
-   Orange
    Email: julien.meuric@orange.com
 
 
@@ -5313,15 +5306,6 @@ Authors' Addresses
    Email: ggalimbe@cisco.com
 
 
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 95]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
    Italo Busi
    Huawei Technologies
    Email: Italo.Busi@huawei.com
@@ -5333,44 +5317,4 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 96]
+Beller, et al.          Expires 14 September 2023              [Page 95]

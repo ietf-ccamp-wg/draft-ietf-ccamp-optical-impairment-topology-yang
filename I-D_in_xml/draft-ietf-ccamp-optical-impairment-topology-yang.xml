@@ -199,11 +199,18 @@
   </t>
 
   <t>
-   The term "add/drop TE-link" needs to be defined here!
+   The term "add/drop TE-link" refers to a TE-link modeling the media
+   channel between the optical port of a remote optical transponder
+   (OT) and an add/drop port of the adjacent WDM-node. The add/drop
+   TE-link typically carries a single OTSi signal (modulated optical
+   carrier).
   </t>
 
   <t>
-   The term "bundled add/drop TE-link" needs to be defined here!
+   The term "bundled add/drop TE-link" refers to the TE-link bundling
+   concept as defined in <xref target="RFC8795"/>. Multiple component
+   links, add/drop TE-links in this case, are bundled into a single
+   bundled add/drop TE-Link.
   </t>
 
   </section>
@@ -4700,12 +4707,6 @@ reference: RFC XXXX (TDB)
    transceiver and a ROADM add/drop port can be modeled as a WDM
    TE-link with the same optical impairments as those defined for a
    WDM TE-link between WDM-TE-nodes (OMS MCG).
-  </t>
-  
-  <t>
-   [Editor's note: define the "add/drop TE-link" and "bundled add/drop
-    TE-link". Should we add the definition of line TE-link for the
-    TE-link between ROADMs?]
   </t>
   
   <t>
