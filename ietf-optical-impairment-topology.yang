@@ -739,10 +739,8 @@ module ietf-optical-impairment-topology {
                   "otsi-group/otsi-group-id";
             }
             description
-              "Reference to the otsi-group list to get otsi-group
-              identifier of the
-              OTSiG carried by this media channel 
-              that reports the transient stat";
+              "Reference to the OTSiG to which the OTSis carried by 
+              this media channel belong to.";
           }
           list otsi-ref {
             description
