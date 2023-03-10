@@ -199,11 +199,11 @@
   </t>
 
   <t>
-   The term "add/drop TE-link" refers to a TE-link modeling the media
-   channel between the optical port of a remote optical transponder
-   (OT) and an add/drop port of the adjacent WDM-node. The add/drop
-   TE-link typically carries a single OTSi signal (modulated optical
-   carrier).
+   The term "add/drop TE-link" refers to a TE-link representing the
+   media channel between a transceiver's media port of a remote optical
+   transponder (OT) and an add/drop port of the ROADM in the adjacent
+   WDM-node. The add/drop TE-link typically carries a single OTSi
+   signal (modulated optical carrier).
   </t>
 
   <t>
@@ -1977,39 +1977,50 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    OMS MCG protection is a 1+1 protection architecture where a TE-link
-   between two adjacent WDM-TE-nodes is 1+1 protected. Such a 1+1
-   protected TE-link composed of an underlying primary and secondary
-   TE-link is shown in <xref target="OMS_MCG_prot"/> together with an
-   unprotected TE-link between the two adjacent WDM-TE-Nodes.
+   representing an OMS MCG between two adjacent WDM-TE-nodes is 1+1
+   protected. This media layer protection type is also described in
+   Appendix III of <xref target="G.873.1 Amd1"/>.
+   <xref target="OMS_MCG_prot"/> illustrates this 1+1 OMS MCG
+   protection type and shows a 1+1 protected TE-link together with an
+   unprotected TE-link between the same two adjacent WDM-TE-Nodes. The
+   protected TE-link in <xref target="OMS_MCG_prot"/> is composed of an
+   underlying primary and secondary TE-link. This  modeling approach is
+   described below.
   </t>
   
   <t>
    1+1 OMS MCG protection is a local protection scheme, which can be
    modeled based on TE-link properties already defined in
    <xref target="RFC8795"/>. The 1+1 protected TE-link is associated
-   with the two underlying TE-links forming the 1+1 protection group
-   together with the splitter/combiner functions in the adjacent
-   WDM-TE-Nodes. The splitter/combiner functions are not modeled as
-   separate entities in the model. Any optical impairments imposed by
-   the splitter and combiner functions are included in the optical
-   impairments of the ROADM functions in the two adjacent WDM-TE-Nodes
-   (connectivity matrix and LLCL, respectively).
+   with the two underlying TE-links representing the physical links,
+   which are forming the 1+1 protection group together with the
+   splitter and selector functions in the adjacent WDM-TE-Nodes as
+   depicted in <xref target="OMS_MCG_prot"/>. This modeling approach
+   is described in more detail in <xref target="Prot_TE-link_underlay"/>.
   </t>
   
   <t>
-   Alternatively, it is also possible to model the 1+1 OMS MCG
-   protection as single protected TE-link abstracting the two
-   underlying physical links as well as the splitter/combiner functions
-   in the two adjacent WDM-TE-Nodes. Similarly, are any optical
-   impairments imposed by the splitter and combiner functions
-   included in the optical impairments of the ROADM functions in the
-   two adjacent WDM-TE-Nodes (connectivity matrix and LLCL,
-   respectively).
+   Alternatively, it is possible to model the 1+1 OMS MCG protection
+   as single protected TE-link abstracting the two underlying physical
+   links as well as the splitter and selector functions in the two
+   adjacent WDM-TE-Nodes. This modeling approach is described in more
+   detail in <xref target="Prot_TE-link_abstraction"/>.
+  </t>
+  
+  <t>
+   For both modeling approaches, the splitter and selector functions
+   are not represented as separate entities in the model. Their optical
+   impairments can be taken into account in the optical impairments of
+   the ROADM paths in the two adjacent WDM-TE-Nodes (connectivity
+   matrix and LLCL, respectively) or in the optical impairments of the
+   1+1 protected TE-link abstracting the two underlying physical OMS
+   links.
   </t>
   
   <figure align="center" title="Two WDM-TE-Nodes with a protected
    and an unprotected OMS MCG (TE-link)" anchor="OMS_MCG_prot">
     <artwork><![CDATA[
+    
 
          WDM-TE-Node-1                     WDM-TE-Node-2
    +-----------------------+         +-----------------------+
@@ -2044,7 +2055,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </figure>
   
   <section title="OMS MCG Protection Modeled as Protected TE-link with
-  underlying TE-links" anchor="abstr_TE-link_prot">
+  underlying TE-links" anchor="Prot_TE-link_underlay">
   
   <t>
    [Editor's note: this sub-section is still work in progress]
@@ -2055,7 +2066,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    additional TE-link entity on top of the primary and secondary
    TE-link between the two adjacent WDM-TE-Nodes terminating the
    1+1 OMS MCG protection group formed by these two TE-links and the
-   splitter/combiner functions in the two nodes. This protected
+   splitter and selector functions in the two nodes. This 1+1 protected
    TE-link is associated with underlying primary and secondary TE-links
    forming the 1+1 protection group. The following "te-link-attributes"
    already defined in <xref target="RFC8795"/> and
@@ -2110,30 +2121,29 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    sufficient as input for path computation (worst case optical
    feasibility consideration).
   </t>
-  
+
   <t>
-   Any optical impairments imposed by the splitter and combiner
-   functions are included in the optical impairments of the ROADM
-   functions in the two adjacent WDM-TE-Nodes (connectivity matrix and
-   LLCL, respectively).
+   [Editor's note: text and a figure based on the slide deck attached
+   to Open Issue #119 on GitHub showing more details regarding the LTPs
+   of the primary and secondary TE-link will be added here.]
   </t>
   
   </section>
   
   <section title="OMS MCG Protection Modeled as Single Protected TE-link"
-  anchor="Single_TE-link_prot">
+  anchor="Prot_TE-link_abstraction">
   
   <t>
-   [[Editor's note: this sub-section is still work in progress]
+   [Editor's note: this sub-section is still work in progress]
   </t>
   
   <t>
-   This modeling approach abstracts the two physical links carrying the
-   same OMS MCG and the splitter/combiner functions in the two
-   WDM-TE-Nodes forming the protection group into a single TE-link. If
-   this modeling approach is used the "te-link-attributes" already
-   defined in <xref target="RFC8795"/> and <xref target="RFC8776"/> are
-   used as follows:
+   This modeling approach abstracts the two physical OMS links carrying
+   the same OMS MCG together with the splitter and selector functions
+   in the two WDM-TE-Nodes forming the OMS protection group into a
+   single TE-link. If  this modeling approach is used the
+   "te-link-attributes" already defined in <xref target="RFC8795"/> and
+   <xref target="RFC8776"/> are used as follows:
    
     <ul spacing="compact">
       <li>"underlay": this container must not be present</li>
@@ -2144,15 +2154,15 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    
    The optical impairments exposed for this 1+1 protected TE-link are
    typically based on the optical impairments of the worse of the two
-   underlying physical links. The optical impairments imposed by the
-   splitter and combiner functions can also be taken into account as
-   optical impairments of the 1+1 protected TE-link. It may also be
-   possible to model the optical impairments imposed by the splitter
-   and combiner functions as contribution to the optical impairments of
-   the ROADM functions in the two adjacent WDM-TE-Nodes (connectivity
-   matrix and LLCL, respectively)
+   underlying physical OMS links.
   </t>
   
+  <t>
+   [Editor's note: text and a figure based on the slide deck attached
+   to Open Issue #119 on GitHub showing more details regarding the LTP
+   of the 1+1 protected TE-link will be added here.]
+  </t>
+
   </section>
   
   </section>
@@ -4219,6 +4229,16 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T" value="Recommendation G.807 Amendment 1"/>
   </reference>
+  
+  <reference anchor="G.873.1 Amd1">
+   <front>
+   <title>Optical transport network: Linear protection Amendment 1</title>
+   <author>
+   </author>
+   <date month="February" year="2022"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.873.1 Amendment 1"/>
+  </reference>  
   
    <reference anchor="G.709">
    <front>
