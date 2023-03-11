@@ -3,219 +3,230 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
-    +--ro otsi-group* [otsi-group-id]
-       +--ro otsi-group-id    string
-       +--ro otsi* [otsi-carrier-id]
-          +--ro otsi-carrier-id           uint16
-          +--ro otsi-carrier-frequency?   union
-          +--ro nmc-path-id*              uint16
+    +--rw otsi-information!
+       +--ro otsi-group* [otsi-group-id]
+          +--ro otsi-group-id    string
+          +--ro otsi* [otsi-carrier-id]
+             +--ro otsi-carrier-id           uint16
+             +--ro otsi-carrier-frequency?   union
+             +--ro e2e-mc-path-id*           uint16
   augment /nw:networks/nw:network/nw:node:
-    +--ro transponder* [transponder-id]
-    |  +--ro transponder-id                   uint32
-    |  +--ro termination-type-capabilities?   enumeration
-    |  +--ro supported-3r-mode?               enumeration
-    |  +--ro transceiver* [transceiver-id]
-    |     +--ro transceiver-id                 uint32
-    |     +--ro supported-modes
-    |     |  +--ro supported-mode* [mode-id]
-    |     |     +--ro mode-id                      string
-    |     |     +--ro (mode)
-    |     |        +--:(G.698.2)
-    |     |        |  +--ro standard-mode?         standard-mode
-    |     |        +--:(organizational-mode)
-    |     |        |  +--ro organizational-mode
-    |     |        |     +--ro operational-mode?
-    |     |        |     |       operational-mode
-    |     |        |     +--ro organization-identifier?
-    |     |        |     |       organization-identifier
-    |     |        |     +--ro min-central-frequency?
-    |     |        |     |       frequency-thz
-    |     |        |     +--ro max-central-frequency?
-    |     |        |     |       frequency-thz
-    |     |        |     +--ro transceiver-tunability?
-    |     |        |     |       frequency-ghz
-    |     |        |     +--ro tx-channel-power-min?      dbm-t
-    |     |        |     +--ro tx-channel-power-max?      dbm-t
-    |     |        |     +--ro rx-channel-power-min?      dbm-t
-    |     |        |     +--ro rx-channel-power-max?      dbm-t
-    |     |        |     +--ro rx-total-power-max?        dbm-t
-    |     |        +--:(explicit-mode)
-    |     |           +--ro explicit-mode
-    |     |              +--ro supported-modes
-    |     |              |  +--ro supported-application-codes*
-    |     |              |  |       -> ../../../mode-id
-    |     |              |  +--ro supported-organizational-modes*
-    |     |              |          -> ../../../mode-id
-    |     |              +--ro line-coding-bitrate?
-    |     |              |       identityref
-    |     |              +--ro bitrate?
-    |     |              |       uint16
-    |     |              +--ro max-polarization-mode-dispersion?
-    |     |              |       decimal64
-    |     |              +--ro max-chromatic-dispersion?
-    |     |              |       decimal64
-    |     |              +--ro chromatic-dispersion-penalty* []
-    |     |              |  +--ro chromatic-dispersion    union
-    |     |              |  +--ro penalty-value           union
-    |     |              +--ro polarization-dispersion-penalty* []
-    |     |              |  +--ro polarization-mode-dispersion
-    |     |              |  |       union
-    |     |              |  +--ro penalty-value
-    |     |              |          union
-    |     |              +--ro max-diff-group-delay?
-    |     |              |       uint32
-    |     |              +--ro max-pol-dependent-loss-penalty* []
-    |     |              |  +--ro max-polarization-dependent-loss
-    |     |              |  |       power-in-db-or-null
-    |     |              |  +--ro penalty-value
-    |     |              |          union
-    |     |              +--ro available-modulation-type?
-    |     |              |       identityref
-    |     |              +--ro min-OSNR?
-    |     |              |       snr
-    |     |              +--ro min-Q-factor?
-    |     |              |       int32
-    |     |              +--ro available-baud-rate?
-    |     |              |       uint32
-    |     |              +--ro roll-off?
-    |     |              |       decimal64
-    |     |              +--ro min-carrier-spacing?
-    |     |              |       frequency-ghz
-    |     |              +--ro available-fec-type?
-    |     |              |       identityref
-    |     |              +--ro fec-code-rate?
-    |     |              |       decimal64
-    |     |              +--ro fec-threshold?
-    |     |              |       decimal64
-    |     |              +--ro in-band-osnr?
-    |     |              |       snr
-    |     |              +--ro out-of-band-osnr?
-    |     |              |       snr
-    |     |              +--ro tx-polarization-power-difference?
-    |     |              |       power-in-db
-    |     |              +--ro polarization-skew?
-    |     |              |       decimal64
-    |     |              +--ro min-central-frequency?
-    |     |              |       frequency-thz
-    |     |              +--ro max-central-frequency?
-    |     |              |       frequency-thz
-    |     |              +--ro transceiver-tunability?
-    |     |              |       frequency-ghz
-    |     |              +--ro tx-channel-power-min?
-    |     |              |       dbm-t
-    |     |              +--ro tx-channel-power-max?
-    |     |              |       dbm-t
-    |     |              +--ro rx-channel-power-min?
-    |     |              |       dbm-t
-    |     |              +--ro rx-channel-power-max?
-    |     |              |       dbm-t
-    |     |              +--ro rx-total-power-max?
-    |     |                      dbm-t
-    |     +--ro configured-mode?
-    |     |       -> ../supported-modes/supported-mode/mode-id
-    |     +--ro tx-channel-power?              union
-    |     +--ro rx-channel-power?              union
-    |     +--ro rx-total-power?                union
-    |     +--ro outgoing-otsi
-    |     |  +--ro otsi-group-ref?
-    |     |  |       -> ../../../../../otsi-group/otsi-group-id
-    |     |  +--ro otsi-ref?         leafref
-    |     +--ro incoming-otsi
-    |     |  +--ro otsi-group-ref?
-    |     |  |       -> ../../../../../otsi-group/otsi-group-id
-    |     |  +--ro otsi-ref?         leafref
-    |     +--ro configured-termination-type?   enumeration
-    +--ro regen-group* [group-id]
-       +--ro group-id           uint32
-       +--ro regen-metric?      uint32
-       +--ro transponder-ref*   -> ../../transponder/transponder-id
+    +--rw transponders!
+    |  +--ro transponder* [transponder-id]
+    |     +--ro transponder-id                   uint32
+    |     +--ro termination-type-capabilities?   enumeration
+    |     +--ro supported-3r-mode?               enumeration
+    |     +--ro transceiver* [transceiver-id]
+    |        +--ro transceiver-id                 uint32
+    |        +--ro supported-modes!
+    |        |  +--ro supported-mode* [mode-id]
+    |        |     +--ro mode-id                      string
+    |        |     +--ro (mode)
+    |        |        +--:(G.698.2)
+    |        |        |  +--ro standard-mode?         standard-mode
+    |        |        +--:(organizational-mode)
+    |        |        |  +--ro organizational-mode
+    |        |        |     +--ro operational-mode?
+    |        |        |     |       operational-mode
+    |        |        |     +--ro organization-identifier?
+    |        |        |     |       organization-identifier
+    |        |        |     +--ro min-central-frequency?
+    |        |        |     |       frequency-thz
+    |        |        |     +--ro max-central-frequency?
+    |        |        |     |       frequency-thz
+    |        |        |     +--ro transceiver-tunability?
+    |        |        |     |       frequency-ghz
+    |        |        |     +--ro tx-channel-power-min?      dbm-t
+    |        |        |     +--ro tx-channel-power-max?      dbm-t
+    |        |        |     +--ro rx-channel-power-min?      dbm-t
+    |        |        |     +--ro rx-channel-power-max?      dbm-t
+    |        |        |     +--ro rx-total-power-max?        dbm-t
+    |        |        +--:(explicit-mode)
+    |        |           +--ro explicit-mode
+    |        |              +--ro supported-modes
+    |        |              |  +--ro supported-application-codes*
+    |        |              |  |       -> ../../../mode-id
+    |        |              |  +--ro supported-organizational-modes*
+    |        |              |          -> ../../../mode-id
+    |        |              +--ro line-coding-bitrate?
+    |        |              |       identityref
+    |        |              +--ro bitrate?
+    |        |              |       uint16
+    |        |              +--ro max-polarization-mode-dispersion?
+    |        |              |       decimal64
+    |        |              +--ro max-chromatic-dispersion?
+    |        |              |       decimal64
+    |        |              +--ro chromatic-dispersion-penalty* []
+    |        |              |  +--ro chromatic-dispersion    union
+    |        |              |  +--ro penalty-value           union
+    |        |              +--ro polarization-dispersion-penalty* []
+    |        |              |  +--ro polarization-mode-dispersion
+    |        |              |  |       union
+    |        |              |  +--ro penalty-value
+    |        |              |          union
+    |        |              +--ro max-diff-group-delay?
+    |        |              |       uint32
+    |        |              +--ro max-pol-dependent-loss-penalty* []
+    |        |              |  +--ro max-polarization-dependent-loss
+    |        |              |  |       power-in-db-or-null
+    |        |              |  +--ro penalty-value
+    |        |              |          union
+    |        |              +--ro available-modulation-type?
+    |        |              |       identityref
+    |        |              +--ro min-OSNR?
+    |        |              |       snr
+    |        |              +--ro rx-ref-channel-power?
+    |        |              |       dbm-t
+    |        |              +--ro rx-channel-power-penalty* []
+    |        |              |  +--ro rx-channel-power    union
+    |        |              |  +--ro penalty-value       union
+    |        |              +--ro min-Q-factor?
+    |        |              |       int32
+    |        |              +--ro available-baud-rate?
+    |        |              |       uint32
+    |        |              +--ro roll-off?
+    |        |              |       decimal64
+    |        |              +--ro min-carrier-spacing?
+    |        |              |       frequency-ghz
+    |        |              +--ro available-fec-type?
+    |        |              |       identityref
+    |        |              +--ro fec-code-rate?
+    |        |              |       decimal64
+    |        |              +--ro fec-threshold?
+    |        |              |       decimal64
+    |        |              +--ro in-band-osnr?
+    |        |              |       snr
+    |        |              +--ro out-of-band-osnr?
+    |        |              |       snr
+    |        |              +--ro tx-polarization-power-difference?
+    |        |              |       power-in-db
+    |        |              +--ro polarization-skew?
+    |        |              |       decimal64
+    |        |              +--ro min-central-frequency?
+    |        |              |       frequency-thz
+    |        |              +--ro max-central-frequency?
+    |        |              |       frequency-thz
+    |        |              +--ro transceiver-tunability?
+    |        |              |       frequency-ghz
+    |        |              +--ro tx-channel-power-min?
+    |        |              |       dbm-t
+    |        |              +--ro tx-channel-power-max?
+    |        |              |       dbm-t
+    |        |              +--ro rx-channel-power-min?
+    |        |              |       dbm-t
+    |        |              +--ro rx-channel-power-max?
+    |        |              |       dbm-t
+    |        |              +--ro rx-total-power-max?
+    |        |                      dbm-t
+    |        +--ro configured-mode?               union
+    |        +--ro tx-channel-power?              union
+    |        +--ro rx-channel-power?              union
+    |        +--ro rx-total-power?                union
+    |        +--ro outgoing-otsi
+    |        |  +--ro otsi-group-ref?   leafref
+    |        |  +--ro otsi-ref?         leafref
+    |        +--ro incoming-otsi
+    |        |  +--ro otsi-group-ref?   leafref
+    |        |  +--ro otsi-ref?         leafref
+    |        +--ro configured-termination-type?   enumeration
+    +--rw regen-groups!
+       +--ro regen-group* [group-id]
+          +--ro group-id           uint32
+          +--ro regen-metric?      uint32
+          +--ro transponder-ref*
+                  -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
        +--ro generalized-snr?                        l0-types:snr
-       +--ro equalization-mode                       identityref
+       +--ro equalization-mode?                      identityref
        +--ro (power-param)?
        |  +--:(channel-power)
        |  |  +--ro nominal-carrier-power?
        |  |          l0-types:power-in-dbm-or-null
        |  +--:(power-spectral-density)
        |     +--ro nominal-power-spectral-density?   union
-       +--ro media-channel-group* [i]
-       |  +--ro i                 int16
-       |  +--ro media-channels* [flexi-n]
-       |     +--ro flexi-n           l0-types:flexi-n
-       |     +--ro flexi-m?          l0-types:flexi-m
-       |     +--ro otsi-group-ref?
-       |     |       -> /nw:networks/network/otsi-group/otsi-group-id
-       |     +--ro otsi-ref* []
-       |     |  +--ro otsi-carrier-ref?   leafref
-       |     |  +--ro nmc-path-ref*       leafref
-       |     +--ro delta-power?      l0-types:power-in-dbm-or-null
-       +--ro OMS-elements* [elt-index]
-          +--ro elt-index                 uint16
-          +--ro oms-element-uid?          union
-          +--ro reverse-element-ref
-          |  +--ro link-ref?
-          |  |       -> ../../../../../../../nt:link/link-id
-          |  +--ro oms-element-ref*   leafref
-          +--ro (element)
-             +--:(amplifier)
-             |  +--ro geolocation
-             |  |  +--ro altitude?    int64
-             |  |  +--ro latitude?    geographic-coordinate-degree
-             |  |  +--ro longitude?   geographic-coordinate-degree
-             |  +--ro amplifier
-             |     +--ro type-variety    string
-             |     +--ro operational
-             |        +--ro amplifier-element* []
-             |           +--ro name?
-             |           |       string
-             |           +--ro frequency-range
-             |           |  +--ro lower-frequency    frequency-thz
-             |           |  +--ro upper-frequency    frequency-thz
-             |           +--ro actual-gain
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro tilt-target
-             |           |       l0-types:decimal-2-digits-or-null
-             |           +--ro out-voa
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro in-voa
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro total-output-power
-             |           |       l0-types:power-in-db-or-null
-             |           +--ro (power-param)?
-             |           |  +--:(channel-power)
-             |           |  |  +--ro nominal-carrier-power?
-             |           |  |          l0-types:power-in-dbm-or-null
-             |           |  +--:(power-spectral-density)
-             |           |     +--ro nominal-power-spectral-density?
-             |           |             union
-             |           +--ro raman-direction?
-             |           |       enumeration
-             |           +--ro raman-pump* []
-             |              +--ro frequency?   l0-types:frequency-thz
-             |              +--ro power?
-             |                      l0-types:decimal-2-digits-or-null
-             +--:(fiber)
-             |  +--ro fiber
-             |     +--ro type-variety    string
-             |     +--ro length
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro loss-coef
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro total-loss      l0-types:power-in-db-or-null
-             |     +--ro pmd?
-             |     |       l0-types:decimal-2-digits-or-null
-             |     +--ro conn-in?        l0-types:power-in-db-or-null
-             |     +--ro conn-out?       l0-types:power-in-db-or-null
-             +--:(concentratedloss)
-                +--ro concentratedloss
-                   +--ro loss    l0-types:power-in-db-or-null
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+       |        +--ro otsi-group-ref?   leafref
+       |        +--ro otsi-ref* []
+       |        |  +--ro otsi-carrier-ref?   leafref
+       |        |  +--ro e2e-mc-path-ref*    leafref
+       |        +--ro delta-power?      l0-types:power-in-dbm-or-null
+       +--ro OMS-elements!
+          +--ro OMS-element* [elt-index]
+             +--ro elt-index                 uint16
+             +--ro oms-element-uid?          union
+             +--ro reverse-element-ref
+             |  +--ro link-ref?
+             |  |       -> ../../../../../../../../nt:link/link-id
+             |  +--ro oms-element-ref*   leafref
+             +--ro (element)
+                +--:(amplifier)
+                |  +--ro geolocation
+                |  |  +--ro altitude?    int64
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
+                |  +--ro amplifier
+                |     +--ro type-variety    string
+                |     +--ro operational
+                |        +--ro amplifier-element* []
+                |           +--ro name?
+                |           |       string
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
+                |           +--ro actual-gain
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro tilt-target
+                |           |       l0-types:decimal-2-digits-or-null
+                |           +--ro out-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro in-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro total-output-power
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro (power-param)?
+                |           |  +--:(channel-power)
+                |           |  |  +--ro nominal-carrier-power?
+                |           |  |          l0-types:power-in-dbm-or-null
+                |           |  +--:(power-spectral-density)
+                |           |     +--ro nominal-power-spectral-density?
+                |           |             union
+                |           +--ro raman-direction?
+                |           |       enumeration
+                |           +--ro raman-pump* []
+                |              +--ro frequency?
+                |              |       l0-types:frequency-thz
+                |              +--ro power?
+                |                      l0-types:decimal-2-digits-or-null
+                +--:(fiber)
+                |  +--ro fiber
+                |     +--ro type-variety    string
+                |     +--ro length
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro loss-coef
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro total-loss
+                |     |       l0-types:power-in-db-or-null
+                |     +--ro pmd?
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro conn-in?
+                |     |       l0-types:power-in-db-or-null
+                |     +--ro conn-out?
+                |             l0-types:power-in-db-or-null
+                +--:(concentratedloss)
+                   +--ro concentratedloss
+                      +--ro loss    l0-types:power-in-db-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
-       |       -> ../../../../transponder/transponder-id
+       |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
