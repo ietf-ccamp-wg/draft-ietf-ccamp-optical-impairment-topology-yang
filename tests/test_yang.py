@@ -33,7 +33,7 @@ IETF_DIR = TEST_DIR / 'tests'
 # git.Repo.clone_from('https://github.com/YangModels/yang.git', temp_dir, branch='master', depth=1)
 # case 2 download only usefull files:
 
-OFFICIAL_YANG_REPO = 'https://raw.githubusercontent.com/YangModels/yang/master/'
+OFFICIAL_YANG_REPO = 'https://raw.githubusercontent.com/YangModels/yang/main/'
 LAYER0EXT_REPO = 'https://raw.githubusercontent.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext/master/'
 URLS = [(OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-network@2018-02-26.yang'),
         (OFFICIAL_YANG_REPO, 'standard/ietf/RFC/ietf-yang-types@2013-07-15.yang'),

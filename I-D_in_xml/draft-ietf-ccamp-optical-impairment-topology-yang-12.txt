@@ -116,22 +116,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
        2.10.2.  OMS MCG protection . . . . . . . . . . . . . . . . .  37
    3.  YANG Model (Tree Structure) . . . . . . . . . . . . . . . . .  40
-   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  48
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  82
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  82
-   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  83
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  83
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  83
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  83
+   4.  Optical Impairment Topology YANG Model  . . . . . . . . . . .  47
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  79
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  80
+   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  80
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  80
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  80
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  81
    Appendix A.  JSON Code Examples for Optical Protection Uses
-           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  86
+           Cases . . . . . . . . . . . . . . . . . . . . . . . . . .  83
    Appendix B.  Optical Transponders in a Remote Shelf (Remote
-           OTs)  . . . . . . . . . . . . . . . . . . . . . . . . . .  93
-     B.1.  JSON Examples for Optical Transponders in a Remote Shelf
-           (Remote OTs)  . . . . . . . . . . . . . . . . . . . . . .  96
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . . 122
-   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . . 122
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 123
+           OTs)  . . . . . . . . . . . . . . . . . . . . . . . . . .  90
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  93
+   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . .  93
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  94
 
 1.  Introduction
 
@@ -161,7 +159,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    Network Controller (CNC), which can run an offline planning process
    to map latter the services in the network.
 
-
+   It is worth noting that optical data plane interoperability is a
+   complex topic especially in a multi vendor environment and usually
+   requires joint engineering, which is independent from control plane
 
 
 
@@ -170,9 +170,6 @@ Beller, et al.          Expires 14 September 2023               [Page 3]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-   It is worth noting that optical data plane interoperability is a
-   complex topic especially in a multi vendor environment and usually
-   requires joint engineering, which is independent from control plane
    and management plane capabilities.  The YANG data model defined in
    this draft is providing sufficient information to enable optical
    impairment aware path computation.
@@ -215,7 +212,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    The terminology for describing YANG data models is found in
    [RFC7950].
 
-
+   The term ROADM in this document refers to the term "multi-degree
+   reconfigurable optical add/drop multiplexer (MD-ROADM)" as defined in
+   [G.672].  It does not include local optical transponders, which can
+   be co-located in the same physical device (managed entity).
 
 
 
@@ -225,11 +225,6 @@ Beller, et al.          Expires 14 September 2023               [Page 4]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
-
-   The term ROADM in this document refers to the term "multi-degree
-   reconfigurable optical add/drop multiplexer (MD-ROADM)" as defined in
-   [G.672].  It does not include local optical transponders, which can
-   be co-located in the same physical device (managed entity).
 
    The term WDM-node refers to a physical device, which is managed as a
    single network element.
@@ -243,16 +238,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    above that are interconnected via TE-links carrying WDM signals.
    These TE-links may include optical amplifiers.
 
-   The term "add/drop TE-link" refers to a TE-link representing the
-   media channel between a transceiver's media port of a remote optical
-   transponder (OT) and an add/drop port of the ROADM in the adjacent
-   WDM-node.  The add/drop TE-link typically carries a single OTSi
-   signal (modulated optical carrier).
+   The term "add/drop TE-link" needs to be defined here!
 
-   The term "bundled add/drop TE-link" refers to the TE-link bundling
-   concept as defined in [RFC8795].  Multiple component links, add/drop
-   TE-links in this case, are bundled into a single bundled add/drop TE-
-   Link.
+   The term "bundled add/drop TE-link" needs to be defined here!
 
 1.2.  Tree Diagram
 
@@ -265,6 +253,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    In this document, names of data nodes and other data model objects
    are prefixed using the standard prefix associated with the
    corresponding YANG imported modules, as shown in Table 1.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1208,11 +1208,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                    Figure 7: Cross-3R Regenerator Example
 
    Due to the fact that 3R regenerators are composed of an optical
-   transponder pair, the capability whether an optical transponder can
+   transponder pair, the capabilitiy whether an optical transponder can
    be used as a 3R regenerator is is added to the transponder
    capabilities.  Hence, no additional entity is required for describing
    3R regenerators in the TE-topology YANG model.  The optical
-   transponder capabilities regarding the 3R regenerator function are
+   transonder capabilities regarding the 3R regenerator function are
    described by the following two YANG model attributes:
 
    *  supported-termination-type
@@ -1222,8 +1222,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    The supported-termination-type attribute describes whether the
    optical transponder can be used as tunnel terminating transponder
    only, as 3R regenerator only, or whether it can support both
-   functions.  The supported-3r-mode attribute describes the
-   configuration of the transponder pair forming the 3R regenerator as
+   functions.  The supported-3r-mode attrbute describes the
+   configuration of the transponder pair forming the 3R regeneartor as
    described above.
 
 
@@ -1362,7 +1362,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    add/drop port of the WDM-node cannot be neglected, it is necessary to
    represent the fiber link with its optical impairments in the topology
    model This also implies that the optical transponders belong to a
-   separate TE-node.
+   separate TE-node
 
    [Editor's note: this requires further study].
 
@@ -2049,22 +2049,22 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    [Editor's note: this section is still work in progress]
 
    OMS MCG protection is a 1+1 protection architecture where a TE-link
-   representing an OMS MCG between two adjacent WDM-TE-nodes is 1+1
-   protected.  This media layer protection type is also described in
-   Appendix III of [G.873.1_Amd1].  Figure 16 illustrates this 1+1 OMS
-   MCG protection type and shows a 1+1 protected TE-link together with
-   an unprotected TE-link between the same two adjacent WDM-TE-Nodes.
-   The protected TE-link in Figure 16 is composed of an underlying
-   primary and secondary TE-link.  This modeling approach is described
-   below.
+   between two adjacent WDM-TE-nodes is 1+1 protected.  Such a 1+1
+   protected TE-link composed of an underlying primary and secondary TE-
+   link is shown in Figure 16 together with an unprotected TE-link
+   between the two adjacent WDM-TE-Nodes.
 
    1+1 OMS MCG protection is a local protection scheme, which can be
    modeled based on TE-link properties already defined in [RFC8795].
    The 1+1 protected TE-link is associated with the two underlying TE-
-   links representing the physical links, which are forming the 1+1
-   protection group together with the splitter and selector functions in
-   the adjacent WDM-TE-Nodes as depicted in Figure 16.  This modeling
-   approach is described in more detail in Section 2.10.2.1.
+   links forming the 1+1 protection group together with the splitter/
+   combiner functions in the adjacent WDM-TE-Nodes.  The splitter/
+   combiner functions are not modeled as separate entities in the model.
+
+   Alternatively, it is also possible to model the 1+1 OMS MCG
+   protection as single protected TE-link abstracting the two underlying
+   physical links and the splitter/combiner functions in the two
+   adjacent WDM-TE-Nodes.
 
 
 
@@ -2072,21 +2072,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 Beller, et al.          Expires 14 September 2023              [Page 37]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-   Alternatively, it is possible to model the 1+1 OMS MCG protection as
-   single protected TE-link abstracting the two underlying physical
-   links as well as the splitter and selector functions in the two
-   adjacent WDM-TE-Nodes.  This modeling approach is described in more
-   detail in Section 2.10.2.2.
-
-   For both modeling approaches, the splitter and selector functions are
-   not represented as separate entities in the model.  Their optical
-   impairments can be taken into account in the optical impairments of
-   the ROADM paths in the two adjacent WDM-TE-Nodes (connectivity matrix
-   and LLCL, respectively) or in the optical impairments of the 1+1
-   protected TE-link abstracting the two underlying physical OMS links.
-
 
 
                WDM-TE-Node-1                     WDM-TE-Node-2
@@ -2122,14 +2107,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
       Figure 16: Two WDM-TE-Nodes with a protected and an unprotected
                              OMS MCG (TE- link)
 
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 38]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
 2.10.2.1.  OMS MCG Protection Modeled as Protected TE-link with
            underlying TE-links
 
@@ -2138,30 +2115,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    This modeling approach models the 1+1 protected TE-link as an
    additional TE-link entity on top of the primary and secondary TE-link
    between the two adjacent WDM-TE-Nodes terminating the 1+1 OMS MCG
-   protection group formed by these two TE-links and the splitter and
-   selector functions in the two nodes.  This 1+1 protected TE-link is
+   protection group formed by these two TE-links and the splitter/
+   combiner functions in the two nodes.  This protected TE-link is
    associated with underlying primary and secondary TE-links forming the
    1+1 protection group.  The following "te-link-attributes" already
-   defined in [RFC8795] and [RFC8776] can be used for modeling the 1+1
-   protected TE-link ("te-link-attributes" augmentation copied from
-   [RFC8795]:
+   defined in [RFC8795] and [RFC8776] are used:
 
-     augment /nw:networks/nw:network/nt:link:
-     +--rw te!
-        +--rw te-link-attributes
-        |  ....................
-        |  +--rw underlay {te-topology-hierarchy}?
-        |  |  +--rw enabled?                     boolean
-        |  |  +--rw primary-path
-        |  |  |  +--rw network-ref?    leafref
-        |  |  |     ....................
-        |  |  +--rw backup-path* [index]
-        |  |  |  +--rw index           uint32
-        |  |  |  +--rw network-ref?    leafref
-        |  |  |     ....................
-        |  |  +--rw protection-type?             identityref
 
-   These attributes are used as follows:
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 38]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
 
    *  "underlay": the presence of this container is indicating that an
       underlying protection scheme exists
@@ -2179,26 +2146,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    sufficient as input for path computation (worst case optical
    feasibility consideration).
 
-
-
-Beller, et al.          Expires 14 September 2023              [Page 39]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-   [Editor's note: text and a figure based on the slide deck attached to
-   Open Issue #119 on GitHub showing more details regarding the LTPs of
-   the primary and secondary TE-link will be added here.]
+   Any optical impairments imposed by the splitter and combiner
+   functions are included in the optical impairments of the ROADM
+   functions in the two adjacent WDM-TE-Nodes (connectivity matrix and
+   LLCL, respectively).
 
 2.10.2.2.  OMS MCG Protection Modeled as Single Protected TE-link
 
-   [Editor's note: this sub-section is still work in progress]
+   [[Editor's note: this sub-section is still work in progress]
 
-   This modeling approach abstracts the two physical OMS links carrying
-   the same OMS MCG together with the splitter and selector functions in
-   the two WDM-TE-Nodes forming the OMS protection group into a single
-   TE-link.  If this modeling approach is used the "te-link-attributes"
-   already defined in [RFC8795] and [RFC8776] are used as follows:
+   This modeling approach abstracts the two physical links carrying the
+   same OMS MCG and the splitter/combiner functions in the two WDM-TE-
+   Nodes forming the protection group into a single TE-link.  If this
+   modeling approach is used the "te-link-attributes" already defined in
+   [RFC8795] and [RFC8776] are used as follows:
 
    *  "underlay": this container must not be present
    *  "link-protection-type" (identityref) set to 'link-protection-1-
@@ -2206,11 +2167,24 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
    The optical impairments exposed for this 1+1 protected TE-link are
    typically based on the optical impairments of the worse of the two
-   underlying physical OMS links.
+   underlying physical links.  The optical impairments imposed by the
+   splitter and combiner functions can also be taken into account as
+   optical impairments of the 1+1 protected TE-link.  It may also be
+   possible to model the optical impairments imposed by the splitter and
+   combiner functions as contribution to the optical impairments of the
+   ROADM functions in the two adjacent WDM-TE-Nodes (connectivity matrix
+   and LLCL, respectively)
 
-   [Editor's note: text and a figure based on the slide deck attached to
-   Open Issue #119 on GitHub showing more details regarding the LTP of
-   the 1+1 protected TE-link will be added here.]
+
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 39]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
 
 3.  YANG Model (Tree Structure)
 
@@ -2222,18 +2196,44 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
      augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
        +--rw optical-impairment-topology!
      augment /nw:networks/nw:network:
-       +--rw otsi-information!
-          +--ro otsi-group* [otsi-group-id]
-             +--ro otsi-group-id    string
-             +--ro otsi* [otsi-carrier-id]
-                +--ro otsi-carrier-id           uint16
-                +--ro otsi-carrier-frequency?   union
-                +--ro e2e-mc-path-id*           uint16
+       +--ro otsi-group* [otsi-group-id]
+          +--ro otsi-group-id    string
+          +--ro otsi* [otsi-carrier-id]
+             +--ro otsi-carrier-id           uint16
+             +--ro otsi-carrier-frequency?   union
+             +--ro nmc-path-id*              uint16
      augment /nw:networks/nw:network/nw:node:
-       +--rw transponders!
-       |  +--ro transponder* [transponder-id]
-       |     +--ro transponder-id                   uint32
-       |     +--ro termination-type-capabilities?   enumeration
+       +--ro transponder* [transponder-id]
+       |  +--ro transponder-id                   uint32
+       |  +--ro termination-type-capabilities?   enumeration
+       |  +--ro supported-3r-mode?               enumeration
+       |  +--ro transceiver* [transceiver-id]
+       |     +--ro transceiver-id                 uint32
+       |     +--ro supported-modes
+       |     |  +--ro supported-mode* [mode-id]
+       |     |     +--ro mode-id                      string
+       |     |     +--ro (mode)
+       |     |        +--:(G.698.2)
+       |     |        |  +--ro standard-mode?         standard-mode
+       |     |        +--:(organizational-mode)
+       |     |        |  +--ro organizational-mode
+       |     |        |     +--ro operational-mode?
+       |     |        |     |       operational-mode
+       |     |        |     +--ro organization-identifier?
+       |     |        |     |       organization-identifier
+       |     |        |     +--ro min-central-frequency?
+       |     |        |     |       frequency-thz
+       |     |        |     +--ro max-central-frequency?
+       |     |        |     |       frequency-thz
+       |     |        |     +--ro transceiver-tunability?
+       |     |        |     |       frequency-ghz
+       |     |        |     +--ro tx-channel-power-min?      dbm-t
+       |     |        |     +--ro tx-channel-power-max?      dbm-t
+       |     |        |     +--ro rx-channel-power-min?      dbm-t
+       |     |        |     +--ro rx-channel-power-max?      dbm-t
+       |     |        |     +--ro rx-total-power-max?        dbm-t
+       |     |        +--:(explicit-mode)
+       |     |           +--ro explicit-mode
 
 
 
@@ -2242,54 +2242,54 @@ Beller, et al.          Expires 14 September 2023              [Page 40]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-       |     +--ro supported-3r-mode?               enumeration
-       |     +--ro transceiver* [transceiver-id]
-       |        +--ro transceiver-id                 uint32
-       |        +--ro supported-modes!
-       |        |  +--ro supported-mode* [mode-id]
-       |        |     +--ro mode-id                      string
-       |        |     +--ro (mode)
-       |        |        +--:(G.698.2)
-       |        |        |  +--ro standard-mode?         standard-mode
-       |        |        +--:(organizational-mode)
-       |        |        |  +--ro organizational-mode
-       |        |        |     +--ro operational-mode?
-       |        |        |     |       operational-mode
-       |        |        |     +--ro organization-identifier?
-       |        |        |     |       organization-identifier
-       |        |        |     +--ro min-central-frequency?
-       |        |        |     |       frequency-thz
-       |        |        |     +--ro max-central-frequency?
-       |        |        |     |       frequency-thz
-       |        |        |     +--ro transceiver-tunability?
-       |        |        |     |       frequency-ghz
-       |        |        |     +--ro tx-channel-power-min?      dbm-t
-       |        |        |     +--ro tx-channel-power-max?      dbm-t
-       |        |        |     +--ro rx-channel-power-min?      dbm-t
-       |        |        |     +--ro rx-channel-power-max?      dbm-t
-       |        |        |     +--ro rx-total-power-max?        dbm-t
-       |        |        +--:(explicit-mode)
-       |        |           +--ro explicit-mode
-       |        |              +--ro supported-modes
-       |        |              |  +--ro supported-application-codes*
-       |        |              |  |       -> ../../../mode-id
-       |        |              |  +--ro supported-organizational-modes*
-       |        |              |          -> ../../../mode-id
-       |        |              +--ro line-coding-bitrate?
-       |        |              |       identityref
-       |        |              +--ro bitrate?
-       |        |              |       uint16
-       |        |              +--ro max-polarization-mode-dispersion?
-       |        |              |       decimal64
-       |        |              +--ro max-chromatic-dispersion?
-       |        |              |       decimal64
-       |        |              +--ro chromatic-dispersion-penalty* []
-       |        |              |  +--ro chromatic-dispersion    union
-       |        |              |  +--ro penalty-value           union
-       |        |              +--ro polarization-dispersion-penalty* []
-       |        |              |  +--ro polarization-mode-dispersion
-       |        |              |  |       union
-       |        |              |  +--ro penalty-value
+       |     |              +--ro supported-modes
+       |     |              |  +--ro supported-application-codes*
+       |     |              |  |       -> ../../../mode-id
+       |     |              |  +--ro supported-organizational-modes*
+       |     |              |          -> ../../../mode-id
+       |     |              +--ro line-coding-bitrate?
+       |     |              |       identityref
+       |     |              +--ro bitrate?
+       |     |              |       uint16
+       |     |              +--ro max-polarization-mode-dispersion?
+       |     |              |       decimal64
+       |     |              +--ro max-chromatic-dispersion?
+       |     |              |       decimal64
+       |     |              +--ro chromatic-dispersion-penalty* []
+       |     |              |  +--ro chromatic-dispersion    union
+       |     |              |  +--ro penalty-value           union
+       |     |              +--ro polarization-dispersion-penalty* []
+       |     |              |  +--ro polarization-mode-dispersion
+       |     |              |  |       union
+       |     |              |  +--ro penalty-value
+       |     |              |          union
+       |     |              +--ro max-diff-group-delay?
+       |     |              |       uint32
+       |     |              +--ro max-pol-dependent-loss-penalty* []
+       |     |              |  +--ro max-polarization-dependent-loss
+       |     |              |  |       power-in-db-or-null
+       |     |              |  +--ro penalty-value
+       |     |              |          union
+       |     |              +--ro available-modulation-type?
+       |     |              |       identityref
+       |     |              +--ro min-OSNR?
+       |     |              |       snr
+       |     |              +--ro min-Q-factor?
+       |     |              |       int32
+       |     |              +--ro available-baud-rate?
+       |     |              |       uint32
+       |     |              +--ro roll-off?
+       |     |              |       decimal64
+       |     |              +--ro min-carrier-spacing?
+       |     |              |       frequency-ghz
+       |     |              +--ro available-fec-type?
+       |     |              |       identityref
+       |     |              +--ro fec-code-rate?
+       |     |              |       decimal64
+       |     |              +--ro fec-threshold?
+       |     |              |       decimal64
+       |     |              +--ro in-band-osnr?
+       |     |              |       snr
 
 
 
@@ -2298,54 +2298,54 @@ Beller, et al.          Expires 14 September 2023              [Page 41]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-       |        |              |          union
-       |        |              +--ro max-diff-group-delay?
-       |        |              |       uint32
-       |        |              +--ro max-pol-dependent-loss-penalty* []
-       |        |              |  +--ro max-polarization-dependent-loss
-       |        |              |  |       power-in-db-or-null
-       |        |              |  +--ro penalty-value
-       |        |              |          union
-       |        |              +--ro available-modulation-type?
-       |        |              |       identityref
-       |        |              +--ro min-OSNR?
-       |        |              |       snr
-       |        |              +--ro rx-ref-channel-power?
-       |        |              |       dbm-t
-       |        |              +--ro rx-channel-power-penalty* []
-       |        |              |  +--ro rx-channel-power    union
-       |        |              |  +--ro penalty-value       union
-       |        |              +--ro min-Q-factor?
-       |        |              |       int32
-       |        |              +--ro available-baud-rate?
-       |        |              |       uint32
-       |        |              +--ro roll-off?
-       |        |              |       decimal64
-       |        |              +--ro min-carrier-spacing?
-       |        |              |       frequency-ghz
-       |        |              +--ro available-fec-type?
-       |        |              |       identityref
-       |        |              +--ro fec-code-rate?
-       |        |              |       decimal64
-       |        |              +--ro fec-threshold?
-       |        |              |       decimal64
-       |        |              +--ro in-band-osnr?
-       |        |              |       snr
-       |        |              +--ro out-of-band-osnr?
-       |        |              |       snr
-       |        |              +--ro tx-polarization-power-difference?
-       |        |              |       power-in-db
-       |        |              +--ro polarization-skew?
-       |        |              |       decimal64
-       |        |              +--ro min-central-frequency?
-       |        |              |       frequency-thz
-       |        |              +--ro max-central-frequency?
-       |        |              |       frequency-thz
-       |        |              +--ro transceiver-tunability?
-       |        |              |       frequency-ghz
-       |        |              +--ro tx-channel-power-min?
-       |        |              |       dbm-t
-       |        |              +--ro tx-channel-power-max?
+       |     |              +--ro out-of-band-osnr?
+       |     |              |       snr
+       |     |              +--ro tx-polarization-power-difference?
+       |     |              |       power-in-db
+       |     |              +--ro polarization-skew?
+       |     |              |       decimal64
+       |     |              +--ro min-central-frequency?
+       |     |              |       frequency-thz
+       |     |              +--ro max-central-frequency?
+       |     |              |       frequency-thz
+       |     |              +--ro transceiver-tunability?
+       |     |              |       frequency-ghz
+       |     |              +--ro tx-channel-power-min?
+       |     |              |       dbm-t
+       |     |              +--ro tx-channel-power-max?
+       |     |              |       dbm-t
+       |     |              +--ro rx-channel-power-min?
+       |     |              |       dbm-t
+       |     |              +--ro rx-channel-power-max?
+       |     |              |       dbm-t
+       |     |              +--ro rx-total-power-max?
+       |     |                      dbm-t
+       |     +--ro configured-mode?
+       |     |       -> ../supported-modes/supported-mode/mode-id
+       |     +--ro tx-channel-power?              union
+       |     +--ro rx-channel-power?              union
+       |     +--ro rx-total-power?                union
+       |     +--ro outgoing-otsi
+       |     |  +--ro otsi-group-ref?
+       |     |  |       -> ../../../../../otsi-group/otsi-group-id
+       |     |  +--ro otsi-ref?         leafref
+       |     +--ro incoming-otsi
+       |     |  +--ro otsi-group-ref?
+       |     |  |       -> ../../../../../otsi-group/otsi-group-id
+       |     |  +--ro otsi-ref?         leafref
+       |     +--ro configured-termination-type?   enumeration
+       +--ro regen-group* [group-id]
+          +--ro group-id           uint32
+          +--ro regen-metric?      uint32
+          +--ro transponder-ref*   -> ../../transponder/transponder-id
+     augment /nw:networks/nw:network/nt:link/tet:te
+               /tet:te-link-attributes:
+       +--ro OMS-attributes
+          +--ro generalized-snr?                        l0-types:snr
+          +--ro equalization-mode                       identityref
+          +--ro (power-param)?
+          |  +--:(channel-power)
+          |  |  +--ro nominal-carrier-power?
 
 
 
@@ -2354,54 +2354,54 @@ Beller, et al.          Expires 14 September 2023              [Page 42]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-       |        |              |       dbm-t
-       |        |              +--ro rx-channel-power-min?
-       |        |              |       dbm-t
-       |        |              +--ro rx-channel-power-max?
-       |        |              |       dbm-t
-       |        |              +--ro rx-total-power-max?
-       |        |                      dbm-t
-       |        +--ro configured-mode?               union
-       |        +--ro tx-channel-power?              union
-       |        +--ro rx-channel-power?              union
-       |        +--ro rx-total-power?                union
-       |        +--ro outgoing-otsi
-       |        |  +--ro otsi-group-ref?   leafref
-       |        |  +--ro otsi-ref?         leafref
-       |        +--ro incoming-otsi
-       |        |  +--ro otsi-group-ref?   leafref
-       |        |  +--ro otsi-ref?         leafref
-       |        +--ro configured-termination-type?   enumeration
-       +--rw regen-groups!
-          +--ro regen-group* [group-id]
-             +--ro group-id           uint32
-             +--ro regen-metric?      uint32
-             +--ro transponder-ref*
-                     -> ../../../transponders/transponder/transponder-id
-     augment /nw:networks/nw:network/nt:link/tet:te
-               /tet:te-link-attributes:
-       +--ro OMS-attributes
-          +--ro generalized-snr?                        l0-types:snr
-          +--ro equalization-mode?                      identityref
-          +--ro (power-param)?
-          |  +--:(channel-power)
-          |  |  +--ro nominal-carrier-power?
           |  |          l0-types:power-in-dbm-or-null
           |  +--:(power-spectral-density)
           |     +--ro nominal-power-spectral-density?   union
-          +--ro media-channel-groups!
-          |  +--ro media-channel-group* [i]
-          |     +--ro i                 int16
-          |     +--ro media-channels* []
-          |        +--ro flexi-n?          l0-types:flexi-n
-          |        +--ro flexi-m?          l0-types:flexi-m
-          |        +--ro otsi-group-ref?   leafref
-          |        +--ro otsi-ref* []
-          |        |  +--ro otsi-carrier-ref?   leafref
-          |        |  +--ro e2e-mc-path-ref*    leafref
-          |        +--ro delta-power?      l0-types:power-in-dbm-or-null
-          +--ro OMS-elements!
-             +--ro OMS-element* [elt-index]
+          +--ro media-channel-group* [i]
+          |  +--ro i                 int16
+          |  +--ro media-channels* [flexi-n]
+          |     +--ro flexi-n           l0-types:flexi-n
+          |     +--ro flexi-m?          l0-types:flexi-m
+          |     +--ro otsi-group-ref?
+          |     |       -> /nw:networks/network/otsi-group/otsi-group-id
+          |     +--ro otsi-ref* []
+          |     |  +--ro otsi-carrier-ref?   leafref
+          |     |  +--ro nmc-path-ref*       leafref
+          |     +--ro delta-power?      l0-types:power-in-dbm-or-null
+          +--ro OMS-elements* [elt-index]
+             +--ro elt-index                 uint16
+             +--ro oms-element-uid?          union
+             +--ro reverse-element-ref
+             |  +--ro link-ref?
+             |  |       -> ../../../../../../../nt:link/link-id
+             |  +--ro oms-element-ref*   leafref
+             +--ro (element)
+                +--:(amplifier)
+                |  +--ro geolocation
+                |  |  +--ro altitude?    int64
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
+                |  +--ro amplifier
+                |     +--ro type-variety    string
+                |     +--ro operational
+                |        +--ro amplifier-element* []
+                |           +--ro name?
+                |           |       string
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
+                |           +--ro actual-gain
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro tilt-target
+                |           |       l0-types:decimal-2-digits-or-null
+                |           +--ro out-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro in-voa
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro total-output-power
+                |           |       l0-types:power-in-db-or-null
+                |           +--ro (power-param)?
+                |           |  +--:(channel-power)
 
 
 
@@ -2410,82 +2410,37 @@ Beller, et al.          Expires 14 September 2023              [Page 43]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-                +--ro elt-index                 uint16
-                +--ro oms-element-uid?          union
-                +--ro reverse-element-ref
-                |  +--ro link-ref?
-                |  |       -> ../../../../../../../../nt:link/link-id
-                |  +--ro oms-element-ref*   leafref
-                +--ro (element)
-                   +--:(amplifier)
-                   |  +--ro geolocation
-                   |  |  +--ro altitude?    int64
-                   |  |  +--ro latitude?    geographic-coordinate-degree
-                   |  |  +--ro longitude?   geographic-coordinate-degree
-                   |  +--ro amplifier
-                   |     +--ro type-variety    string
-                   |     +--ro operational
-                   |        +--ro amplifier-element* []
-                   |           +--ro name?
-                   |           |       string
-                   |           +--ro frequency-range
-                   |           |  +--ro lower-frequency    frequency-thz
-                   |           |  +--ro upper-frequency    frequency-thz
-                   |           +--ro actual-gain
-                   |           |       l0-types:power-in-db-or-null
-                   |           +--ro tilt-target
-                   |           |       l0-types:decimal-2-digits-or-null
-                   |           +--ro out-voa
-                   |           |       l0-types:power-in-db-or-null
-                   |           +--ro in-voa
-                   |           |       l0-types:power-in-db-or-null
-                   |           +--ro total-output-power
-                   |           |       l0-types:power-in-db-or-null
-                   |           +--ro (power-param)?
-                   |           |  +--:(channel-power)
-                   |           |  |  +--ro nominal-carrier-power?
-                   |           |  |          l0-types:power-in-dbm-or-null
-                   |           |  +--:(power-spectral-density)
-                   |           |     +--ro nominal-power-spectral-density?
-                   |           |             union
-                   |           +--ro raman-direction?
-                   |           |       enumeration
-                   |           +--ro raman-pump* []
-                   |              +--ro frequency?
-                   |              |       l0-types:frequency-thz
-                   |              +--ro power?
-                   |                     l0-types:decimal-2-digits-or-null
-                   +--:(fiber)
-                   |  +--ro fiber
-                   |     +--ro type-variety    string
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 44]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                   |     +--ro length
-                   |     |       l0-types:decimal-2-digits-or-null
-                   |     +--ro loss-coef
-                   |     |       l0-types:decimal-2-digits-or-null
-                   |     +--ro total-loss
-                   |     |       l0-types:power-in-db-or-null
-                   |     +--ro pmd?
-                   |     |       l0-types:decimal-2-digits-or-null
-                   |     +--ro conn-in?
-                   |     |       l0-types:power-in-db-or-null
-                   |     +--ro conn-out?
-                   |             l0-types:power-in-db-or-null
-                   +--:(concentratedloss)
-                      +--ro concentratedloss
-                         +--ro loss    l0-types:power-in-db-or-null
+                |           |  |  +--ro nominal-carrier-power?
+                |           |  |          l0-types:power-in-dbm-or-null
+                |           |  +--:(power-spectral-density)
+                |           |     +--ro nominal-power-spectral-density?
+                |           |             union
+                |           +--ro raman-direction?
+                |           |       enumeration
+                |           +--ro raman-pump* []
+                |              +--ro frequency?   l0-types:frequency-thz
+                |              +--ro power?
+                |                      l0-types:decimal-2-digits-or-null
+                +--:(fiber)
+                |  +--ro fiber
+                |     +--ro type-variety    string
+                |     +--ro length
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro loss-coef
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro total-loss      l0-types:power-in-db-or-null
+                |     +--ro pmd?
+                |     |       l0-types:decimal-2-digits-or-null
+                |     +--ro conn-in?        l0-types:power-in-db-or-null
+                |     +--ro conn-out?       l0-types:power-in-db-or-null
+                +--:(concentratedloss)
+                   +--ro concentratedloss
+                      +--ro loss    l0-types:power-in-db-or-null
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point:
        +--ro ttp-transceiver* [transponder-ref transceiver-ref]
           +--ro transponder-ref
-          |       -> ../../../../transponders/transponder/transponder-id
+          |       -> ../../../../transponder/transponder-id
           +--ro transceiver-ref    leafref
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point:
@@ -2503,6 +2458,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              |     +--ro frequency-range
              |     |  +--ro lower-frequency    frequency-thz
              |     |  +--ro upper-frequency    frequency-thz
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 44]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              |     +--ro roadm-pmd?                union
              |     +--ro roadm-cd?                 union
              |     +--ro roadm-pdl?
@@ -2514,14 +2477,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              +--:(roadm-add-path)
              |  +--ro roadm-add-path* []
              |     +--ro frequency-range
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 45]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
              |     |  +--ro lower-frequency    frequency-thz
              |     |  +--ro upper-frequency    frequency-thz
              |     +--ro roadm-pmd?                union
@@ -2559,6 +2514,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                    |       l0-types:power-in-dbm-or-null
                    +--ro roadm-ptyp?
                    |       l0-types:power-in-dbm-or-null
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 45]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
                    +--ro roadm-osnr?               l0-types:snr-or-null
                    +--ro roadm-noise-figure?       union
      augment /nw:networks/nw:network/nw:node/tet:te
@@ -2570,14 +2533,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        +--ro roadm-path-impairments?   leafref
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:te-node-attributes/tet:connectivity-matrices:
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 46]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        +--ro roadm-path-impairments?
                -> ../../roadm-path-impairments/roadm-path-impairments-id
      augment /nw:networks/nw:network/nw:node/tet:te
@@ -2615,6 +2570,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        |  +--ro ttp-transceiver-ref
        |  |       -> ../../../../ttp-transceiver/transceiver-ref
        |  +--ro is-allowed?              boolean
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 46]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
        |  +--ro add-path-impairments?    leafref
        |  +--ro drop-path-impairments?   leafref
        +--ro additional-ltp* [ltp-ref]
@@ -2622,17 +2585,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
           |       -> ../../../../../../nt:termination-point/tp-id
           +--ro add-path-impairments?    leafref
           +--ro drop-path-impairments?   leafref
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 47]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
 4.  Optical Impairment Topology YANG Model
 
@@ -2675,21 +2627,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
         WG List: <mailto:ccamp@ietf.org>
 
-        Editor:   Young Lee <younglee.tx@gmail.com>
-        Editor:   Haomian Zheng <zhenghaomian@huawei.com>
-        Editor:   Nicola Sambo <nicosambo@gmail.com>
-        Editor:   Victor Lopez <victor.lopez@nokia.com>
-        Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
-        Editor:   Giovanni Martinelli <giomarti@cisco.com>
-        Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
 
 
-
-Beller, et al.          Expires 14 September 2023              [Page 48]
+Beller, et al.          Expires 14 September 2023              [Page 47]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
+        Editor:   Young Lee <younglee.tx@gmail.com>
+        Editor:   Haomian Zheng <zhenghaomian@huawei.com>
+        Editor:   Nicola Sambo <nicosambo@gmail.com>
+        Editor:   Victor Lopez <victor.lopezalvarez@telefonica.com>
+        Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
+        Editor:   Giovanni Martinelli <giomarti@cisco.com>
+        Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
         Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
         Editor:   Julien Meuric <julien.meuric@orange.com>
         Editor:   Italo Busi <Italo.Busi@huawei.com>
@@ -2715,7 +2666,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
         described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
         they appear in all capitals, as shown here.
 
-        Copyright (c) 2023 IETF Trust and the persons identified as
+        Copyright (c) 2022 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -2731,21 +2682,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    // RFC Ed.: replace XXXX with actual RFC number and remove
    // this note
    // replace the revision date with the module publication date
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 48]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    // the format is (year-month-day)
-     revision 2023-03-07 {
+     revision 2022-10-21 {
        description
          "Initial Version";
        reference
          "RFC XXXX: A Yang Data Model for Impairment-aware
           Optical Networks";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 49]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
      }
 
      /*
@@ -2787,6 +2738,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        container amplifier {
          description
            "amplifier type, operatonal parameters are described.";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 49]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          leaf type-variety {
            type string;
            mandatory true ;
@@ -2794,14 +2753,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              "String identifier of amplifier type referencing
              a specification in a separate equipment catalog";
          }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 50]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          container operational {
            description "amplifier operational parameters";
            list amplifier-element {
@@ -2843,6 +2794,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                type l0-types:power-in-db-or-null;
                mandatory true;
                description "..";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 50]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              }
              leaf total-output-power {
                type l0-types:power-in-db-or-null;
@@ -2850,13 +2809,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                description
                  "It represent total output power measured in the range
                  specified by the frequency-range.
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 51]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
                  Optical power is especially needed to re-compute/check
                  consistency of span (fiber+ concentrated loss) loss
@@ -2898,6 +2850,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                    at the raman pump central frequency.";
                }
              }
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 51]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
            }  // list amplifier-element
          }  // container operational
        }  // container amplifier
@@ -2906,14 +2866,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
      grouping fiber-params {
        description
          "String identifier of fiber type referencing a
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 52]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
           specification in a separate equipment catalog";
        container fiber {
          description "fiber characteristics";
@@ -2954,6 +2906,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            type l0-types:power-in-db-or-null;
            description "connector-out";
          }
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 52]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
        }
      }
 
@@ -2962,14 +2922,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          "The optical impairments of a ROADM express path.";
        leaf roadm-pmd {
          type union {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 53]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            type decimal64 {
              fraction-digits 8;
              range "0..max";
@@ -3011,6 +2963,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        }
      }
 
+
+
+Beller, et al.          Expires 14 September 2023              [Page 53]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
      grouping roadm-add-path {
        description "The optical impairments of a ROADM add path.";
        leaf roadm-pmd {
@@ -3018,14 +2977,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            type decimal64 {
              fraction-digits 8;
              range "0..max";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 54]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            }
            type empty;
          }
@@ -3067,6 +3018,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              assuming no additional add path loss is added.
              This is used to establish the minimum required
              transponder output power required
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 54]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              to hit the ROADM egress target power
              levels and preventing
              to hit the WSS attenuation limits.
@@ -3074,14 +3033,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              this loss value should be based
              on worst case expected amplifier gain due to
              ripple or gain uncertainty";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 55]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        }
        leaf roadm-pmax {
          type l0-types:power-in-dbm-or-null;
@@ -3123,6 +3074,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              This permits add path OSNR calculation based
              on the input power levels to the add block
              without knowing the ROADM path losses to
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 55]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              the add amplifier.";
        }
      }
@@ -3130,14 +3089,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
      grouping roadm-drop-path {
        description "roadm drop block path optical impairments";
        leaf roadm-pmd {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 56]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          type union {
            type decimal64 {
              fraction-digits 8;
@@ -3179,6 +3130,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          type l0-types:power-in-db-or-null;
          description
            "The net loss from the ROADM input,to the output
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 56]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              of the drop block.
              If ROADM ingress to drop path includes an amplifier,
              the amplifier gain reduces the net loss.
@@ -3186,14 +3145,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              that may be required
              due to drop amplifier power contraints.
              The max value correspond to worst case expected loss,
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 57]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
              including amplifier gain ripple or uncertainty.
              It is the maximum output power of the drop
              amplifier.";
@@ -3235,6 +3186,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              drop path amplifier, or simply, to reduce the
              power of a strong carrier
              (due to ripple,for example),
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 57]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              then the use of the ROADM input power levels and
              the above drop losses is not appropriate.
              This parameter corresponds to the min per
@@ -3242,14 +3201,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              expected at the output of the drop block.
              A detail example of the comparison using
              these parameters is
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 58]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
              detailed in section xxx of the document yyy.";
        }
        leaf roadm-pmax {
@@ -3291,6 +3242,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              (before this amplifier)
              in order to hit a target power level (per carrier).
              If both, the OSNR based on the ROADM
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 58]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              input power level
              (Pcarrier =
              Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
@@ -3298,14 +3257,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              and this OSNR value, are defined,
              the minimum value between these two should be used";
        }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 59]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        leaf roadm-noise-figure {
          type union {
            type decimal64 {
@@ -3347,6 +3298,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        description
          "optical power or PSD after the ROADM or after the out-voa";
        choice power-param {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 59]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          description
            "select the mode: channel power or power spectral density";
          case channel-power {
@@ -3354,14 +3313,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                /tet:te-link-attributes/OMS-attributes
                /equalization-mode='carrier-power'";
            leaf nominal-carrier-power{
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 60]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
              type l0-types:power-in-dbm-or-null;
              description
                " Reference channel power. Same grouping is used for the
@@ -3400,24 +3351,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          type identityref {
            base l0-types:type-power-mode;
          }
-         description
-           "The equalization mode.
-
-           When not present it indicates that the information about
-           the equalization mode is not reported.
-
-           Reporting this value is needed to support optical
-           impairments applications.";
+         mandatory true;
+         description "equalization mode";
        }
-       uses power-param;
 
 
 
-Beller, et al.          Expires 14 September 2023              [Page 61]
+Beller, et al.          Expires 14 September 2023              [Page 60]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
+       uses power-param;
      }
 
      grouping otsi-group {
@@ -3443,12 +3388,12 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              "OTSi carrier frequency, equivalent to the
              actual configured transmitter frequency";
          }
-         leaf-list e2e-mc-path-id {
+         leaf-list nmc-path-id {
            type uint16;
            description
-             "The list of the possible end-to-end Media Channel
-             (e2e-MC) paths associated with the OTSi which have
-             different optical impairments.
+             "The list of the possible Network Media Channel (NMC) paths
+             associated with the OTSi which have different optical
+             impairments.
 
              This list is meaningful in case the OTSi can be associated
              with multiple NMC paths
@@ -3462,10 +3407,65 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
      grouping media-channel-groups {
        description "media channel groups";
+       list media-channel-group {
+       key "i";
+         description
 
-       container media-channel-groups {
-         presence
-           "When present, it indicates that the list media channel
+
+
+Beller, et al.          Expires 14 September 2023              [Page 61]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
+           "list of media channel groups";
+         leaf i {
+           type int16;
+             description "index of media channel group member";
+         }
+
+         list media-channels {
+           key "flexi-n";
+           description
+             "list of media channels represented as (n,m)";
+
+    // this grouping add both n.m values
+           uses l0-types:flexi-grid-frequency-slot;
+
+           leaf otsi-group-ref {
+             type leafref {
+               path "/nw:networks/nw:network/otsi-group/otsi-group-id";
+             }
+             description
+               "Reference to the otsi-group list to get otsi-group
+               identifier of the
+               OTSiG carried by this media channel
+               that reports the transient stat";
+           }
+           list otsi-ref {
+             description
+               "The list of references to the OTSis and their NMC paths
+               within the OTSiG carried by this media channel.";
+             leaf otsi-carrier-ref {
+               type leafref {
+                 path "/nw:networks/nw:network/"
+                   + "otsi-group[otsi-group-id=current()"
+                   + "/../../otsi-group-ref]/"
+                   + "otsi/otsi-carrier-id" ;
+               }
+               description
+                 "Reference to the OTSi within the OTSiG carried
+                 by this media channel.";
+             }
+             leaf-list nmc-path-ref {
+               type leafref {
+                 path "/nw:networks/nw:network/"
+                   + "otsi-group[otsi-group-id=current()"
+                   + "/../../otsi-group-ref]/"
+                   + "otsi[otsi-carrier-id=current()"
+                   + "/../otsi-carrier-ref]/nmc-path-id" ;
+               }
+               description
 
 
 
@@ -3474,54 +3474,54 @@ Beller, et al.          Expires 14 September 2023              [Page 62]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-           groups is reported.";
-         description
-           "The top level container for the list of media channel
-           groups.";
-         list media-channel-group {
-           key "i";
-           description
-             "The list of media channel groups";
-           leaf i {
-             type int16;
-               description "index of media channel group member";
-           }
-           list media-channels {
-             // key "flexi-n";
-             description
-               "list of media channels represented as (n,m)";
-
-             // this grouping add both n.m values
-             uses l0-types:flexi-grid-frequency-slot;
-
-             leaf otsi-group-ref {
-               type leafref {
-                 path "/nw:networks/nw:network/otsi-information/" +
-                     "otsi-group/otsi-group-id";
-               }
-               description
-                 "Reference to the OTSiG to which the OTSis carried by
-                 this media channel belong to.";
+                 "References to the NMC paths of this OTSi which are
+                 routed through this media channel.";
              }
-             list otsi-ref {
-               description
-                 "The list of references to the OTSis and their NMC
-                 paths within the OTSiG carried by this media channel.";
-               leaf otsi-carrier-ref {
-                 type leafref {
-                   path  "/nw:networks/nw:network/otsi-information/" +
-                         "otsi-group[otsi-group-id=current()" +
-                         "/../../otsi-group-ref]/" +
-                         "otsi/otsi-carrier-id" ;
-                 }
-                 description
-                   "Reference to the OTSi within the OTSiG carried
-                   by this media channel.";
-               }
-               leaf-list e2e-mc-path-ref {
-                 type leafref {
-                   path  "/nw:networks/nw:network/otsi-information/" +
-                         "otsi-group[otsi-group-id=current()" +
+           }
+           leaf delta-power {
+             type l0-types:power-in-dbm-or-null;
+             description
+               " Deviation from the reference carrier power defined for
+               the OMS.";
+           }
+         } // media channels list
+       } // media-channel-groups list
+     } // media media-channel-groups grouping
+
+     grouping oms-element {
+       description "OMS description";
+       list OMS-elements {
+         key "elt-index";
+         description
+           "defines the spans and the amplifier blocks of
+           the amplified lines";
+         leaf elt-index {
+           type uint16;
+           description
+             "ordered list of Index of OMS element
+             (whether it's a Fiber, an EDFA or a
+             Concentratedloss)";
+         }
+         leaf oms-element-uid {
+           type union {
+             type string;
+             type empty;
+           }
+           description
+             "unique id of the element if it exists";
+         }
+         container reverse-element-ref {
+           description
+             "It contains references to the elements which are
+             associated with this element in the reverse
+             direction.";
+           leaf link-ref {
+             type leafref {
+               path "../../../../../../../nt:link/nt:link-id";
+             }
+             description
+               "The reference to the OMS link which the OMS elements
+               belongs to.";
 
 
 
@@ -3530,100 +3530,30 @@ Beller, et al.          Expires 14 September 2023              [Page 63]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-                         "/../../otsi-group-ref]/" +
-                         "otsi[otsi-carrier-id=current()" +
-                         "/../otsi-carrier-ref]/e2e-mc-path-id";
-                 }
-                 description
-                   "References to the end-to-end Media Channel (e2e-MC)
-                   paths of this OTSi which are routed through this
-                   media channel.";
-               }
-             }
-             leaf delta-power {
-               type l0-types:power-in-dbm-or-null;
-               description
-                 " Deviation from the reference carrier power defined
-                 for the OMS.";
-             }
-           } // media channels list
-         } // media-channel-groups list
-       }
-     } // media media-channel-groups grouping
-
-     grouping oms-element {
-       description "OMS description";
-       container OMS-elements {
-         presence
-           "When present, it indicates that the list of OMS elements
-           is reported.";
-         description
-           "The top level container for the list of OMS elements.";
-         list OMS-element {
-           key "elt-index";
-           description
-             "defines the spans and the amplifier blocks of
-             the amplified lines";
-           leaf elt-index {
-             type uint16;
-             description
-               "ordered list of Index of OMS element
-               (whether it's a Fiber, an EDFA or a
-               Concentratedloss)";
            }
-           leaf oms-element-uid {
-             type union {
-               type string;
-               type empty;
+           leaf-list oms-element-ref {
+             type leafref {
+               path "../../../../../../../nt:link[nt:link-id="
+                   + "current()/../link-ref]/tet:te/"
+                   + "tet:te-link-attributes/OMS-attributes/"
+                   + "OMS-elements/elt-index";
              }
              description
-               "unique id of the element if it exists";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 64]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
+               "The references to the OMS elements.";
            }
-           container reverse-element-ref {
-             description
-               "It contains references to the elements which are
-               associated with this element in the reverse
-               direction.";
-             leaf link-ref {
-               type leafref {
-                 path "../../../../../../../../nt:link/nt:link-id";
-               }
-               description
-                 "The reference to the OMS link which the OMS elements
-                 belongs to.";
-             }
-             leaf-list oms-element-ref {
-               type leafref {
-                 path "../../../../../../../../nt:link[nt:link-id="
-                     + "current()/../link-ref]/tet:te/"
-                     + "tet:te-link-attributes/OMS-attributes/"
-                     + "OMS-elements/OMS-element/elt-index";
-               }
-               description
-                 "The references to the OMS elements.";
-             }
+         }
+         choice element {
+           mandatory true;
+           description "OMS element type";
+           case amplifier {
+             uses tet:geolocation-container;
+             uses amplifier-params;
            }
-           choice element {
-             mandatory true;
-             description "OMS element type";
-             case amplifier {
-               uses tet:geolocation-container;
-               uses amplifier-params;
-             }
-             case fiber {
-               uses fiber-params;
-             }
-             case concentratedloss {
-               uses concentratedloss-params ;
-             }
+           case fiber {
+             uses fiber-params;
+           }
+           case concentratedloss {
+             uses concentratedloss-params ;
            }
          }
        }
@@ -3634,30 +3564,28 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          "References to an OTSi.
          This grouping is intended to be reused within the
          transceiver's list only.";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 65]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        leaf otsi-group-ref {
          type leafref {
-           path  "../../../../../../otsi-information/otsi-group/" +
-                 "otsi-group-id";
+           path "../../../../../otsi-group/otsi-group-id";
          }
          description
            "The OTSi generated by the transceiver's transmitter.";
        }
        leaf otsi-ref {
          type leafref {
-           path  "../../../../../../otsi-information/otsi-group" +
-                 "[otsi-group-id=current()/../otsi-group-ref]/otsi/" +
-                 "otsi-carrier-id";
+           path "../../../../../otsi-group[otsi-group-id=" +
+                "current()/../otsi-group-ref]/otsi/otsi-carrier-id";
          }
          description
            "The OTSi generated by the transceiver's transmitter.";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 64]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
        }
      }
    /* Data nodes */
@@ -3682,36 +3610,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        }
        description
          "Network augmentation for optical impairments data.";
-       container otsi-information {
-         presence
-           "When present, it indicates that OTSi information is
-           reported.";
+       list otsi-group {
+         key "otsi-group-id";
+         config false;
          description
-           "The information about the OTSis configured on the WDM-TE
-           link.";
-         list otsi-group {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 66]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-           key "otsi-group-id";
-           config false;
+           "the list of possible OTSiG representing client digital
+           stream";
+         leaf otsi-group-id {
+           type string;
            description
-             "the list of possible OTSiG representing client digital
-             stream";
-           leaf otsi-group-id {
-             type string;
-             description
-               "A network-wide unique identifier of otsi-group element.
-               It could be structured e.g., as an URI or as an UUID.";
-           }
-           uses otsi-group;
-         } // list of OTSiG
-       }
+             "A network-wide unique identifier of otsi-group element.
+             It could be structured e.g., as an URI or as an UUID.";
+         }
+         uses otsi-group;
+       } // list of OTSiG
      }
 
      augment "/nw:networks/nw:network/nw:node" {
@@ -3722,30 +3634,118 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        }
        description
          "Node augmentation for optical impairments data.";
-       container transponders {
-         presence
-           "If present, it indicates that the list of transponders is
-           reported.";
-         description
-           "The top level container for the list of transponders.";
-         list transponder {
-           key "transponder-id";
-           config false;
-           description "The list of transponders.";
-           leaf transponder-id {
-             type uint32;
-             description "transponder identifier";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 65]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
+       list transponder {
+         key "transponder-id";
+         config false;
+         description "list of transponder";
+         leaf transponder-id {
+           type uint32;
+           description "transponder identifier";
+         }
+         leaf termination-type-capabilities {
+           type enumeration {
+             enum tunnel-only {
+               description
+                 "The transponder can only be used in an Optical
+                 Tunnel termination configuration.";
+             }
+             enum 3r-only {
+               description
+                 "The transponder can only be used in a 3R
+                 configuration.";
+             }
+             enum 3r-or-tunnel {
+               description
+                 "The transponder can be configure to be used either
+                 in an Optical Tunnel termination configuration or in
+                 a 3R configuration.";
+             }
            }
-           leaf termination-type-capabilities {
+           description
+             "Describes whether the transponder can be used in an
+             Optical Tunnel termination configuration or in a 3R
+             configuration (or both).";
+         }
+         leaf supported-3r-mode {
+           when '(../termination-type-capabilities = "3r-only") or
+                 (../termination-type-capabilities = "3r-or-tunnel")'
+                 {
+             description
+               "Applies only when the transponder supports 3R
+               configuration.";
+           }
+           type enumeration {
+             enum unidir {
+               description
+                 "Unidirectional 3R configuration.";
+             }
+             enum bidir {
+               description
+                 "Bidirectional 3R configuration.";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 66]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
+             }
+           }
+           description
+             "Describes the supported 3R configuration type.";
+         }
+         list transceiver {
+           key "transceiver-id";
+           config false;
+           description "list of transceiver related to a transponder";
+           leaf transceiver-id {
+             type uint32;
+             description "transceiver identifier";
+           }
+           uses l0-types:transceiver-capabilities;
+           leaf configured-mode {
+             type leafref {
+               path "../supported-modes/supported-mode/mode-id";
+             }
+             description
+               "Reference to the configured mode for transceiver
+               compatibility approach.";
+           }
+           uses l0-types:common-transceiver-configured-param;
+           container outgoing-otsi {
+             description
+               "The OTSi generated by the transceiver's transmitter.";
+             uses otsi-ref;
+           }
+           container incoming-otsi {
+             description
+               "The OTSi received by the transceiver's received.";
+             uses otsi-ref;
+           }
+           leaf configured-termination-type {
              type enumeration {
-               enum tunnel-only {
+               enum tunnel-termination {
                  description
-                   "The transponder can only be used in an Optical
+                   "The transceiver is currently used in an Optical
                    Tunnel termination configuration.";
                }
-               enum 3r-only {
+               enum 3r-regeneration {
                  description
-                   "The transponder can only be used in a 3R
+                   "The transceiver is currently used in a 3R
+                   configuration.";
+               }
+             }
+             description
+               "Describes whether the current configuration of the
 
 
 
@@ -3754,178 +3754,42 @@ Beller, et al.          Expires 14 September 2023              [Page 67]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
-                   configuration.";
-               }
-               enum 3r-or-tunnel {
-                 description
-                   "The transponder can be configure to be used either
-                   in an Optical Tunnel termination configuration or in
-                   a 3R configuration.";
-               }
-             }
-             description
-               "Describes whether the transponder can be used in an
-               Optical Tunnel termination configuration or in a 3R
-               configuration (or both).";
+               transceiver is used in an Optical Tunnel termination
+               configuration or in a 3R configuration.
+
+               If empty, it means that the transcevier is not used.";
            }
-           leaf supported-3r-mode {
-             when '(../termination-type-capabilities = "3r-only") or
-                   (../termination-type-capabilities = "3r-or-tunnel")'
-                   {
-               description
-                 "Applies only when the transponder supports 3R
-                 configuration.";
-             }
-             type enumeration {
-               enum unidir {
-                 description
-                   "Unidirectional 3R configuration.";
-               }
-               enum bidir {
-                 description
-                   "Bidirectional 3R configuration.";
-               }
-             }
-             description
-               "Describes the supported 3R configuration type.";
-           }
-           list transceiver {
-             key "transceiver-id";
-             config false;
-             min-elements 1;
-             description "list of transceiver related to a transponder";
-             leaf transceiver-id {
-               type uint32;
-               description "transceiver identifier";
-             }
-             uses l0-types:transceiver-capabilities;
-             leaf configured-mode {
-               type union {
-                 type empty;
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 68]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 type leafref {
-                   path "../supported-modes/supported-mode/mode-id";
-                 }
-               }
-               description
-                 "Reference to the configured mode for transceiver
-                 compatibility approach.
-
-                 The empty value is used to report that no mode has
-                 been configured and there is no default mode.
-
-                 When not present, the configured-mode is not reported
-                 by the server.";
-             }
-             uses l0-types:common-transceiver-configured-param;
-             container outgoing-otsi {
-               when "../../../../../otsi-information" {
-                 description
-                   "It applies only when the OTSi information is
-                   reported.";
-               }
-               description
-                 "The OTSi generated by the transceiver's transmitter.";
-               uses otsi-ref;
-             }
-             container incoming-otsi {
-               when "../../../../../otsi-information" {
-                 description
-                   "It applies only when the OTSi information is
-                   reported.";
-               }
-               description
-                 "The OTSi received by the transceiver's received.";
-               uses otsi-ref;
-             }
-             leaf configured-termination-type {
-               type enumeration {
-                 enum unused-transceiver {
-                   description
-                     "The transcevier is not used.";
-                 }
-                 enum tunnel-termination {
-                   description
-                     "The transceiver is currently used in an Optical
-                     Tunnel termination configuration.";
-                 }
-                 enum 3r-regeneration {
-                   description
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 69]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     "The transceiver is currently used in a 3R
-                     configuration.";
-                 }
-               }
-               description
-                 "Describes whether the current configuration of the
-                 transceiver is used in an Optical Tunnel termination
-                 configuration or in a 3R configuration.
-
-                 If empty, it means that the information about the
-                 configured-termination-type is not reported.";
-             }
-           } // end of list of transceiver
-         } // end list of transponder
-       }
-       container regen-groups {
-         presence
-           "When present, it indicates that the list of 3R groups
-           is reported.";
+         } // end of list of transceiver
+       } // end list of transponder
+       list regen-group {
+         key "group-id";
+         config false;
          description
-           "The top level container for the list of 3R groups.";
-         list regen-group {
-           key "group-id";
-           config false;
+           "List of 3R groups.
+           Any 3R group represent a group of transponder in which an a
+           an electrical connectivity is either in place or could be
+           dynamically provided, to associated transponders used for 3R
+           regeneration.";
+         leaf group-id {
+           type uint32;
            description
-             "The list of 3R groups.
-
-             Any 3R group represent a group of transponder in which an
-             a an electrical connectivity is either in place or could
-             be dynamically provided, to associated transponders used
-             for 3R regeneration.";
-           leaf group-id {
-             type uint32;
-             description
-               "Group identifier used an index to access elements in the
-               list of 3R groups.";
+             "Group identifier used an index to access elements in the
+             list of 3R groups.";
+         }
+         leaf regen-metric {
+           type uint32;
+           description
+             "The cost permits choice among different group of
+             transponders during path computation";
+         }
+         leaf-list transponder-ref {
+           type leafref {
+             path "../../transponder/transponder-id";
            }
-           leaf regen-metric {
-             type uint32;
-             description
-               "The cost permits choice among different group of
-               transponders during path computation";
-           }
-           leaf-list transponder-ref {
-             type leafref {
-               path "../../../transponders/transponder/transponder-id";
-             }
-             description
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 70]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-               "The list of transponder belonging to this 3R group.";
-           }
-         } // end 3R-group
-       }
+           description
+             "The list of transponder belonging to this 3R group.";
+         }
+       } // end 3R-group
      }
 
      augment "/nw:networks/nw:network/nt:link/tet:te"
@@ -3938,6 +3802,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        }
        description "Optical Link augmentation for impairment data.";
        container OMS-attributes {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 68]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          config false;
          description "OMS attributes";
          uses oms-general-optical-params;
@@ -3959,27 +3831,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
           transponder model.";
 
        list ttp-transceiver {
-         when "../../../transponders" {
-           description
-             "It applies only when the list of transponders is
-             reported.";
-         }
          key "transponder-ref transceiver-ref";
          config false;
-         min-elements 1;
          description
            "The list of the transceivers used by the TTP.";
          leaf transponder-ref {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 71]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            type leafref {
-             path "../../../../transponders/transponder/transponder-id";
+             path "../../../../transponder/transponder-id";
            }
            description
              "The reference to the transponder hosting the transceiver
@@ -3987,9 +3845,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          }
          leaf transceiver-ref {
            type leafref {
-             path "../../../../transponders/transponder" +
-                  "[transponder-id=current()/../transponder-ref]/" +
-                  "transceiver/transceiver-id";
+             path "../../../../transponder[transponder-id=current()" +
+                  "/../transponder-ref]/transceiver/transceiver-id";
            }
            description
              "The reference to the transceiver of the TTP.";
@@ -4001,6 +3858,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            + "/tet:tunnel-termination-point" {
        when "../../../nw:network-types/tet:te-topology/"
           + "optical-imp-topo:optical-impairment-topology" {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 69]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          description
            "This augment is only valid for optical impairment
           with sliceable transponder model";
@@ -4026,18 +3891,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            base te-types:lsp-protection-type;
          }
          description
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 72]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-           "The protection type that this LTP is capable of.
-
-           When not present it indicates that the information about
-           the protection type is not reported.";
+           "The protection type that this LTP is capable of.";
        }
      }
 
@@ -4060,6 +3914,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            "The set of optical impairments related to a ROADM path.";
 
          leaf roadm-path-impairments-id {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 70]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
            type uint32;
            description "index of the ROADM path-impairment list";
          }
@@ -4082,14 +3944,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                uses roadm-express-path;
              }
            }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 73]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            case roadm-add-path {
              list roadm-add-path {
                description
@@ -4116,6 +3970,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                  Two elements in the list must not have the same range
                  or overlapping ranges.";
                container frequency-range {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 71]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
                  description
                    "The frequency range for which these optical
                    impairments apply.";
@@ -4138,14 +4000,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
        }
        description
          "Augment default TE node connectivity matrix information
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 74]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          source.";
 
        leaf roadm-path-impairments {
@@ -4172,6 +4026,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          source.";
        leaf roadm-path-impairments {
          type leafref {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 72]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
            path "../../../../tet:te-node-attributes/"
            + "roadm-path-impairments/roadm-path-impairments-id";
          }
@@ -4194,14 +4056,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          type leafref {
            path "../../roadm-path-impairments/"
            + "roadm-path-impairments-id";
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 75]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          }
          config false; /*the identifier in the list */
           /*"roadm-path-impairments" of ROADM optical impairment*/
@@ -4228,6 +4082,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            + "roadm-path-impairments-id";
          }
          config false;
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 73]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          description "pointer to the list set of ROADM optical
           impairments";
        }
@@ -4250,14 +4112,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
             + "nt:termination-point"
             + "[nt:tp-id=current()/../../tet:to/tet:tp-ref]/"
             + "optical-imp-topo:protection-type,"
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 76]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
             + "'optical-imp-topo:otsi-protection')" {
            description
              "This list applies only when the 'to' LTP for this
@@ -4284,6 +4138,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              entry is selected as a working LTP";
          }
          leaf roadm-path-impairments {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 74]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
            type leafref {
              path "../../../../../../../tet:te/tet:te-node-attributes/"
                 + "roadm-path-impairments/roadm-path-impairments-id";
@@ -4306,14 +4168,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            "This augment is only valid for
            Optical Impairment topology ";
        }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 77]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        description
          "Augment the attributes for the 'to' LTP for the TE node
          connectivity matrix entry.";
@@ -4340,6 +4194,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            entry can be selected as secondary LTPs.";
          leaf ltp-ref {
            type leafref {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 75]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
              path "../../../../../../../nt:termination-point/nt:tp-id";
            }
            description
@@ -4362,14 +4224,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
      } // augmentation connectivity-matrix to
 
      augment "/nw:networks/nw:network/nw:node/tet:te/"
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 78]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            + "tet:tunnel-termination-point/"
            + "tet:local-link-connectivities" {
        when "../../../../nw:network-types/tet:te-topology/"
@@ -4396,6 +4250,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          config false;
          description "pointer to the list set of ROADM
          optical impairments";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 76]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
        }
      } // augmentation local-link-connectivities
 
@@ -4418,14 +4280,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          }
          config false;
          description "pointer to the list set of ROADM optical
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 79]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
           impairments";
        }
        leaf drop-path-impairments {
@@ -4452,6 +4306,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              of this LLCL entry.";
          }
          leaf ttp-transceiver-ref {
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 77]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
            type leafref {
              path "../../../../ttp-transceiver/transceiver-ref";
            }
@@ -4474,14 +4336,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            description "pointer to the list set of ROADM optical
            impairments";
          }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 80]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          leaf drop-path-impairments {
            type leafref {
              path "../../../../../tet:te-node-attributes/"
@@ -4508,6 +4362,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
            If this list is empty, all the other LTPs that can be
            reached by this TTP can be selected as secondary LTPs.";
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 78]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          leaf ltp-ref {
            type leafref {
              path "../../../../../../nt:termination-point/nt:tp-id";
@@ -4530,14 +4392,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
            type leafref {
              path "../../../../../tet:te-node-attributes/"
              + "roadm-path-impairments/roadm-path-impairments-id" ;
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 81]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
            }
            config false;
            description "pointer to the list set of ROADM
@@ -4561,6 +4415,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    read-only; however, these data nodes may be considered sensitive or
    vulnerable in some network environments (TBD).
 
+
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 79]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
 6.  IANA Considerations
 
    This document registers the following namespace URIs in the IETF XML
@@ -4582,17 +4447,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    prefix:    optical-imp-topo
    reference: RFC XXXX (TDB)
    --------------------------------------------------------------------
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 82]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
 7.  Acknowledgments
 
@@ -4621,6 +4475,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
               DOI 10.17487/RFC8341, March 2018,
               <https://www.rfc-editor.org/info/rfc8341>.
 
+
+
+Beller, et al.          Expires 14 September 2023              [Page 80]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    [RFC8776]  Saad, T., Gandhi, R., Liu, X., Beeram, V., and I. Bryskin,
               "Common YANG Data Types for Traffic Engineering",
               RFC 8776, DOI 10.17487/RFC8776, June 2020,
@@ -4638,17 +4499,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
               and A. Bierman, Ed., "Network Configuration Protocol
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 83]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
    [RFC6566]  Lee, Y., Ed., Bernstein, G., Ed., Li, D., and G.
               Martinelli, "A Framework for the Control of Wavelength
@@ -4681,6 +4531,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
               RFC 7698, DOI 10.17487/RFC7698, November 2015,
               <https://www.rfc-editor.org/info/rfc7698>.
 
+
+
+Beller, et al.          Expires 14 September 2023              [Page 81]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
@@ -4694,17 +4551,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
               Ananthakrishnan, H., and X. Liu, "A YANG Data Model for
               Network Topologies", RFC 8345, DOI 10.17487/RFC8345, March
               2018, <https://www.rfc-editor.org/info/rfc8345>.
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 84]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
    [RFC8453]  Ceccarelli, D., Ed. and Y. Lee, Ed., "Framework for
               Abstraction and Control of TE Networks (ACTN)", RFC 8453,
@@ -4738,6 +4584,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
               <https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-
               dwdm-if-param-yang-08>.
 
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 82]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    [I-D.ietf-teas-te-topo-and-tunnel-modeling]
               Bryskin, I., Beeram, V. P., Saad, T., and X. Liu, "TE
               Topology and Tunnel Modeling for Transport Networks", Work
@@ -4753,24 +4609,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    [G.807]    "Generic functional architecture of the optical media
               network", ITU-T Recommendation G.807, February 2020.
 
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 85]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
    [G.807_Amd1]
               "Generic functional architecture of the optical media
               network Amendment 1", ITU-T Recommendation G.807 Amendment
               1, January 2021.
-
-   [G.873.1_Amd1]
-              "Optical transport network: Linear protection Amendment
-              1", ITU-T Recommendation G.873.1 Amendment 1, February
-              2022.
 
    [G.709]    "Interfaces for the Optical Transport Network (OTN)",
               ITU-T Recommendation G.709, June 2016.
@@ -4800,6 +4642,14 @@ Appendix A.  JSON Code Examples for Optical Protection Uses Cases
 
    (1)  JSON example for use case in Section 2.10.1.1:
 
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 83]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    [Editor's note: The JSON example below needs to be updated and
    aligned with Figure 11 and Figure 12.]
 
@@ -4810,14 +4660,6 @@ Appendix A.  JSON Code Examples for Optical Protection Uses Cases
          "roadm-add-path":
          "Add path impairments from TTP 1 or TTP 2 to any LTPs."
        },
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 86]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        {
          "roadm-path-impairments-id": 2,
          "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
@@ -4856,6 +4698,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              {
                "link-tp-ref": "LTP-2",
                "additional-ltp": [
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 84]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
                  {
                    "link-tp-ref": "LTP-1",
                    "link-tp-ref": "LTP-3"
@@ -4866,14 +4716,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                "link-tp-ref": "LTP-3",
                "additional-ltp": [
                  {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 87]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
                    "link-tp-ref": "LTP-1",
                    "link-tp-ref": "LTP-2"
                  }
@@ -4912,6 +4754,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                    "link-tp-ref": "LTP-1",
                    "add-path-impairments": 3
                  },
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 85]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
                  {
                    "link-tp-ref": "LTP-2",
                    "add-path-impairments": 3
@@ -4922,14 +4772,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          }
        },
        {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 88]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          "tunnel-tp-id": 4,
          "protection-type": "ops-protection",
          "local-link-connectivities": {
@@ -4968,6 +4810,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
              {
                "link-tp-ref": "LTP-3",
                "is-allowed": true,
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 86]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
                "add-path-impairments": 2,
                "additional-ltp": [
                  {
@@ -4978,14 +4828,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                    "link-tp-ref": "LTP-2",
                    "add-path-impairments": 3
                  }
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 89]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
                ]
              }
            ]
@@ -5024,6 +4866,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
      "connectivity-matrix"[
        {
          "id": 1,
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 87]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
          "from": {
            "tp-ref" : 20
          },
@@ -5034,14 +4884,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                  "link-tp-ref": 1,
                  "roadm-path-impairments": 3
               },
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 90]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
               {
                  "link-tp-ref": 2,
                  "roadm-path-impairments": 3
@@ -5080,6 +4922,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          "to" :  {
            "tp-ref" : 1,
            "additional-ltp": [
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 88]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
               {
                  "link-tp-ref": 1,
                  "roadm-path-impairments": 2
@@ -5090,14 +4940,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
               }
            ]
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 91]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
          },
          "is-allowed": true,
          "roadm-path-impairments": 2
@@ -5136,6 +4978,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
                "link-tp-ref": 1,
                "roadm-path-impairments": 3
               },
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 89]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
               {
                "link-tp-ref": 2,
                "roadm-path-impairments": 3
@@ -5146,14 +4996,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
          "is-allowed": true,
          "roadm-path-impairments": 2
        },
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 92]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
        {
          "id": 6,
          "from": {
@@ -5186,8 +5028,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 Appendix B.  Optical Transponders in a Remote Shelf (Remote OTs)
 
-   Figure 17 illustrates a configuration where the optical transponders
-   and the ROADM are located in a different WDM-TE-nodes.
+   Figure 17 describes an example where the optical transponders and the
+   ROADM are located in a different WDM-TE-nodes.
 
 
 
@@ -5195,17 +5037,7 @@ Appendix B.  Optical Transponders in a Remote Shelf (Remote OTs)
 
 
 
-
-
-
-
-
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 93]
+Beller, et al.          Expires 14 September 2023              [Page 90]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
@@ -5249,22 +5081,28 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    impairments as those defined for a WDM TE-link between WDM-TE-nodes
    (OMS MCG).
 
+   [Editor's note: define the "add/drop TE-link" and "bundled add/drop
+   TE-link".  Should we add the definition of line TE-link for the TE-
+   link between ROADMs?]
+
    If the two WDM-TE-Nodes are reported in different network topology
    instances, the plug-id attribute, defined in [RFC8795], can be used
    to discover the adjacency for add/drop TE-links.
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 91]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
 
    It is worth noting that there are no standard protocols for automatic
    discovery of the adjacency between an external transceiver and a
    ROADM add/drop port and therefore the information reported in the
    plug-id can be either statically configured or provided through
    vendor-specific discovery mechanisms.
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 94]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
    Each add/drop TE-link carries a single OTSi between the transceiver
    and ROADM add/drop port and one or more OTSis in the reverse
@@ -5306,1509 +5144,26 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    is used just to model the co-routing aspects of the OTSis belonging
    to the same OTSiG.
 
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 92]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
+
+
    The per-transceiver Local Link Connectivity (LLC) is used in the WDM-
    TE-Node which abstracts the remote OT shelf (e.g., WDM-TE-Node-1 in
    Figure 17), to represent the association between each transceiver and
    each LTP terminating the add/drop TE-link which models the
    transceiver port.
 
-
-
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 95]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
    The connectivity matrix in the WDM-TE-Node which abstract the edge
    ROADM (e.g., WDM-TE-Node-2 in Figure 17) references the LTPs
    terminating the add/drop TE-links which models the ROADM add/drop
    ports.
-
-B.1.  JSON Examples for Optical Transponders in a Remote Shelf (Remote
-      OTs)
-
-   [Editor's note: Introductory text TBA here.]
-
-   [Editor's note: JSON example from JSON file TBA below.]
-
-   {
-     "ietf-network:networks": {
-       "network": [
-         {
-           "network-id": "WDM-Network-1",
-           "network-types": {
-             "ietf-te-topology:te-topology": {
-               "ietf-optical-impairment-topology:optical-impairment-topology": {}
-             }
-           },
-           "ietf-te-topology:te-topology-identifier": {
-             "topology-id": "WDM-Network-1"
-           },
-           "ietf-te-topology:te": {},
-           "ietf-optical-impairment-topology:otsi-information": {
-             "otsi-group": [
-               {
-                 "otsi-group-id": "Red OTSiG (Forward)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Red OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Green OTSiG (Forward)",
-                 "otsi": [
-                   {
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 96]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Green OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-               }
-             ]
-           },
-           "node": [
-             {
-               "node-id": "WDM-TE-Node-1",
-               "ietf-te-topology:te-node-id": "192.0.2.1",
-               "ietf-te-topology:te": {
-                 "ietf-te-topology:tunnel-termination-point": [
-                   {
-                     "tunnel-tp-id": "AQ==",
-                     "ietf-optical-impairment-topology:ttp-transceiver": [
-                       {
-                         "transponder-ref": 1,
-                         "transceiver-ref": 1
-                       }
-                     ],
-                     "local-link-connectivities": {
-                       "is-allowed": false,
-                       "local-link-connectivity": [
-                         {
-                           "link-tp-ref": "1",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 1,
-                               "ttp-transceiver-ref": 1,
-                               "is-allowed": true
-                             }
-                           ]
-                         }
-                       ]
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 97]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     }
-                   },
-                   {
-                     "tunnel-tp-id": "Ag==",
-                     "ietf-optical-impairment-topology:ttp-transceiver": [
-                       {
-                         "transponder-ref": 2,
-                         "transceiver-ref": 1
-                       },
-                       {
-                         "transponder-ref": 2,
-                         "transceiver-ref": 2
-                       }
-                     ],
-                     "local-link-connectivities": {
-                       "is-allowed": false,
-                       "local-link-connectivity": [
-                         {
-                           "link-tp-ref": "2",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 2,
-                               "ttp-transceiver-ref": 1,
-                               "is-allowed": true
-                             }
-                           ]
-                         },
-                         {
-                           "link-tp-ref": "3",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 2,
-                               "ttp-transceiver-ref": 2,
-                               "is-allowed": true
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 ]
-               },
-               "ietf-network-topology:termination-point": [
-                 {
-                   "tp-id": "1",
-                   "ietf-te-topology:te-tp-id": 1,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "AQ=="
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 98]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                   }
-                 },
-                 {
-                   "tp-id": "2",
-                   "ietf-te-topology:te-tp-id": 2,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "Ag=="
-                   }
-                 },
-                 {
-                   "tp-id": "3",
-                   "ietf-te-topology:te-tp-id": 3,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "Awo="
-                   }
-                 },
-                 {
-                   "tp-id": "23",
-                   "ietf-te-topology:te-tp-id": 23
-                 }
-               ],
-               "ietf-optical-impairment-topology:transponders": {
-                 "transponder": [
-                   {
-                     "transponder-id": 1,
-                     "transceiver": [
-                       {
-                         "transceiver-id": 1,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Red OTSiG (Forward)",
-                           "otsi-ref": 1
-                         },
-                         "incoming-otsi": {
-                           "otsi-group-ref": "Red OTSiG (Reverse)",
-                           "otsi-ref": 1
-                         }
-                       }
-                     ]
-                   },
-                   {
-                     "transponder-id": 2,
-                     "transceiver": [
-                       {
-                         "transceiver-id": 1,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Forward)",
-                           "otsi-ref": 1
-                         },
-
-
-
-Beller, et al.          Expires 14 September 2023              [Page 99]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                         "incoming-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Reverse)",
-                           "otsi-ref": 1
-                         }
-                       },
-                       {
-                         "transceiver-id": 2,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Forward)",
-                           "otsi-ref": 2
-                         },
-                         "incoming-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Reverse)",
-                           "otsi-ref": 2
-                         }
-                       }
-                     ]
-                   }
-                 ]
-               }
-             }
-           ],
-           "ietf-network-topology:link": [
-             {
-               "link-id": "Add-Drop-Link-1-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-                 "source-tp": "1"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "otsi-group-ref": "Red OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 100]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-1-Reverse",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "1"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-                 "source-tp": "2"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 101]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                           "media-channels": [
-                             {
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Reverse",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "2"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                       "media-channel-groups": {
-                         "media-channel-group": [
-                           {
-                             "i": 1,
-                             "media-channels": [
-                               {
-                                 "otsi-group-ref": "Green OTSiG (Reverse)",
-                                 "otsi-ref": [
-                                   {
-                                     "otsi-carrier-ref": 1
-                                   }
-                                 ]
-                               }
-                             ]
-                           }
-                         ]
-                       }
-                     }
-                 }
-               }
-             },
-             {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 102]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-               "link-id": "Add-Drop-Link-3-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-                 "source-tp": "3"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-3-Reverse",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "3"
-               },
-               "ietf-te-topology:te": {
-                 "ietf-te-topology:te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 2
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 103]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Bundled-Link-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-                 "source-tp": "23"
-               },
-               "ietf-te-topology:te": {
-                 "bundled-links": {
-                   "bundled-link": [
-                     {
-                       "sequence": 1,
-                       "src-tp-ref": "2"
-                     },
-                     {
-                       "sequence": 2,
-                       "src-tp-ref": "3"
-                     }
-                   ]
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Bundled-Link-Reverse",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "23"
-               },
-               "ietf-te-topology:te": {
-                 "bundled-links": {
-                   "bundled-link": [
-                     {
-                       "sequence": 1,
-                       "des-tp-ref": "2"
-                     },
-                     {
-                       "sequence": 2,
-                       "des-tp-ref": "3"
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 104]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     }
-                   ]
-                 }
-               }
-             }
-           ]
-         },
-         {
-           "network-id": "WDM-Network-2",
-           "network-types": {
-             "ietf-te-topology:te-topology": {
-               "ietf-optical-impairment-topology:optical-impairment-topology": {}
-             }
-           },
-           "ietf-te-topology:te-topology-identifier": {
-             "topology-id": "WDM-Network-2"
-           },
-           "ietf-te-topology:te": {},
-           "ietf-optical-impairment-topology:otsi-information": {
-             "otsi-group": [
-               {
-                 "otsi-group-id": "Red OTSiG (Forward)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Red OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Green OTSiG (Forward)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-               },
-               {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 105]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 "otsi-group-id": "Green OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-               }
-             ]
-           },
-           "node": [
-             {
-               "node-id": "WDM-TE-Node-2",
-               "ietf-te-topology:te-node-id": "192.0.2.2",
-               "ietf-te-topology:te": {},
-               "ietf-network-topology:termination-point": [
-                 {
-                   "tp-id": "1",
-                   "ietf-te-topology:te-tp-id": 1,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "2",
-                   "ietf-te-topology:te-tp-id": 2,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "3",
-                   "ietf-te-topology:te-tp-id": 3,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "4",
-                   "ietf-te-topology:te-tp-id": 4,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "AQ=="
-                   }
-                 },
-                 {
-                   "tp-id": "5",
-                   "ietf-te-topology:te-tp-id": 5,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "Ag=="
-                   }
-                 },
-                 {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 106]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                   "tp-id": "6",
-                   "ietf-te-topology:te-tp-id": 6,
-                   "ietf-te-topology:te": {
-                     "inter-domain-plug-id": "Awo="
-                   }
-                 }
-               ]
-             }
-           ],
-           "ietf-network-topology:link": [
-             {
-               "link-id": "Add-Drop-Link-1-Forward",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "4"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -10,
-                               "otsi-group-ref": "Red OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-1-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "4"
-               },
-               "ietf-te-topology:te": {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 107]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Forward",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "5"
-               },
-               "ietf-te-topology:te": {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 108]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -20,
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "5"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 109]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-3-Forward",
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "6"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -20,
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 110]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-3-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "6"
-               },
-               "ietf-te-topology:te": {
-                 "ietf-te-topology:te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 111]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             }
-           ]
-         },
-         {
-           "network-id": "WDM-Network-Complete",
-           "network-types": {
-             "ietf-te-topology:te-topology": {
-               "ietf-optical-impairment-topology:optical-impairment-topology": {}
-             }
-           },
-           "ietf-te-topology:te-topology-identifier": {
-             "topology-id": "WDM-Network-Complete"
-           },
-           "ietf-te-topology:te": {},
-           "ietf-optical-impairment-topology:otsi-information": {
-             "otsi-group": [
-               {
-                 "otsi-group-id": "Red OTSiG (Forward)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Red OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   }
-                 ]
-               },
-               {
-                 "otsi-group-id": "Green OTSiG (Forward)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 112]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-               },
-               {
-                 "otsi-group-id": "Green OTSiG (Reverse)",
-                 "otsi": [
-                   {
-                     "otsi-carrier-id": 1
-                   },
-                   {
-                     "otsi-carrier-id": 2
-                   }
-                 ]
-               }
-             ]
-           },
-           "node": [
-             {
-               "node-id": "WDM-TE-Node-1",
-               "ietf-te-topology:te-node-id": "192.0.2.1",
-               "ietf-te-topology:te": {
-                 "ietf-te-topology:tunnel-termination-point": [
-                   {
-                     "tunnel-tp-id": "AQ==",
-                     "ietf-optical-impairment-topology:ttp-transceiver": [
-                       {
-                         "transponder-ref": 1,
-                         "transceiver-ref": 1
-                       }
-                     ],
-                     "local-link-connectivities": {
-                       "is-allowed": false,
-                       "local-link-connectivity": [
-                         {
-                           "link-tp-ref": "1",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 1,
-                               "ttp-transceiver-ref": 1,
-                               "is-allowed": true
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   },
-                   {
-                     "tunnel-tp-id": "Ag==",
-                     "ietf-optical-impairment-topology:ttp-transceiver": [
-                       {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 113]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                         "transponder-ref": 2,
-                         "transceiver-ref": 1
-                       },
-                       {
-                         "transponder-ref": 2,
-                         "transceiver-ref": 2
-                       }
-                     ],
-                     "local-link-connectivities": {
-                       "is-allowed": false,
-                       "local-link-connectivity": [
-                         {
-                           "link-tp-ref": "2",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 2,
-                               "ttp-transceiver-ref": 1,
-                               "is-allowed": true
-                             }
-                           ]
-                         },
-                         {
-                           "link-tp-ref": "3",
-                           "ietf-optical-impairment-topology:llc-transceiver": [
-                             {
-                               "ttp-transponder-ref": 2,
-                               "ttp-transceiver-ref": 2,
-                               "is-allowed": true
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 ]
-               },
-               "ietf-network-topology:termination-point": [
-                 {
-                   "tp-id": "1",
-                   "ietf-te-topology:te-tp-id": 1,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "2",
-                   "ietf-te-topology:te-tp-id": 2,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 114]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                   "tp-id": "3",
-                   "ietf-te-topology:te-tp-id": 3,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "23",
-                   "ietf-te-topology:te-tp-id": 23
-                 }
-               ],
-               "ietf-optical-impairment-topology:transponders": {
-                 "transponder": [
-                   {
-                     "transponder-id": 1,
-                     "transceiver": [
-                       {
-                         "transceiver-id": 1,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Red OTSiG (Forward)",
-                           "otsi-ref": 1
-                         },
-                         "incoming-otsi": {
-                           "otsi-group-ref": "Red OTSiG (Reverse)",
-                           "otsi-ref": 1
-                         }
-                       }
-                     ]
-                   },
-                   {
-                     "transponder-id": 2,
-                     "transceiver": [
-                       {
-                         "transceiver-id": 1,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Forward)",
-                           "otsi-ref": 1
-                         },
-                         "incoming-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Reverse)",
-                           "otsi-ref": 1
-                         }
-                       },
-                       {
-                         "transceiver-id": 2,
-                         "outgoing-otsi": {
-                           "otsi-group-ref": "Green OTSiG (Forward)",
-                           "otsi-ref": 2
-                         },
-                         "incoming-otsi": {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 115]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                           "otsi-group-ref": "Green OTSiG (Reverse)",
-                           "otsi-ref": 2
-                         }
-                       }
-                     ]
-                   }
-                 ]
-               }
-             },
-             {
-               "node-id": "WDM-TE-Node-2",
-               "ietf-te-topology:te-node-id": "192.0.2.2",
-               "ietf-te-topology:te": {},
-               "ietf-network-topology:termination-point": [
-                 {
-                   "tp-id": "1",
-                   "ietf-te-topology:te-tp-id": 1,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "2",
-                   "ietf-te-topology:te-tp-id": 2,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "3",
-                   "ietf-te-topology:te-tp-id": 3,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "4",
-                   "ietf-te-topology:te-tp-id": 4,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "5",
-                   "ietf-te-topology:te-tp-id": 5,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "6",
-                   "ietf-te-topology:te-tp-id": 6,
-                   "ietf-te-topology:te": {}
-                 },
-                 {
-                   "tp-id": "56",
-                   "ietf-te-topology:te-tp-id": 56,
-                   "ietf-te-topology:te": {}
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 116]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 }
-               ]
-             }
-           ],
-           "ietf-network-topology:link": [
-             {
-               "link-id": "Add-Drop-Link-1-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-                 "source-tp": "1"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "4"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -10,
-                               "otsi-group-ref": "Red OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-1-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "4"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 117]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 "dest-tp": "1"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-1",
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 118]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                 "source-tp": "2"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "5"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -20,
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-2-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "5"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "2"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 119]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-3-Forward",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "4"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-2",
-                 "dest-tp": "6"
-               },
-               "ietf-te-topology:te": {
-                 "te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 120]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": -20,
-                               "otsi-group-ref": "Green OTSiG (Forward)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             },
-             {
-               "link-id": "Add-Drop-Link-3-Reverse",
-               "source": {
-                 "source-node": "WDM-TE-Node-2",
-                 "source-tp": "6"
-               },
-               "destination": {
-                 "dest-node": "WDM-TE-Node-1",
-                 "dest-tp": "3"
-               },
-               "ietf-te-topology:te": {
-                 "ietf-te-topology:te-link-attributes": {
-                   "ietf-optical-impairment-topology:OMS-attributes": {
-                     "media-channel-groups": {
-                       "media-channel-group": [
-                         {
-                           "i": 1,
-                           "media-channels": [
-                             {
-                               "flexi-n": 10,
-                               "otsi-group-ref": "Red OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 }
-                               ]
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 121]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
-                             }
-                           ]
-                         },
-                         {
-                           "i": 2,
-                           "media-channels": [
-                             {
-                               "flexi-n": 20,
-                               "otsi-group-ref": "Green OTSiG (Reverse)",
-                               "otsi-ref": [
-                                 {
-                                   "otsi-carrier-ref": 1
-                                 },
-                                 {
-                                   "otsi-carrier-ref": 2
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     }
-                   }
-                 }
-               }
-             }
-           ]
-         }
-       ]
-     }
-   }
 
 Contributors
 
@@ -6825,14 +5180,6 @@ Contributors
 
 
 Additional Authors
-
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 122]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
 
    Young Lee
    Samsung Electronics
@@ -6852,6 +5199,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    Giovanni Martinelli
    Cisco
    Email: giomarti@cisco.com
+
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 93]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
    Jean-Luc Auge
@@ -6881,15 +5237,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 Authors' Addresses
 
-
-
-
-
-Beller, et al.          Expires 14 September 2023             [Page 123]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
-
-
    Dieter Beller (editor)
    Nokia
    Email: Dieter.Beller@nokia.com
@@ -6908,6 +5255,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
    G. Galimberti
    Cisco
    Email: ggalimbe@cisco.com
+
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 94]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
    Italo Busi
@@ -6941,4 +5297,24 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2023
 
 
 
-Beller, et al.          Expires 14 September 2023             [Page 124]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.          Expires 14 September 2023              [Page 95]
