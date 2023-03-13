@@ -2411,9 +2411,9 @@ module: ietf-optical-impairment-topology
                 |           +--ro (power-param)?
                 |           |  +--:(channel-power)
                 |           |  |  +--ro nominal-carrier-power?
-                |           |  |          l0-types:power-in-dbm-or-null
+                |           |  |        l0-types:power-in-dbm-or-null
                 |           |  +--:(power-spectral-density)
-                |           |     +--ro nominal-power-spectral-density?
+                |           |   +--ro nominal-power-spectral-density?
                 |           |             union
                 |           +--ro raman-direction?
                 |           |       enumeration
@@ -2421,7 +2421,7 @@ module: ietf-optical-impairment-topology
                 |              +--ro frequency?
                 |              |       l0-types:frequency-thz
                 |              +--ro power?
-                |                     l0-types:decimal-2-digits-or-null
+                |                   l0-types:decimal-2-digits-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -4321,6 +4321,8 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8453.xml"/>
 
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
+
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9093.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
@@ -4963,11 +4965,16 @@ reference: RFC XXXX (TDB)
   <t>
    [Editor's note: Introductory text TBA here.]
   </t>
-
+  
   <t>
-   [Editor's note: JSON example from JSON file TBA below.]
+   The JSON example below describes ... (TBA)
   </t>
   
+  <t>
+   Line-folding as defined in <xref target="RFC8792"/> has been used
+   for the JSON code example below.
+  </t>
+
   <sourcecode type="json" markers="false">
     <![CDATA[
 {
@@ -4977,7 +4984,8 @@ reference: RFC XXXX (TDB)
         "network-id": "WDM-Network-1",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+            "ietf-optical-impairment-topology:optical-impairment-top\
+ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -5034,7 +5042,8 @@ reference: RFC XXXX (TDB)
               "ietf-te-topology:tunnel-termination-point": [
                 {
                   "tunnel-tp-id": "AQ==",
-                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                  "ietf-optical-impairment-topology:ttp-transceiver"\
+: [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -5045,7 +5054,8 @@ reference: RFC XXXX (TDB)
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "1",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -5058,7 +5068,8 @@ reference: RFC XXXX (TDB)
                 },
                 {
                   "tunnel-tp-id": "Ag==",
-                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                  "ietf-optical-impairment-topology:ttp-transceiver"\
+: [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -5073,7 +5084,8 @@ reference: RFC XXXX (TDB)
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "2",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -5083,7 +5095,8 @@ reference: RFC XXXX (TDB)
                       },
                       {
                         "link-tp-ref": "3",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -5248,7 +5261,8 @@ reference: RFC XXXX (TDB)
                         "i": 1,
                         "media-channels": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -5278,7 +5292,8 @@ reference: RFC XXXX (TDB)
                           "i": 1,
                           "media-channels": [
                             {
-                              "otsi-group-ref": "Green OTSiG (Reverse)",
+                              "otsi-group-ref": "Green OTSiG (Revers\
+e)",
                               "otsi-ref": [
                                 {
                                   "otsi-carrier-ref": 1
@@ -5308,7 +5323,8 @@ reference: RFC XXXX (TDB)
                         "i": 1,
                         "media-channels": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 2
@@ -5338,7 +5354,8 @@ reference: RFC XXXX (TDB)
                         "i": 1,
                         "media-channels": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 2
@@ -5401,7 +5418,8 @@ reference: RFC XXXX (TDB)
         "network-id": "WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+            "ietf-optical-impairment-topology:optical-impairment-top\
+ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -5557,7 +5575,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -5591,7 +5610,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -5636,7 +5656,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -5670,7 +5691,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 2
@@ -5715,7 +5737,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -5739,7 +5762,8 @@ reference: RFC XXXX (TDB)
         "network-id": "WDM-Network-Complete",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+            "ietf-optical-impairment-topology:optical-impairment-top\
+ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -5796,7 +5820,8 @@ reference: RFC XXXX (TDB)
               "ietf-te-topology:tunnel-termination-point": [
                 {
                   "tunnel-tp-id": "AQ==",
-                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                  "ietf-optical-impairment-topology:ttp-transceiver"\
+: [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -5807,7 +5832,8 @@ reference: RFC XXXX (TDB)
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "1",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -5820,7 +5846,8 @@ reference: RFC XXXX (TDB)
                 },
                 {
                   "tunnel-tp-id": "Ag==",
-                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                  "ietf-optical-impairment-topology:ttp-transceiver"\
+: [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -5835,7 +5862,8 @@ reference: RFC XXXX (TDB)
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "2",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -5845,7 +5873,8 @@ reference: RFC XXXX (TDB)
                       },
                       {
                         "link-tp-ref": "3",
-                        "ietf-optical-impairment-topology:llc-transceiver": [
+                        "ietf-optical-impairment-topology:llc-transc\
+eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -6040,7 +6069,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -6078,7 +6108,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -6127,7 +6158,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -6165,7 +6197,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-group-ref": "Green OTSiG (Forward)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -6214,7 +6247,8 @@ reference: RFC XXXX (TDB)
                         "media-channels": [
                           {
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-group-ref": "Green OTSiG (Reverse)\
+",
                             "otsi-ref": [
                               {
                                 "otsi-carrier-ref": 1
@@ -6236,7 +6270,8 @@ reference: RFC XXXX (TDB)
       }
     ]
   }
-}    ]]>
+}
+    ]]>
   </sourcecode>
   
   </section>
