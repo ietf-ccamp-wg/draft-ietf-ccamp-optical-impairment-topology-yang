@@ -586,7 +586,7 @@ module ietf-optical-impairment-topology {
           This permits to determine 
           amplifier OSNR contribution 
           without having to specify the 
-          ROADM node’s losses to that amplifier.
+          ROADM node's losses to that amplifier.
           This applies for the case of no 
           additional drop path loss, 
           before the amplifier, in order to reduce the power
