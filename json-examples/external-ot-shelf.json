@@ -1,0 +1,1267 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "WDM-Network-1",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-1"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:otsi-information": {
+          "otsi-group": [
+            {
+              "otsi-group-id": "Red OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Red OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            }
+          ]
+        },
+        "node": [
+          {
+            "node-id": "WDM-TE-Node-1",
+            "ietf-te-topology:te-node-id": "192.0.2.1",
+            "ietf-te-topology:te": {
+              "ietf-te-topology:tunnel-termination-point": [
+                {
+                  "tunnel-tp-id": "AQ==",
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                    {
+                      "transponder-ref": 1,
+                      "transceiver-ref": 1
+                    }
+                  ],
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "1",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 1,
+                            "ttp-transceiver-ref": 1,
+                            "is-allowed": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Ag==",
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                    {
+                      "transponder-ref": 2,
+                      "transceiver-ref": 1
+                    },
+                    {
+                      "transponder-ref": 2,
+                      "transceiver-ref": 2
+                    }
+                  ],
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "2",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 2,
+                            "ttp-transceiver-ref": 1,
+                            "is-allowed": true
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "3",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 2,
+                            "ttp-transceiver-ref": 2,
+                            "is-allowed": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1",
+                "ietf-te-topology:te-tp-id": 1,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "AQ=="
+                }
+              },
+              {
+                "tp-id": "2",
+                "ietf-te-topology:te-tp-id": 2,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "Ag=="
+                }
+              },
+              {
+                "tp-id": "3",
+                "ietf-te-topology:te-tp-id": 3,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "Awo="
+                }
+              },
+              {
+                "tp-id": "23",
+                "ietf-te-topology:te-tp-id": 23
+              }
+            ],
+            "ietf-optical-impairment-topology:transponders": {
+              "transponder": [
+                {
+                  "transponder-id": 1,
+                  "transceiver": [
+                    {
+                      "transceiver-id": 1,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Red OTSiG (Forward)",
+                        "otsi-ref": 1
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "otsi-ref": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "transponder-id": 2,
+                  "transceiver": [
+                    {
+                      "transceiver-id": 1,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "otsi-ref": 1
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "otsi-ref": 1
+                      }
+                    },
+                    {
+                      "transceiver-id": 2,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "otsi-ref": 2
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "otsi-ref": 2
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "Add-Drop-Link-1-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "1"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "otsi-group-ref": "Red OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-1-Reverse",
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "1"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "2"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Reverse",
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "2"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                    "media-channel-groups": {
+                      "media-channel-group": [
+                        {
+                          "i": 1,
+                          "media-channels": [
+                            {
+                              "otsi-group-ref": "Green OTSiG (Reverse)",
+                              "otsi-ref": [
+                                {
+                                  "otsi-carrier-ref": 1
+                                } 
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "3"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Reverse",
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "3"
+            },
+            "ietf-te-topology:te": {
+              "ietf-te-topology:te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Bundled-Link-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "23"
+            },
+            "ietf-te-topology:te": {
+              "bundled-links": {
+                "bundled-link": [
+                  {
+                    "sequence": 1,
+                    "src-tp-ref": "2"
+                  },
+                  {
+                    "sequence": 2,
+                    "src-tp-ref": "3"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Bundled-Link-Reverse",
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "23"
+            },
+            "ietf-te-topology:te": {
+              "bundled-links": {
+                "bundled-link": [
+                  {
+                    "sequence": 1,
+                    "des-tp-ref": "2"
+                  },
+                  {
+                    "sequence": 2,
+                    "des-tp-ref": "3"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "WDM-Network-2",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-2"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:otsi-information": {
+          "otsi-group": [
+            {
+              "otsi-group-id": "Red OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Red OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            }
+          ]
+        },
+        "node": [
+          {
+            "node-id": "WDM-TE-Node-2",
+            "ietf-te-topology:te-node-id": "192.0.2.2",
+            "ietf-te-topology:te": {},
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1",
+                "ietf-te-topology:te-tp-id": 1,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "2",
+                "ietf-te-topology:te-tp-id": 2,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "3",
+                "ietf-te-topology:te-tp-id": 3,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "4",
+                "ietf-te-topology:te-tp-id": 4,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "AQ=="
+                }
+              },
+              {
+                "tp-id": "5",
+                "ietf-te-topology:te-tp-id": 5,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "Ag=="
+                }
+              },
+              {
+                "tp-id": "6",
+                "ietf-te-topology:te-tp-id": 6,
+                "ietf-te-topology:te": {
+                  "inter-domain-plug-id": "Awo="
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "Add-Drop-Link-1-Forward",
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "4"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -10,
+                            "otsi-group-ref": "Red OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-1-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "4"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Forward",
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "5"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -20,
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "5"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Forward",
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "6"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -20,
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "6"
+            },
+            "ietf-te-topology:te": {
+              "ietf-te-topology:te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ] 
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "WDM-Network-Complete",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-Complete"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:otsi-information": {
+          "otsi-group": [
+            {
+              "otsi-group-id": "Red OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Red OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Forward)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            },
+            {
+              "otsi-group-id": "Green OTSiG (Reverse)",
+              "otsi": [
+                {
+                  "otsi-carrier-id": 1
+                },
+                {
+                  "otsi-carrier-id": 2
+                }
+              ]
+            }
+          ]
+        },
+        "node": [
+          {
+            "node-id": "WDM-TE-Node-1",
+            "ietf-te-topology:te-node-id": "192.0.2.1",
+            "ietf-te-topology:te": {
+              "ietf-te-topology:tunnel-termination-point": [
+                {
+                  "tunnel-tp-id": "AQ==",
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                    {
+                      "transponder-ref": 1,
+                      "transceiver-ref": 1
+                    }
+                  ],
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "1",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 1,
+                            "ttp-transceiver-ref": 1,
+                            "is-allowed": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Ag==",
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
+                    {
+                      "transponder-ref": 2,
+                      "transceiver-ref": 1
+                    },
+                    {
+                      "transponder-ref": 2,
+                      "transceiver-ref": 2
+                    }
+                  ],
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "2",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 2,
+                            "ttp-transceiver-ref": 1,
+                            "is-allowed": true
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "3",
+                        "ietf-optical-impairment-topology:llc-transceiver": [
+                          {
+                            "ttp-transponder-ref": 2,
+                            "ttp-transceiver-ref": 2,
+                            "is-allowed": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1",
+                "ietf-te-topology:te-tp-id": 1,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "2",
+                "ietf-te-topology:te-tp-id": 2,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "3",
+                "ietf-te-topology:te-tp-id": 3,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "23",
+                "ietf-te-topology:te-tp-id": 23
+              }
+            ],
+            "ietf-optical-impairment-topology:transponders": {
+              "transponder": [
+                {
+                  "transponder-id": 1,
+                  "transceiver": [
+                    {
+                      "transceiver-id": 1,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Red OTSiG (Forward)",
+                        "otsi-ref": 1
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "otsi-ref": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "transponder-id": 2,
+                  "transceiver": [
+                    {
+                      "transceiver-id": 1,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "otsi-ref": 1
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "otsi-ref": 1
+                      }
+                    },
+                    {
+                      "transceiver-id": 2,
+                      "outgoing-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "otsi-ref": 2
+                      },
+                      "incoming-otsi": {
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "otsi-ref": 2
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "WDM-TE-Node-2",
+            "ietf-te-topology:te-node-id": "192.0.2.2",
+            "ietf-te-topology:te": {},
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1",
+                "ietf-te-topology:te-tp-id": 1,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "2",
+                "ietf-te-topology:te-tp-id": 2,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "3",
+                "ietf-te-topology:te-tp-id": 3,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "4",
+                "ietf-te-topology:te-tp-id": 4,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "5",
+                "ietf-te-topology:te-tp-id": 5,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "6",
+                "ietf-te-topology:te-tp-id": 6,
+                "ietf-te-topology:te": {}
+              },
+              {
+                "tp-id": "56",
+                "ietf-te-topology:te-tp-id": 56,
+                "ietf-te-topology:te": {}
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "Add-Drop-Link-1-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "1"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "4"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -10,
+                            "otsi-group-ref": "Red OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-1-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "4"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "1"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-1",
+              "source-tp": "2"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "5"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -20,
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-2-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "5"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "2"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ] 
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Forward",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "4"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-2",
+              "dest-tp": "6"
+            },
+            "ietf-te-topology:te": {
+              "te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": -20,
+                            "otsi-group-ref": "Green OTSiG (Forward)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          },
+          {
+            "link-id": "Add-Drop-Link-3-Reverse",
+            "source": {
+              "source-node": "WDM-TE-Node-2",
+              "source-tp": "6"
+            },
+            "destination": {
+              "dest-node": "WDM-TE-Node-1",
+              "dest-tp": "3"
+            },
+            "ietf-te-topology:te": {
+              "ietf-te-topology:te-link-attributes": {
+                "ietf-optical-impairment-topology:OMS-attributes": {
+                  "media-channel-groups": {
+                    "media-channel-group": [
+                      {
+                        "i": 1,
+                        "media-channels": [
+                          {
+                            "flexi-n": 10,
+                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "i": 2,
+                        "media-channels": [
+                          {
+                            "flexi-n": 20,
+                            "otsi-group-ref": "Green OTSiG (Reverse)",
+                            "otsi-ref": [
+                              {
+                                "otsi-carrier-ref": 1
+                              },
+                              {
+                                "otsi-carrier-ref": 2
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]  
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
