@@ -1,0 +1,126 @@
+# YANG model for Optical Impairment aware Topology week (April 18th,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [] Julien Meuric
+- [] Italo Busi
+- [x] Gert Grammel
+- [] Gabriele Galimberti 
+- [] Yuji Tochio
+- [x] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+
+## Admin
+
+### Review APs (action point) 
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+### Closed Issues
+
+#### issue #26 Convention for ITU-T Recommendations https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/26
+
+the last decision is that "If it is not prohibit the usage of "." , we can use the "." also in YANG statements.
+RFC8407 allows using the "." for ITU-T Recommendation numbers since it is a well-know value (see https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/26#issuecomment-1503279997)
+
+### Next calls
+next call on Tuesday, May 2nd.
+The weekly call foreseen for April 25th, will be deleted due to a bank holiday in Italy.
+
+
+### General discussion
+
+
+### YANG doctor review feedback
+As required during IETF-116 presentation, a YANGdoctors review has been provided to both RFC9093-bis and OI Topology model .
+Two specific issues have been added to address the answers to YANGdoctors
+issues #68 https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68 for RFC9093-bis and 
+issue #133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+
+We went through briefly the proposed replies for both YANGdoctors reviews.
+People are welcome to review the proposed replies and add comments if needed. 
+
+### RFC9093-bis issues review and priority
+
+Following what discussed during the presentation made in IETF 116, we started to review some of the issues still open in RFC9093-bis.
+The intention is to valuate which of these issues can  create dependency on Optical Impairments Topology YANG model.
+
+#### issue #65 pyang tree length issue   https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/65
+
+Related to this issue it was decided to add a new issue for both RFC9093-bis and OI aware Topology YANG model, to check length of the names of attributes and 
+see where it is possible to shorten them.
+see 
+* issue #134 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/134  for OI Topology model
+* issue #69 https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/69 for RFC9093-bis
+
+#### Issue #64 Downrefs https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/64
+
+The issue could be solved just putting "Informative reference" instead of "normative reference"
+
+#### Issue #56 Name for the channel spacing type https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/56
+
+see proposal https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/56#issuecomment-1498817041
+
+why do not use nominal central frequency granularity e.g. dwdm-ncf-granularity-type from now on in RFC9093-bis instead of channel spacing ?
+
+#### Issue #61 Question from Julien during Last Call (Jan, 2022) https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/61 
+
+We need to add text in RFC9093-bis draft to clarify that the available nominal central frequencies are correlated with m=1
+as stated in Section 3.1 of RFC8363.
+To be fixed in the next update.
+
+The fact to add or not the text also in flexi-grid I-D will be discussed in the flexi-grid Thursday's calls.
+
+#### Issue #33 Label encoding w/ branching https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/33
+
+No strong position, need to have Julien to decide.
+No impact for OI draft since "flexi-grid-label-hop" grouping, where the branching is defined, is not used in the topology model for OI. 
+
+Potential problem for BC. 
+An alternative option could be to define a new grouping and either do not modify the flexi-grid-label-hop grouping or deprecate it.
+
+An alternative option could be not to change the YANG model but to clarify that the (super) case can be used also for single channel e.g. in the layer0-types-ext.
+
+Last proposal from Julien: do not change the YANG but specify in the text there should be a unique way to describe a single-channel label
+(i.e., prevent the use of super in case of single n) : this would avoid possible IW problem
+
+#### Issue #16 Need to align FEC Identities
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16
+
+see last proposal https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16#issuecomment-1508482369 
+
+Gert:we need to check if there could be interworking problems.
+The RS FEC is terminated between the host and the module.
+There are different interleaving defined for RS modualtion formats and the question is if an impact for interoperability can exist.
+The conclusions are:
+- We need to have Gabriele since, together with Enrico, has provided the list of new RS different FEC types
+- Apparently the proposal to focus only on FEC definition that are actually used for line transmission can be acceptable,
+provided that further investigation would be needed to clarify if interworking problem can be possible with RS modulation formats.
+
+#### Issue #10 Need for frequency and power range attributes also with Standard Mode 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/10
+
+G.698.2 application codes also defines the minimum and maximum central frequency to be supported (see clause 7.2.2 of G.698.2)
+G.698.2 application codes also defines the minimum and maximum channel output power to be supported (see clause 7.2.1 of G.698.2)
+G.698.2 application codes also defines the minimum and maximum mean input power to be supported (see clause 7.4.1 of G.698.2)
+
+Therefore it seems useful to add also to the standard mode the attributes used to report the frequency and power ranges supported by a given transceiver 
+for a given application code.
+
+No comment/concern during the meeting about the possible update of the model.
+
+
+
