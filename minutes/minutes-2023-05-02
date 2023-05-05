@@ -1,0 +1,92 @@
+# YANG model for Optical Impairment aware Topology week (May 2nd,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [] Gert Grammel
+- [] Gabriele Galimberti 
+- [] Yuji Tochio
+- [] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, 
+making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+####issue #110 "*Unnecessary supported-modes level*"
+The issue is the usage of "container" as immediate parent of a "list" 
+After the update of the model for profiling the issue has been partially resolved 
+
+**AP: Julien** to valuate if the updated model is enough to overcome the issue
+
+### Review APs (action point) RFC9093-bis
+
+
+### Closed Issues
+
+
+
+### Next calls
+next call on Tuesday, May 9th.
+
+It was proposed to organize the following weekly call with an agenda addressing specific remaining issues to close. 
+So the required "mandatory" participants to the meeting are the ones to which the different issues in agenda are assigned. 
+Other possible attendees are "optional".
+
+
+### YANG doctor review feedback
+As required during IETF-116 presentation, a YANGdoctors review has been provided to both RFC9093-bis and OI Topology model .
+Two specific issues have been added to address the answers to YANGdoctors
+issues #68 https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68 for RFC9093-bis and issue #133
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+
+We went through briefly the proposed replies for both YANGdoctors reviews.
+People are welcome to review the proposed replies and add comments if needed. 
+
+For OI Topology model we will update the model following the YANG doctor review suggestion as indicated in the github of issue#133
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+
+
+### General discussion
+
+#### issue #133 Yangdoctors last call review of 
+draft-ietf-ccamp-optical-impairment-topology-yang-12 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+No comments/concerns during the meeting about the possible update of the model along the lines indicated by YANG doctors and reported in issue#133.
+A specific PR is foreseen to update the YANG model.
+
+#### issue #62  of RFC9093-bis "Multiple line codings for the same ITU-T application code" 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/62
+We need to decide if to adopt with organizational and explicit mode the same approach we would use for application code as soon as the liaison 
+from ITU-T will arrive.
+see comment https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/62#issuecomment-1536481817
+
+#### Issue #16 Need to align FEC Identities
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16issue #16 
+
+The agreement would be to stay with the three FEC as proposed in the comment
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16#issuecomment-1508482369 .
+Since the FEC types are defined in "available-fec-type" attribute that is of type identityref, nothing preclude in future new identities 
+representing FEC types as soon as new standard FEC types should be proposed.
+Before to close the issue we need to check YANG code if the related 3 identities for the 3 FEC types have been already defined 
+
+
+
