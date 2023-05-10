@@ -1,0 +1,115 @@
+# YANG model for Optical Impairment aware Topology week (May 9th,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [] Aihua Guo
+- [] Esther Lerouzic
+- [x] Julien Meuric
+- [] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, 
+making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+####issue #110 "*Unnecessary supported-modes level*"
+The issue is the usage of "container" as immediate parent of a "list" 
+After the update of the model for profiling the issue has been partially resolved 
+
+**AP: Julien** to valuate if the updated model is enough to overcome the issue
+
+### Review APs (action point) RFC9093-bis
+
+
+### Closed Issues
+
+
+
+### Next calls
+next call on Tuesday, May 16
+
+
+It was proposed to organize the following weekly call with an agenda addressing specific remaining issues to close. So the required "mandatory" 
+participants to the meeting are the ones to which the different issues in agenda are assigned. Other possible attendees are "optional".
+
+
+### YANG doctor review feedback
+As required during IETF-116 presentation, a YANGdoctors review has been provided to both RFC9093-bis and OI Topology model .
+Two specific issues have been added to address the answers to YANGdoctors
+issues #68 https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68 for RFC9093-bis and
+issue #133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+
+We went through briefly the proposed replies for both YANGdoctors reviews.
+People are welcome to review the proposed replies and add comments if needed. 
+
+For OI Topology model we will update the model following the YANG doctor review suggestion as indicated in the github of
+issue#133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+
+
+### General discussion
+
+#### Issue #16 Need to align FEC Identities
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16issue #16 
+
+The agreement would be to stay with the three FEC as proposed in the comment
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16#issuecomment-1508482369 .
+Since the FEC types are defined in "available-fec-type" attribute that is of type identityref, nothing preclude in future new identities 
+representing FEC types as soon as new standard FEC types should be proposed.
+Before to close the issue we need to check YANG code if the related 3 identities for the 3 FEC types have been already defined 
+
+##### Discussion
+
+The check on the code has been done and new YANG identies have to be added in the model to cover the three new FEC types definitions.
+
+About the already defined FEC types in YANG:
+* g-fec and e-fec : add correct descriptions and referecne standard (if exist)
+AP: @Gabriele to help providing possible description and standard referecne
+* reed-solomon : since we agreed to focus only on FEC definition that are actually used for line transmission, 
+we agreed to delete "reed-solomon" YANG identity (used for client connection)
+* haming-code, golay : delete the YANG identities
+
+#### Issue #56 Name for the channel spacing 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/56
+
+##### Discussion
+
+There is a proposal to change the name the identity name of dwdm-ch-spc-type into a more friendly name, avoiding the usage of channe spacing since not
+defined in G.694.1.
+Gabriele explained the wrong assumtion is to use channel spacing in the context of flexible grid to compute Nominal centra frequency with the formula 
+Frequency (THz) = 193.1 THz + n * channel spacing (THz). Channel spacing has to be used only for fixed grid.
+Instead is correct to use Nominal Central Frequency Granularity in the above formula, for flexible grid NW.
+
+##### Post meeting note: 
+in our RFC9093-bis model we have two identities deinining the base type for both fixed grid and flexible grid 
+* dwdm-ch-spc-type
+* flexi-ch-spc-type
+The name for the base identity, even if not friendly, it is correct since it uses channel spacing as in G.694.1.
+The problem is for flexible grid where as well it is used "ch-spc" instead to use a name related to "nominal central frequency granularity" as indicated in G.694.1 
+
+193.1 + n × 0.00625 where n is a positive or negative integer including 0 and 0.00625 is the nominal central frequency granularity in THz
+
+It would be more appropriate to change the name of identity base like "flexi-ncf-granularity-type" or if too long a more synthetic "flexi-ncf-gr-type" name and 
+change the description where there is referecne to channel spacing instead of NCF granularity.
+For backward compatiblity issue we cannot modifiy the already present definition we can aonly adding new definitions and take the actions to use in all related models 
+the new definitons on behalf of the old ones.
+
