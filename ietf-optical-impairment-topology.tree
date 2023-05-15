@@ -43,11 +43,6 @@ module: ietf-optical-impairment-topology
     |        |        |     +--ro rx-total-power-max?        dbm-t
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro supported-modes
-    |        |              |  +--ro supported-application-codes*
-    |        |              |  |       -> ../../../mode-id
-    |        |              |  +--ro supported-organizational-modes*
-    |        |              |          -> ../../../mode-id
     |        |              +--ro line-coding-bitrate?
     |        |              |       identityref
     |        |              +--ro bitrate?
@@ -117,7 +112,12 @@ module: ietf-optical-impairment-topology
     |        |              +--ro rx-channel-power-max?
     |        |              |       dbm-t
     |        |              +--ro rx-total-power-max?
-    |        |                      dbm-t
+    |        |              |       dbm-t
+    |        |              +--ro supported-modes
+    |        |                 +--ro supported-application-codes*
+    |        |                 |       -> ../../../mode-id
+    |        |                 +--ro supported-organizational-modes*
+    |        |                         -> ../../../mode-id
     |        +--ro configured-mode?               union
     |        +--ro tx-channel-power?              union
     |        +--ro rx-channel-power?              union
@@ -145,7 +145,8 @@ module: ietf-optical-impairment-topology
        |  |  +--ro nominal-carrier-power?
        |  |          l0-types:power-in-dbm-or-null
        |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?   union
+       |     +--ro nominal-power-spectral-density?
+       |             l0-types:decimal-16-digits-or-null
        +--ro media-channel-groups!
        |  +--ro media-channel-group* [i]
        |     +--ro i                 int16
@@ -196,7 +197,7 @@ module: ietf-optical-impairment-topology
                 |           |  |          l0-types:power-in-dbm-or-null
                 |           |  +--:(power-spectral-density)
                 |           |     +--ro nominal-power-spectral-density?
-                |           |             union
+                |           |             l0-types:decimal-16-digits-or-null
                 |           +--ro raman-direction?
                 |           |       enumeration
                 |           +--ro raman-pump* []
@@ -245,7 +246,8 @@ module: ietf-optical-impairment-topology
           |     |  +--ro lower-frequency    frequency-thz
           |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                union
-          |     +--ro roadm-cd?                 union
+          |     +--ro roadm-cd?
+          |     |       l0-types:decimal-5-digits-or-null
           |     +--ro roadm-pdl?
           |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
@@ -258,7 +260,8 @@ module: ietf-optical-impairment-topology
           |     |  +--ro lower-frequency    frequency-thz
           |     |  +--ro upper-frequency    frequency-thz
           |     +--ro roadm-pmd?                union
-          |     +--ro roadm-cd?                 union
+          |     +--ro roadm-cd?
+          |     |       l0-types:decimal-5-digits-or-null
           |     +--ro roadm-pdl?
           |     |       l0-types:power-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
@@ -268,14 +271,16 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-pmax?
           |     |       l0-types:power-in-dbm-or-null
           |     +--ro roadm-osnr?               l0-types:snr-or-null
-          |     +--ro roadm-noise-figure?       union
+          |     +--ro roadm-noise-figure?
+          |             l0-types:decimal-5-digits-or-null
           +--:(roadm-drop-path)
              +--ro roadm-drop-path* []
                 +--ro frequency-range
                 |  +--ro lower-frequency    frequency-thz
                 |  +--ro upper-frequency    frequency-thz
                 +--ro roadm-pmd?                union
-                +--ro roadm-cd?                 union
+                +--ro roadm-cd?
+                |       l0-types:decimal-5-digits-or-null
                 +--ro roadm-pdl?
                 |       l0-types:power-in-db-or-null
                 +--ro roadm-inband-crosstalk?
@@ -293,7 +298,8 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-ptyp?
                 |       l0-types:power-in-dbm-or-null
                 +--ro roadm-osnr?               l0-types:snr-or-null
-                +--ro roadm-noise-figure?       union
+                +--ro roadm-noise-figure?
+                        l0-types:decimal-5-digits-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
     +--ro roadm-path-impairments?   leafref
@@ -347,3 +353,4 @@ module: ietf-optical-impairment-topology
        |       -> ../../../../../../nt:termination-point/tp-id
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
+
