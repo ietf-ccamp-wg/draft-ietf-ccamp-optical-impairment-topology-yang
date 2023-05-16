@@ -1,0 +1,155 @@
+# YANG model for Optical Impairment aware Topology week (May 16th,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+####issue #110 "*Unnecessary supported-modes level*"
+The issue is the usage of "container" as immediate parent of a "list" 
+After the update of the model for profiling the issue has been partially resolved 
+
+**AP: Julien** to valuate if the updated model is enough to overcome the issue
+
+### Review APs (action point) RFC9093-bis
+
+####issue #16 "*Need to align FEC Identities*" 
+We agree to add new 3 FEC type :+1: 
+* SC-FEC
+* oFEC
+* C-FEC
+We agree to delete:
+* reed-solomon : since we agreed to focus only on FEC definition that are actually used for line transmission, we agreed to delete "reed-solomon" YANG identity (used for client connection)
+* haming-code, golay : delete the YANG identities
+
+* g-fec and e-fec : add correct descriptions and referecne standard (if exist)
+**AP: @Gabriele to help providing possible description and standard referecne**
+
+
+### Closed Issues
+
+
+
+### Next calls
+next call on Tuesday, May 23
+
+
+It was proposed to organize the following weekly call with an agenda addressing specific remaining issues to close. So the required "mandatory" participants to the meeting are the ones to which the different issues in agenda are assigned. Other possible attendees are "optional".
+
+
+### YANG doctor review feedback
+
+We have updated both RFC9093-bis and OI topology model 
+following the YANG doctor review suggestion as indicated in the github of issue#133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+and https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68.
+
+Please review the two PRs #70 and #135: 
+* for RFC9093-bis https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/pull/70
+* for OI topology model https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/pull/135
+
+
+### General discussion
+
+
+#### Issue #56 Name for the channel spacing 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/56
+
+##### Discussion 05-09-23
+
+There is a proposal to change the name the identity name of dwdm-ch-spc-type into a more friendly name, avoiding the usage of 
+channe spacing since not defined in G.694.1.
+Gabriele explained the wrong assumtion is to use channel spacing in the context of flexible grid to compute Nominal centra frequency with the formula 
+Frequency (THz) = 193.1 THz + n * channel spacing (THz). Channel spacing has to be used only for fixed grid.
+Instead is correct to use Nominal Central Frequency Granularity in the above formula, for flexible grid NW.
+
+##### Post meeting note: 
+in our RFC9093-bis model we have two identities deinining the base type for both fixed grid and flexible grid 
+* dwdm-ch-spc-type
+* flexi-ch-spc-type
+The name for the base identity, even if not friendly, it is correct since it uses channel spacing as in G.694.1.
+The problem is for flexible grid where as well it is used "ch-spc" instead to use a name related to "nominal central frequency granularity" 
+as indicated in G.694.1 
+
+193.1 + n × 0.00625 where n is a positive or negative integer including 0 and 0.00625 is the nominal central frequency granularity in THz
+
+It would be more appropriate to change the name of identity base like "flexi-ncf-granularity-type" or if too long a more synthetic "flexi-ncf-gr-type" 
+name and change the description where there is referecne to channel spacing instead of NCF granularity.
+For backward compatiblity issue we cannot modifiy the already present definition we can aonly adding new definitions and take the actions to use in
+all related models the new definitons on behalf of the old ones.
+
+##### Discussion today 05-16-23
+
+The decision is 
+* to "deprecate" the flexi-ch-spc-type, with "deprecated" status statement
+* to substitute that attribute with "flexi-ncf-granularity-type" with a new description. e.g. "Flexi-grid nominal central frequency granularity type"
+* to add new identity "flexi-ncfg-6p25ghz"
+* Open a new issue in the flexible topology and tunnel
+
+#### issue #61 Question from Julien during Last Call https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/61
+
+It was decided to add in the draft this text:
+* "As described in section 3.1 RFC8363,the range of available central frequencies are advertised for m=1, which means that for
+an available central frequency n, the frequency slot from central frequency n-1 to central frequency n+1 is available.
+
+#### issue #33 Label encoding w/ branching
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/33
+
+We can suggest to deprecate the choice in the YANG code of "flexi-grid-label-hop" grouping and use instead a single list.
+This update impacting the syntanx but not semantically the structure is avoiding problem for interoperability .
+We need to share the update in the mailing list.
+
+OLD
+
+    +--:(flexi-grid)
+       +--rw (single-or-super-channel)?
+          +--:(single)
+          |  +--rw flexi-n?              l0-types:flexi-n
+          |  +--rw flexi-m?              l0-types:flexi-m
+          +--:(super)
+             +--rw subcarrier-flexi-n* [flexi-n]
+                +--rw flexi-n    l0-types:flexi-n
+                +--rw flexi-m?   l0-types:flexi-m
+
+NEW
+
+    +--:(flexi-grid)
+       x--rw (single-or-super-channel)?
+       |  x--:(single)
+       |  |  x--rw flexi-n?              l0-types:flexi-n
+       |  |  x--rw flexi-m?              l0-types:flexi-m
+       |  x--:(super)
+       |     x--rw subcarrier-flexi-n* [flexi-n]
+       |        x--rw flexi-n    l0-types:flexi-n
+       |        x--rw flexi-m?   l0-types:flexi-m
+       +--rw tbd* [flexi-n]
+          +--rw flexi-n    l0-types:flexi-n
+          +--rw flexi-m?   l0-types:flexi-m
+
+
+
