@@ -286,7 +286,7 @@ module ietf-optical-impairment-topology {
         }
         type empty;
       }
-      units "ps/(km)^0.5"; 
+      units "ps"; 
       description 
         "Polarization Mode Dispersion (PMD)";
     }
