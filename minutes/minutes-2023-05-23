@@ -1,0 +1,155 @@
+# YANG model for Optical Impairment aware Topology week (May 23rd,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [] Enrico Griseri
+- [] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+- [x] Jonathan Sadler
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+Need to make some json examples and make the validation with yanglint.
+You cannot have two media channel in the same media channel group with the same flexi-n. See figure 5 in section 2.3.4
+
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+
+Need to check if "unique" statement is still valid when flexi-n is not present.
+Esther: flexi-n if it exists must be unique in the media-channel-group upper level list.
+
+####issue #110 "*Unnecessary supported-modes level*"
+The issue is the usage of "container" as immediate parent of a "list" 
+After the update of the model for profiling the issue has been partially resolved 
+
+**AP: Julien** to valuate if the updated model is enough to overcome the issue
+
+We can consider closed this issue with the updated model
+
+
+
+### Review APs (action point) RFC9093-bis
+
+####issue #16 "*Need to align FEC Identities*" 
+We agree to add new 3 FEC type :+1: 
+* SC-FEC
+* oFEC
+* C-FEC
+We agree to delete:
+* reed-solomon : since we agreed to focus only on FEC definition that are actually used for line transmission, we agreed to delete "reed-solomon" YANG identity (used for client connection)
+* haming-code, golay : delete the YANG identities
+
+* g-fec and e-fec : add correct descriptions and referecne standard (if exist)
+**AP: @Gabriele to help providing possible description and standard referecne**
+
+
+### Closed Issues
+
+
+
+### Next calls
+
+
+
+### YANG doctor review feedback
+
+We have updated both RFC9093-bis and OI topology model 
+following the YANG doctor review suggestion as indicated in the github of issue#133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+and https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68.
+
+Please review the two PRs #70 and #135: 
+* for RFC9093-bis https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/pull/70
+* for OI topology model https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/pull/135
+
+Need to change the pmd unit in ps for drop and express path.
+Esther: instead of polarization Mode dispersion we may need to use DGD (differential group delay). 
+**AP:@Esther to check with PSE TIP group when discussion in are finished**.
+
+### General discussion
+
+#### Issue #10 Need for frequency and power range attributes also with Standard Mode
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/10
+
+it seems that G.698.2 does not mandate transceivers to be tunable nor to support tunability for the whole frequency range between the 
+minimum and maximum frequency.
+
+Then it could be useful to add also to the standard mode the attributes used to report the frequency and power ranges supported by a given
+transceiver for a given application code.
+
+##### Discussion
+
+let's check with  Q6 experts our understanding before any update. 
+
+AP: @italo, @sergio to check off-line with Q6 experts 
+
+#### Issue #3 ietf-layer0-types-ext 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/3
+
+it would be wise to check with Yang experts on what is the best way forward here with ietf-layer0-types-ext.
+
+##### Discussion 
+
+The issue is superseded by events and we can consider that as closed.
+
+#### Issue #5 Clarification of layer0 label definitions
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/5
+
+The layero-types defines groupings for augmenting generic TE label for layer0 (WSON and flexi-grid) but there is no description about the concept of 
+layer0 label.
+
+It may be worthwhile adding a paragraph similar to https://tools.ietf.org/html/draft-ietf-ccamp-layer1-types-06#section-4.3 for layer0 labels.
+
+See also: https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-flexigrid-yang/pull/1/files?file-filters%5B%5D=.yang#r490981902
+
+##### Discussion
+
+We agree that we need to add this specific section.
+
+#### Issue #9 Guidance for unique organization-identifier
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/9
+
+Need to provide guidance on how to make the organization-identifier unique (e.g., using an OUI or another IANA assigned registry, for further 
+discussion/investigation).
+
+##### Discussion
+
+The possibilites are to use OUI or to use identyref to identities to be defined
+in an organization specific YANG model.
+
+Julien: Trying to have a solution supporting both options. 
+
+
+
+
+
+
+
+
+
