@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-12"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-13"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -19,39 +19,33 @@
 
   <front>
   <title abbrev="Opt. Impairment-Aware Topo YANG Model">
-   A YANG Data Model for Optical Impairment-aware Topology</title>
+    A YANG Data Model for Optical Impairment-aware Topology</title>
   
   <author initials="D." surname="Beller" fullname="Dieter Beller" role="editor">
-  <organization>Nokia</organization>
-  <address><email>Dieter.Beller@nokia.com</email>
-  </address>
+    <organization>Nokia</organization>
+    <address><email>Dieter.Beller@nokia.com</email></address>
   </author>
   
   <author initials="E." surname="Le Rouzic" fullname="Esther Le Rouzic">
-  <organization>Orange</organization>
-  <address><email>esther.lerouzic@orange.com</email>
-  </address>
+    <organization>Orange</organization>
+    <address><email>esther.lerouzic@orange.com</email></address>
   </author>
   
   <author initials="S." surname="Belotti" fullname="Sergio Belotti">
-  <organization>Nokia</organization>
-  <address><email>Sergio.Belotti@nokia.com</email>
-  </address>
+    <organization>Nokia</organization>
+    <address><email>Sergio.Belotti@nokia.com</email></address>
   </author>
 
   <author initials="G." surname="Galimberti" fullname="G. Galimberti">
-  <organization>Cisco</organization>
-  <address><email>ggalimbe@cisco.com</email>
-  </address>
+    <address><email>ggalimbe56@gmail.com</email></address>
   </author>
   
   <author initials="I." surname="Busi" fullname="Italo Busi">
-  <organization>Huawei Technologies</organization>
-  <address><email>Italo.Busi@huawei.com</email>
-  </address>
+    <organization>Huawei Technologies</organization>
+    <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2023" month="March" day="13" />
+  <date year="2023" month="July" day="10" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -1631,13 +1625,14 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    The YANG model defined in this document supports the following
    optical protection architectures:
   </t>
-    
-  <t><list style="symbols"><?rfc subcompact="yes"?>
-   <t>Individual OTSi protection</t>
-   <t>OMS MCG protection = TE-link protection between adjacent
-   WDM-TE-nodes</t>
-  <?rfc subcompact="no"?>
-  </list></t>
+ 
+  <t>
+    <ul>
+      <li>Individual OTSi protection</li>
+      <li>OMS MCG protection = TE-link protection between adjacent
+          WDM-TE-nodes</li>
+    </ul>
+  </t>
 
   <t>
    [Editor's note: this section is still work in progress]
@@ -1673,12 +1668,139 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   </t>
   
   <t>
-   In case of individual OTSi protection, there are two end-to-end MC
-   paths associated with the OTSi signal. In the YANG model, this is
-   modeled as a leaf list of the otsi providing the e2e-mc-path-id for
-   the two end-to-end MC paths associated with the individually
-   protected otsi.
+   In case of individual OTSi protection without 3R regenerators,
+   two end-to-end MC paths are associated with the OTSi signal. In the
+   YANG model, this is modeled as leaf list of the otsi providing the
+   e2e-mc-path-id for the two end-to-end MC paths associated with the
+   individually 1+1 protected OTSi. This scenario is depicted in
+   <xref target="OTSi_prot_no_3R"/> below.
   </t>
+  
+   <figure align="center" title="Individual OTSi Protection without 3R
+   regenerators" anchor="OTSi_prot_no_3R">
+    <artwork><![CDATA[
+
+                         end-to-end MC path1
+      |<------------------------------------------------------>|
+
+ +-----------+                                          +-----------+
+ | WDM Node1 |           +-----+      +-----+           | WDM Node2 |
+ |      +----|           | WDM |      | WDM |           |----+      |
+ |      |   -o<--------->o-----o<---->o-----o<--------->o-   |      |
+ |  OT  |  / |           |Node3|      |Node4|           | \  |  OT  |
+ | +--+ | /  |           +-----+      +-----+           |  \ | +--+ |
+-o-o  o-o-   |                                          |   -o-o  o-o-
+ | +--+ | \  |     +-----+     +------+     +-----+     |  / | +--+ |
+ |      |  \ |     | WDM |     | WDM  |     | WDM |     | /  |      |
+ |      |   -o<--->o-----o<--->o------o<--->o-----o<--->o-   |      | 
+ |      +----|     |Node5|     | Node6|     |Node7|     |----+      |
+ |           |     +-----+     +------+     +-----+     |           |
+ +-----------+                                          +-----------+
+
+      |<------------------------------------------------------>|
+                         end-to-end MC path2
+
+]]> </artwork>
+  </figure>
+
+  <t>
+   For each OMS MCG (TE-link) along the two end-to-end MC paths, the
+   e2e-mc-path-id is provided for the individually protected OTSi
+   signal. Based on this information, it is possible to construct the
+   two end-to-end MC paths between the optical transponders terminating
+   the individually 1+1 protected OTSi.
+  </t>
+  
+  <t>
+   In the scenario depicted in <xref target="OTSi_prot_no_3R"/>, the
+   e2e-mc-path-id of end-to-end MC path1 is provided for the  TE-links
+   between WDM Node1 and WDM Node3, WDM Node3 and WDM Node4 as well as
+   WDM Node4 and WDM Node2 while the e2e-mc-path-id of end-to-end MC
+   path2 is provided for the TE-links between WDM Node1 and WDM Node5,
+   WDM Node5 and WDM Node6, WDM Node6 and WDM Node7 as well as WDM
+   Node7 and WDM Node2.
+  </t>
+
+  <t>
+   If a 3R regenerator is crossed on one of the two legs or even on
+   both legs, the end-to-end MCs are terminated on both sides of the
+   3R regenerator. The configured-termination-type attribute set to
+   "3r-regeneration" shall be used to indicate that the transceivers
+   are forming a 3R regenerator instead of terminating the layer 0
+   tunnel (layer 0 service).
+   At WDM-nodes containing a 3R regenerator, the end-2-end MCs are
+   stitched together forming the end-to-end path for the layer 0 tunnel
+   (layer 0 service). This is reflected in the leaf list of the OTSi,
+   which now lists all e2e-mc-path-ids of the end-to-end MC paths on
+   the two legs of the individually 1+1 protected OTSi signal.
+  </t>
+  
+  <t>
+   In the scenario depicted in <xref target="OTSi_prot_with_3R"/> below
+   where a 3R regenerator is crossed in WDM Node6 on the lower leg,
+   the e2e-mc-path-id leaf list has 3 entries:
+   
+   <ol>
+     <li>
+       The e2e-mc-path-id identifying end-to-end MC path1 from WDM
+       Node1 via WDM Node3 and WDM Node4 to WDM Node2 (upper leg)
+     </li>
+     <li>
+       The e2e-mc-path-id identifying end-to-end MC path2 from WDM
+       Node1 via WDM Node5 to WDM Node6 containing the 3R regenerator
+       (left hand segment of the lower leg)
+     </li>
+     <li>
+       The e2e-mc-path-id identifying end-to-end MC path3 from WDM
+       Node6 containing the 3R regenerator via WDM Node7 to WDM
+       Node2 (right hand segment of the lower leg)
+     </li>
+   </ol>
+
+   Based on this modeling approach it is possible to identify the
+   end-2-end MCs stitched together at 3R regenerators on each of the
+   two legs of the individually protected 1+1 OTSi signal. Like for
+   the case without 3R regenerators is also possible to associate
+   two end-to-end paths for the two legs between the optical
+   transponders terminating the individually 1+1 protected OTSi
+   in WDM Node1 and WDM Node2, respectively:
+   
+   <ol spacing="compact">
+     <li>end-to-end MC path1 (upper leg)</li>
+     <li>end-to-end MC path2 + end-to-end MC path3 (lower leg)</li>
+   </ol>
+   
+  </t>
+
+  <figure align="center" title="Individual OTSi Protection with a 3R
+   regenerator" anchor="OTSi_prot_with_3R">
+    <artwork><![CDATA[
+
+                         end-to-end MC path1
+      |<------------------------------------------------------>|
+
+ +-----------+                                          +-----------+
+ | WDM Node1 |           +-----+      +-----+           | WDM Node2 |
+ |      +----|           | WDM |      | WDM |           |----+      |
+ |      |   -o<--------->o-----o<---->o-----o<--------->o-   |      |
+ |  OT  |  / |           |Node3|      |Node4|           | \  |  OT  |
+ | +--+ | /  |           +-----+      +-----+           |  \ | +--+ |
+-o-o  o-o-   |                                          |   -o-o  o-o-
+ | +--+ | \  |     +-----+     +------+     +-----+     |  / | +--+ |
+ |      |  \ |     |     |     | +--+ |     |     |     | /  |      |
+ |      |   -o<--->o-----o<--->o-o  o-o<--->o-----o<--->o-   |      | 
+ |      +----|     | WDM |     | +--+ |     | WDM |     |----+      |
+ |           |     |Node5|     |  3R  |     |Node7|     |           |
+ +-----------+     +-----+     +------+     +-----+     +-----------+
+                               WDM Node6
+                               with 3R
+                               Regenerator
+
+      |<------------------------>|  |<------------------------>|
+          end-to-end MC path2           end-to-end MC path3
+
+]]> </artwork>
+  </figure>
   
   <t>Individual OTSi protection use cases:</t>
     <ol type="(%i)">
@@ -2157,10 +2279,74 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    feasibility consideration).
   </t>
 
+  <figure align="center" title="Modeling view of 1+1 protected TE-link
+   with underlying primary and secondary TE-link"
+   anchor="OMS_MCG_prot_link_1">
+    <artwork><![CDATA[
+
+
+         WDM-TE-Node-1                         WDM-TE-Node-2
+    +-----------------------+           +-----------------------+
+    |     ROADM     Splitter|           |Selector     ROADM     |
+    |   +-------+   +-------+LTP2   LTP4+-------+   +-------+   |
+    |   |       |   |    ---o<--------->o---    |   |       |   |
+LTP1|   |    RP1|   |   /   |  prim.    |   \   |   |RP2    |   |LTP6
+<-->o---o.......o---o--o    |           |    o--o---o.......o---o<-->
+    |   |       |   |   \   |  second.  |   /   |   |       |   |
+    |   |       |   |    ---o<--------->o---    |   |       |   |
+    |   +-------+   +-------+LTP3   LTP5+-------+   +-------+   |
+    |               Selector|           |Splitter               |
+    +-----------------------+           +-----------------------+
+
+              --+                                   +--
+     ROADM port |                                   | ROADM port
+            RP1 o<--------------------------------->o RP2
+                |                                   |
+              --+                                   +--
+                   1+1 protected OMS MCG (TE-link)
+                   between ROADM ports RP1 and RP2
+
+             underlying primary and secondary TE-links:
+
+                          --+           +--
+                            |  prim.    |
+                       LTP2 o<--------->o LTP4
+                       LTP3 o<--------->o LTP5
+                            |  second.  |
+                          --+           +--
+
+        connectivity matrix provides optical impairments in
+        both directions between LTPs in the two WDM-TE-Nodes:
+        * LTP1 and LTP2,                     * LTP6 and LTP4,
+        * LTP1 and LTP3                      * LTP6 and LTP5
+
+]]> </artwork>
+  </figure>
+  
   <t>
-   [Editor's note: text and a figure based on the slide deck attached
-   to Open Issue #119 on GitHub showing more details regarding the LTPs
-   of the primary and secondary TE-link will be added here.]
+   <xref target="OMS_MCG_prot_link_1" /> illustrates this modeling
+   approach including the LTPs in WDM-TE-Node-1 and WDM-TE-Node-2,
+   respectively.
+   In addition to the physical view, the following three TE-links are
+   shown:
+
+   <ul spacing="compact">
+     <li>The 1+1 protected TE-link</li>
+   </ul>
+   <ul spacing="compact">
+     <li><t>The underlying primary TE-link</t></li>
+     <li>The underlying secondary TE-link</li>
+   </ul>
+
+   The optical impairments of the splitter (outgoing direction) and
+   the selector (incoming direction) are included in the optical
+   impairments described by the connectivity matrix and the local link
+   connectivity list for the TE node.
+   For the example shown in <xref target="OMS_MCG_prot_link_1" />,
+   the connectivity matrix describes the optical impairments between
+   LPT1 and LTP2 as well as LTP1 and LTP3 for WDM-TE-Node-1. Likewise,
+   the connectivity matrix describes the optical impairments between
+   LPT4 and LTP6 as well as LTP5 and LTP6 in WDM-TE-Node-2.
   </t>
   
   </section>
@@ -2189,14 +2375,105 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    
    The optical impairments exposed for this 1+1 protected TE-link are
    typically based on the optical impairments of the worse of the two
-   underlying physical OMS links.
+   underlying physical OMS links including the optical impairments
+   imposed by the splitter (outgoing direction) and selector (incoming
+   direction).
   </t>
-  
+
   <t>
-   [Editor's note: text and a figure based on the slide deck attached
-   to Open Issue #119 on GitHub showing more details regarding the LTP
-   of the 1+1 protected TE-link will be added here.]
+   <xref target="OMS_MCG_prot_link_2a"/> illustrates this modeling
+   approach where the splitter/selector in the adjacent WDM-TE-Nodes,
+   WDM-TE-Node-1 and WDM-TE-Node-2, as well as the two physical OMS MCG
+   links are abstracted into a single 1+1 protected TE-link. This is
+   illustrated by the the dotted line surrounding these four physical
+   entities in <xref target="OMS_MCG_prot_link_2a"/>. Based on this
+   modeling approach, the ROADM port connected to the splitter/selector
+   function is modeled as LTP for the 1+1 protected TE-link (LTP2 in 
+   WDM-TE-Node-1 and LTP3 in WDM-TE-Node-2).
+   In this example, the connectivity matrix describes the optical
+   impairments between LPT1 and LTP2 in WDM-TE-Node-1. Likewise, the
+   connectivity matrix describes the optical impairments between LPT3
+   and LTP4 in WDM-TE-Node-2.
   </t>
+
+  <figure align="center" title="Modeling view of abstracted 1+1 protected
+   TE-link - ROADM ports modeled as LTPs" anchor="OMS_MCG_prot_link_2a">
+    <artwork><![CDATA[
+
+
+         WDM-TE-Node-1                         WDM-TE-Node-2
+    +-----------------------+           +-----------------------+
+    |     ROADM     Splitter|           |Selector     ROADM     |
+    |   +-------+   +.......+...........+-------+   +-------+   |
+    |   |       |   .    ---o<--------->o---    .   |       |   |
+LTP1|   |   LTP2|   .   /   |           |   \   .   |LTP3   |   |LTP4
+<-->o---o.......o---o--o    |           |    o--o---o.......o---o<-->
+    |   |       |   .   \   |           |   /   .   |       |   |
+    |   |       |   .    ---o<--------->o---    .   |       |   |
+    |   +-------+   +...................+.......+   +-------+   |
+    |               Selector|           |Splitter               |
+    +-----------------------+           +-----------------------+
+
+              --+                                   +--
+     ROADM port |                                   | ROADM port
+           LTP2 o<--------------------------------->o LTP3
+                |                                   |
+              --+                                   +---
+                  Splitter/Selector abstracted into
+                  1+1 protected OMS MCG (TE-link)
+
+        connectivity matrix provides optical impairments in
+        both directions between LTPs in the two WDM-TE-Nodes:
+        * LTP1 and LTP2                      * LTP3 and LTP4
+        
+]]> </artwork>
+  </figure>
+
+  <t>
+   Alternatively, the optical impairments imposed by the splitter and
+   selector in each of the two adjacent WDM-TE-Nodes can also be
+   included in the optical impairments described by the connectivity
+   matrix of the two nodes instead of taking them into account as
+   optical impairments of the 1+1 protected TE-link.
+   This is illustrated in <xref target="OMS_MCG_prot_link_2b"/> below.
+   In this case, the two physical ports on both ends of the 1+1
+   protected TE-link are abstracted into a single LTP, LTP2 and LTP3,
+   respectively.
+  </t>
+
+  <figure align="center" title="Modeling view of abstracted 1+1 protected
+   TE-link - physical ports abstracted into single LTP on both link ends"
+   anchor="OMS_MCG_prot_link_2b">
+    <artwork><![CDATA[
+
+
+         WDM-TE-Node-1                         WDM-TE-Node-2
+    +-----------------------+           +-----------------------+
+    |     ROADM     Splitter|           |Selector     ROADM     |
+    |   +-------+   +-------+...........+-------+   +-------+   |
+    |   |       |   |    ---o<--------->o---    |   |       |   |
+LTP1|   |       |   |   /   |LTP2   LTP3|   \   |   |       |   |LTP4
+<-->o---o.......o---o--o    |           |    o--o---o.......o---o<-->
+    |   |       |   |   \   |LTP2   LTP3|   /   |   |       |   |
+    |   |       |   |    ---o<--------->o---    |   |       |   |
+    |   +-------+   +-------+...........+-------+   +-------+   |
+    |               Selector|           |Splitter               |
+    +-----------------------+           +-----------------------+
+    
+                          --+           +--
+                            |           |
+                       LTP2 o<--------->o LTP3
+                            |           |
+                          --+           +--
+                            1+1 protected
+                            OMS MCG (TE-link)
+
+        connectivity matrix provides optical impairments in
+        both directions between LTPs in the two WDM-TE-Nodes:
+        * LTP1 and LTP2                      * LTP3 and LTP4
+
+]]> </artwork>
+  </figure>
 
   </section>
   
