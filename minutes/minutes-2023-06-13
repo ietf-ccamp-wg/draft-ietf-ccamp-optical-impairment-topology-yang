@@ -1,0 +1,182 @@
+# YANG model for Optical Impairment aware Topology week (June 13th,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [] Aihua Guo
+- [] Esther Lerouzic
+- [] Julien Meuric
+- [] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+- [] Jonathan Sadler
+- [x]Roberto Manzotti
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+Need to make some json examples and make the validation with yanglint.
+You cannot have two media channel in the same media channel group with the same flexi-n. See figure 5 in section 2.3.4
+
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+
+Need to check if "unique" statement is still valid when flexi-n is not present.
+Esther: flexi-n if it exists must be unique in the media-channel-group upper level list.
+
+
+### Review APs (action point) RFC9093-bis
+
+####issue #16 "*Need to align FEC Identities*" 
+We agree to add new 3 FEC type :+1: 
+* SC-FEC
+* oFEC
+* C-FEC
+We agree to delete:
+* reed-solomon : since we agreed to focus only on FEC definition that are actually used for line transmission, we agreed to delete "reed-solomon" YANG identity (used for client connection)
+* haming-code, golay : delete the YANG identities
+
+* g-fec and e-fec : add correct descriptions and referecne standard (if exist)
+**AP: @Gabriele to help providing possible description and standard referecne**
+
+#### closed AP
+Gabriele is suggesting to stay as we are about description ,
+just changing enhanced-FEC with super-FEC, since enhanced does not exist.
+Moreover we need to add the referecne to ITU-T G.975 for g-FEC and G.975.1 for super-FEC.
+see final comment in github https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16#issuecomment-1578763060
+
+####Issue #10 Need for frequency and power range attributes also with Standard Mode
+
+it seems that G.698.2 does not mandate transceivers to be tunable nor to support tunability for the whole frequency range between the minimum and maximum frequency.
+Then *it could be useful to add also to the standard mode the attributes used to report the frequency and power ranges supported by a given transceiver for a given application code*
+
+**AP: @Italo, @Sergio to to check off-line with Q6 experts if our understanding is correct**
+
+
+### Closed Issues (from last IETF)
+
+Issue #3 ietf-layer0-types-ext 
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/3
+
+Issue #26 Convention for ITU-T Recommendations
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/26
+
+Issue #110 Unnecessary supported-modes level
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/110
+
+### Next calls
+
+
+### YANG doctor review feedback
+
+We have updated both RFC9093-bis and OI topology model 
+following the YANG doctor review suggestion as indicated in the github of issue#133 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/133
+and https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/68.
+
+Please review the two PRs #70 and #135: 
+* for RFC9093-bis https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/pull/70
+* for OI topology model https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/pull/135
+
+Need to change the pmd unit in ps for drop and express path.
+Esther: instead of polarization Mode dispersion we may need to use DGD (differential group delay). 
+**AP:@Esther to check with PSE TIP group when discussion in are finished**.
+
+### General discussion
+ 
+#### issue#9 Guidance for unique organization identifier
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/9
+
+Need to provide guidance on how to make the organization-identifier unique (e.g., using an OUI or another IANA assigned registry, for further discussion/investigation).
+
+##### Discussion
+
+The possibilites are to use OUI or to use identityref to identities to be defined
+in an organization specific YANG model.
+
+Julien: Trying to have a solution supporting both options. 
+
+#### issue #7 DC-DP-QAM8 and DC-DP-QAM16
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/7
+
+##### Discussion
+
+The final decision was to remove from the model all the modulation formats with DC- as prefix .
+
+#### issue #16 Need to align FEC identities
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/16
+
+##### Discussion
+
+
+To close the issue, in addition to the introduction of the new FEC:
+
+SC-FEC
+identity sc-fec {
+base fec-type;
+description
+"Staircase FEC";
+reference
+"ITU-T Annex A/G.709.2 v1.1 (09/2020):OTU4 long-reach interface";
+}
+
+oFEC
+identity o-fec {
+base fec-type;
+description
+"Open FEC as defined by OpenROADM forum";
+reference
+"ITU-T clause 16.4.4/G.709.3 and reuses the
+BCH FEC defined in ITU-T Annex E/G.709.3";
+}
+
+C-FEC
+identity c-fec {
+base fec-type;
+description
+"Concatenated FEC (C-FEC) that combines an outer SC-FEC
+outer code and an inner double-extended
+SD-FEC (128,119) Hamming code";
+reference
+"outer SC-FEC, defined in Annex A/G.709.2, with an inner Hamming SD-FEC, defined in Annex D/G.709.3. More details are provided in clause 15/G.709.3 where it is called DSH instead of concatenated FEC
+}
+
+we need to change enhanced-FEC with Super-FEC, and add the reference to ITU- Rec. :
+
+identity g-fec {
+base fec-type;
+description
+"G-FEC (Generic-FEC)";
+reference
+"ITU-T G.975";
+}
+identity super-fec {
+base fec-type;
+description
+"S-FEC (Super-FEC)";
+reference
+"ITU-T G.975.1";
+}
+
+
