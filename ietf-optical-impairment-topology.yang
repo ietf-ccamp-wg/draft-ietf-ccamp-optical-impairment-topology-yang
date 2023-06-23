@@ -52,19 +52,6 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Within this module, if the value of a mandatory attribute is
-     unknown, it MUST be reported using the empty type.
-     If an optional attribute is applicable but its value is unknown,
-     it MUST be reported using the empty type.
-     If an optional attribute is not applicable to an entity, it MUST
-     be omitted (not be present in the datastore).
-
-     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
-     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
-     'MAY', and 'OPTIONAL' in this document are to be interpreted as
-     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-     they appear in all capitals, as shown here.
-
      Copyright (c) 2023 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
@@ -82,7 +69,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-05-15 {
+  revision 2023-06-23 {
     description
       "Initial Version";
     reference
@@ -288,7 +275,8 @@ module ietf-optical-impairment-topology {
       }
       units "ps"; 
       description 
-        "Polarization Mode Dispersion (PMD)";
+        "Polarization Mode Dispersion (PMD), when known, or an 
+        empty value when unknown.";
     }
     leaf roadm-cd {
       type l0-types:decimal-5-digits-or-null;
@@ -624,7 +612,8 @@ module ietf-optical-impairment-topology {
         }
         description
           "OTSi carrier frequency, equivalent to the
-          actual configured transmitter frequency";
+          actual configured transmitter frequency, when known, or 
+          an empty value when unknown.";
       }
       leaf-list e2e-mc-path-id {
         type uint16;
@@ -654,13 +643,8 @@ module ietf-optical-impairment-topology {
         "The top level container for the list of media channel 
         groups.";
       list media-channel-group {
-        key "i";
         description
           "The list of media channel groups";
-        leaf i {
-          type int16;
-            description "index of media channel group member";
-        }
         list media-channels {
           // key "flexi-n";
           description
@@ -671,7 +655,7 @@ module ietf-optical-impairment-topology {
 
           leaf otsi-group-ref {
             type leafref {
-              path "/nw:networks/nw:network/otsi-information/" +
+              path "/nw:networks/nw:network/otsis/" +
                   "otsi-group/otsi-group-id";
             }
             description
@@ -684,7 +668,7 @@ module ietf-optical-impairment-topology {
               paths within the OTSiG carried by this media channel.";
             leaf otsi-carrier-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsi-information/" +
+                path  "/nw:networks/nw:network/otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi/otsi-carrier-id" ;
@@ -695,7 +679,7 @@ module ietf-optical-impairment-topology {
             }
             leaf-list e2e-mc-path-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsi-information/" +
+                path  "/nw:networks/nw:network/otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi[otsi-carrier-id=current()" +
@@ -744,7 +728,11 @@ module ietf-optical-impairment-topology {
             type empty;
           }
           description
-            "unique id of the element if it exists";
+            "Unique id of the element, if it exists and it is known.
+            
+            When unknown, an empty value is reported.
+            
+            When it does not exist, the attribute is not present.";
         }
         container reverse-element-ref {
           description
@@ -796,7 +784,7 @@ module ietf-optical-impairment-topology {
       transceiver's list only.";
     leaf otsi-group-ref {
       type leafref {
-        path  "../../../../../../otsi-information/otsi-group/" +
+        path  "../../../../../../otsis/otsi-group/" +
               "otsi-group-id";
       }
       description
@@ -804,7 +792,7 @@ module ietf-optical-impairment-topology {
     }
     leaf otsi-ref {
       type leafref {
-        path  "../../../../../../otsi-information/otsi-group" +
+        path  "../../../../../../otsis/otsi-group" +
               "[otsi-group-id=current()/../otsi-group-ref]/otsi/" +
               "otsi-carrier-id";
       }
@@ -825,6 +813,8 @@ module ietf-optical-impairment-topology {
         "Indicates an impairment-aware topology of optical networks";
       description
         "Container to identify impairment-aware topology type";
+      reference
+        "RFC8345: A YANG Data Model for Network Topologies.";
    }
   }
 
@@ -837,7 +827,7 @@ module ietf-optical-impairment-topology {
     }
     description
       "Network augmentation for optical impairments data.";
-    container otsi-information {
+    container otsis {
       presence
         "When present, it indicates that OTSi information is 
         reported.";
@@ -957,7 +947,7 @@ module ietf-optical-impairment-topology {
           }
           uses l0-types:common-transceiver-configured-param;
           container outgoing-otsi {
-            when "../../../../../otsi-information" {
+            when "../../../../../otsis" {
               description
                 "It applies only when the OTSi information is 
                 reported.";
@@ -967,7 +957,7 @@ module ietf-optical-impairment-topology {
             uses otsi-ref;
           }
           container incoming-otsi {
-            when "../../../../../otsi-information" {
+            when "../../../../../otsis" {
               description
                 "It applies only when the OTSi information is 
                 reported.";

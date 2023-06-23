@@ -3,7 +3,7 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
-    +--rw otsi-information!
+    +--rw otsis!
        +--ro otsi-group* [otsi-group-id]
           +--ro otsi-group-id    string
           +--ro otsi* [otsi-carrier-id]
@@ -148,8 +148,7 @@ module: ietf-optical-impairment-topology
        |     +--ro nominal-power-spectral-density?
        |             l0-types:decimal-16-digits-or-null
        +--ro media-channel-groups!
-       |  +--ro media-channel-group* [i]
-       |     +--ro i                 int16
+       |  +--ro media-channel-group* []
        |     +--ro media-channels* []
        |        +--ro flexi-n?          l0-types:flexi-n
        |        +--ro flexi-m?          l0-types:flexi-m
@@ -353,4 +352,3 @@ module: ietf-optical-impairment-topology
        |       -> ../../../../../../nt:termination-point/tp-id
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
-
