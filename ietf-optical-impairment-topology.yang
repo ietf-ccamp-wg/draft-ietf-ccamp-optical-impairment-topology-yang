@@ -623,11 +623,11 @@ module ietf-optical-impairment-topology {
           different optical impairments.
 
           This list is meaningful in case the OTSi can be associated
-          with multiple NMC paths
+          with multiple end-to-end Media Channel (e2e-MC) paths
           (e.g., when OPS protection is configured).
           
           The list can be empty when the OTSi has only one
-          NMC path.";
+          e2e-MC path.";
       }
     } // OTSi list
   } // OTSiG grouping
@@ -664,8 +664,9 @@ module ietf-optical-impairment-topology {
           }
           list otsi-ref {
             description
-              "The list of references to the OTSis and their NMC 
-              paths within the OTSiG carried by this media channel.";
+              "The list of references to the OTSis and their 
+              end-to-end Media Channel (e2e-MC) paths within the 
+              OTSiG carried by this media channel.";
             leaf otsi-carrier-ref {
               type leafref {
                 path  "/nw:networks/nw:network/otsis/" +
