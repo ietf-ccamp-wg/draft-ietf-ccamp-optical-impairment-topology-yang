@@ -113,7 +113,7 @@ module: ietf-optical-impairment-topology
     |        |              |       dbm-t
     |        |              +--ro rx-total-power-max?
     |        |              |       dbm-t
-    |        |              +--ro supported-modes
+    |        |              +--ro compatible-modes
     |        |                 +--ro supported-application-codes*
     |        |                 |       -> ../../../mode-id
     |        |                 +--ro supported-organizational-modes*
@@ -352,3 +352,4 @@ module: ietf-optical-impairment-topology
        |       -> ../../../../../../nt:termination-point/tp-id
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
+
