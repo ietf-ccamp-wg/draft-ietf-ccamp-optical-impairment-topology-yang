@@ -1676,6 +1676,21 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="OTSi_prot_no_3R"/> below.
   </t>
   
+  <t>
+   Note: Where several WDM nodes are involved, the links between WDM
+   nodes in the figures below illustrating  the various protection
+   architectures are drawn as bi-directional links (arrows on both ends
+   of the dashed line) for the sake of simplification.
+   Physically, all links in WDM networks are uni-directional and there
+   is a fiber link in forward and a fiber link in reverse direction.
+   WDM services are typically bi-directional and the same media channel
+   is used on the links in both directions.
+   The splitter function of the combined splitter/selector is always
+   located on the upstream side whereas the selector function is always
+   located on the downstream side in the two directions.
+   
+  </t>
+  
    <figure align="center" title="Individual OTSi Protection without 3R
    regenerators" anchor="OTSi_prot_no_3R">
     <artwork><![CDATA[

@@ -1637,6 +1637,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
    individually 1+1 protected OTSi.  This scenario is depicted in
    Figure 11 below.
 
+   Note: Where several WDM nodes are involved, the links between WDM
+   nodes in the figures below illustrating the various protection
+   architectures are drawn as bi-directional links (arrows on both ends
+   of the dashed line) for the sake of simplification.  Physically, all
+   links in WDM networks are uni-directional and there is a fiber link
+   in forward and a fiber link in reverse direction.  WDM services are
+   typically bi-directional and the same media channel is used on the
+   links in both directions.  The splitter function of the combined
+   splitter/selector is always located on the upstream side whereas the
+   selector function is always located on the downstream side in the two
+   directions.
+
                            end-to-end MC path1
         |<------------------------------------------------------>|
 
@@ -1660,6 +1672,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
 
       Figure 11: Individual OTSi Protection without 3R regenerators
 
+
+
+
+
+
+Beller, et al.           Expires 11 January 2024               [Page 30]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
+
+
    For each OMS MCG (TE-link) along the two end-to-end MC paths, the
    e2e-mc-path-id is provided for the individually protected OTSi
    signal.  Based on this information, it is possible to construct the
@@ -1672,15 +1694,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
    while the e2e-mc-path-id of end-to-end MC path2 is provided for the
    TE-links between WDM Node1 and WDM Node5, WDM Node5 and WDM Node6,
    WDM Node6 and WDM Node7 as well as WDM Node7 and WDM Node2.
-
-
-
-
-
-Beller, et al.           Expires 11 January 2024               [Page 30]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
-
 
    If a 3R regenerator is crossed on one of the two legs or even on both
    legs, the end-to-end MCs are terminated on both sides of the 3R
@@ -1717,19 +1730,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
    terminating the individually 1+1 protected OTSi in WDM Node1 and WDM
    Node2, respectively:
 
-   1.  end-to-end MC path1 (upper leg)
-   2.  end-to-end MC path2 + end-to-end MC path3 (lower leg)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1737,6 +1737,9 @@ Beller, et al.           Expires 11 January 2024               [Page 31]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
 
+
+   1.  end-to-end MC path1 (upper leg)
+   2.  end-to-end MC path2 + end-to-end MC path3 (lower leg)
 
                            end-to-end MC path1
         |<------------------------------------------------------>|
@@ -1779,13 +1782,10 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
    examples are provided how these uses cases can be modeled properly
    using the optical impairment aware TE-topology YANG data model.
 
-2.10.1.1.  OT and OTSi protection function are an integral part of the
-           WDM-TE-node
 
-   This use case is based on the architecture illustrated in Figure 8
-   and the following entities are all integral parts of the WDM-TE-node:
 
-   *  Local optical transponder
+
+
 
 
 
@@ -1794,6 +1794,13 @@ Beller, et al.           Expires 11 January 2024               [Page 32]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
 
 
+2.10.1.1.  OT and OTSi protection function are an integral part of the
+           WDM-TE-node
+
+   This use case is based on the architecture illustrated in Figure 8
+   and the following entities are all integral parts of the WDM-TE-node:
+
+   *  Local optical transponder
    *  Splitter/selector protection function
    *  ROADM function
 
@@ -1834,13 +1841,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2023
 
    A local-link-connectivity list example for a protected TTP in JSON
    format is provided in Appendix A.
-
-
-
-
-
-
-
 
 
 
