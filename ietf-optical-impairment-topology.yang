@@ -69,7 +69,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-06-23 {
+  revision 2023-07-03 {
     description
       "Initial Version";
     reference
@@ -142,9 +142,11 @@ module ietf-optical-impairment-topology {
             uses l0-types:frequency-range;
           }
           leaf actual-gain {
-            type l0-types:power-in-db-or-null;
+            type l0-types:ratio-in-db-or-null;
             mandatory true ;
-            description "..";
+            description
+              "The value of the gain provided by the amplification 
+              stage of the optical amplifier.";
           }
           leaf tilt-target {
             type l0-types:decimal-2-digits-or-null;
@@ -154,17 +156,23 @@ module ietf-optical-impairment-topology {
               frequency of the amplifier frequency range.";
           }
           leaf out-voa {
-            type l0-types:power-in-db-or-null;
+            type l0-types:ratio-in-db-or-null;
             mandatory true;
-            description "..";
+            description
+              "Loss introduced by the Variable Optical Attenuator 
+              (VOA) at the output of the amplification stage of 
+              the amplifier, if present.";
           }
           leaf in-voa {
-            type l0-types:power-in-db-or-null;
+            type l0-types:ratio-in-db-or-null;
             mandatory true;
-            description "..";
+            description
+              "Loss introduced by the Variable Optical Attenuator 
+              (VOA) at the input of the amplification stage of the 
+              amplifier, if present";
           }
           leaf total-output-power {
-            type l0-types:power-in-db-or-null;
+            type l0-types:ratio-in-db-or-null;
             mandatory true;
             description
               "It represent total output power measured in the range
@@ -239,7 +247,7 @@ module ietf-optical-impairment-topology {
         description "loss coefficient of the fiber";
       }
       leaf total-loss {
-        type l0-types:power-in-db-or-null;
+        type l0-types:ratio-in-db-or-null;
         mandatory true ;
         description
           "includes all losses: fiber loss and conn-in and 
@@ -251,11 +259,11 @@ module ietf-optical-impairment-topology {
         description "pmd of the fiber";
       }
       leaf conn-in{
-        type l0-types:power-in-db-or-null;
+        type l0-types:ratio-in-db-or-null;
         description "connector-in";
       }
       leaf conn-out{
-        type l0-types:power-in-db-or-null;
+        type l0-types:ratio-in-db-or-null;
         description "connector-out";
       }
     }
@@ -284,11 +292,11 @@ module ietf-optical-impairment-topology {
       description "Chromatic Dispersion (CD)";
     }            
     leaf roadm-pdl {
-      type l0-types:power-in-db-or-null;
+      type l0-types:ratio-in-db-or-null;
       description "Polarization Dependent Loss (PDL)";
     }      
     leaf roadm-inband-crosstalk {
-      type l0-types:power-in-db-or-null;
+      type l0-types:ratio-in-db-or-null;
       description
         "In-band crosstalk, or coherent crosstalk, can occur in 
         components that can have multiple same wavelength inputs
@@ -296,7 +304,7 @@ module ietf-optical-impairment-topology {
         or all but 1 blocked";
     }
     leaf roadm-maxloss {
-      type l0-types:power-in-db-or-null;
+      type l0-types:ratio-in-db-or-null;
       description
         "This is the maximum expected path loss from the 
         ROADM ingress to the ROADM egress 
@@ -412,7 +420,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-minloss {
-      type l0-types:power-in-db-or-null;
+      type l0-types:ratio-in-db-or-null;
       description 
         "The net loss from the ROADM input, to the 
         output of the drop block.
@@ -425,7 +433,7 @@ module ietf-optical-impairment-topology {
         including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
-      type l0-types:power-in-db-or-null;
+      type l0-types:ratio-in-db-or-null;
       description 
         "The net loss from the ROADM input, 
         to the output of the drop block.
@@ -528,9 +536,10 @@ module ietf-optical-impairment-topology {
     container concentratedloss{
       description "concentrated loss";
       leaf loss {
-        type l0-types:power-in-db-or-null;
+        type l0-types:ratio-in-db-or-null;
         mandatory true;
-        description "..";
+        description
+          "Loss introduced by the concentrated loss element.";
       }
     }
   }
