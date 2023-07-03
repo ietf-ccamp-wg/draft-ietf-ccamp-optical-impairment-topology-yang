@@ -253,9 +253,9 @@ module ietf-optical-impairment-topology {
           "includes all losses: fiber loss and conn-in and 
            conn-out losses";
       }
-      leaf pmd{
+      leaf pmd {
         type l0-types:decimal-2-digits-or-null;
-        units sqrt(ps);
+        units "ps";
         description "pmd of the fiber";
       }
       leaf conn-in{
@@ -281,7 +281,7 @@ module ietf-optical-impairment-topology {
         }
         type empty;
       }
-      units "ps"; 
+      units "ps";
       description 
         "Polarization Mode Dispersion (PMD), when known, or an 
         empty value when unknown.";
