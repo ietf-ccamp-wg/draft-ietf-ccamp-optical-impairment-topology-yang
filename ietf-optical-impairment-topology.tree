@@ -24,12 +24,15 @@ module: ietf-optical-impairment-topology
     |        |     +--ro (mode)
     |        |        +--:(G.698.2)
     |        |        |  +--ro standard-mode?         standard-mode
+    |        |        |  +--ro line-coding-bitrate*   identityref
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
     |        |        |     +--ro operational-mode?
     |        |        |     |       operational-mode
     |        |        |     +--ro organization-identifier?
     |        |        |     |       organization-identifier
+    |        |        |     +--ro line-coding-bitrate*
+    |        |        |     |       identityref
     |        |        |     +--ro min-central-frequency?
     |        |        |     |       frequency-thz
     |        |        |     +--ro max-central-frequency?
@@ -119,6 +122,7 @@ module: ietf-optical-impairment-topology
     |        |                 +--ro supported-organizational-modes*
     |        |                         -> ../../../mode-id
     |        +--ro configured-mode?               union
+    |        +--ro line-coding-bitrate?           identityref
     |        +--ro tx-channel-power?              union
     |        +--ro rx-channel-power?              union
     |        +--ro rx-total-power?                union
