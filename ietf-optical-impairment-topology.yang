@@ -172,7 +172,7 @@ module ietf-optical-impairment-topology {
               amplifier, if present";
           }
           leaf total-output-power {
-            type l0-types:ratio-in-db-or-null;
+            type l0-types:power-in-dbm-or-null;
             mandatory true;
             description
               "It represent total output power measured in the range

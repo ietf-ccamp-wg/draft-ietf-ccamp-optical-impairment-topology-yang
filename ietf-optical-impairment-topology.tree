@@ -189,7 +189,7 @@ module: ietf-optical-impairment-topology
                 |           +--ro in-voa
                 |           |       l0-types:ratio-in-db-or-null
                 |           +--ro total-output-power
-                |           |       l0-types:ratio-in-db-or-null
+                |           |       l0-types:power-in-dbm-or-null
                 |           +--ro (power-param)?
                 |           |  +--:(channel-power)
                 |           |  |  +--ro nominal-carrier-power?
