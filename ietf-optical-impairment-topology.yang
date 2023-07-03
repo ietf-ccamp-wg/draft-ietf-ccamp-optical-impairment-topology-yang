@@ -8,23 +8,41 @@ module ietf-optical-impairment-topology {
 
   import ietf-network {
     prefix "nw";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
   }
 
   import ietf-network-topology {
     prefix "nt";
+    reference
+      "RFC 8345: A YANG Data Model for Network Topologies";
   }
 
   import ietf-te-topology {
     prefix "tet";
+    reference
+      "RFC 8795: YANG Data Model for Traffic Engineering (TE) 
+      Topologies";
   }
 
   import ietf-te-types {
     prefix "te-types";
+    reference
+      "RFC YYYY: Updated Common YANG Data Types for Traffic
+      Engineering";
   }
+
+  /* Note: The RFC Editor will replace YYYY with the number assigned
+     to the RFC once draft-ietf-teas-rfc8776-update becomes an RFC.*/
 
   import ietf-layer0-types {
     prefix "l0-types";
+    reference
+      "RFC ZZZZ: A YANG Data Model for Layer 0 Types";
   }
+
+  /* Note: The RFC Editor will replace ZZZZ with the number assigned
+     to the RFC once draft-ietf-ccamp-rfc9093-bis becomes an RFC.*/
 
   organization
     "IETF CCAMP Working Group";
