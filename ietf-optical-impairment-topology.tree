@@ -54,21 +54,18 @@ module: ietf-optical-impairment-topology
     |        |              |       decimal64
     |        |              +--ro max-chromatic-dispersion?
     |        |              |       decimal64
-    |        |              +--ro chromatic-dispersion-penalty* []
-    |        |              |  +--ro chromatic-dispersion    union
-    |        |              |  +--ro penalty-value           union
-    |        |              +--ro polarization-dispersion-penalty* []
-    |        |              |  +--ro polarization-mode-dispersion
-    |        |              |  |       union
-    |        |              |  +--ro penalty-value
-    |        |              |          union
+    |        |              +--ro cd-penalty* []
+    |        |              |  +--ro cd-value         union
+    |        |              |  +--ro penalty-value    union
+    |        |              +--ro pmd-penalty* []
+    |        |              |  +--ro pmd-value        union
+    |        |              |  +--ro penalty-value    union
     |        |              +--ro max-diff-group-delay?
     |        |              |       uint32
-    |        |              +--ro max-pol-dependent-loss-penalty* []
-    |        |              |  +--ro max-polarization-dependent-loss
-    |        |              |  |       power-in-db-or-null
-    |        |              |  +--ro penalty-value
-    |        |              |          union
+    |        |              +--ro max-pdl-penalty* []
+    |        |              |  +--ro max-pdl-value
+    |        |              |  |       loss-in-db-or-null
+    |        |              |  +--ro penalty-value    union
     |        |              +--ro available-modulation-type?
     |        |              |       identityref
     |        |              +--ro min-OSNR?
@@ -76,8 +73,8 @@ module: ietf-optical-impairment-topology
     |        |              +--ro rx-ref-channel-power?
     |        |              |       dbm-t
     |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power    union
-    |        |              |  +--ro penalty-value       union
+    |        |              |  +--ro rx-channel-power-value    union
+    |        |              |  +--ro penalty-value             union
     |        |              +--ro min-Q-factor?
     |        |              |       int32
     |        |              +--ro available-baud-rate?
@@ -97,7 +94,7 @@ module: ietf-optical-impairment-topology
     |        |              +--ro out-of-band-osnr?
     |        |              |       snr
     |        |              +--ro tx-polarization-power-difference?
-    |        |              |       power-in-db
+    |        |              |       power-in-dbm
     |        |              +--ro polarization-skew?
     |        |              |       decimal64
     |        |              +--ro min-central-frequency?

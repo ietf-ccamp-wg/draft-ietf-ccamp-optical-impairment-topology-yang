@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-07-03 {
+  revision 2023-07-05 {
     description
       "Initial Version";
     reference
@@ -319,7 +319,7 @@ module ietf-optical-impairment-topology {
         "In-band crosstalk, or coherent crosstalk, can occur in 
         components that can have multiple same wavelength inputs
         with the inputs either routed to different output ports,
-        or all but 1 blocked";
+        or all but one blocked";
     }
     leaf roadm-maxloss {
       type l0-types:ratio-in-db-or-null;
@@ -346,7 +346,7 @@ module ietf-optical-impairment-topology {
           can occur in components that can have multiple same
           wavelength inputs,with the inputs either 
           routed to different output ports,
-          or all but 1 blocked.
+          or all but one blocked.
 
           In the case of add path it is the total 
           of the add block + egress WSS crosstalk contributions.";
@@ -415,7 +415,7 @@ module ietf-optical-impairment-topology {
           "In-band crosstalk, or coherent crosstalk, can occur in
           components that can have multiple same wavelength 
           inputs,with the inputs either routed to different
-          output ports,or all but 1 blocked.
+          output ports,or all but one blocked.
 
           In the case of drop path it is the total 
           of the ingress
@@ -620,14 +620,14 @@ module ietf-optical-impairment-topology {
 
   grouping otsi-group {
     description "OTSiG definition , representing client
-     digital information stream supported by 1 or more OTSi";
+     digital information stream supported by one or more OTSi";
 
     list otsi {
       key "otsi-carrier-id";
       config false;
       description
-        "list of OTSi contained in 1 OTSiG.
-        The list could also be of only 1 element";
+        "list of OTSi contained in one OTSiG.
+        The list could also be of only one element";
       leaf otsi-carrier-id {
         type uint16;
         description "OTSi carrier-id";
