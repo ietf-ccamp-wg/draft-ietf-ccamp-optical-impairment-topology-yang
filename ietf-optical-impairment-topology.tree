@@ -182,13 +182,13 @@ module: ietf-optical-impairment-topology
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro actual-gain
-                |           |       l0-types:ratio-in-db-or-null
+                |           |       l0-types:gain-in-db-or-null
                 |           +--ro tilt-target
                 |           |       l0-types:decimal-2-digits-or-null
                 |           +--ro out-voa
-                |           |       l0-types:ratio-in-db-or-null
+                |           |       l0-types:loss-in-db-or-null
                 |           +--ro in-voa
-                |           |       l0-types:ratio-in-db-or-null
+                |           |       l0-types:loss-in-db-or-null
                 |           +--ro total-output-power
                 |           |       l0-types:power-in-dbm-or-null
                 |           +--ro (power-param)?
@@ -213,16 +213,16 @@ module: ietf-optical-impairment-topology
                 |     +--ro loss-coef
                 |     |       l0-types:decimal-2-digits-or-null
                 |     +--ro total-loss
-                |     |       l0-types:ratio-in-db-or-null
+                |     |       l0-types:loss-in-db-or-null
                 |     +--ro pmd?
                 |     |       l0-types:decimal-2-digits-or-null
                 |     +--ro conn-in?
-                |     |       l0-types:ratio-in-db-or-null
+                |     |       l0-types:loss-in-db-or-null
                 |     +--ro conn-out?
-                |             l0-types:ratio-in-db-or-null
+                |             l0-types:loss-in-db-or-null
                 +--:(concentratedloss)
                    +--ro concentratedloss
-                      +--ro loss    l0-types:ratio-in-db-or-null
+                      +--ro loss    l0-types:loss-in-db-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
@@ -249,11 +249,11 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-cd?
           |     |       l0-types:decimal-5-digits-or-null
           |     +--ro roadm-pdl?
-          |     |       l0-types:ratio-in-db-or-null
+          |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:ratio-in-db-or-null
+          |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-maxloss?
-          |             l0-types:ratio-in-db-or-null
+          |             l0-types:loss-in-db-or-null
           +--:(roadm-add-path)
           |  +--ro roadm-add-path* []
           |     +--ro frequency-range
@@ -263,11 +263,11 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-cd?
           |     |       l0-types:decimal-5-digits-or-null
           |     +--ro roadm-pdl?
-          |     |       l0-types:ratio-in-db-or-null
+          |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:ratio-in-db-or-null
+          |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-maxloss?
-          |     |       l0-types:ratio-in-db-or-null
+          |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-pmax?
           |     |       l0-types:power-in-dbm-or-null
           |     +--ro roadm-osnr?               l0-types:snr-or-null
@@ -282,15 +282,15 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-cd?
                 |       l0-types:decimal-5-digits-or-null
                 +--ro roadm-pdl?
-                |       l0-types:ratio-in-db-or-null
+                |       l0-types:loss-in-db-or-null
                 +--ro roadm-inband-crosstalk?
-                |       l0-types:ratio-in-db-or-null
+                |       l0-types:loss-in-db-or-null
                 +--ro roadm-maxloss?
-                |       l0-types:ratio-in-db-or-null
+                |       l0-types:loss-in-db-or-null
                 +--ro roadm-minloss?
-                |       l0-types:ratio-in-db-or-null
+                |       l0-types:loss-in-db-or-null
                 +--ro roadm-typloss?
-                |       l0-types:ratio-in-db-or-null
+                |       l0-types:loss-in-db-or-null
                 +--ro roadm-pmin?
                 |       l0-types:power-in-dbm-or-null
                 +--ro roadm-pmax?

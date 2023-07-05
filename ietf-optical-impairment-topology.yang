@@ -160,7 +160,7 @@ module ietf-optical-impairment-topology {
             uses l0-types:frequency-range;
           }
           leaf actual-gain {
-            type l0-types:ratio-in-db-or-null;
+            type l0-types:gain-in-db-or-null;
             mandatory true ;
             description
               "The value of the gain provided by the amplification 
@@ -174,7 +174,7 @@ module ietf-optical-impairment-topology {
               frequency of the amplifier frequency range.";
           }
           leaf out-voa {
-            type l0-types:ratio-in-db-or-null;
+            type l0-types:loss-in-db-or-null;
             mandatory true;
             description
               "Loss introduced by the Variable Optical Attenuator 
@@ -182,7 +182,7 @@ module ietf-optical-impairment-topology {
               the amplifier, if present.";
           }
           leaf in-voa {
-            type l0-types:ratio-in-db-or-null;
+            type l0-types:loss-in-db-or-null;
             mandatory true;
             description
               "Loss introduced by the Variable Optical Attenuator 
@@ -265,7 +265,7 @@ module ietf-optical-impairment-topology {
         description "loss coefficient of the fiber";
       }
       leaf total-loss {
-        type l0-types:ratio-in-db-or-null;
+        type l0-types:loss-in-db-or-null;
         mandatory true ;
         description
           "includes all losses: fiber loss and conn-in and 
@@ -277,11 +277,11 @@ module ietf-optical-impairment-topology {
         description "pmd of the fiber";
       }
       leaf conn-in{
-        type l0-types:ratio-in-db-or-null;
+        type l0-types:loss-in-db-or-null;
         description "connector-in";
       }
       leaf conn-out{
-        type l0-types:ratio-in-db-or-null;
+        type l0-types:loss-in-db-or-null;
         description "connector-out";
       }
     }
@@ -310,11 +310,11 @@ module ietf-optical-impairment-topology {
       description "Chromatic Dispersion (CD)";
     }            
     leaf roadm-pdl {
-      type l0-types:ratio-in-db-or-null;
+      type l0-types:loss-in-db-or-null;
       description "Polarization Dependent Loss (PDL)";
     }      
     leaf roadm-inband-crosstalk {
-      type l0-types:ratio-in-db-or-null;
+      type l0-types:loss-in-db-or-null;
       description
         "In-band crosstalk, or coherent crosstalk, can occur in 
         components that can have multiple same wavelength inputs
@@ -322,7 +322,7 @@ module ietf-optical-impairment-topology {
         or all but one blocked";
     }
     leaf roadm-maxloss {
-      type l0-types:ratio-in-db-or-null;
+      type l0-types:loss-in-db-or-null;
       description
         "This is the maximum expected path loss from the 
         ROADM ingress to the ROADM egress 
@@ -438,7 +438,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-minloss {
-      type l0-types:ratio-in-db-or-null;
+      type l0-types:loss-in-db-or-null;
       description 
         "The net loss from the ROADM input, to the 
         output of the drop block.
@@ -451,7 +451,7 @@ module ietf-optical-impairment-topology {
         including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
-      type l0-types:ratio-in-db-or-null;
+      type l0-types:loss-in-db-or-null;
       description 
         "The net loss from the ROADM input, 
         to the output of the drop block.
@@ -554,7 +554,7 @@ module ietf-optical-impairment-topology {
     container concentratedloss{
       description "concentrated loss";
       leaf loss {
-        type l0-types:ratio-in-db-or-null;
+        type l0-types:loss-in-db-or-null;
         mandatory true;
         description
           "Loss introduced by the concentrated loss element.";
