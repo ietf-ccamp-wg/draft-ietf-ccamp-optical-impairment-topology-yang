@@ -50,20 +50,22 @@ module: ietf-optical-impairment-topology
     |        |              |       identityref
     |        |              +--ro bitrate?
     |        |              |       uint16
-    |        |              +--ro max-polarization-mode-dispersion?
-    |        |              |       decimal64
+    |        |              +--ro max-diff-group-delay?
+    |        |              |       uint32
     |        |              +--ro max-chromatic-dispersion?
     |        |              |       decimal64
     |        |              +--ro cd-penalty* []
     |        |              |  +--ro cd-value         union
     |        |              |  +--ro penalty-value    union
+    |        |              +--ro max-polarization-mode-dispersion?
+    |        |              |       decimal64
     |        |              +--ro pmd-penalty* []
     |        |              |  +--ro pmd-value        union
     |        |              |  +--ro penalty-value    union
-    |        |              +--ro max-diff-group-delay?
-    |        |              |       uint32
-    |        |              +--ro max-pdl-penalty* []
-    |        |              |  +--ro max-pdl-value
+    |        |              +--ro max-polarization-dependant-loss
+    |        |              |       loss-in-db-or-null
+    |        |              +--ro pdl-penalty* []
+    |        |              |  +--ro pdl-value
     |        |              |  |       loss-in-db-or-null
     |        |              |  +--ro penalty-value    union
     |        |              +--ro available-modulation-type?
@@ -94,7 +96,7 @@ module: ietf-optical-impairment-topology
     |        |              +--ro out-of-band-osnr?
     |        |              |       snr
     |        |              +--ro tx-polarization-power-difference?
-    |        |              |       power-in-dbm
+    |        |              |       decimal-2-digits
     |        |              +--ro polarization-skew?
     |        |              |       decimal64
     |        |              +--ro min-central-frequency?
@@ -120,9 +122,12 @@ module: ietf-optical-impairment-topology
     |        |                         -> ../../../mode-id
     |        +--ro configured-mode?               union
     |        +--ro line-coding-bitrate?           identityref
-    |        +--ro tx-channel-power?              union
-    |        +--ro rx-channel-power?              union
-    |        +--ro rx-total-power?                union
+    |        +--ro tx-channel-power?
+    |        |       power-in-dbm-or-null
+    |        +--ro rx-channel-power?
+    |        |       power-in-dbm-or-null
+    |        +--ro rx-total-power?
+    |        |       power-in-dbm-or-null
     |        +--ro outgoing-otsi
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
@@ -251,7 +256,7 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-pdl?
           |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:loss-in-db-or-null
+          |     |       l0-types:decimal-2-digits-or-null
           |     +--ro roadm-maxloss?
           |             l0-types:loss-in-db-or-null
           +--:(roadm-add-path)
@@ -265,7 +270,7 @@ module: ietf-optical-impairment-topology
           |     +--ro roadm-pdl?
           |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:loss-in-db-or-null
+          |     |       l0-types:decimal-2-digits-or-null
           |     +--ro roadm-maxloss?
           |     |       l0-types:loss-in-db-or-null
           |     +--ro roadm-pmax?
@@ -284,7 +289,7 @@ module: ietf-optical-impairment-topology
                 +--ro roadm-pdl?
                 |       l0-types:loss-in-db-or-null
                 +--ro roadm-inband-crosstalk?
-                |       l0-types:loss-in-db-or-null
+                |       l0-types:decimal-2-digits-or-null
                 +--ro roadm-maxloss?
                 |       l0-types:loss-in-db-or-null
                 +--ro roadm-minloss?

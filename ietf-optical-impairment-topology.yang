@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-07-05 {
+  revision 2023-07-07 {
     description
       "Initial Version";
     reference
@@ -168,6 +168,7 @@ module ietf-optical-impairment-topology {
           }
           leaf tilt-target {
             type l0-types:decimal-2-digits-or-null;
+            units "dB";
             mandatory true ;
             description
               "The tilt target defined between lower and upper
@@ -314,7 +315,8 @@ module ietf-optical-impairment-topology {
       description "Polarization Dependent Loss (PDL)";
     }      
     leaf roadm-inband-crosstalk {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:decimal-2-digits-or-null;
+      units "dB";
       description
         "In-band crosstalk, or coherent crosstalk, can occur in 
         components that can have multiple same wavelength inputs
