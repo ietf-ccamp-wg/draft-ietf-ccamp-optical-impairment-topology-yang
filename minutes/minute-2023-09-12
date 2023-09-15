@@ -1,0 +1,95 @@
+# YANG model for Optical Impairment aware Topology week (September 12th,2023)
+
+
+****Attendees****
+- [x] Dieter Beller
+- [x] Aihua Guo
+- [x] Esther Lerouzic
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [x] Enrico Griseri
+- [x] Sergio Belotti
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+- [] Jonathan Sadler
+- [x]Roberto Manzotti
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+####issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+Need to make some json examples and make the validation with yanglint.
+You cannot have two media channel in the same media channel group with the same flexi-n. See figure 5 in section 2.3.4
+
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+
+Need to check if "unique" statement is still valid when flexi-n is not present.
+Esther: flexi-n if it exists must be unique in the media-channel-group upper level list.
+
+
+### Review APs (action point) RFC9093-bis
+
+####Issue #10 Need for frequency and power range attributes also with Standard Mode
+
+it seems that G.698.2 does not mandate transceivers to be tunable nor to support tunability for the whole frequency range between the minimum and maximum frequency.
+Then *it could be useful to add also to the standard mode the attributes used to report the frequency and power ranges supported by a given transceiver for a given application code*
+
+**AP: @Italo, @Sergio to to check off-line with Q6 experts if our understanding is correct**
+
+### Closed Issues
+
+Issue #71 Issue tags for developpers 
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/71
+
+### Next calls
+September 19th 
+
+### General discussion: Agenda
+ 
+#### Optical Impairment Topology model
+
+We reviewed all the issues trying to start making a plan to solve them in the view of IETF 118 and with the target to be ready for LC.
+
+#### 71 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/71 
+When a YANG modification is done , the YANG revision date has to be changed . It would be good if automatically the revision red flag could be introduced. (warning).
+But we all agree to delete the issue from this specific context.
+
+#### Issue #150 Usage of "protection-type" for OMS MCG Protection Modeled as Single Protected TE-link https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/150
+has been discussed and the solution is agreed https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/150#issuecomment-1715259854
+and a draft text proposal already exists and agreed.
+The issue will be closed with the next update for IETF-118.
+
+#### Issue #151 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/151, a draft text proposal exist and is agreed. The issue will be closed with the next update for IETF-118
+
+#### Issue #130 "Documenting mandatory profile for OI applications" https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/130
+
+Esther and Julien will provide an Optical Impairment profile based on the topology used by Orange in laboratory.
+
+#### Issue #120 "Muxponders' configuration constraints" https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/120 , There is already a proposal in the context of flexible grid. We need to discuss in the flexible grid call on Thursday if it would be better to add the modification here in Optical Impairment to make the updated module feasible for both WSON and Flexgrid NW and not only for flexible grid as in case the action for modification would be taken in flexible grid topology.
+
+
+#### issue #144 Tom Petch all comments
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/144
+Regarding Tom Petch comments, 3 issues out of 8 have been already fixed with the version 13. In the remaining 5 points,we disussed the decision regarding the prefix since optical-imp-topo is too long for T. Petch.
+One proposal would be "oit". Another proposal would be oi-tet, but Italo sugested  that the characterization regarding traffic engineering is useful in case like MPLS in which you can have also the case without traffic engineering. 
+There was agreement to change the module prefix to "oit".
