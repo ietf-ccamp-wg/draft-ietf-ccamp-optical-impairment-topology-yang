@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-13"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-14"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -45,7 +45,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2023" month="July" day="10" />
+  <date year="2023" month="October" day="23" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -1219,30 +1219,33 @@
   anchor="Figure-y">
    <artwork><![CDATA[
 
-                    Optical Transponder 1
+                   Optical Transponder 1
+                   3R in forward direction
                +-----------------------------+
                | Transceiver                 |
                |-------------+   +---------+ |
-           --->| Receiver    |---|Sig. --+ | |
+       ------->| Receiver    |---|Sig. --+ | |
                |-------------+   |       | | |
-           <---| Transmitter |---|Proc.<-+ | |
-               |-------------+   +---------+ |
+           +---| Transmitter |---|Proc.<-+ | |
+           |   |-------------+   +---------+ |
+           |   |                             |
+           |   +-----------------------------+
+           |
+           +----------------------------------------->
+           
+       <-----------------------------------------+
+                                                 |
+               +-----------------------------+   |
+               |                 Transceiver |   |
+               | +---------+   +-------------|   |
+               | | +->Sig. |---| Transmitter |---+
+               | | |       |   +-------------|
+               | | +--Proc.|---| Receiver    |<-------
+               | +---------+   +-------------|
                |                             |
                +-----------------------------+
-                  3R in forward direction
-
-
-                    Optical Transponder 2
-               +-----------------------------+
-               | Transceiver                 |
-               |-------------+   +---------+ |
-           --->| Receiver    |---|Sig. --+ | |
-               |-------------+   |       | | |
-           <---| Transmitter |---|Proc.<-+ | |
-               |-------------+   +---------+ |
-               |                             |
-               +-----------------------------+
-                  3R in reverse direction
+                   Optical Transponder 2
+                   3R in backward direction
        
                Sig. Proc. = Signal Processing
 
@@ -2126,7 +2129,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
       WDM-TE-Node-1                      WDM-TE-Node-2
    +----------------+      +---------------------------------------+
    |                |      |                     ROADM             |
-   |      Remote OT |      |    Selector    +--------------+       |
+   |      Remote OT |      |    Splitter    +--------------+       |
    |   +------------+      |   +--------+   |              | Line  |
    |   |         TTP|      |AD |     ---o-->o------\       | LTP 1 |
    |   |       +----|      |LTP|    /   |   |       \------o-------o->
@@ -2340,7 +2343,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    modeling the 1+1 protected TE-link ("te-link-attributes"
    augmentation copied from <xref target="RFC8795"/>:
    
-  <sourcecode name="TE-topology subtree" type="text" markers="false">
+  <sourcecode name="TE-topology subtree underlay" type="text" markers="false">
   <![CDATA[
   augment /nw:networks/nw:network/nt:link:
   +--rw te!
@@ -2355,8 +2358,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
      |  |  |  +--rw index           uint32
      |  |  |  +--rw network-ref?    leafref
      |  |  |     ....................
-     |  |  +--rw protection-type?             identityref
-  ]]>
+     |  ....................
+     |  +--rw link-protection-type?           identityref
+     |  ....................
+]]>
   </sourcecode>
   
   <t>
@@ -2371,11 +2376,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
       </li>
       <li>"backup-path": is referencing the secondary OMS MCG (TE-link)
       </li>
-      <li>"protection-type" (identityref) set to
+      <li>"link-protection-type" (identityref) set to
         'link-protection-1-plus-1' as defined in
         <xref target="I-D.ietf-teas-rfc8776-update"/>
-      </li>
-    </ul>
+      </li>    </ul>
   </t>
   
   <t>
@@ -2518,9 +2522,20 @@ LTP1'   |   RP1'|   |   /   |  prim.    |   \   |   |RP2'   |   LTP6'
    "te-link-attributes" already defined in <xref target="RFC8795"/> and
    <xref target="I-D.ietf-teas-rfc8776-update"/> are used as follows:
    
+  <sourcecode name="TE-topology subtree" type="text" markers="false">
+  <![CDATA[
+ augment /nw:networks/nw:network/nt:link:
+  +--rw te!
+     +--rw te-link-attributes
+     |  ....................
+     |  +--rw link-protection-type?           identityref
+     |  ....................
+  ]]>
+  </sourcecode>
+  
     <ul spacing="compact">
       <li>"underlay": this container must not be present</li>
-      <li>"protection-type" (identityref) set to
+      <li>"link-protection-type" (identityref) set to
         'link-protection-1-plus-1' as defined in
         <xref target="I-D.ietf-teas-rfc8776-update"/>
       </li>
