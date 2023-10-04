@@ -1164,6 +1164,40 @@ module ietf-optical-impairment-topology {
     }
   }
 
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point"
+        + "/tet:te" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "oit:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment 
+        topology";
+    }
+    description
+      "Augment TE attributes of an LTP";
+    
+    leaf inter-layer-sequence-number {
+      type uint32;
+      description
+        "The inter-layer-sequence-number (ILSN) is used to report 
+        additional connectivity constraints between a client layer 
+        Link Termination Point (LTP), such as a muxponder port, and 
+        the server layer Tunnel Termination Point (TTP).
+
+        A client service cannot be setup between two client layer 
+        LTPs which report different values of the ILSN.
+
+        This attribute is not reported when there are no additional 
+        connectivity constraints.
+        
+        Therefore, a client service can be setup when at least one 
+        of the two client layer LTPs does not report any ILSN or 
+        both client layer LTPs report the same ILSN value and the 
+        corresponding server layer TTPs have at least one common 
+        server-layer switching capability and at least one common 
+        client-layer switching capability.";
+    }
+  }
+
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
     when "../../../nw:network-types/tet:te-topology"

@@ -246,6 +246,9 @@ module: ietf-optical-impairment-topology
        +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
+  augment /nw:networks/nw:network/nw:node/nt:termination-point
+            /tet:te:
+    +--rw inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
