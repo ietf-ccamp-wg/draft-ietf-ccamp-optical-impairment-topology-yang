@@ -39,11 +39,16 @@ module: ietf-optical-impairment-topology
     |        |        |     |       frequency-thz
     |        |        |     +--ro transceiver-tunability?
     |        |        |     |       frequency-ghz
-    |        |        |     +--ro tx-channel-power-min?      dbm-t
-    |        |        |     +--ro tx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-channel-power-min?      dbm-t
-    |        |        |     +--ro rx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-total-power-max?        dbm-t
+    |        |        |     +--ro tx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro tx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-total-power-max?
+    |        |        |             power-in-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
     |        |              +--ro line-coding-bitrate?
@@ -73,9 +78,10 @@ module: ietf-optical-impairment-topology
     |        |              +--ro min-OSNR?
     |        |              |       snr
     |        |              +--ro rx-ref-channel-power?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power-value    union
+    |        |              |  +--ro rx-channel-power-value
+    |        |              |  |       power-in-dbm-or-null
     |        |              |  +--ro penalty-value             union
     |        |              +--ro min-Q-factor?
     |        |              |       int32
@@ -106,15 +112,15 @@ module: ietf-optical-impairment-topology
     |        |              +--ro transceiver-tunability?
     |        |              |       frequency-ghz
     |        |              +--ro tx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro tx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-total-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro compatible-modes
     |        |                 +--ro supported-application-codes*
     |        |                 |       -> ../../../mode-id
