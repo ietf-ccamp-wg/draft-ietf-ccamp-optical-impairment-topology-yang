@@ -4,7 +4,7 @@ module ietf-optical-impairment-topology {
   namespace "urn:ietf:params:xml"
           + ":ns:yang:ietf-optical-impairment-topology";
 
-  prefix "optical-imp-topo";
+  prefix "oit";
 
   import ietf-network {
     prefix "nw";
@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-07-07 {
+  revision 2023-10-04 {
     description
       "Initial Version";
     reference
@@ -564,7 +564,7 @@ module ietf-optical-impairment-topology {
     }
   }
 
-  grouping power-param{
+  grouping power-param {
     description
       "optical power or PSD after the ROADM or after the out-voa";
     choice power-param {
@@ -662,7 +662,11 @@ module ietf-optical-impairment-topology {
   } // OTSiG grouping
 
   grouping media-channel-groups {
-    description "media channel groups";
+    description
+      "media channel groups.
+      
+      This grouping is not intended to be reused outside of this 
+      module.";
 
     container media-channel-groups {
       presence
@@ -684,7 +688,7 @@ module ietf-optical-impairment-topology {
 
           leaf otsi-group-ref {
             type leafref {
-              path "/nw:networks/nw:network/otsis/" +
+              path "../../../../../../../../otsis/" +
                   "otsi-group/otsi-group-id";
             }
             description
@@ -698,7 +702,7 @@ module ietf-optical-impairment-topology {
               OTSiG carried by this media channel.";
             leaf otsi-carrier-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsis/" +
+                path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi/otsi-carrier-id" ;
@@ -709,7 +713,7 @@ module ietf-optical-impairment-topology {
             }
             leaf-list e2e-mc-path-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsis/" +
+                path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi[otsi-carrier-id=current()" +
@@ -849,8 +853,8 @@ module ietf-optical-impairment-topology {
   }
 
   augment "/nw:networks/nw:network" {
-    when "nw:network-types/tet:te-topology" +
-         "/optical-imp-topo:optical-impairment-topology" {
+    when "./nw:network-types/tet:te-topology" +
+         "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology.";
@@ -883,7 +887,7 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node" {
     when "../nw:network-types/tet:te-topology" +
-         "/optical-imp-topo:optical-impairment-topology" {
+         "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment.";
     }
@@ -1066,7 +1070,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nt:link/tet:te"
         + "/tet:te-link-attributes"   {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology.";
@@ -1084,7 +1088,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Impairment with
          non-sliceable transponder model";
@@ -1127,7 +1131,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for optical impairment
        with sliceable transponder model";
@@ -1141,7 +1145,7 @@ module ietf-optical-impairment-topology {
   // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
     when "../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -1163,7 +1167,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
     when "../../../nw:network-types/tet:te-topology"
-       + "/optical-imp-topo:optical-impairment-topology" {
+       + "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -1242,7 +1246,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices"{
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
@@ -1266,7 +1270,7 @@ module ietf-optical-impairment-topology {
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment
          topology ";
@@ -1288,7 +1292,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices" {
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
@@ -1312,7 +1316,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/"
         + "tet:connectivity-matrices/tet:connectivity-matrix" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -1334,7 +1338,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:from" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -1346,8 +1350,8 @@ module ietf-optical-impairment-topology {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
          + "[nt:tp-id=current()/../../tet:to/tet:tp-ref]/"
-         + "optical-imp-topo:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "oit:protection-type,"
+         + "'oit:otsi-protection')" {
         description
           "This list applies only when the 'to' LTP for this 
           connectivity matrix entry supports individual OTSi(G) 
@@ -1389,7 +1393,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:to" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -1401,8 +1405,8 @@ module ietf-optical-impairment-topology {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
          + "[nt:tp-id=current()/../../tet:from/tet:tp-ref]/"
-         + "optical-imp-topo:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "oit:protection-type,"
+         + "'oit:otsi-protection')" {
         description
           "This list applies only when the 'from' LTP for this 
           connectivity matrix entry supports individual OTSi(G) 
@@ -1444,7 +1448,7 @@ module ietf-optical-impairment-topology {
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities" {
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
       "This augment is only valid for Optical Impairment topology ";
     }
@@ -1475,7 +1479,7 @@ module ietf-optical-impairment-topology {
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for
          Optical Impairment topology ";
@@ -1547,7 +1551,7 @@ module ietf-optical-impairment-topology {
     }
     list additional-ltp {
       when "derived-from-or-self(../../../tet:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "'oit:otsi-protection')" {
         description
           "This list applies only to TTPs that support individual 
           OTSi(G) protection.";
