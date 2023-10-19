@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-10-04 {
+  revision 2023-10-19 {
     description
       "Initial Version";
     reference
@@ -152,6 +152,12 @@ module ietf-optical-impairment-topology {
               "The name of the amplifier element as specified in
               the vendor's specification associated with the
               type-variety.";
+          }
+          leaf is-dynamic-gain-equalyzer {
+            type boolean;
+            description
+              "Indicates whether the amplifier element is a Dynamic 
+              Gain Equalizer (DGE).";
           }
           container frequency-range {
             description
@@ -237,6 +243,34 @@ module ietf-optical-impairment-topology {
                 at the raman pump central frequency.";
             }
           }
+          leaf pdl {
+            type l0-types:loss-in-db-or-null;
+            description "Polarization Dependent Loss (PDL)";
+          }
+          container media-channel-groups {
+            description
+              "The top level container for the list of media channel 
+              groups.";
+            list media-channel-group {
+              description
+                "The list of media channel groups";
+              list media-channels {
+                // key "flexi-n";
+                description
+                  "List of media channels represented as (n,m)";
+
+                // this grouping add both n.m values
+                uses l0-types:flexi-grid-frequency-slot;
+
+                leaf delta-power {
+                  type l0-types:power-in-dbm-or-null;
+                  description
+                    " Deviation from the reference carrier power 
+                    defined for the OMS.";
+                }
+              } // media channels list
+            } // media-channel-groups list
+          }
         }  // list amplifier-element
       }  // container operational
     }  // container amplifier
@@ -313,7 +347,7 @@ module ietf-optical-impairment-topology {
     leaf roadm-pdl {
       type l0-types:loss-in-db-or-null;
       description "Polarization Dependent Loss (PDL)";
-    }      
+    }
     leaf roadm-inband-crosstalk {
       type l0-types:decimal-2-digits-or-null;
       units "dB";
@@ -684,7 +718,7 @@ module ietf-optical-impairment-topology {
             "list of media channels represented as (n,m)";
 
           // this grouping add both n.m values
-          uses l0-types:flexi-grid-frequency-slot; 
+          uses l0-types:flexi-grid-frequency-slot;
 
           leaf otsi-group-ref {
             type leafref {
