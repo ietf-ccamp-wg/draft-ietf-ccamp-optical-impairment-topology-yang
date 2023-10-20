@@ -168,7 +168,7 @@ module: ietf-optical-impairment-topology
        |        +--ro otsi-ref* []
        |        |  +--ro otsi-carrier-ref?   leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-in-dbm-or-null
+       |        +--ro delta-power?      l0-types:gain-in-db-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -228,7 +228,7 @@ module: ietf-optical-impairment-topology
                 |                    +--ro flexi-m?
                 |                    |       l0-types:flexi-m
                 |                    +--ro delta-power?
-                |                            l0-types:power-in-dbm-or-null
+                |                            l0-types:gain-in-db-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string

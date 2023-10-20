@@ -41,11 +41,16 @@ module: ietf-optical-impairment-topology
     |        |        |     |       frequency-thz
     |        |        |     +--ro transceiver-tunability?
     |        |        |     |       frequency-ghz
-    |        |        |     +--ro tx-channel-power-min?      dbm-t
-    |        |        |     +--ro tx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-channel-power-min?      dbm-t
-    |        |        |     +--ro rx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-total-power-max?        dbm-t
+    |        |        |     +--ro tx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro tx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-total-power-max?
+    |        |        |             power-in-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
     |        |              +--ro line-coding-bitrate?
@@ -75,9 +80,10 @@ module: ietf-optical-impairment-topology
     |        |              +--ro min-OSNR?
     |        |              |       snr
     |        |              +--ro rx-ref-channel-power?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power-value    union
+    |        |              |  +--ro rx-channel-power-value
+    |        |              |  |       power-in-dbm-or-null
     |        |              |  +--ro penalty-value             union
     |        |              +--ro min-Q-factor?
     |        |              |       int32
@@ -108,15 +114,15 @@ module: ietf-optical-impairment-topology
     |        |              +--ro transceiver-tunability?
     |        |              |       frequency-ghz
     |        |              +--ro tx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro tx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-total-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro compatible-modes
     |        |                 +--ro supported-application-codes*
     |        |                 |       -> ../../../mode-id
@@ -142,8 +148,7 @@ module: ietf-optical-impairment-topology
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
           +--ro transponder-ref*
-                  -> ../../../transponders/transponder/transponder-i\
-d
+                  -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
@@ -165,8 +170,7 @@ d
        |        +--ro otsi-ref* []
        |        |  +--ro otsi-carrier-ref?   leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-in-dbm-or-nul\
-l
+       |        +--ro delta-power?      l0-types:gain-in-db-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -179,26 +183,23 @@ l
                 +--:(amplifier)
                 |  +--ro geolocation
                 |  |  +--ro altitude?    int64
-                |  |  +--ro latitude?    geographic-coordinate-degre\
-e
-                |  |  +--ro longitude?   geographic-coordinate-degre\
-e
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
                 |        +--ro amplifier-element* []
                 |           +--ro name?
                 |           |       string
+                |           +--ro is-dynamic-gain-equalyzer?
+                |           |       boolean
                 |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-th\
-z
-                |           |  +--ro upper-frequency    frequency-th\
-z
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro actual-gain
                 |           |       l0-types:gain-in-db-or-null
                 |           +--ro tilt-target
-                |           |       l0-types:decimal-2-digits-or-nul\
-l
+                |           |       l0-types:decimal-2-digits-or-null
                 |           +--ro out-voa
                 |           |       l0-types:loss-in-db-or-null
                 |           +--ro in-voa
@@ -218,10 +219,22 @@ ty?
                 |           +--ro raman-direction?
                 |           |       enumeration
                 |           +--ro raman-pump* []
-                |              +--ro frequency?
-                |              |       l0-types:frequency-thz
-                |              +--ro power?
-                |                      l0-types:decimal-2-digits-or-\
+                |           |  +--ro frequency?
+                |           |  |       l0-types:frequency-thz
+                |           |  +--ro power?
+                |           |          l0-types:decimal-2-digits-or-\
+null
+                |           +--ro pdl?
+                |           |       l0-types:loss-in-db-or-null
+                |           +--ro media-channel-groups
+                |              +--ro media-channel-group* []
+                |                 +--ro media-channels* []
+                |                    +--ro flexi-n?
+                |                    |       l0-types:flexi-n
+                |                    +--ro flexi-m?
+                |                    |       l0-types:flexi-m
+                |                    +--ro delta-power?
+                |                            l0-types:gain-in-db-or-\
 null
                 +--:(fiber)
                 |  +--ro fiber
@@ -245,8 +258,7 @@ null
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
-       |       -> ../../../../transponders/transponder/transponder-i\
-d
+       |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
@@ -254,6 +266,9 @@ d
        +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
+  augment /nw:networks/nw:network/nw:node/nt:termination-point
+            /tet:te:
+    +--rw inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
@@ -329,8 +344,7 @@ d
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices:
     +--ro roadm-path-impairments?
-            -> ../../roadm-path-impairments/roadm-path-impairments-i\
-d
+            -> ../../roadm-path-impairments/roadm-path-impairments-id
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix:
