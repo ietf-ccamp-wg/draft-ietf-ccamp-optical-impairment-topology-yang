@@ -263,7 +263,7 @@ module ietf-optical-impairment-topology {
                 uses l0-types:flexi-grid-frequency-slot;
 
                 leaf delta-power {
-                  type l0-types:power-in-dbm-or-null;
+                  type l0-types:gain-in-db-or-null;
                   description
                     " Deviation from the reference carrier power 
                     defined for the OMS.";
@@ -760,7 +760,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:power-in-dbm-or-null;
+            type l0-types:gain-in-db-or-null;
             description
               " Deviation from the reference carrier power defined 
               for the OMS.";
