@@ -130,9 +130,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
            OTs)  . . . . . . . . . . . . . . . . . . . . . . . . . . 106
      B.1.  JSON Examples for Optical Transponders in a Remote Shelf
            (Remote OTs)  . . . . . . . . . . . . . . . . . . . . . . 108
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . . 135
-   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . . 135
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 136
+   Appendix C.  Examples How to Use the organizational-mode
+           Attribute . . . . . . . . . . . . . . . . . . . . . . . . 135
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . . 137
+   Additional Authors  . . . . . . . . . . . . . . . . . . . . . . . 137
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 138
 
 1.  Introduction
 
@@ -152,6 +154,22 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
    two encoding documents [RFC7581] and [RFC7579] that developed
    protocol independent encodings based on [RFC7446].
 
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 25 April 2024                 [Page 3]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
+
+
    The intent of this document is to provide a YANG data model, which
    can be utilized by a Multi-Domain Service Coordinator (MDSC) to
    collect states of WSON impairment data from the Transport PNCs to
@@ -161,14 +179,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
    Similarly,this model can also be exported by the MDSC to a Customer
    Network Controller (CNC), which can run an offline planning process
    to map latter the services in the network.
-
-
-
-
-Beller, et al.            Expires 25 April 2024                 [Page 3]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
-
 
    It is worth noting that optical data plane interoperability is a
    complex topic especially in a multi vendor environment and usually
@@ -208,16 +218,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
    The following terms are defined in [RFC6241] and are not redefined
    here:
 
-   *  configuration data
-
-   *  state data
-
-   The terminology for describing YANG data models is found in
-   [RFC7950].
-
-
-
-
 
 
 
@@ -225,6 +225,13 @@ Beller, et al.            Expires 25 April 2024                 [Page 4]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
 
+
+   *  configuration data
+
+   *  state data
+
+   The terminology for describing YANG data models is found in
+   [RFC7950].
 
    The term ROADM in this document refers to the term "multi-degree
    reconfigurable optical add/drop multiplexer (MD-ROADM)" as defined in
@@ -265,13 +272,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
    In this document, names of data nodes and other data model objects
    are prefixed using the standard prefix associated with the
    corresponding YANG imported modules, as shown in Table 1.
-
-
-
-
-
-
-
 
 
 
@@ -367,7 +367,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
                 ^                                        ^
                 |                                        |
                 |                                        |
-               Scope of [I-D.ietf-ccamp-dwdm-if-param-yang]
+       Scope of RFC AAAA                        Scope of RFC AAAA
 
                         Figure 1: Scope of RFC AAAA
 
@@ -7536,6 +7536,100 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
      }
    }
 
+Appendix C.  Examples How to Use the organizational-mode Attribute
+
+   One option to describe the transceiver capabilities of an optical
+   transponder (supported-mode list in the supported-modes container as
+   defied in [I-D.ietf-ccamp-rfc9093-bis]) is to describe the
+   organizational-modes a transceiver supports as described in section
+   Section 2.6.2.
+
+   [I-D.ietf-ccamp-rfc9093-bis]) defines the operational-mode of type
+   identityref, which means that the identity the operational-mode
+   attribute is referring to needs to be defined in a separate
+   organization-specific or vendor-specific YANG module.  An example of
+   such an organization-specific YANG module as well as a vendor-
+   specific YANG module is provided below.
+
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Forum A:
+
+
+
+
+Beller, et al.            Expires 25 April 2024               [Page 135]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
+
+
+   module forum-a-operational-modes {
+     yang-version 1.1;
+
+     import "ietf-layer0-types"{
+       prefix "id-base"};
+
+     namespace "urn:forum-a:example:forum-a-op-modes";
+     prefix "op-modes";
+
+   ...
+
+     identity 400G-operational-mode {
+       base "id-base:operational-mode"
+         description "Forum A 400G specific mode.";
+     }
+
+   ...
+
+   }
+
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Vendor B with the same
+   identity name "400G-operational-mode" as an operational mode that
+   specified by Forum A.
+
+   module vendor-b-operational-modes {
+     yang-version 1.1;
+
+     import "ietf-layer0-types"{
+       prefix "id-base"};
+
+     namespace "urn:vendor-b:example:vendor-b-op-modes";
+     prefix "op-modes";
+
+   ...
+
+     identity 400G-operational-mode {
+       base "id-base:operational-mode"
+         description "Vendor B 400G mode.";
+     }
+
+   ...
+
+   }
+
+
+
+
+
+
+
+Beller, et al.            Expires 25 April 2024               [Page 136]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
+
+
+   If there are transceivers in a network that are supporting any of the
+   two 400G operational modes, the one specified by Forum A or the one
+   specified by Vendor B or even both, the different name spaces allow
+   to unambiguously identify the two modes that are defined in the YANG
+   modules above with exactly the same identity name.
+
+   The NETCONF server providing the optical impairment-aware topology
+   will have to support both YANG modules above and will have to
+   advertise both as capability in the NETCONF hello message indicating
+   that these operational mode identities are used in the description of
+   the optical impairment-aware topology model defined in this document.
+
 Contributors
 
    Thanks to all of the contributors.
@@ -7554,14 +7648,6 @@ Additional Authors
 
    Young Lee
    Samsung Electronics
-
-
-
-Beller, et al.            Expires 25 April 2024               [Page 135]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
-
-
    Email: younglee.tx@gmail.com
 
 
@@ -7578,6 +7664,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
    Giovanni Martinelli
    Cisco
    Email: giomarti@cisco.com
+
+
+
+
+
+Beller, et al.            Expires 25 April 2024               [Page 137]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
 
 
    Jean-Luc Auge
@@ -7612,12 +7706,6 @@ Authors' Addresses
    Email: Dieter.Beller@nokia.com
 
 
-
-Beller, et al.            Expires 25 April 2024               [Page 136]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
-
-
    Esther Le Rouzic
    Orange
    Email: esther.lerouzic@orange.com
@@ -7634,6 +7722,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
 
    Italo Busi
    Huawei Technologies
+
+
+
+Beller, et al.            Expires 25 April 2024               [Page 138]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
+
+
    Email: Italo.Busi@huawei.com
 
 
@@ -7669,4 +7765,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2023
 
 
 
-Beller, et al.            Expires 25 April 2024               [Page 137]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 25 April 2024               [Page 139]

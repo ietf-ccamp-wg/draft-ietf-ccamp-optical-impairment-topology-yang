@@ -295,7 +295,7 @@
           ^                                        ^
           |                                        |
           |                                        |
-         Scope of [I-D.ietf-ccamp-dwdm-if-param-yang]
+ Scope of RFC AAAA                        Scope of RFC AAAA
 
 ]]></artwork>
   </figure>
@@ -926,7 +926,7 @@
   
   </section>
   
-  <section title="Organizational Modes" anchor="sect-2.5.2">
+  <section title="Organizational Modes" anchor="organizational-modes">
   <t>
    Organizations like operator groups, industry fora, or equipment
    vendors can define their own optical interface specifications and
@@ -6900,6 +6900,106 @@ eiver": [
   </section>
   
   </section>
+
+  <section anchor="operational-mode_usage" numbered="true">
+  <name>Examples How to Use the organizational-mode Attribute</name>
+  
+  <t>
+   One option to describe the transceiver capabilities of an optical
+   transponder (supported-mode list in the supported-modes container
+   as defied in <xref target="I-D.ietf-ccamp-rfc9093-bis" />) is to
+   describe the organizational-modes a transceiver supports as
+   described in section <xref target="organizational-modes"/>.
+  </t>
+  
+  <t>
+   <xref target="I-D.ietf-ccamp-rfc9093-bis" />) defines the
+   operational-mode of type identityref, which means that the identity
+   the operational-mode attribute is referring to needs to be defined
+   in a separate organization-specific or vendor-specific YANG module.
+   An example of such an organization-specific YANG module as well as a
+   vendor-specific YANG module is provided below.
+  </t>
+  
+  <t>
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Forum A:
+  </t>
+
+  <sourcecode type="xml" markers="false">
+    <![CDATA[
+module forum-a-operational-modes {
+  yang-version 1.1;
+
+  import "ietf-layer0-types"{
+    prefix "id-base"};
+
+  namespace "urn:forum-a:example:forum-a-op-modes";
+  prefix "op-modes";
+
+...
+
+  identity 400G-operational-mode {
+    base "id-base:operational-mode"
+      description "Forum A 400G specific mode.";
+  }
+
+...
+
+}
+    ]]>
+  </sourcecode>
+
+  <t>
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Vendor B with the
+   same identity name "400G-operational-mode" as an operational mode
+   that specified by Forum A.
+  </t>
+
+  <sourcecode type="xml" markers="false">
+    <![CDATA[
+module vendor-b-operational-modes {
+  yang-version 1.1;
+
+  import "ietf-layer0-types"{
+    prefix "id-base"};
+
+  namespace "urn:vendor-b:example:vendor-b-op-modes";
+  prefix "op-modes";
+
+...
+
+  identity 400G-operational-mode {
+    base "id-base:operational-mode"
+      description "Vendor B 400G mode.";
+  }
+
+...
+
+}
+    ]]>
+  </sourcecode>
+
+  <t>
+   If there are transceivers in a network that are supporting any of
+   the two 400G operational modes, the one specified by Forum A or the
+   one specified by Vendor B or even both, the different name spaces
+   allow to unambiguously identify the two modes that are defined in
+   the YANG modules above with exactly the same identity name.
+  </t>
+  
+  <t>
+   The NETCONF server providing the optical impairment-aware topology
+   will have to support both YANG modules above and will have to
+   advertise both as capability in the NETCONF hello message indicating
+   that these operational mode identities are used in the description
+   of the optical impairment-aware topology model defined in this
+   document.
+  </t>
+
+  </section>
+
   
   <section anchor="Contributors" numbered="false">
   <name>Contributors</name>
