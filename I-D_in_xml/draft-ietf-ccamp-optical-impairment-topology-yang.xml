@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-13"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-14"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -45,7 +45,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2023" month="July" day="10" />
+  <date year="2023" month="October" day="23" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -231,7 +231,7 @@
    <ttcol> Prefix</ttcol>
    <ttcol> YANG module</ttcol>
    <ttcol> Reference</ttcol>
-   <c>optical-imp-topo</c>
+   <c>oit</c>
    <c>ietf-optical-impairment-topology</c>
    <c>[RFCXXXX]</c>
    <c>l0-types</c>
@@ -264,8 +264,7 @@
   </t>
 
   
-  <figure align="center" title="Scope of 
-  draft-ietf-ccamp-dwdm-if-param-yang" anchor="Figure-1">
+  <figure align="center" title="Scope of RFC AAAA" anchor="Figure-1">
   <artwork><![CDATA[
                           +--------+
                           |  MDSC  |
@@ -296,10 +295,16 @@
           ^                                        ^
           |                                        |
           |                                        |
-         Scope of [I-D.ietf-ccamp-dwdm-if-param-yang]
+ Scope of RFC AAAA                        Scope of RFC AAAA
 
 ]]></artwork>
   </figure>
+
+  <t>
+   Note: The RFC Editor will replace AAAA above with the number
+   assigned to the RFC once draft-ietf-ccamp-dwdm-if-param-yang will
+   become an RFC.
+  </t>
   
   <t>
    The topology model developed in this document is an abstracted
@@ -328,7 +333,8 @@
   </t>
 
   <figure title="Reference Architecture for Optical Transport Network"
-   anchor="Figure-2"><artwork><![CDATA[
+   anchor="Figure-2">
+   <artwork><![CDATA[
   +-------------------+                      +-------------------+
   |     WDM-Node 1    |                      |     WDM-Node 2    |
   |                   |                      |                   |
@@ -551,6 +557,7 @@
 --+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---
                                 n = 4
                K1           K2           K3           K4
+
 ]]></artwork>
   </figure>
 
@@ -603,8 +610,9 @@
    graph" interconnecting a pair of tunnel termination points (TTPs).
   </t>
 
-  <figure align="center" title="Figure Caption TBA" anchor="Figure-4">
-   <artwork><![CDATA[
+  <figure align="center" title="MC Example containing both OTSi signals
+  of an OTSiG" anchor="Figure-4">
+  <artwork><![CDATA[
                                  m=8
   +-------------------------------X-------------------------------+
   |                               |                               |
@@ -618,6 +626,7 @@
                    K1                            K2
 
   <------------------------ Media Channel ----------------------->
+
 ]]></artwork>
   </figure>
   
@@ -658,7 +667,8 @@
    across 2 or more MCs.
   </t>
 
-  <figure align="center" title="Figure Caption TBA" anchor="Figure-5">
+  <figure align="center" title="MCG Example with 2 MCs"
+  anchor="Figure-5">
   <artwork><![CDATA[
                                 MCG1 = {M1.1, M1.2}
        __________________________/\________________________
@@ -677,6 +687,7 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                     n=0                               n=17
             K1      K2      K3                        K4
+
 ]]></artwork>
   </figure>
   
@@ -691,7 +702,7 @@
 
   </section>
 
-  <section title="Optical Amplifiers" anchor="sect-2.4">
+  <section title="Optical Amplifiers" anchor="optical_amps">
   <t>
    Optical amplifiers are used in WDM networks for amplifying the
    optical signal in the optical domain without any optical to
@@ -792,9 +803,29 @@
    WSS/Filter).
   </t>
 
+ </section>
+
+
+  <section title="Dynamic Gain Equalizers" anchor="DGE_subsection">
+  
+  <t>
+   A Dynamic Gain Equalizer (DGE) is an optical equipment that is
+   capable of adjusting the optical power on a per channel basis in
+   order to compensate the channel power variation as a result of
+   variable gain or loss the DWDM signals experienced while propagating
+   through the network. The channel power can be configured explicitly
+   or in the form of power-spectral-density.
+  </t>
+
+  <t>
+   [Editor's note: This sub-section needs to be completed and is still
+   work in progress.]
+  </t>
+  
   </section>
 
-  <section title="Transponders" anchor="sect-2.5">
+
+  <section title="Transponders" anchor="transponders">
   <t>
    [Editor's note: The relationship between the transponder and the
    OTSi in the YANG model described in <xref target="sect-3"></xref>
@@ -895,7 +926,7 @@
   
   </section>
   
-  <section title="Organizational Modes" anchor="sect-2.5.2">
+  <section title="Organizational Modes" anchor="organizational-modes">
   <t>
    Organizations like operator groups, industry fora, or equipment
    vendors can define their own optical interface specifications and
@@ -998,6 +1029,7 @@
    related properties are not included in the operational mode
    definition.
   </t>
+  
   </section>
 
   <section title="Explicit Modes" anchor="sect-2.5.3">
@@ -1153,7 +1185,7 @@
   
   <t>
    3R regenerators are usually realized by a pair of optical
-   transponders, which are described in <xref target="sect-2.5"/>
+   transponders, which are described in <xref target="transponders"/>
    above. If a pair of optical transponders is used to perform a 3R
    regeneratator function, two different configurations are possible
    involving the pair of optical transceivers of the two optical
@@ -1219,30 +1251,33 @@
   anchor="Figure-y">
    <artwork><![CDATA[
 
-                    Optical Transponder 1
+                   Optical Transponder 1
+                   3R in forward direction
                +-----------------------------+
                | Transceiver                 |
                |-------------+   +---------+ |
-           --->| Receiver    |---|Sig. --+ | |
+       ------->| Receiver    |---|Sig. --+ | |
                |-------------+   |       | | |
-           <---| Transmitter |---|Proc.<-+ | |
-               |-------------+   +---------+ |
+           +---| Transmitter |---|Proc.<-+ | |
+           |   |-------------+   +---------+ |
+           |   |                             |
+           |   +-----------------------------+
+           |
+           +----------------------------------------->
+           
+       <-----------------------------------------+
+                                                 |
+               +-----------------------------+   |
+               |                 Transceiver |   |
+               | +---------+   +-------------|   |
+               | | +->Sig. |---| Transmitter |---+
+               | | |       |   +-------------|
+               | | +--Proc.|---| Receiver    |<-------
+               | +---------+   +-------------|
                |                             |
                +-----------------------------+
-                  3R in forward direction
-
-
-                    Optical Transponder 2
-               +-----------------------------+
-               | Transceiver                 |
-               |-------------+   +---------+ |
-           --->| Receiver    |---|Sig. --+ | |
-               |-------------+   |       | | |
-           <---| Transmitter |---|Proc.<-+ | |
-               |-------------+   +---------+ |
-               |                             |
-               +-----------------------------+
-                  3R in reverse direction
+                   Optical Transponder 2
+                   3R in backward direction
        
                Sig. Proc. = Signal Processing
 
@@ -2126,7 +2161,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
       WDM-TE-Node-1                      WDM-TE-Node-2
    +----------------+      +---------------------------------------+
    |                |      |                     ROADM             |
-   |      Remote OT |      |    Selector    +--------------+       |
+   |      Remote OT |      |    Splitter    +--------------+       |
    |   +------------+      |   +--------+   |              | Line  |
    |   |         TTP|      |AD |     ---o-->o------\       | LTP 1 |
    |   |       +----|      |LTP|    /   |   |       \------o-------o->
@@ -2340,7 +2375,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    modeling the 1+1 protected TE-link ("te-link-attributes"
    augmentation copied from <xref target="RFC8795"/>:
    
-  <sourcecode name="TE-topology subtree" type="text" markers="false">
+  <sourcecode name="TE-topology subtree underlay" type="text" markers="false">
   <![CDATA[
   augment /nw:networks/nw:network/nt:link:
   +--rw te!
@@ -2355,8 +2390,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
      |  |  |  +--rw index           uint32
      |  |  |  +--rw network-ref?    leafref
      |  |  |     ....................
-     |  |  +--rw protection-type?             identityref
-  ]]>
+     |  ....................
+     |  +--rw link-protection-type?           identityref
+     |  ....................
+]]>
   </sourcecode>
   
   <t>
@@ -2371,11 +2408,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
       </li>
       <li>"backup-path": is referencing the secondary OMS MCG (TE-link)
       </li>
-      <li>"protection-type" (identityref) set to
+      <li>"link-protection-type" (identityref) set to
         'link-protection-1-plus-1' as defined in
         <xref target="I-D.ietf-teas-rfc8776-update"/>
-      </li>
-    </ul>
+      </li>    </ul>
   </t>
   
   <t>
@@ -2518,9 +2554,20 @@ LTP1'   |   RP1'|   |   /   |  prim.    |   \   |   |RP2'   |   LTP6'
    "te-link-attributes" already defined in <xref target="RFC8795"/> and
    <xref target="I-D.ietf-teas-rfc8776-update"/> are used as follows:
    
+  <sourcecode name="TE-topology subtree" type="text" markers="false">
+  <![CDATA[
+ augment /nw:networks/nw:network/nt:link:
+  +--rw te!
+     +--rw te-link-attributes
+     |  ....................
+     |  +--rw link-protection-type?           identityref
+     |  ....................
+  ]]>
+  </sourcecode>
+  
     <ul spacing="compact">
       <li>"underlay": this container must not be present</li>
-      <li>"protection-type" (identityref) set to
+      <li>"link-protection-type" (identityref) set to
         'link-protection-1-plus-1' as defined in
         <xref target="I-D.ietf-teas-rfc8776-update"/>
       </li>
@@ -2722,6 +2769,8 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
   <sourcecode name="ietf-optical-impairment-topolog.tree" type="text"
   markers="false">
     <![CDATA[
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
 module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
@@ -2763,11 +2812,16 @@ module: ietf-optical-impairment-topology
     |        |        |     |       frequency-thz
     |        |        |     +--ro transceiver-tunability?
     |        |        |     |       frequency-ghz
-    |        |        |     +--ro tx-channel-power-min?      dbm-t
-    |        |        |     +--ro tx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-channel-power-min?      dbm-t
-    |        |        |     +--ro rx-channel-power-max?      dbm-t
-    |        |        |     +--ro rx-total-power-max?        dbm-t
+    |        |        |     +--ro tx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro tx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-min?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-channel-power-max?
+    |        |        |     |       power-in-dbm
+    |        |        |     +--ro rx-total-power-max?
+    |        |        |             power-in-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
     |        |              +--ro line-coding-bitrate?
@@ -2797,9 +2851,10 @@ module: ietf-optical-impairment-topology
     |        |              +--ro min-OSNR?
     |        |              |       snr
     |        |              +--ro rx-ref-channel-power?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power-value    union
+    |        |              |  +--ro rx-channel-power-value
+    |        |              |  |       power-in-dbm-or-null
     |        |              |  +--ro penalty-value             union
     |        |              +--ro min-Q-factor?
     |        |              |       int32
@@ -2830,15 +2885,15 @@ module: ietf-optical-impairment-topology
     |        |              +--ro transceiver-tunability?
     |        |              |       frequency-ghz
     |        |              +--ro tx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro tx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-min?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-channel-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro rx-total-power-max?
-    |        |              |       dbm-t
+    |        |              |       power-in-dbm
     |        |              +--ro compatible-modes
     |        |                 +--ro supported-application-codes*
     |        |                 |       -> ../../../mode-id
@@ -2886,7 +2941,7 @@ module: ietf-optical-impairment-topology
        |        +--ro otsi-ref* []
        |        |  +--ro otsi-carrier-ref?   leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-in-dbm-or-null
+       |        +--ro delta-power?      l0-types:gain-in-db-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -2907,6 +2962,8 @@ module: ietf-optical-impairment-topology
                 |        +--ro amplifier-element* []
                 |           +--ro name?
                 |           |       string
+                |           +--ro is-dynamic-gain-equalyzer?
+                |           |       boolean
                 |           +--ro frequency-range
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
@@ -2923,17 +2980,33 @@ module: ietf-optical-impairment-topology
                 |           +--ro (power-param)?
                 |           |  +--:(channel-power)
                 |           |  |  +--ro nominal-carrier-power?
-                |           |  |        l0-types:power-in-dbm-or-null
+                |           |  |          l0-types:power-in-dbm-or-n\
+ull
                 |           |  +--:(power-spectral-density)
-                |           |   +--ro nominal-power-spectral-density?
-                |           |      l0-types:decimal-16-digits-or-null
+                |           |     +--ro nominal-power-spectral-densi\
+ty?
+                |           |             l0-types:decimal-16-digits\
+-or-null
                 |           +--ro raman-direction?
                 |           |       enumeration
                 |           +--ro raman-pump* []
-                |              +--ro frequency?
-                |              |       l0-types:frequency-thz
-                |              +--ro power?
-                |                   l0-types:decimal-2-digits-or-null
+                |           |  +--ro frequency?
+                |           |  |       l0-types:frequency-thz
+                |           |  +--ro power?
+                |           |          l0-types:decimal-2-digits-or-\
+null
+                |           +--ro pdl?
+                |           |       l0-types:loss-in-db-or-null
+                |           +--ro media-channel-groups
+                |              +--ro media-channel-group* []
+                |                 +--ro media-channels* []
+                |                    +--ro flexi-n?
+                |                    |       l0-types:flexi-n
+                |                    +--ro flexi-m?
+                |                    |       l0-types:flexi-m
+                |                    +--ro delta-power?
+                |                            l0-types:gain-in-db-or-\
+null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -2964,6 +3037,9 @@ module: ietf-optical-impairment-topology
        +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
+  augment /nw:networks/nw:network/nw:node/nt:termination-point
+            /tet:te:
+    +--rw inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
     +--ro roadm-path-impairments* [roadm-path-impairments-id]
@@ -3105,7 +3181,7 @@ module ietf-optical-impairment-topology {
   namespace "urn:ietf:params:xml"
           + ":ns:yang:ietf-optical-impairment-topology";
 
-  prefix "optical-imp-topo";
+  prefix "oit";
 
   import ietf-network {
     prefix "nw";
@@ -3188,7 +3264,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-07-07 {
+  revision 2023-10-19 {
     description
       "Initial Version";
     reference
@@ -3253,6 +3329,12 @@ module ietf-optical-impairment-topology {
               "The name of the amplifier element as specified in
               the vendor's specification associated with the
               type-variety.";
+          }
+          leaf is-dynamic-gain-equalyzer {
+            type boolean;
+            description
+              "Indicates whether the amplifier element is a Dynamic 
+              Gain Equalizer (DGE).";
           }
           container frequency-range {
             description
@@ -3338,6 +3420,34 @@ module ietf-optical-impairment-topology {
                 at the raman pump central frequency.";
             }
           }
+          leaf pdl {
+            type l0-types:loss-in-db-or-null;
+            description "Polarization Dependent Loss (PDL)";
+          }
+          container media-channel-groups {
+            description
+              "The top level container for the list of media channel 
+              groups.";
+            list media-channel-group {
+              description
+                "The list of media channel groups";
+              list media-channels {
+                // key "flexi-n";
+                description
+                  "List of media channels represented as (n,m)";
+
+                // this grouping add both n.m values
+                uses l0-types:flexi-grid-frequency-slot;
+
+                leaf delta-power {
+                  type l0-types:gain-in-db-or-null;
+                  description
+                    " Deviation from the reference carrier power 
+                    defined for the OMS.";
+                }
+              } // media channels list
+            } // media-channel-groups list
+          }
         }  // list amplifier-element
       }  // container operational
     }  // container amplifier
@@ -3414,7 +3524,7 @@ module ietf-optical-impairment-topology {
     leaf roadm-pdl {
       type l0-types:loss-in-db-or-null;
       description "Polarization Dependent Loss (PDL)";
-    }      
+    }
     leaf roadm-inband-crosstalk {
       type l0-types:decimal-2-digits-or-null;
       units "dB";
@@ -3665,7 +3775,7 @@ module ietf-optical-impairment-topology {
     }
   }
 
-  grouping power-param{
+  grouping power-param {
     description
       "optical power or PSD after the ROADM or after the out-voa";
     choice power-param {
@@ -3763,7 +3873,11 @@ module ietf-optical-impairment-topology {
   } // OTSiG grouping
 
   grouping media-channel-groups {
-    description "media channel groups";
+    description
+      "media channel groups.
+      
+      This grouping is not intended to be reused outside of this 
+      module.";
 
     container media-channel-groups {
       presence
@@ -3781,11 +3895,11 @@ module ietf-optical-impairment-topology {
             "list of media channels represented as (n,m)";
 
           // this grouping add both n.m values
-          uses l0-types:flexi-grid-frequency-slot; 
+          uses l0-types:flexi-grid-frequency-slot;
 
           leaf otsi-group-ref {
             type leafref {
-              path "/nw:networks/nw:network/otsis/" +
+              path "../../../../../../../../otsis/" +
                   "otsi-group/otsi-group-id";
             }
             description
@@ -3799,7 +3913,7 @@ module ietf-optical-impairment-topology {
               OTSiG carried by this media channel.";
             leaf otsi-carrier-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsis/" +
+                path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi/otsi-carrier-id" ;
@@ -3810,7 +3924,7 @@ module ietf-optical-impairment-topology {
             }
             leaf-list e2e-mc-path-ref {
               type leafref {
-                path  "/nw:networks/nw:network/otsis/" +
+                path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
                       "/../../otsi-group-ref]/" +
                       "otsi[otsi-carrier-id=current()" +
@@ -3823,7 +3937,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:power-in-dbm-or-null;
+            type l0-types:gain-in-db-or-null;
             description
               " Deviation from the reference carrier power defined 
               for the OMS.";
@@ -3950,8 +4064,8 @@ module ietf-optical-impairment-topology {
   }
 
   augment "/nw:networks/nw:network" {
-    when "nw:network-types/tet:te-topology" +
-         "/optical-imp-topo:optical-impairment-topology" {
+    when "./nw:network-types/tet:te-topology" +
+         "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology.";
@@ -3984,7 +4098,7 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node" {
     when "../nw:network-types/tet:te-topology" +
-         "/optical-imp-topo:optical-impairment-topology" {
+         "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment.";
     }
@@ -4167,7 +4281,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nt:link/tet:te"
         + "/tet:te-link-attributes"   {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology.";
@@ -4185,7 +4299,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Impairment with
          non-sliceable transponder model";
@@ -4228,7 +4342,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
     when "../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for optical impairment
        with sliceable transponder model";
@@ -4242,7 +4356,7 @@ module ietf-optical-impairment-topology {
   // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
     when "../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -4261,10 +4375,44 @@ module ietf-optical-impairment-topology {
     }
   }
 
+  augment "/nw:networks/nw:network/nw:node/nt:termination-point"
+        + "/tet:te" {
+    when "../../../nw:network-types/tet:te-topology/"
+       + "oit:optical-impairment-topology" {
+      description
+        "This augment is only valid for Optical Impairment 
+        topology";
+    }
+    description
+      "Augment TE attributes of an LTP";
+    
+    leaf inter-layer-sequence-number {
+      type uint32;
+      description
+        "The inter-layer-sequence-number (ILSN) is used to report 
+        additional connectivity constraints between a client layer 
+        Link Termination Point (LTP), such as a muxponder port, and 
+        the server layer Tunnel Termination Point (TTP).
+
+        A client service cannot be setup between two client layer 
+        LTPs which report different values of the ILSN.
+
+        This attribute is not reported when there are no additional 
+        connectivity constraints.
+        
+        Therefore, a client service can be setup when at least one 
+        of the two client layer LTPs does not report any ILSN or 
+        both client layer LTPs report the same ILSN value and the 
+        corresponding server layer TTPs have at least one common 
+        server-layer switching capability and at least one common 
+        client-layer switching capability.";
+    }
+  }
+
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
     when "../../../nw:network-types/tet:te-topology"
-       + "/optical-imp-topo:optical-impairment-topology" {
+       + "/oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology";
@@ -4343,7 +4491,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices"{
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
@@ -4367,7 +4515,7 @@ module ietf-optical-impairment-topology {
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment
          topology ";
@@ -4389,7 +4537,7 @@ module ietf-optical-impairment-topology {
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices" {
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for Optical Impairment 
         topology ";
@@ -4413,7 +4561,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/"
         + "tet:connectivity-matrices/tet:connectivity-matrix" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -4435,7 +4583,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:from" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -4447,8 +4595,8 @@ module ietf-optical-impairment-topology {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
          + "[nt:tp-id=current()/../../tet:to/tet:tp-ref]/"
-         + "optical-imp-topo:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "oit:protection-type,"
+         + "'oit:otsi-protection')" {
         description
           "This list applies only when the 'to' LTP for this 
           connectivity matrix entry supports individual OTSi(G) 
@@ -4490,7 +4638,7 @@ module ietf-optical-impairment-topology {
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:to" {
     when "../../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for 
         Optical Impairment topology ";
@@ -4502,8 +4650,8 @@ module ietf-optical-impairment-topology {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
          + "[nt:tp-id=current()/../../tet:from/tet:tp-ref]/"
-         + "optical-imp-topo:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "oit:protection-type,"
+         + "'oit:otsi-protection')" {
         description
           "This list applies only when the 'from' LTP for this 
           connectivity matrix entry supports individual OTSi(G) 
@@ -4545,7 +4693,7 @@ module ietf-optical-impairment-topology {
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities" {
     when "../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
       "This augment is only valid for Optical Impairment topology ";
     }
@@ -4576,7 +4724,7 @@ module ietf-optical-impairment-topology {
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity" {
     when "../../../../../nw:network-types/tet:te-topology/"
-       + "optical-imp-topo:optical-impairment-topology" {
+       + "oit:optical-impairment-topology" {
       description
         "This augment is only valid for
          Optical Impairment topology ";
@@ -4648,7 +4796,7 @@ module ietf-optical-impairment-topology {
     }
     list additional-ltp {
       when "derived-from-or-self(../../../tet:protection-type,"
-         + "'optical-imp-topo:otsi-protection')" {
+         + "'oit:otsi-protection')" {
         description
           "This list applies only to TTPs that support individual 
           OTSi(G) protection.";
@@ -4737,7 +4885,7 @@ XML: N/A, the requested URI is an XML namespace.
 name:      ietf-optical-impairment-topology
 namespace: urn:ietf:params:xml:ns:yang:ietf-optical-impairment-
 topology
-prefix:    optical-imp-topo
+prefix:    oit
 reference: RFC XXXX (TDB)
 --------------------------------------------------------------------
 ]]></artwork>
@@ -6752,6 +6900,106 @@ eiver": [
   </section>
   
   </section>
+
+  <section anchor="operational-mode_usage" numbered="true">
+  <name>Examples How to Use the organizational-mode Attribute</name>
+  
+  <t>
+   One option to describe the transceiver capabilities of an optical
+   transponder (supported-mode list in the supported-modes container
+   as defied in <xref target="I-D.ietf-ccamp-rfc9093-bis" />) is to
+   describe the organizational-modes a transceiver supports as
+   described in section <xref target="organizational-modes"/>.
+  </t>
+  
+  <t>
+   <xref target="I-D.ietf-ccamp-rfc9093-bis" />) defines the
+   operational-mode of type identityref, which means that the identity
+   the operational-mode attribute is referring to needs to be defined
+   in a separate organization-specific or vendor-specific YANG module.
+   An example of such an organization-specific YANG module as well as a
+   vendor-specific YANG module is provided below.
+  </t>
+  
+  <t>
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Forum A:
+  </t>
+
+  <sourcecode type="xml" markers="false">
+    <![CDATA[
+module forum-a-operational-modes {
+  yang-version 1.1;
+
+  import "ietf-layer0-types"{
+    prefix "id-base"};
+
+  namespace "urn:forum-a:example:forum-a-op-modes";
+  prefix "op-modes";
+
+...
+
+  identity 400G-operational-mode {
+    base "id-base:operational-mode"
+      description "Forum A 400G specific mode.";
+  }
+
+...
+
+}
+    ]]>
+  </sourcecode>
+
+  <t>
+   YANG module example containing the identity definition for a 400G
+   operational-mode specified by the organization Vendor B with the
+   same identity name "400G-operational-mode" as an operational mode
+   that specified by Forum A.
+  </t>
+
+  <sourcecode type="xml" markers="false">
+    <![CDATA[
+module vendor-b-operational-modes {
+  yang-version 1.1;
+
+  import "ietf-layer0-types"{
+    prefix "id-base"};
+
+  namespace "urn:vendor-b:example:vendor-b-op-modes";
+  prefix "op-modes";
+
+...
+
+  identity 400G-operational-mode {
+    base "id-base:operational-mode"
+      description "Vendor B 400G mode.";
+  }
+
+...
+
+}
+    ]]>
+  </sourcecode>
+
+  <t>
+   If there are transceivers in a network that are supporting any of
+   the two 400G operational modes, the one specified by Forum A or the
+   one specified by Vendor B or even both, the different name spaces
+   allow to unambiguously identify the two modes that are defined in
+   the YANG modules above with exactly the same identity name.
+  </t>
+  
+  <t>
+   The NETCONF server providing the optical impairment-aware topology
+   will have to support both YANG modules above and will have to
+   advertise both as capability in the NETCONF hello message indicating
+   that these operational mode identities are used in the description
+   of the optical impairment-aware topology model defined in this
+   document.
+  </t>
+
+  </section>
+
   
   <section anchor="Contributors" numbered="false">
   <name>Contributors</name>
