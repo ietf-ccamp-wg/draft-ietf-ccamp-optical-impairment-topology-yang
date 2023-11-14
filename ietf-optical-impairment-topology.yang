@@ -108,22 +108,6 @@ module ietf-optical-impairment-topology {
       Linear protection";
   }
 
-  // groupings
-
-  grouping sliceable-transponder-attributes {
-    description
-      "Configuration of a sliceable transponder.";
-    list sliceable-transponder-list {
-      key "carrier-id";
-      config false;
-      description "List of carriers";
-      leaf carrier-id {
-        type uint32;
-        description "Identifier of the carrier";
-      }
-    }
-  }
-
   /*
    * Groupings
    */
@@ -208,7 +192,30 @@ module ietf-optical-impairment-topology {
               value, with respect to loss/gain information on
               elements.";
           }
-          uses power-param;
+          container power-param {
+            description
+              "The optical power after the out-voa of each amplifier
+              element.";
+            choice power-param {
+              description
+                "Select the mode: channel power or power spectral
+                density (PSD).";
+              case channel-power {
+                leaf nominal-carrier-power {
+                  type l0-types:power-in-dbm-or-null;
+                  description
+                    "Reference channel power.";
+                }
+              }
+              case power-spectral-density {
+                leaf nominal-power-spectral-density {
+                  type l0-types:power-spectral-density-or-null;
+                  description
+                    "Reference power spectral density (PSD).";
+                }
+              }
+            }
+          }   // container power-param
           leaf raman-direction {
             type enumeration {
               enum co-propagating {
@@ -263,7 +270,7 @@ module ietf-optical-impairment-topology {
                 uses l0-types:flexi-grid-frequency-slot;
 
                 leaf delta-power {
-                  type l0-types:gain-in-db-or-null;
+                  type l0-types:ratio-in-db-or-null;
                   description
                     " Deviation from the reference carrier power 
                     defined for the OMS.";
@@ -598,40 +605,6 @@ module ietf-optical-impairment-topology {
     }
   }
 
-  grouping power-param {
-    description
-      "optical power or PSD after the ROADM or after the out-voa";
-    choice power-param {
-      description
-        "select the mode: channel power or power spectral density";
-      case channel-power {
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='carrier-power'";
-        leaf nominal-carrier-power{
-          type l0-types:power-in-dbm-or-null;
-          description
-            " Reference channel power. Same grouping is used for the
-            OMS power after the ROADM (input of the OMS) or after the
-            out-voa of each amplifier. ";
-        }
-      }
-      case power-spectral-density{
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='power-spectral-density'";
-        leaf nominal-power-spectral-density{
-          type l0-types:decimal-16-digits-or-null;
-          units W/Hz ;
-          description
-            " Reference power spectral density after 
-              the ROADM or after the out-voa.
-              Typical value : 3.9 E-14, resolution 0.1nW/MHz";
-        }
-      }
-    }
-  }
-
   grouping oms-general-optical-params {
     description "OMS link optical parameters";
     leaf generalized-snr {
@@ -651,8 +624,24 @@ module ietf-optical-impairment-topology {
         Reporting this value is needed to support optical 
         impairments applications.";
     }
-    uses power-param;
-  }
+    container power-param {
+      description
+        "Optical channel power or power spectral densitity (PSD)
+        after the ROADM.";
+      leaf nominal-carrier-power {
+        when "../../equalization-mode='carrier-power'";
+        type l0-types:power-in-dbm-or-null;
+        description
+          "Reference channel power.";
+      }
+      leaf nominal-power-spectral-density {
+        when "../../equalization-mode='power-spectral-density'";
+        type l0-types:power-spectral-density-or-null;
+        description
+          " Reference power spectral density (PSD).";
+      }
+    }   // container power-param
+  } // grouping oms-general-optical-params
 
   grouping otsi-group {
     description "OTSiG definition , representing client
@@ -760,7 +749,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:gain-in-db-or-null;
+            type l0-types:ratio-in-db-or-null;
             description
               " Deviation from the reference carrier power defined 
               for the OMS.";
@@ -1124,12 +1113,11 @@ module ietf-optical-impairment-topology {
     when "../../../nw:network-types/tet:te-topology/"
        + "oit:optical-impairment-topology" {
       description
-        "This augment is only valid for Impairment with
-         non-sliceable transponder model";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description
-      "Tunnel termination point augmentation for non-sliceable
-       transponder model.";
+      "Tunnel termination point augmentation for impairment data.";
 
     list ttp-transceiver {
       when "../../../transponders" {
@@ -1161,20 +1149,6 @@ module ietf-optical-impairment-topology {
       }
     } // list of transceivers
   } // end of augment
-
-  augment "/nw:networks/nw:network/nw:node/tet:te"
-        + "/tet:tunnel-termination-point" {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
-      description
-        "This augment is only valid for optical impairment
-       with sliceable transponder model";
-    }
-    description
-      "Tunnel termination point augmentation for sliceable
-      transponder model.";
-    uses sliceable-transponder-attributes;
-  }
 
   // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {

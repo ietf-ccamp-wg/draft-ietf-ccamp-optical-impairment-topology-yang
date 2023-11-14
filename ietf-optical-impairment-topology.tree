@@ -150,15 +150,13 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
-       +--ro generalized-snr?                        l0-types:snr
-       +--ro equalization-mode?                      identityref
-       +--ro (power-param)?
-       |  +--:(channel-power)
-       |  |  +--ro nominal-carrier-power?
-       |  |          l0-types:power-in-dbm-or-null
-       |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?
-       |             l0-types:decimal-16-digits-or-null
+       +--ro generalized-snr?        l0-types:snr
+       +--ro equalization-mode?      identityref
+       +--ro power-param
+       |  +--ro nominal-carrier-power?
+       |  |       l0-types:power-in-dbm-or-null
+       |  +--ro nominal-power-spectral-density?
+       |          l0-types:power-spectral-density-or-null
        +--ro media-channel-groups!
        |  +--ro media-channel-group* []
        |     +--ro media-channels* []
@@ -168,7 +166,7 @@ module: ietf-optical-impairment-topology
        |        +--ro otsi-ref* []
        |        |  +--ro otsi-carrier-ref?   leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:gain-in-db-or-null
+       |        +--ro delta-power?      l0-types:ratio-in-db-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -187,8 +185,7 @@ module: ietf-optical-impairment-topology
                 |     +--ro type-variety    string
                 |     +--ro operational
                 |        +--ro amplifier-element* []
-                |           +--ro name?
-                |           |       string
+                |           +--ro name?                        string
                 |           +--ro is-dynamic-gain-equalyzer?
                 |           |       boolean
                 |           +--ro frequency-range
@@ -204,13 +201,14 @@ module: ietf-optical-impairment-topology
                 |           |       l0-types:loss-in-db-or-null
                 |           +--ro total-output-power
                 |           |       l0-types:power-in-dbm-or-null
-                |           +--ro (power-param)?
-                |           |  +--:(channel-power)
-                |           |  |  +--ro nominal-carrier-power?
-                |           |  |          l0-types:power-in-dbm-or-null
-                |           |  +--:(power-spectral-density)
-                |           |     +--ro nominal-power-spectral-density?
-                |           |             l0-types:decimal-16-digits-or-null
+                |           +--ro power-param
+                |           |  +--ro (power-param)?
+                |           |     +--:(channel-power)
+                |           |     |  +--ro nominal-carrier-power?
+                |           |     |          l0-types:power-in-dbm-or-null
+                |           |     +--:(power-spectral-density)
+                |           |        +--ro nominal-power-spectral-density?
+                |           |                l0-types:power-spectral-density-or-null
                 |           +--ro raman-direction?
                 |           |       enumeration
                 |           +--ro raman-pump* []
@@ -228,7 +226,7 @@ module: ietf-optical-impairment-topology
                 |                    +--ro flexi-m?
                 |                    |       l0-types:flexi-m
                 |                    +--ro delta-power?
-                |                            l0-types:gain-in-db-or-null
+                |                            l0-types:ratio-in-db-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -253,10 +251,6 @@ module: ietf-optical-impairment-topology
        +--ro transponder-ref
        |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:tunnel-termination-point:
-    +--ro sliceable-transponder-list* [carrier-id]
-       +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/nt:termination-point
