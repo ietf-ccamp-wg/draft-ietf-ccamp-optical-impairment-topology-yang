@@ -197,19 +197,22 @@ module ietf-optical-impairment-topology {
               "The optical power after the out-voa of each amplifier
               element.";
             choice power-param {
+              mandatory true;
               description
                 "Select the mode: channel power or power spectral
                 density (PSD).";
               case channel-power {
                 leaf nominal-carrier-power {
                   type l0-types:power-in-dbm-or-null;
+                  mandatory true;
                   description
                     "Reference channel power.";
                 }
               }
               case power-spectral-density {
-                leaf nominal-power-spectral-density {
+                leaf nominal-psd {
                   type l0-types:power-spectral-density-or-null;
+                  mandatory true;
                   description
                     "Reference power spectral density (PSD).";
                 }
@@ -634,7 +637,7 @@ module ietf-optical-impairment-topology {
         description
           "Reference channel power.";
       }
-      leaf nominal-power-spectral-density {
+      leaf nominal-psd {
         when "../../equalization-mode='power-spectral-density'";
         type l0-types:power-spectral-density-or-null;
         description
