@@ -1,0 +1,204 @@
+# YANG model for Optical Impairment aware Topology week (January 9th,2024)
+
+
+****Attendees****
+- [] Dieter Beller
+- [] Aihua Guo
+- [x] Esther Lerouzic 
+- [x] Julien Meuric
+- [x] Italo Busi
+- [x] Gert Grammel
+- [x] Gabriele Galimberti 
+- [x] Yuji Tochio
+- [x] Enrico Griseri
+- [x] Sergio Belotti
+- [x] Roberto Manzotti
+- [] Daniel King
+- [] Victor Lopez
+- [] Haomian Zheng
+- [] Igor Bryskin
+- [] Dirk Schroetter
+- [] Brent Foster
+- [] Jiang Sun (CMCC)
+- [] Jan Kundrat
+- [] Eliana Vercelli
+- [] Jonathan Sadler 
+
+## Admin
+
+### Review APs (action point) Optical Impairment Topology YANG model
+
+#### issue #124 "*Remove key from media channel list*"
+related to flexi-n value there is agreement to go ahead to delete the key statements from the media-channel-group/media-channel lists, 
+making the flexi-n attribute optional.
+A possible issue without key is to have more elements with the same flexi-n and we cannot have 2 media-channel with the same flexi-n.
+
+**AP: Italo/Aihua** to have a look to possible YANG statement (e.g.unique statement) to overcome the issue
+
+Need to make some json examples and make the validation with yanglint.
+You cannot have two media channel in the same media channel group with the same flexi-n. See figure 5 in section 2.3.4
+
+       +--ro media-channel-groups!
+       |  +--ro media-channel-group* [i]
+       |     +--ro i                 int16
+       |     +--ro media-channels* []
+       |        +--ro flexi-n?          l0-types:flexi-n
+       |        +--ro flexi-m?          l0-types:flexi-m
+
+Need to check if "unique" statement is still valid when flexi-n is not present.
+Esther: flexi-n if it exists must be unique in the media-channel-group upper level list.
+
+#### #130 "Documenting mandatory profile for OI applications"
+
+**AP: Esther** will provide a description of the various attributes that even if optional in the model, are needed for OI application. 
+These attributes will be described in specifc context.
+
+Let's try to have this list in a couple of weeks from now.
+
+
+### Review APs (action point) RFC9093-bis
+
+#### Issue #21 "Review otu-type identities"  
+https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/issues/21
+
+**AP: @Aihua: to verify with Haomian if these otu identities are needed and where they are defined (some, but not all, are defined in G.Sup43)**
+
+### Closed Issues Optical Impairment Topology
+
+Closed issues from last IETF117 has been reported in the presentation during IETF118 
+
+issue #134 "Try to shorten the names of attributes"
+issue #155 "Absolute path in grouping power-param", 
+issue #158 "delta-power contains a ratio in dB. one may call it gain, however gain is only positive, where delta_p could be negative. 
+so the type should be changed",
+issue #159 "remove from the model grouping sliceable-transponder-attributes"
+
+There is a proposal to solve these issue in PR#160 https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/pull/160
+
+PR#160 approved and ready to be merged pending merging of RFC9093-bis PR#82
+
+### Closed Issues RFC9093-bis 
+
+see new PR#82 https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/pull/82
+
+see the description of YANG updates at https://github.com/ietf-ccamp-wg/ietf-ccamp-layer0-types-ext-RFC9093-bis/pull/82#issue-1992861226
+
+
+
+### Next calls
+January 16th 
+
+ 
+### Optical Impairment Topology YANG model
+
+#### #153  "Adding guideline for DGE representation"  
+https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/153
+
+![](https://)![](https://s3.hedgedoc.org/demo/uploads/95d5cf7d-91a7-4fe7-bb7a-989dc398f102.png)
+
+
+
+#### #145 "Update Security Considerations"
+
+Sergio uploaded to github a first draft for security section.
+
+
+
+
+
+### Discussion
+
+#### DGE guideline issue#153- Optical Impairment 
+
+We agreed:
+
+In specific case as DGE, to take into account OI, amplifier are considered as sequence of element to take into account gain/attenuation of the different elements.
+
+* multi-band amplification in parallel.
+* 3 elements in sequence per band.
+* new attribute as stage-order to characerize the stage of amplifier-element in the sequence
+* "is-dynamic-gain-equalyzer" attribute is correctly at the level of amplifier-element to make explicit what of the elements is sequence is DGE, to avoid ambiguity.
+
+Issue still to be clarified: 
+
+* Need to understand if type-variety need to be replicated per element.
+
+Roberto has proposed new text and YANG proposal ,
+see https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/153#issuecomment-1880596742
+
+"In order to support the modelling of multi bandwidth (parallel)
+and multi stage (cascaded) amplifier like in picture xxx, 
+the OMS element that describe an optical amplifier contains an unordered 
+list of amplifier-element. The position of the elements is bases 
+on the following two attributes:
+
+- the lower-frequecy and upper-frequecy attributre indentify the set of amplifier-element that support a specific spectrum bandwidth
+- the stage-order attribute allow to define for each spectrum badwidththe cascade order of amplifier-element.
+
+The detailed rapresentation of the amplifier stage is not mandatory in general,
+but in the case the OMS-element has both the function of Amplifier and DGE (refer 
+section 2.5) the implementation MUST provide the cascade order details of
+amplifier-element in order to allow a proper modelling of the impairment"
+
+Here the YANG porposal:
+
+                |  +--ro amplifier
+                |     +--ro type-variety    string
+                |     +--ro operational
+                |        +--ro amplifier-element* []
+                |           +--ro name?
+                |           |       string
+                |           +--ro is-dynamic-gain-equalyzer?
+                |           |       boolean
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
+                |           +--ro stage-order? int
+
+
+Italo commented about the last part of the text, proposing a more generic text to generalize the sentence related to the possibility to abstract 
+or not the amplifier characterisitcs. 
+**AP @Italo** to propose some text to generalize the text below:
+
+"The detailed rapresentation of the amplifier stage is not mandatory in general,
+but in the case the OMS-Elemtn has both the funtion of Amplifier and DGE (refer 
+section 2.5) the implementation MUST provide the cascade order details of
+amplifier element in order to allow a proper modelling of the impairment"
+
+
+
+For the rest the proposal from Roberto has been agreed.
+
+
+#### Update security Consideration issue#145- Optical Impairment
+
+
+About security is still open the discussion about the rw vs. ro data nodes.
+To summarize the issue , in the text proposed for security it is stated that the data nodes in the YANG module are not writable , are readable only.
+Gert observed that a couple of data nodes "protection-type" and "inter-layer-sequance-number" are rw. Gert suggested we should consider our OI topology model
+as "information-source-entry" in RFC8795 representing readable topology information while RFC8795 is also able to modify data nodes adding links/nodes ,
+obtaining a combination of the real topology and what if something is added in the model. 
+As stated in the previous meeting we have kepf data nodes as rw for consistency with RFC8795.
+The topology models have been defined as rw to support other UCs where the topology information can be written by the client applications and we have defined
+the LTP protection-type as rw to be consistent with the link-protection-type attribute defined in RFC8795 that we are using to report OMS protection configuration
+Both Esther and Italo commented that there are use cases that could justify to have e.g. protection-type rw.
+If it is possible to modify protection-type for OMS protection it should also be possible to modify protection-type for OTSi protection using the
+augmented data node in our OI topology model. This would be a use case justifying the possibility to use writable data nodes also in our topology model,
+independently of RFC8795.
+
+The discussion is on going. Maybe a short separate cal would be needed to complete and close the issue, permitting to finalize the security text.
+
+### Post meeting notes
+
+About "Need to understand if type-variety need to be replicated per element." **the proposal is to
+replicate type-variety at amplifier-element but as optional attribute** since the oms-element level might not encompass all combination of amps especially in case
+of switchable gain cases.
+Type-variety at OMS-element level will remain mandatory and type-variety at amplifier-element is needed only in case the type-variety attribute at OMS-element level is not providing sufficient information on the type-variety for the amplifier-element.
+
+About the question from Enrico https://github.com/ietf-ccamp-wg/draft-ietf-ccamp-optical-impairment-topology-yang/issues/153#issuecomment-1881637849 
+regarding the parameters like tilt, in-voa/out-voa that would not be part in case of DGE and so should be optional, 
+the proposal is to use a choice on the mutually exclusive attributes to keep amp parameters such as gain, voa, … mandatory. In this way, 
+if is-dynamic-gain-equalyzer is present, Gain, voa, … are not present and reversely.
+In case the amp element is a dge, dynamic-gain-equalizer should be mandatory.
+
+
