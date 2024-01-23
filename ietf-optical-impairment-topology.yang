@@ -70,7 +70,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2023 IETF Trust and the persons identified as
+     Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-10-19 {
+  revision 2024-01-23 {
     description
       "Initial Version";
     reference
@@ -106,22 +106,6 @@ module ietf-optical-impairment-topology {
     reference
       "ITU-T G.873.1 v5.2 (02/2022): Optical transport network: 
       Linear protection";
-  }
-
-  // groupings
-
-  grouping sliceable-transponder-attributes {
-    description
-      "Configuration of a sliceable transponder.";
-    list sliceable-transponder-list {
-      key "carrier-id";
-      config false;
-      description "List of carriers";
-      leaf carrier-id {
-        type uint32;
-        description "Identifier of the carrier";
-      }
-    }
   }
 
   /*
@@ -153,6 +137,17 @@ module ietf-optical-impairment-topology {
               the vendor's specification associated with the
               type-variety.";
           }
+          leaf type-variety {
+            type string;
+            description
+              "String identifier of amplifier element type
+              referencing a specification in a separate equipment
+              catalog.
+              
+              This attributes applies only when the type-variety of
+              the amplifier is not sufficient to describe the
+              amplifier element type.";
+          }
           leaf is-dynamic-gain-equalyzer {
             type boolean;
             description
@@ -165,112 +160,165 @@ module ietf-optical-impairment-topology {
               element.";
             uses l0-types:frequency-range;
           }
-          leaf actual-gain {
-            type l0-types:gain-in-db-or-null;
-            mandatory true ;
+          leaf stage-order {
+            type uint8;
+            default 1;
             description
-              "The value of the gain provided by the amplification 
-              stage of the optical amplifier.";
+              "It allows defining for each spectrum badwidth the
+              cascade order of each amplifier-element.";
           }
-          leaf tilt-target {
-            type l0-types:decimal-2-digits-or-null;
-            units "dB";
-            mandatory true ;
+          container power-param {
             description
-              "The tilt target defined between lower and upper
-              frequency of the amplifier frequency range.";
-          }
-          leaf out-voa {
-            type l0-types:loss-in-db-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the output of the amplification stage of 
-              the amplifier, if present.";
-          }
-          leaf in-voa {
-            type l0-types:loss-in-db-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the input of the amplification stage of the 
-              amplifier, if present";
-          }
-          leaf total-output-power {
-            type l0-types:power-in-dbm-or-null;
-            mandatory true;
-            description
-              "It represent total output power measured in the range
-              specified by the frequency-range.
-              
-              Optical power is especially needed to re-compute/check
-              consistency of span (fiber+ concentrated loss) loss
-              value, with respect to loss/gain information on
-              elements.";
-          }
-          uses power-param;
-          leaf raman-direction {
-            type enumeration {
-              enum co-propagating {
-                description
-                  "Co-propagating indicates that optical pump light
-                  is injected in the same direction to the optical
-                  signal that is amplified (forward pump).";
+              "The optical power after the out-voa of each amplifier
+              element.";
+            choice power-param {
+              mandatory true;
+              description
+                "Select the mode: channel power or power spectral
+                density (PSD).";
+              case channel-power {
+                leaf nominal-carrier-power {
+                  type l0-types:power-dbm-or-null;
+                  mandatory true;
+                  description
+                    "Reference channel power.";
+                }
               }
-              enum counter-propagating {
-                description
-                  "Counter-propagating indicates that optical pump
-                  light is injected in opposite direction to the
-                  optical signal that is amplified (backward pump).";
+              case power-spectral-density {
+                leaf nominal-psd {
+                  type l0-types:psd-or-null;
+                  mandatory true;
+                  description
+                    "Reference power spectral density (PSD).";
+                }
               }
             }
-            description
-              "The direction of injection of the raman pump.";
-          }
-          list raman-pump {
-            description
-              "The list of pumps for the Raman amplifier.";
-            leaf frequency {
-              type l0-types:frequency-thz;
-              description
-                "The raman pump central frequency.";
-            }
-            leaf power {
-              type l0-types:decimal-2-digits-or-null;
-              units "Watts";
-              description
-                "The total pump power considering a depolarized pump
-                at the raman pump central frequency.";
-            }
-          }
+          }   // container power-param
           leaf pdl {
-            type l0-types:loss-in-db-or-null;
+            type l0-types:power-loss-or-null;
             description "Polarization Dependent Loss (PDL)";
           }
-          container media-channel-groups {
+          choice amplifier-element-type {
+            mandatory true;
             description
-              "The top level container for the list of media channel 
-              groups.";
-            list media-channel-group {
+              "Identifies whether the amplifier element is an
+              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              (DGE).";
+            container optical-amplifier {
               description
-                "The list of media channel groups";
-              list media-channels {
-                // key "flexi-n";
+                "The attributes applicable only to amplifier
+                elements";
+              leaf actual-gain {
+                type l0-types:power-gain-or-null;
+                mandatory true;
                 description
-                  "List of media channels represented as (n,m)";
-
-                // this grouping add both n.m values
-                uses l0-types:flexi-grid-frequency-slot;
-
-                leaf delta-power {
-                  type l0-types:gain-in-db-or-null;
-                  description
-                    " Deviation from the reference carrier power 
-                    defined for the OMS.";
+                  "The value of the gain provided by the
+                  amplification  stage of the optical amplifier.";
+              }
+              leaf in-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the input of the amplification stage of
+                  the amplifier, if present";
+              }
+              leaf out-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the output of the amplification stage of
+                  the amplifier, if present.";
+              }
+              leaf tilt-target {
+                type l0-types:decimal-2-or-null;
+                units "dB";
+                mandatory true ;
+                description
+                  "The tilt target defined between lower and upper
+                  frequency of the amplifier frequency range.";
+              }
+              leaf total-output-power {
+                type l0-types:power-dbm-or-null;
+                mandatory true;
+                description
+                  "It represent total output power measured in the
+                  range specified by the frequency-range.
+                  
+                  Optical power is especially needed to
+                  re-compute/check consistency of span
+                  (fiber + concentrated loss) loss value, with
+                  respect to loss/gain information on elements.";
+              }
+              leaf raman-direction {
+                type enumeration {
+                  enum co-propagating {
+                    description
+                      "Co-propagating indicates that optical pump
+                      light is injected in the same direction to the
+                      optical signal that is amplified
+                      (forward pump).";
+                  }
+                  enum counter-propagating {
+                    description
+                      "Counter-propagating indicates that optical
+                      pump light is injected in opposite direction
+                      to the optical signal that is amplified
+                      (backward pump).";
+                  }
                 }
-              } // media channels list
-            } // media-channel-groups list
-          }
+                description
+                  "The direction of injection of the raman pump.";
+              }
+              list raman-pump {
+                description
+                  "The list of pumps for the Raman amplifier.";
+                leaf frequency {
+                  type l0-types:frequency-thz;
+                  description
+                    "The raman pump central frequency.";
+                }
+                leaf power {
+                  type l0-types:decimal-2-or-null;
+                  units "Watts";
+                  description
+                    "The total pump power considering a depolarized
+                    pump at the raman pump central frequency.";
+                }
+              }
+            }   // container optical-amplifier
+            container dynamic-gain-equalyzer {
+              presence
+                "When present it indicates that the amplifier element
+                is a Dynamic Gain Equalyzer (DGE)";
+              description
+                "The attributes applicable only to DEG amplifier
+                elements.";
+              container media-channel-groups {
+                description
+                  "The top level container for the list of media
+                  channel groups.";
+                list media-channel-group {
+                  description
+                    "The list of media channel groups";
+                  list media-channels {
+                    // key "flexi-n";
+                    description
+                      "List of media channels represented as (n,m)";
+
+                    // this grouping add both n.m values
+                    uses l0-types:flexi-grid-frequency-slot;
+
+                    leaf delta-power {
+                      type l0-types:power-ratio-or-null;
+                      description
+                        " Deviation from the reference carrier power 
+                        defined for the OMS.";
+                    }
+                  } // media channels list
+                } // media-channel-groups list
+              }   // container media-channel-groups
+            }   // container dynamic-gain-equalyzer
+          } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational
     }  // container amplifier
@@ -288,35 +336,35 @@ module ietf-optical-impairment-topology {
         description "fiber type";
       }
       leaf length {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units km;
         mandatory true ;
         description "length of fiber";
       }
       leaf loss-coef {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units dB/km;
         mandatory true ;
         description "loss coefficient of the fiber";
       }
       leaf total-loss {
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         mandatory true ;
         description
           "includes all losses: fiber loss and conn-in and 
            conn-out losses";
       }
       leaf pmd {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units "ps";
         description "pmd of the fiber";
       }
       leaf conn-in{
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         description "connector-in";
       }
       leaf conn-out{
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         description "connector-out";
       }
     }
@@ -340,16 +388,16 @@ module ietf-optical-impairment-topology {
         empty value when unknown.";
     }
     leaf roadm-cd {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "ps/nm";
       description "Chromatic Dispersion (CD)";
     }            
     leaf roadm-pdl {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description "Polarization Dependent Loss (PDL)";
     }
     leaf roadm-inband-crosstalk {
-      type l0-types:decimal-2-digits-or-null;
+      type l0-types:decimal-2-or-null;
       units "dB";
       description
         "In-band crosstalk, or coherent crosstalk, can occur in 
@@ -358,7 +406,7 @@ module ietf-optical-impairment-topology {
         or all but one blocked";
     }
     leaf roadm-maxloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description
         "This is the maximum expected path loss from the 
         ROADM ingress to the ROADM egress 
@@ -404,7 +452,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-pmax {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "This is the maximum (per carrier) power level 
         permitted at the add block input ports,
@@ -429,7 +477,7 @@ module ietf-optical-impairment-topology {
         (if both are defined).";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "dB"; 
       description 
         "Noise Figure. If the add path contains an amplifier, 
@@ -474,7 +522,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-minloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description 
         "The net loss from the ROADM input, to the 
         output of the drop block.
@@ -487,7 +535,7 @@ module ietf-optical-impairment-topology {
         including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description 
         "The net loss from the ROADM input, 
         to the output of the drop block.
@@ -502,7 +550,7 @@ module ietf-optical-impairment-topology {
         expected loss.";
     }
     leaf roadm-pmin {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss
         that is added, for example,
@@ -520,7 +568,7 @@ module ietf-optical-impairment-topology {
         detailed in section xxx of the document yyy."; 
     }
     leaf roadm-pmax {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss that is added, 
         for example, to hit target power levels into a 
@@ -536,7 +584,7 @@ module ietf-optical-impairment-topology {
         is detailed in section xxx of the document yyy";        
     }
     leaf roadm-ptyp {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss that is added,
         for example, to hit target power levels into a 
@@ -566,7 +614,7 @@ module ietf-optical-impairment-topology {
         the minimum value between these two should be used";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "dB"; 
       description 
         "Drop path Noise Figure. 
@@ -590,44 +638,10 @@ module ietf-optical-impairment-topology {
     container concentratedloss{
       description "concentrated loss";
       leaf loss {
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         mandatory true;
         description
           "Loss introduced by the concentrated loss element.";
-      }
-    }
-  }
-
-  grouping power-param {
-    description
-      "optical power or PSD after the ROADM or after the out-voa";
-    choice power-param {
-      description
-        "select the mode: channel power or power spectral density";
-      case channel-power {
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='carrier-power'";
-        leaf nominal-carrier-power{
-          type l0-types:power-in-dbm-or-null;
-          description
-            " Reference channel power. Same grouping is used for the
-            OMS power after the ROADM (input of the OMS) or after the
-            out-voa of each amplifier. ";
-        }
-      }
-      case power-spectral-density{
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='power-spectral-density'";
-        leaf nominal-power-spectral-density{
-          type l0-types:decimal-16-digits-or-null;
-          units W/Hz ;
-          description
-            " Reference power spectral density after 
-              the ROADM or after the out-voa.
-              Typical value : 3.9 E-14, resolution 0.1nW/MHz";
-        }
       }
     }
   }
@@ -651,8 +665,24 @@ module ietf-optical-impairment-topology {
         Reporting this value is needed to support optical 
         impairments applications.";
     }
-    uses power-param;
-  }
+    container power-param {
+      description
+        "Optical channel power or power spectral densitity (PSD)
+        after the ROADM.";
+      leaf nominal-carrier-power {
+        when "../../equalization-mode='carrier-power'";
+        type l0-types:power-dbm-or-null;
+        description
+          "Reference channel power.";
+      }
+      leaf nominal-psd {
+        when "../../equalization-mode='power-spectral-density'";
+        type l0-types:psd-or-null;
+        description
+          " Reference power spectral density (PSD).";
+      }
+    }   // container power-param
+  } // grouping oms-general-optical-params
 
   grouping otsi-group {
     description "OTSiG definition , representing client
@@ -760,7 +790,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:gain-in-db-or-null;
+            type l0-types:power-ratio-or-null;
             description
               " Deviation from the reference carrier power defined 
               for the OMS.";
@@ -1124,12 +1154,11 @@ module ietf-optical-impairment-topology {
     when "../../../nw:network-types/tet:te-topology/"
        + "oit:optical-impairment-topology" {
       description
-        "This augment is only valid for Impairment with
-         non-sliceable transponder model";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description
-      "Tunnel termination point augmentation for non-sliceable
-       transponder model.";
+      "Tunnel termination point augmentation for impairment data.";
 
     list ttp-transceiver {
       when "../../../transponders" {
@@ -1161,20 +1190,6 @@ module ietf-optical-impairment-topology {
       }
     } // list of transceivers
   } // end of augment
-
-  augment "/nw:networks/nw:network/nw:node/tet:te"
-        + "/tet:tunnel-termination-point" {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
-      description
-        "This augment is only valid for optical impairment
-       with sliceable transponder model";
-    }
-    description
-      "Tunnel termination point augmentation for sliceable
-      transponder model.";
-    uses sliceable-transponder-attributes;
-  }
 
   // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
