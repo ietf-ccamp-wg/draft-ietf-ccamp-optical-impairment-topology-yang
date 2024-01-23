@@ -70,7 +70,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2023 IETF Trust and the persons identified as
+     Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-12-01 {
+  revision 2024-01-23 {
     description
       "Initial Version";
     reference
@@ -137,6 +137,17 @@ module ietf-optical-impairment-topology {
               the vendor's specification associated with the
               type-variety.";
           }
+          leaf type-variety {
+            type string;
+            description
+              "String identifier of amplifier element type
+              referencing a specification in a separate equipment
+              catalog.
+              
+              This attributes applies only when the type-variety of
+              the amplifier is not sufficient to describe the
+              amplifier element type.";
+          }
           leaf is-dynamic-gain-equalyzer {
             type boolean;
             description
@@ -149,48 +160,12 @@ module ietf-optical-impairment-topology {
               element.";
             uses l0-types:frequency-range;
           }
-          leaf actual-gain {
-            type l0-types:power-gain-or-null;
-            mandatory true ;
+          leaf stage-order {
+            type uint8;
+            default 1;
             description
-              "The value of the gain provided by the amplification 
-              stage of the optical amplifier.";
-          }
-          leaf tilt-target {
-            type l0-types:decimal-2-or-null;
-            units "dB";
-            mandatory true ;
-            description
-              "The tilt target defined between lower and upper
-              frequency of the amplifier frequency range.";
-          }
-          leaf out-voa {
-            type l0-types:power-loss-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the output of the amplification stage of 
-              the amplifier, if present.";
-          }
-          leaf in-voa {
-            type l0-types:power-loss-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the input of the amplification stage of the 
-              amplifier, if present";
-          }
-          leaf total-output-power {
-            type l0-types:power-dbm-or-null;
-            mandatory true;
-            description
-              "It represent total output power measured in the range
-              specified by the frequency-range.
-              
-              Optical power is especially needed to re-compute/check
-              consistency of span (fiber+ concentrated loss) loss
-              value, with respect to loss/gain information on
-              elements.";
+              "It allows defining for each spectrum badwidth the
+              cascade order of each amplifier-element.";
           }
           container power-param {
             description
@@ -219,68 +194,131 @@ module ietf-optical-impairment-topology {
               }
             }
           }   // container power-param
-          leaf raman-direction {
-            type enumeration {
-              enum co-propagating {
-                description
-                  "Co-propagating indicates that optical pump light
-                  is injected in the same direction to the optical
-                  signal that is amplified (forward pump).";
-              }
-              enum counter-propagating {
-                description
-                  "Counter-propagating indicates that optical pump
-                  light is injected in opposite direction to the
-                  optical signal that is amplified (backward pump).";
-              }
-            }
-            description
-              "The direction of injection of the raman pump.";
-          }
-          list raman-pump {
-            description
-              "The list of pumps for the Raman amplifier.";
-            leaf frequency {
-              type l0-types:frequency-thz;
-              description
-                "The raman pump central frequency.";
-            }
-            leaf power {
-              type l0-types:decimal-2-or-null;
-              units "Watts";
-              description
-                "The total pump power considering a depolarized pump
-                at the raman pump central frequency.";
-            }
-          }
           leaf pdl {
             type l0-types:power-loss-or-null;
             description "Polarization Dependent Loss (PDL)";
           }
-          container media-channel-groups {
+          choice amplifier-element-type {
+            mandatory true;
             description
-              "The top level container for the list of media channel 
-              groups.";
-            list media-channel-group {
+              "Identifies whether the amplifier element is an
+              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              (DGE).";
+            container optical-amplifier {
               description
-                "The list of media channel groups";
-              list media-channels {
-                // key "flexi-n";
+                "The attributes applicable only to amplifier
+                elements";
+              leaf actual-gain {
+                type l0-types:power-gain-or-null;
+                mandatory true;
                 description
-                  "List of media channels represented as (n,m)";
-
-                // this grouping add both n.m values
-                uses l0-types:flexi-grid-frequency-slot;
-
-                leaf delta-power {
-                  type l0-types:power-ratio-or-null;
-                  description
-                    " Deviation from the reference carrier power 
-                    defined for the OMS.";
+                  "The value of the gain provided by the
+                  amplification  stage of the optical amplifier.";
+              }
+              leaf in-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the input of the amplification stage of
+                  the amplifier, if present";
+              }
+              leaf out-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the output of the amplification stage of
+                  the amplifier, if present.";
+              }
+              leaf tilt-target {
+                type l0-types:decimal-2-or-null;
+                units "dB";
+                mandatory true ;
+                description
+                  "The tilt target defined between lower and upper
+                  frequency of the amplifier frequency range.";
+              }
+              leaf total-output-power {
+                type l0-types:power-dbm-or-null;
+                mandatory true;
+                description
+                  "It represent total output power measured in the
+                  range specified by the frequency-range.
+                  
+                  Optical power is especially needed to
+                  re-compute/check consistency of span
+                  (fiber + concentrated loss) loss value, with
+                  respect to loss/gain information on elements.";
+              }
+              leaf raman-direction {
+                type enumeration {
+                  enum co-propagating {
+                    description
+                      "Co-propagating indicates that optical pump
+                      light is injected in the same direction to the
+                      optical signal that is amplified
+                      (forward pump).";
+                  }
+                  enum counter-propagating {
+                    description
+                      "Counter-propagating indicates that optical
+                      pump light is injected in opposite direction
+                      to the optical signal that is amplified
+                      (backward pump).";
+                  }
                 }
-              } // media channels list
-            } // media-channel-groups list
-          }
+                description
+                  "The direction of injection of the raman pump.";
+              }
+              list raman-pump {
+                description
+                  "The list of pumps for the Raman amplifier.";
+                leaf frequency {
+                  type l0-types:frequency-thz;
+                  description
+                    "The raman pump central frequency.";
+                }
+                leaf power {
+                  type l0-types:decimal-2-or-null;
+                  units "Watts";
+                  description
+                    "The total pump power considering a depolarized
+                    pump at the raman pump central frequency.";
+                }
+              }
+            }   // container optical-amplifier
+            container dynamic-gain-equalyzer {
+              presence
+                "When present it indicates that the amplifier element
+                is a Dynamic Gain Equalyzer (DGE)";
+              description
+                "The attributes applicable only to DEG amplifier
+                elements.";
+              container media-channel-groups {
+                description
+                  "The top level container for the list of media
+                  channel groups.";
+                list media-channel-group {
+                  description
+                    "The list of media channel groups";
+                  list media-channels {
+                    // key "flexi-n";
+                    description
+                      "List of media channels represented as (n,m)";
+
+                    // this grouping add both n.m values
+                    uses l0-types:flexi-grid-frequency-slot;
+
+                    leaf delta-power {
+                      type l0-types:power-ratio-or-null;
+                      description
+                        " Deviation from the reference carrier power 
+                        defined for the OMS.";
+                    }
+                  } // media channels list
+                } // media-channel-groups list
+              }   // container media-channel-groups
+            }   // container dynamic-gain-equalyzer
+          } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational
     }  // container amplifier
