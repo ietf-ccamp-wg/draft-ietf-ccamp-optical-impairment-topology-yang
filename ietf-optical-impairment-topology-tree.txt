@@ -116,7 +116,7 @@ module: ietf-optical-impairment-topology
     |        |              +--ro out-of-band-osnr?
     |        |              |       snr
     |        |              +--ro tx-polarization-power-difference?
-    |        |              |       decimal-2
+    |        |              |       power-ratio
     |        |              +--ro polarization-skew?
     |        |              |       decimal64
     |        |              +--ro min-central-frequency?
@@ -194,22 +194,17 @@ module: ietf-optical-impairment-topology
                 |     +--ro type-variety    string
                 |     +--ro operational
                 |        +--ro amplifier-element* []
-                |           +--ro name?                        string
+                |           +--ro name?
+                |           |       string
+                |           +--ro type-variety?
+                |           |       string
                 |           +--ro is-dynamic-gain-equalyzer?
                 |           |       boolean
                 |           +--ro frequency-range
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
-                |           +--ro actual-gain
-                |           |       l0-types:power-gain-or-null
-                |           +--ro tilt-target
-                |           |       l0-types:decimal-2-or-null
-                |           +--ro out-voa
-                |           |       l0-types:power-loss-or-null
-                |           +--ro in-voa
-                |           |       l0-types:power-loss-or-null
-                |           +--ro total-output-power
-                |           |       l0-types:power-dbm-or-null
+                |           +--ro stage-order?
+                |           |       uint8
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -219,25 +214,49 @@ ull
                 |           |     +--:(power-spectral-density)
                 |           |        +--ro nominal-psd
                 |           |                l0-types:psd-or-null
-                |           +--ro raman-direction?
-                |           |       enumeration
-                |           +--ro raman-pump* []
-                |           |  +--ro frequency?
-                |           |  |       l0-types:frequency-thz
-                |           |  +--ro power?
-                |           |          l0-types:decimal-2-or-null
                 |           +--ro pdl?
                 |           |       l0-types:power-loss-or-null
-                |           +--ro media-channel-groups
-                |              +--ro media-channel-group* []
-                |                 +--ro media-channels* []
-                |                    +--ro flexi-n?
-                |                    |       l0-types:flexi-n
-                |                    +--ro flexi-m?
-                |                    |       l0-types:flexi-m
-                |                    +--ro delta-power?
-                |                            l0-types:power-ratio-or\
--null
+                |           +--ro (amplifier-element-type)
+                |              +--:(optical-amplifier)
+                |              |  +--ro optical-amplifier
+                |              |     +--ro actual-gain
+                |              |     |       l0-types:power-gain-or-\
+null
+                |              |     +--ro in-voa?
+                |              |     |       l0-types:power-loss-or-\
+null
+                |              |     +--ro out-voa?
+                |              |     |       l0-types:power-loss-or-\
+null
+                |              |     +--ro tilt-target
+                |              |     |       l0-types:decimal-2-or-n\
+ull
+                |              |     +--ro total-output-power
+                |              |     |       l0-types:power-dbm-or-n\
+ull
+                |              |     +--ro raman-direction?
+                |              |     |       enumeration
+                |              |     +--ro raman-pump* []
+                |              |        +--ro frequency?
+                |              |        |       l0-types:frequency-t\
+hz
+                |              |        +--ro power?
+                |              |                l0-types:decimal-2-o\
+r-null
+                |              +--:(dynamic-gain-equalyzer)
+                |                 +--ro dynamic-gain-equalyzer!
+                |                    +--ro media-channel-groups
+                |                       +--ro media-channel-group* []
+                |                          +--ro media-channels* []
+                |                             +--ro flexi-n?
+                |                             |       l0-types:flexi\
+-n
+                |                             +--ro flexi-m?
+                |                             |       l0-types:flexi\
+-m
+                |                             +--ro delta-power?
+                |                                     l0-types:power\
+-ratio-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
