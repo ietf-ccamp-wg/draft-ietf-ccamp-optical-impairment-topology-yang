@@ -1043,7 +1043,7 @@ module ietf-optical-impairment-topology {
               When not present, the configured-mode is not reported 
               by the server.";
           }
-          uses l0-types:common-transceiver-configured-param;
+          uses l0-types:common-transceiver-param;
           container outgoing-otsi {
             when "../../../../../otsis" {
               description
