@@ -12,73 +12,110 @@ module: ietf-optical-impairment-topology
     |        +--ro otsi-carrier-id           uint16
     |        +--ro otsi-carrier-frequency?   union
     |        +--ro e2e-mc-path-id*           uint16
-    +--rw templates
-       +--rw roadm-path-impairments
-          +--ro roadm-path-impairment* [roadm-path-impairments-id]
-             +--ro roadm-path-impairments-id    string
-             +--ro (impairment-type)?
-                +--:(roadm-express-path)
-                |  +--ro roadm-express-path* []
-                |     +--ro frequency-range
-                |     |  +--ro lower-frequency    frequency-thz
-                |     |  +--ro upper-frequency    frequency-thz
-                |     +--ro roadm-pmd?                union
-                |     +--ro roadm-cd?                 l0-types:decim\
+    +--ro templates
+       +--ro roadm-path-impairments
+       |  +--ro roadm-path-impairment* [roadm-path-impairments-id]
+       |     +--ro roadm-path-impairments-id    string
+       |     +--ro (impairment-type)?
+       |        +--:(roadm-express-path)
+       |        |  +--ro roadm-express-path* []
+       |        |     +--ro frequency-range
+       |        |     |  +--ro lower-frequency    frequency-thz
+       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     +--ro roadm-pmd?                union
+       |        |     +--ro roadm-cd?                 l0-types:decim\
 \al-5-or-null
-                |     +--ro roadm-pdl?                l0-types:power\
+       |        |     +--ro roadm-pdl?                l0-types:power\
 \-loss-or-null
-                |     +--ro roadm-inband-crosstalk?   l0-types:decim\
+       |        |     +--ro roadm-inband-crosstalk?   l0-types:decim\
 \al-2-or-null
-                |     +--ro roadm-maxloss?            l0-types:power\
+       |        |     +--ro roadm-maxloss?            l0-types:power\
 \-loss-or-null
-                +--:(roadm-add-path)
-                |  +--ro roadm-add-path* []
-                |     +--ro frequency-range
-                |     |  +--ro lower-frequency    frequency-thz
-                |     |  +--ro upper-frequency    frequency-thz
-                |     +--ro roadm-pmd?                union
-                |     +--ro roadm-cd?                 l0-types:decim\
+       |        +--:(roadm-add-path)
+       |        |  +--ro roadm-add-path* []
+       |        |     +--ro frequency-range
+       |        |     |  +--ro lower-frequency    frequency-thz
+       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     +--ro roadm-pmd?                union
+       |        |     +--ro roadm-cd?                 l0-types:decim\
 \al-5-or-null
-                |     +--ro roadm-pdl?                l0-types:power\
+       |        |     +--ro roadm-pdl?                l0-types:power\
 \-loss-or-null
-                |     +--ro roadm-inband-crosstalk?   l0-types:decim\
+       |        |     +--ro roadm-inband-crosstalk?   l0-types:decim\
 \al-2-or-null
-                |     +--ro roadm-maxloss?            l0-types:power\
+       |        |     +--ro roadm-maxloss?            l0-types:power\
 \-loss-or-null
-                |     +--ro roadm-pmax?               l0-types:power\
+       |        |     +--ro roadm-pmax?               l0-types:power\
 \-dbm-or-null
-                |     +--ro roadm-osnr?               l0-types:snr-o\
+       |        |     +--ro roadm-osnr?               l0-types:snr-o\
 \r-null
-                |     +--ro roadm-noise-figure?       l0-types:decim\
+       |        |     +--ro roadm-noise-figure?       l0-types:decim\
 \al-5-or-null
-                +--:(roadm-drop-path)
-                   +--ro roadm-drop-path* []
-                      +--ro frequency-range
-                      |  +--ro lower-frequency    frequency-thz
-                      |  +--ro upper-frequency    frequency-thz
-                      +--ro roadm-pmd?                union
-                      +--ro roadm-cd?                 l0-types:decim\
+       |        +--:(roadm-drop-path)
+       |           +--ro roadm-drop-path* []
+       |              +--ro frequency-range
+       |              |  +--ro lower-frequency    frequency-thz
+       |              |  +--ro upper-frequency    frequency-thz
+       |              +--ro roadm-pmd?                union
+       |              +--ro roadm-cd?                 l0-types:decim\
 \al-5-or-null
-                      +--ro roadm-pdl?                l0-types:power\
+       |              +--ro roadm-pdl?                l0-types:power\
 \-loss-or-null
-                      +--ro roadm-inband-crosstalk?   l0-types:decim\
+       |              +--ro roadm-inband-crosstalk?   l0-types:decim\
 \al-2-or-null
-                      +--ro roadm-maxloss?            l0-types:power\
+       |              +--ro roadm-maxloss?            l0-types:power\
 \-loss-or-null
-                      +--ro roadm-minloss?            l0-types:power\
+       |              +--ro roadm-minloss?            l0-types:power\
 \-loss-or-null
-                      +--ro roadm-typloss?            l0-types:power\
+       |              +--ro roadm-typloss?            l0-types:power\
 \-loss-or-null
-                      +--ro roadm-pmin?               l0-types:power\
+       |              +--ro roadm-pmin?               l0-types:power\
 \-dbm-or-null
-                      +--ro roadm-pmax?               l0-types:power\
+       |              +--ro roadm-pmax?               l0-types:power\
 \-dbm-or-null
-                      +--ro roadm-ptyp?               l0-types:power\
+       |              +--ro roadm-ptyp?               l0-types:power\
 \-dbm-or-null
-                      +--ro roadm-osnr?               l0-types:snr-o\
+       |              +--ro roadm-osnr?               l0-types:snr-o\
 \r-null
-                      +--ro roadm-noise-figure?       l0-types:decim\
+       |              +--ro roadm-noise-figure?       l0-types:decim\
 \al-5-or-null
+       +--ro explicit-transceiver-modes
+          +--ro explicit-transceiver-mode* [explicit-transceiver-mod\
+\e-id]
+             +--ro explicit-transceiver-mode-id        string
+             +--ro line-coding-bitrate?                identityref
+             +--ro bitrate?                            uint16
+             +--ro max-diff-group-delay?               uint32
+             +--ro max-chromatic-dispersion?           decimal64
+             +--ro cd-penalty* []
+             |  +--ro cd-value         union
+             |  +--ro penalty-value    union
+             +--ro max-polarization-mode-dispersion?   decimal64
+             +--ro pmd-penalty* []
+             |  +--ro pmd-value        union
+             |  +--ro penalty-value    union
+             +--ro max-polarization-dependant-loss     power-loss-or\
+\-null
+             +--ro pdl-penalty* []
+             |  +--ro pdl-value        power-loss-or-null
+             |  +--ro penalty-value    union
+             +--ro available-modulation-type?          identityref
+             +--ro min-OSNR?                           snr
+             +--ro rx-ref-channel-power?               power-dbm
+             +--ro rx-channel-power-penalty* []
+             |  +--ro rx-channel-power-value    power-dbm-or-null
+             |  +--ro penalty-value             union
+             +--ro min-Q-factor?                       int32
+             +--ro available-baud-rate?                uint32
+             +--ro roll-off?                           decimal64
+             +--ro min-carrier-spacing?                frequency-ghz
+             +--ro available-fec-type?                 identityref
+             +--ro fec-code-rate?                      decimal64
+             +--ro fec-threshold?                      decimal64
+             +--ro in-band-osnr?                       snr
+             +--ro out-of-band-osnr?                   snr
+             +--ro tx-polarization-power-difference?   power-ratio
+             +--ro polarization-skew?                  decimal64
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -132,81 +169,30 @@ module: ietf-optical-impairment-topology
 \bm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro line-coding-bitrate?              \
-\  identityref
-    |        |              +--ro bitrate?                          \
-\  uint16
-    |        |              +--ro max-diff-group-delay?             \
-\  uint32
-    |        |              +--ro max-chromatic-dispersion?         \
-\  decimal64
-    |        |              +--ro cd-penalty* []
-    |        |              |  +--ro cd-value         union
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro max-polarization-mode-dispersion? \
-\  decimal64
-    |        |              +--ro pmd-penalty* []
-    |        |              |  +--ro pmd-value        union
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro max-polarization-dependant-loss   \
-\  power-loss-or-null
-    |        |              +--ro pdl-penalty* []
-    |        |              |  +--ro pdl-value        power-loss-or-\
-\null
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro available-modulation-type?        \
-\  identityref
-    |        |              +--ro min-OSNR?                         \
-\  snr
-    |        |              +--ro rx-ref-channel-power?             \
-\  power-dbm
-    |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power-value    power\
-\-dbm-or-null
-    |        |              |  +--ro penalty-value             union
-    |        |              +--ro min-Q-factor?                     \
-\  int32
-    |        |              +--ro available-baud-rate?              \
-\  uint32
-    |        |              +--ro roll-off?                         \
-\  decimal64
-    |        |              +--ro min-carrier-spacing?              \
-\  frequency-ghz
-    |        |              +--ro available-fec-type?               \
-\  identityref
-    |        |              +--ro fec-code-rate?                    \
-\  decimal64
-    |        |              +--ro fec-threshold?                    \
-\  decimal64
-    |        |              +--ro in-band-osnr?                     \
-\  snr
-    |        |              +--ro out-of-band-osnr?                 \
-\  snr
-    |        |              +--ro tx-polarization-power-difference? \
-\  power-ratio
-    |        |              +--ro polarization-skew?                \
-\  decimal64
-    |        |              +--ro min-central-frequency?            \
-\  frequency-thz
-    |        |              +--ro max-central-frequency?            \
-\  frequency-thz
-    |        |              +--ro transceiver-tunability?           \
-\  frequency-ghz
-    |        |              +--ro tx-channel-power-min?             \
-\  power-dbm
-    |        |              +--ro tx-channel-power-max?             \
-\  power-dbm
-    |        |              +--ro rx-channel-power-min?             \
-\  power-dbm
-    |        |              +--ro rx-channel-power-max?             \
-\  power-dbm
-    |        |              +--ro rx-total-power-max?               \
-\  power-dbm
+    |        |              +--ro min-central-frequency?           f\
+\requency-thz
+    |        |              +--ro max-central-frequency?           f\
+\requency-thz
+    |        |              +--ro transceiver-tunability?          f\
+\requency-ghz
+    |        |              +--ro tx-channel-power-min?            p\
+\ower-dbm
+    |        |              +--ro tx-channel-power-max?            p\
+\ower-dbm
+    |        |              +--ro rx-channel-power-min?            p\
+\ower-dbm
+    |        |              +--ro rx-channel-power-max?            p\
+\ower-dbm
+    |        |              +--ro rx-total-power-max?              p\
+\ower-dbm
     |        |              +--ro compatible-modes
-    |        |                 +--ro supported-application-codes*   \
+    |        |              |  +--ro supported-application-codes*   \
 \   -> ../../../mode-id
-    |        |                 +--ro supported-organizational-modes*\
+    |        |              |  +--ro supported-organizational-modes*\
 \   -> ../../../mode-id
+    |        |              +--ro explicit-transceiver-mode-ref?   -\
+\> ../../../../../../../../templates/explicit-transceiver-modes/expl\
+\icit-transceiver-mode/explicit-transceiver-mode-id
     |        +--ro configured-mode?               union
     |        +--ro line-coding-bitrate?           identityref
     |        +--ro tx-channel-power?              power-dbm-or-null
