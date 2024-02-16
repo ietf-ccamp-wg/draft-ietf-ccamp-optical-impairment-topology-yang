@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-14"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-15"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -37,6 +37,7 @@
   </author>
 
   <author initials="G." surname="Galimberti" fullname="G. Galimberti">
+    <organization>Individual</organization>
     <address><email>ggalimbe56@gmail.com</email></address>
   </author>
   
@@ -45,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2023" month="October" day="23" />
+  <date year="2024" month="March" day="04" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -782,7 +783,86 @@
    stage and does not include the attenuation of the in-voa and/or
    out-voa.
   </t>
+  
+  <t>
+   To support the modeling of multi-band (e.g., C + L band) and
+   multi-stage (cascaded) amplifiers as depicted in
+   <xref target="multi-band_multi-stage_amp"/>, the OMS element that
+   describes an optical amplifier may contain an unordered list of
+   amplifier-elements. The position of the element is based on the
+   following attributes:
+  </t>
+  <t>
+   <ul spacing="compact">
+     <li>
+       lower-frequency and upper-frequency describing the frequency
+       band the set of amplifier-elements are operating in.
+     </li>
+     <li>
+       stage-order describing the sequential order of the cascaded
+       amplifier-elements for the frequency band.
+     </li>   
+   </ul>
+  </t>
+  
+  <t>
+   The detailed representation of the amplifier stages is not always
+   mandatory. Abstraction is allowed as long as the optical impairments
+   of the multi-stage amplifier are modeled properly.
+   For example, the detailed representation of the cascaded elements is
+   needed in case the amplifier supports both amplification of the
+   signal as well as the DGE function described in
+   <xref target="DGE_subsection"/>.
+  </t>
+  
+  <t>
+   Multi-band amplifiers like the dual-band amplifier depicted in
+   <xref target="multi-band_multi-stage_amp"/> have a band-separating
+   filter at the input and a combiner combining all the bands at the
+   output. These functions are not modeled explicitly and their optical
+   impairments are subsumed in the optical impairments of the amplifier
+   components.
+  </t>
 
+  <figure align="center" title="Example of a Dual-band, Multi-stage
+   Amplifier with DGE Functionality" anchor="multi-band_multi-stage_amp">
+  <artwork><![CDATA[
+
+        Dual-band, Multi-stage Amplifier with DGE
+    +-----------------------------------------------+
+    |                                               |
+    |                         C BAND                |
+    |                  lower/upper-frequency        |
+    |                            |                  |
+    |                +-----------+----------+       |
+    |                |                      |       |
+    |                  OA1      DGE      OA2        |
+    |                  |\      +---+     |\         |
+    |                  | \     |   |     | \        |
+--->o---+------------->|  +----+   +-----+  +-->+---o--->
+    |   |              | /     |   |     | /    |   |
+    |   |              |/      +---+     |/     |   |
+    |   | stage-order = 1        2        3     |   |
+    |   |                                       |   |
+    |   |                                       |   |
+    |   | stage-order = 1        2        3     |   |
+    |   |              |\      +---+     |\     |   |
+    |   |              | \     |   |     | \    |   |
+    |   +------------->|  +----+   +-----+  +-->+   |
+    |                  | /     |   |     | /        |
+    |                  |/      +---+     |/         |
+    |                  OA1      DGE      OA2        |
+    |                |                       |      |
+    |                +-----------+-----------+      |
+    |                            |                  |
+    |                  lower/upper-frequency        |
+    |                         L BAND                |
+    |                                               |
+    +-----------------------------------------------+
+
+]]></artwork>
+
+  </figure>
   <t>
    ILAs are placed at locations where the optical amplification of the
    WDM signal is required on the TE-link (OMS MCG) between two
@@ -4844,6 +4924,7 @@ module ietf-optical-impairment-topology {
   </section>
 
   <section title="Security Considerations" anchor="sect-5">
+<!-- Old text commented out and replaced by the new text below.
   <t>
    The configuration, state, and action data defined in this document
    are designed to be accessed via a management protocol with a secure
@@ -4858,6 +4939,108 @@ module ietf-optical-impairment-topology {
    A number of configuration data nodes defined in this document are
    read-only; however, these data nodes may be considered sensitive or
    vulnerable in some network environments (TBD).
+  </t>
+-->
+
+  <t>
+   The YANG module specified in this document defines a schema for data
+   that is designed to be accessed via network management protocols
+   such as NETCONF <xref target="RFC6241"/> or RESTCONF
+   <xref target="RFC8040"/>. The lowest NETCONF layer is the secure
+   transport layer, and the mandatory-to-implement secure transport is
+   Secure Shell (SSH) <xref target="RFC6242"/>. The lowest RESTCONF
+   layer is HTTPS, and the mandatory-to-implement secure transport is
+   TLS <xref target="RFC8446"/>.
+  </t>
+  
+  <t>
+   The Network Configuration Access Control Model (NACM)
+   <xref target="RFC8341"/> provides the means to restrict access for
+   particular NETCONF or RESTCONF users to a preconfigured subset of
+   all available NETCONF or RESTCONF protocol operations and content.
+  </t>
+  
+  <t>
+   The YANG module specified in this document imports the ietf-network
+   and ietf-network-topology models defined in
+   <xref target="RFC8345"/>. This YANG module augments te-topology
+   defined in <xref target="RFC8795"/> and consequently inherits
+   te-topology subtrees and data nodes and their potential
+   sensitivities and vulnerabilities. Therefore, the security
+   considerations from <xref target="RFC8345"/> also apply to the YANG
+   module defined in this document.
+  </t>
+  
+  <t>
+   The data nodes in this YANG module are not writable nor creatable
+   nor deletable (i.e., config true; the data nodes are readable only
+   (i.e., config false, which is the default). Although the data nodes
+   are not susceptible to write operations or attacks
+   (e.g., edit-config), network information may be exposed using read
+   access (e.g., get, get-config, or notification) operations. Thus,
+   controlling read access to specific data nodes containing sensitive
+   or vulnerable information is important. Below are the specific
+   subtrees, data nodes and subsequent sensitivity/vulnerability:
+  </t>
+  
+  <t>
+    <dl newline="true">
+      <dt>/nw:networks/nw:network/nw:network-types/tet:te-topology</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the TE
+        topology type.
+      </dd>
+      
+      <dt>/nw:networks/tet:te</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the TE node
+        templates and TE link templates.
+      </dd>
+      
+      <dt>/nw:networks/nw:network</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        topology-wide configurations, including the TE topology ID, the
+        topology-wide policies, and the topology geolocation.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nw:node</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE nodes.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nt:link/tet:te</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE links.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nw:node/nt:termination-point</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE link termination points.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nt:link/tet:te/tet:te-link-attributes</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE link attributes.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE link tunnel termination
+        points.
+      </dd>
+      
+      <dt>/nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes</dt>
+      <dd>
+        Unauthorized access to this subtree can disclose the
+        operational state information of TE node attributes.
+      </dd>
+    </dl>
   </t>
 
   </section>
@@ -4908,11 +5091,19 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
 
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
+
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8345.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
 <!--
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8776.xml"/>
 -->
@@ -4924,8 +5115,6 @@ reference: RFC XXXX (TDB)
 
   <references title="Informative References">
   
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
-
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6566.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7446.xml"/>
@@ -4939,8 +5128,6 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8342.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8345.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8453.xml"/>
 
@@ -7085,6 +7272,13 @@ module vendor-b-operational-modes {
       <organization>Juniper</organization>
       <address>
         <email>ggrammel@juniper.net</email>
+      </address>
+    </contact>
+    
+    <contact fullname="Roberto Manzotti" initials="R" surname="Manzotti">
+      <organization>Cisco</organization>
+      <address>
+        <email>rmanzott@cisco.com</email>
       </address>
     </contact>
 
