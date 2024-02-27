@@ -83,7 +83,7 @@ module: ietf-optical-impairment-topology
              +--ro explicit-transceiver-mode-id        string
              +--ro line-coding-bitrate?                identityref
              +--ro bitrate?                            uint16
-             +--ro max-diff-group-delay?               uint32
+             +--ro max-diff-group-delay?               decimal-2
              +--ro max-chromatic-dispersion?           decimal64
              +--ro cd-penalty* []
              |  +--ro cd-value         union
@@ -103,8 +103,8 @@ module: ietf-optical-impairment-topology
              +--ro rx-channel-power-penalty* []
              |  +--ro rx-channel-power-value    power-dbm-or-null
              |  +--ro penalty-value             union
-             +--ro min-Q-factor?                       int32
-             +--ro available-baud-rate?                uint32
+             +--ro min-Q-factor?                       decimal-2
+             +--ro available-baud-rate?                decimal64
              +--ro roll-off?                           decimal64
              +--ro min-carrier-spacing?                frequency-ghz
              +--ro available-fec-type?                 identityref
@@ -185,9 +185,9 @@ module: ietf-optical-impairment-topology
     |        |              |       power-dbm
     |        |              +--ro compatible-modes
     |        |              |  +--ro supported-application-codes*
-    |        |              |  |       -> ../../../mode-id
+    |        |              |  |       leafref
     |        |              |  +--ro supported-organizational-modes*
-    |        |              |          -> ../../../mode-id
+    |        |              |          leafref
     |        |              +--ro explicit-transceiver-mode-ref?
     |        |                      leafref
     |        +--ro configured-mode?               union

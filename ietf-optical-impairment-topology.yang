@@ -85,7 +85,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-02-14 {
+  revision 2024-02-22 {
     description
       "Initial Version";
     reference
@@ -668,13 +668,15 @@ module ietf-optical-impairment-topology {
         "Optical channel power or power spectral densitity (PSD)
         after the ROADM.";
       leaf nominal-carrier-power {
-        when "../../equalization-mode='carrier-power'";
+        when "derived-from-or-self(../../equalization-mode, "
+           + "'l0-types:carrier-power')";
         type l0-types:power-dbm-or-null;
         description
           "Reference channel power.";
       }
       leaf nominal-psd {
-        when "../../equalization-mode='power-spectral-density'";
+        when "derived-from-or-self(../../equalization-mode, "
+           + "'l0-types:power-spectral-density')";
         type l0-types:psd-or-null;
         description
           " Reference power spectral density (PSD).";
