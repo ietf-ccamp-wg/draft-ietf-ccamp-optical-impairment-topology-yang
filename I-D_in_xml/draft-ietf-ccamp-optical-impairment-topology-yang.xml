@@ -818,10 +818,10 @@
   <t>
    Multi-band amplifiers like the dual-band amplifier depicted in
    <xref target="multi-band_multi-stage_amp"/> have a band-separating
-   filter at the input and a combiner combining all the bands at the
-   output. These functions are not modeled explicitly and their optical
-   impairments are subsumed in the optical impairments of the amplifier
-   components.
+   filter at the input and a band-combining multiplexer combining all
+   the bands at the output. This filter and multiplexer functions are
+   not modeled explicitly and their optical impairments are subsumed
+   in the optical impairments of the amplifier components.
   </t>
 
   <figure align="center" title="Example of a Dual-band, Multi-stage
@@ -1411,6 +1411,23 @@
    There are various optical fiber types defined by ITU-T. There are
    several fiber-level parameters that need to be factored in, such as,
    fiber-type, length, loss coefficient, pmd, connectors (in/out).
+  </t>
+  
+  <t>
+   The loss of a fiber span can be described in two ways: it should be
+   described by specifying the loss coefficient (loss-coef) of the
+   fiber type and the length of the fiber as well as the total-loss
+   attribute when the loss can be measured with an egress amplifier
+   power measurement facility (power measured at the output of the
+   egress amplifier = input of the fiber span) and an ingress amplifier
+   power measurement facility (power measured at the input of the
+   ingress amplifier in the next node = output of the fiber span).
+   This measured loss typically differs from the calculated loss based
+   on loss-coef and length as it includes all loss contributions
+   including possible accumulated loss due to imperfect fiber splices
+   and connector losses. In case the total-loss cannot be measured (no
+   power measurement facilities in place), this optional attribute
+   shall be omitted.
   </t>
 
   <t>
