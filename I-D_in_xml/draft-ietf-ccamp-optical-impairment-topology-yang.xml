@@ -122,6 +122,20 @@
    This document augments the generic TE topology YANG model defined
    in <xref target="RFC8795"/> where possible.
   </t>
+  
+  <t>
+   The optical impairment aware topology for a WSON/SSON network
+   based on the YANG data model defined in this document is intended to
+   be used for exposing the network topology including optical
+   impairments. Therefore, the topology information that is typically
+   provided by a Transport PNC is assumed to be read-only (ro) data,
+   i.e., not configurable (read-write). This may change when the same
+   optical impairment-aware topology model is used for other use cases
+   than exposing the network topology. E.g, for a path computation
+   engine, where topological elements could be added in the context of
+   a what-if scenario analysis. This is outside of the scope of this
+   document.
+  </t>
 
   <t>
    This document defines one YANG module: ietf-optical-impairment-
@@ -4990,7 +5004,7 @@ module ietf-optical-impairment-topology {
   
   <t>
    The data nodes in this YANG module are not writable nor creatable
-   nor deletable (i.e., config true; the data nodes are readable only
+   nor deletable (i.e., config true) the data nodes are readable only
    (i.e., config false, which is the default). Although the data nodes
    are not susceptible to write operations or attacks
    (e.g., edit-config), network information may be exposed using read

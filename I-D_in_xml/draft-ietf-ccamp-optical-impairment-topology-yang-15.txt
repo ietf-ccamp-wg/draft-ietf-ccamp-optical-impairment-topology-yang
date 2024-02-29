@@ -76,8 +76,8 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
-     1.2.  Tree Diagram  . . . . . . . . . . . . . . . . . . . . . .   5
-     1.3.  Prefixes in Data Node Names . . . . . . . . . . . . . . .   5
+     1.2.  Tree Diagram  . . . . . . . . . . . . . . . . . . . . . .   6
+     1.3.  Prefixes in Data Node Names . . . . . . . . . . . . . . .   6
    2.  Reference Architecture  . . . . . . . . . . . . . . . . . . .   6
      2.1.  Control Plane Architecture  . . . . . . . . . . . . . . .   6
      2.2.  Optical Transport Network Data Plane  . . . . . . . . . .   8
@@ -193,6 +193,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
    This document augments the generic TE topology YANG model defined in
    [RFC8795] where possible.
 
+   The optical impairment aware topology for a WSON/SSON network based
+   on the YANG data model defined in this document is intended to be
+   used for exposing the network topology including optical impairments.
+   Therefore, the topology information that is typically provided by a
+   Transport PNC is assumed to be read-only (ro) data, i.e., not
+   configurable (read-write).  This may change when the same optical
+   impairment-aware topology model is used for other use cases than
+   exposing the network topology.  E.g, for a path computation engine,
+   where topological elements could be added in the context of a what-if
+   scenario analysis.  This is outside of the scope of this document.
+
    This document defines one YANG module: ietf-optical-impairment-
    topology (Section 3) according to the new Network Management
    Datastore Architecture [RFC8342].
@@ -207,6 +218,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
 
    *  client
 
+
+
+
+Beller, et al.          Expires 5 September 2024                [Page 4]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
+
+
    *  server
 
    *  augment
@@ -217,14 +236,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
 
    The following terms are defined in [RFC6241] and are not redefined
    here:
-
-
-
-
-Beller, et al.          Expires 5 September 2024                [Page 4]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
-
 
    *  configuration data
 
@@ -261,6 +272,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
    TE-links in this case, are bundled into a single bundled add/drop TE-
    Link.
 
+
+
+
+
+
+Beller, et al.          Expires 5 September 2024                [Page 5]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
+
+
 1.2.  Tree Diagram
 
    A simplified graphical representation of the data model is used in
@@ -272,15 +293,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
    In this document, names of data nodes and other data model objects
    are prefixed using the standard prefix associated with the
    corresponding YANG imported modules, as shown in Table 1.
-
-
-
-
-
-Beller, et al.          Expires 5 September 2024                [Page 5]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
-
 
      +==========+=====================+==============================+
      | Prefix   | YANG module         | Reference                    |
@@ -308,18 +320,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
 2.1.  Control Plane Architecture
 
    Figure 1 shows the control plane architecture.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -5387,7 +5387,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2024
    in this document.
 
    The data nodes in this YANG module are not writable nor creatable nor
-   deletable (i.e., config true; the data nodes are readable only (i.e.,
+   deletable (i.e., config true) the data nodes are readable only (i.e.,
    config false, which is the default).  Although the data nodes are not
    susceptible to write operations or attacks (e.g., edit-config),
    network information may be exposed using read access (e.g., get, get-
