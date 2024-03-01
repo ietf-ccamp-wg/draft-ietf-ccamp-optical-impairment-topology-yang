@@ -2888,12 +2888,116 @@ module: ietf-optical-impairment-topology
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
     +--rw otsis!
-       +--ro otsi-group* [otsi-group-id]
-          +--ro otsi-group-id    string
-          +--ro otsi* [otsi-carrier-id]
-             +--ro otsi-carrier-id           uint16
-             +--ro otsi-carrier-frequency?   union
-             +--ro e2e-mc-path-id*           uint16
+    |  +--ro otsi-group* [otsi-group-id]
+    |     +--ro otsi-group-id    string
+    |     +--ro otsi* [otsi-carrier-id]
+    |        +--ro otsi-carrier-id           uint16
+    |        +--ro otsi-carrier-frequency?   union
+    |        +--ro e2e-mc-path-id*           uint16
+    +--ro templates
+       +--ro roadm-path-impairments
+       |  +--ro roadm-path-impairment* [roadm-path-impairments-id]
+       |     +--ro roadm-path-impairments-id    string
+       |     +--ro (impairment-type)?
+       |        +--:(roadm-express-path)
+       |        |  +--ro roadm-express-path* []
+       |        |     +--ro frequency-range
+       |        |     |  +--ro lower-frequency    frequency-thz
+       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     +--ro roadm-pmd?                union
+       |        |     +--ro roadm-cd?
+       |        |     |       l0-types:decimal-5-or-null
+       |        |     +--ro roadm-pdl?
+       |        |     |       l0-types:power-loss-or-null
+       |        |     +--ro roadm-inband-crosstalk?
+       |        |     |       l0-types:decimal-2-or-null
+       |        |     +--ro roadm-maxloss?
+       |        |             l0-types:power-loss-or-null
+       |        +--:(roadm-add-path)
+       |        |  +--ro roadm-add-path* []
+       |        |     +--ro frequency-range
+       |        |     |  +--ro lower-frequency    frequency-thz
+       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     +--ro roadm-pmd?                union
+       |        |     +--ro roadm-cd?
+       |        |     |       l0-types:decimal-5-or-null
+       |        |     +--ro roadm-pdl?
+       |        |     |       l0-types:power-loss-or-null
+       |        |     +--ro roadm-inband-crosstalk?
+       |        |     |       l0-types:decimal-2-or-null
+       |        |     +--ro roadm-maxloss?
+       |        |     |       l0-types:power-loss-or-null
+       |        |     +--ro roadm-pmax?
+       |        |     |       l0-types:power-dbm-or-null
+       |        |     +--ro roadm-osnr?
+       |        |     |       l0-types:snr-or-null
+       |        |     +--ro roadm-noise-figure?
+       |        |             l0-types:decimal-5-or-null
+       |        +--:(roadm-drop-path)
+       |           +--ro roadm-drop-path* []
+       |              +--ro frequency-range
+       |              |  +--ro lower-frequency    frequency-thz
+       |              |  +--ro upper-frequency    frequency-thz
+       |              +--ro roadm-pmd?                union
+       |              +--ro roadm-cd?
+       |              |       l0-types:decimal-5-or-null
+       |              +--ro roadm-pdl?
+       |              |       l0-types:power-loss-or-null
+       |              +--ro roadm-inband-crosstalk?
+       |              |       l0-types:decimal-2-or-null
+       |              +--ro roadm-maxloss?
+       |              |       l0-types:power-loss-or-null
+       |              +--ro roadm-minloss?
+       |              |       l0-types:power-loss-or-null
+       |              +--ro roadm-typloss?
+       |              |       l0-types:power-loss-or-null
+       |              +--ro roadm-pmin?
+       |              |       l0-types:power-dbm-or-null
+       |              +--ro roadm-pmax?
+       |              |       l0-types:power-dbm-or-null
+       |              +--ro roadm-ptyp?
+       |              |       l0-types:power-dbm-or-null
+       |              +--ro roadm-osnr?
+       |              |       l0-types:snr-or-null
+       |              +--ro roadm-noise-figure?
+       |                      l0-types:decimal-5-or-null
+       +--ro explicit-transceiver-modes
+          +--ro explicit-transceiver-mode*
+                  [explicit-transceiver-mode-id]
+             +--ro explicit-transceiver-mode-id        string
+             +--ro line-coding-bitrate?                identityref
+             +--ro bitrate?                            uint16
+             +--ro max-diff-group-delay?               decimal-2
+             +--ro max-chromatic-dispersion?           decimal64
+             +--ro cd-penalty* []
+             |  +--ro cd-value         union
+             |  +--ro penalty-value    union
+             +--ro max-polarization-mode-dispersion?   decimal64
+             +--ro pmd-penalty* []
+             |  +--ro pmd-value        union
+             |  +--ro penalty-value    union
+             +--ro max-polarization-dependant-loss
+             |       power-loss-or-null
+             +--ro pdl-penalty* []
+             |  +--ro pdl-value        power-loss-or-null
+             |  +--ro penalty-value    union
+             +--ro available-modulation-type?          identityref
+             +--ro min-OSNR?                           snr
+             +--ro rx-ref-channel-power?               power-dbm
+             +--ro rx-channel-power-penalty* []
+             |  +--ro rx-channel-power-value    power-dbm-or-null
+             |  +--ro penalty-value             union
+             +--ro min-Q-factor?                       decimal-2
+             +--ro available-baud-rate?                decimal64
+             +--ro roll-off?                           decimal64
+             +--ro min-carrier-spacing?                frequency-ghz
+             +--ro available-fec-type?                 identityref
+             +--ro fec-code-rate?                      decimal64
+             +--ro fec-threshold?                      decimal64
+             +--ro in-band-osnr?                       snr
+             +--ro out-of-band-osnr?                   snr
+             +--ro tx-polarization-power-difference?   power-ratio
+             +--ro polarization-skew?                  decimal64
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -2904,11 +3008,23 @@ module: ietf-optical-impairment-topology
     |        +--ro transceiver-id                 uint32
     |        +--ro supported-modes!
     |        |  +--ro supported-mode* [mode-id]
-    |        |     +--ro mode-id                      string
+    |        |     +--ro mode-id                         string
     |        |     +--ro (mode)
     |        |        +--:(G.698.2)
-    |        |        |  +--ro standard-mode?         standard-mode
-    |        |        |  +--ro line-coding-bitrate*   identityref
+    |        |        |  +--ro standard-mode?
+    |        |        |  |       standard-mode
+    |        |        |  +--ro line-coding-bitrate*      identityref
+    |        |        |  +--ro min-central-frequency?
+    |        |        |  |       frequency-thz
+    |        |        |  +--ro max-central-frequency?
+    |        |        |  |       frequency-thz
+    |        |        |  +--ro transceiver-tunability?
+    |        |        |  |       frequency-ghz
+    |        |        |  +--ro tx-channel-power-min?     power-dbm
+    |        |        |  +--ro tx-channel-power-max?     power-dbm
+    |        |        |  +--ro rx-channel-power-min?     power-dbm
+    |        |        |  +--ro rx-channel-power-max?     power-dbm
+    |        |        |  +--ro rx-total-power-max?       power-dbm
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
     |        |        |     +--ro operational-mode?
@@ -2924,71 +3040,17 @@ module: ietf-optical-impairment-topology
     |        |        |     +--ro transceiver-tunability?
     |        |        |     |       frequency-ghz
     |        |        |     +--ro tx-channel-power-min?
-    |        |        |     |       power-in-dbm
+    |        |        |     |       power-dbm
     |        |        |     +--ro tx-channel-power-max?
-    |        |        |     |       power-in-dbm
+    |        |        |     |       power-dbm
     |        |        |     +--ro rx-channel-power-min?
-    |        |        |     |       power-in-dbm
+    |        |        |     |       power-dbm
     |        |        |     +--ro rx-channel-power-max?
-    |        |        |     |       power-in-dbm
+    |        |        |     |       power-dbm
     |        |        |     +--ro rx-total-power-max?
-    |        |        |             power-in-dbm
+    |        |        |             power-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro line-coding-bitrate?
-    |        |              |       identityref
-    |        |              +--ro bitrate?
-    |        |              |       uint16
-    |        |              +--ro max-diff-group-delay?
-    |        |              |       uint32
-    |        |              +--ro max-chromatic-dispersion?
-    |        |              |       decimal64
-    |        |              +--ro cd-penalty* []
-    |        |              |  +--ro cd-value         union
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro max-polarization-mode-dispersion?
-    |        |              |       decimal64
-    |        |              +--ro pmd-penalty* []
-    |        |              |  +--ro pmd-value        union
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro max-polarization-dependant-loss
-    |        |              |       loss-in-db-or-null
-    |        |              +--ro pdl-penalty* []
-    |        |              |  +--ro pdl-value
-    |        |              |  |       loss-in-db-or-null
-    |        |              |  +--ro penalty-value    union
-    |        |              +--ro available-modulation-type?
-    |        |              |       identityref
-    |        |              +--ro min-OSNR?
-    |        |              |       snr
-    |        |              +--ro rx-ref-channel-power?
-    |        |              |       power-in-dbm
-    |        |              +--ro rx-channel-power-penalty* []
-    |        |              |  +--ro rx-channel-power-value
-    |        |              |  |       power-in-dbm-or-null
-    |        |              |  +--ro penalty-value             union
-    |        |              +--ro min-Q-factor?
-    |        |              |       int32
-    |        |              +--ro available-baud-rate?
-    |        |              |       uint32
-    |        |              +--ro roll-off?
-    |        |              |       decimal64
-    |        |              +--ro min-carrier-spacing?
-    |        |              |       frequency-ghz
-    |        |              +--ro available-fec-type?
-    |        |              |       identityref
-    |        |              +--ro fec-code-rate?
-    |        |              |       decimal64
-    |        |              +--ro fec-threshold?
-    |        |              |       decimal64
-    |        |              +--ro in-band-osnr?
-    |        |              |       snr
-    |        |              +--ro out-of-band-osnr?
-    |        |              |       snr
-    |        |              +--ro tx-polarization-power-difference?
-    |        |              |       decimal-2-digits
-    |        |              +--ro polarization-skew?
-    |        |              |       decimal64
     |        |              +--ro min-central-frequency?
     |        |              |       frequency-thz
     |        |              +--ro max-central-frequency?
@@ -2996,28 +3058,27 @@ module: ietf-optical-impairment-topology
     |        |              +--ro transceiver-tunability?
     |        |              |       frequency-ghz
     |        |              +--ro tx-channel-power-min?
-    |        |              |       power-in-dbm
+    |        |              |       power-dbm
     |        |              +--ro tx-channel-power-max?
-    |        |              |       power-in-dbm
+    |        |              |       power-dbm
     |        |              +--ro rx-channel-power-min?
-    |        |              |       power-in-dbm
+    |        |              |       power-dbm
     |        |              +--ro rx-channel-power-max?
-    |        |              |       power-in-dbm
+    |        |              |       power-dbm
     |        |              +--ro rx-total-power-max?
-    |        |              |       power-in-dbm
+    |        |              |       power-dbm
     |        |              +--ro compatible-modes
-    |        |                 +--ro supported-application-codes*
-    |        |                 |       -> ../../../mode-id
-    |        |                 +--ro supported-organizational-modes*
-    |        |                         -> ../../../mode-id
+    |        |              |  +--ro supported-application-codes*
+    |        |              |  |       leafref
+    |        |              |  +--ro supported-organizational-modes*
+    |        |              |          leafref
+    |        |              +--ro explicit-transceiver-mode-ref?
+    |        |                      leafref
     |        +--ro configured-mode?               union
     |        +--ro line-coding-bitrate?           identityref
-    |        +--ro tx-channel-power?
-    |        |       power-in-dbm-or-null
-    |        +--ro rx-channel-power?
-    |        |       power-in-dbm-or-null
-    |        +--ro rx-total-power?
-    |        |       power-in-dbm-or-null
+    |        +--ro tx-channel-power?              power-dbm-or-null
+    |        +--ro rx-channel-power?              power-dbm-or-null
+    |        +--ro rx-total-power?                power-dbm-or-null
     |        +--ro outgoing-otsi
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
@@ -3034,15 +3095,11 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
-       +--ro generalized-snr?                        l0-types:snr
-       +--ro equalization-mode?                      identityref
-       +--ro (power-param)?
-       |  +--:(channel-power)
-       |  |  +--ro nominal-carrier-power?
-       |  |          l0-types:power-in-dbm-or-null
-       |  +--:(power-spectral-density)
-       |     +--ro nominal-power-spectral-density?
-       |             l0-types:decimal-16-digits-or-null
+       +--ro generalized-snr?        l0-types:snr
+       +--ro equalization-mode?      identityref
+       +--ro power-param
+       |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
+       |  +--ro nominal-psd?             l0-types:psd-or-null
        +--ro media-channel-groups!
        |  +--ro media-channel-group* []
        |     +--ro media-channels* []
@@ -3052,7 +3109,7 @@ module: ietf-optical-impairment-topology
        |        +--ro otsi-ref* []
        |        |  +--ro otsi-carrier-ref?   leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:gain-in-db-or-null
+       |        +--ro delta-power?      l0-types:power-ratio-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -3073,79 +3130,91 @@ module: ietf-optical-impairment-topology
                 |        +--ro amplifier-element* []
                 |           +--ro name?
                 |           |       string
+                |           +--ro type-variety?
+                |           |       string
                 |           +--ro is-dynamic-gain-equalyzer?
                 |           |       boolean
                 |           +--ro frequency-range
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
-                |           +--ro actual-gain
-                |           |       l0-types:gain-in-db-or-null
-                |           +--ro tilt-target
-                |           |       l0-types:decimal-2-digits-or-null
-                |           +--ro out-voa
-                |           |       l0-types:loss-in-db-or-null
-                |           +--ro in-voa
-                |           |       l0-types:loss-in-db-or-null
-                |           +--ro total-output-power
-                |           |       l0-types:power-in-dbm-or-null
-                |           +--ro (power-param)?
-                |           |  +--:(channel-power)
-                |           |  |  +--ro nominal-carrier-power?
-                |           |  |          l0-types:power-in-dbm-or-n\
+                |           +--ro stage-order?
+                |           |       uint8
+                |           +--ro power-param
+                |           |  +--ro (power-param)
+                |           |     +--:(channel-power)
+                |           |     |  +--ro nominal-carrier-power
+                |           |     |          l0-types:power-dbm-or-n\
 ull
-                |           |  +--:(power-spectral-density)
-                |           |     +--ro nominal-power-spectral-densi\
-ty?
-                |           |             l0-types:decimal-16-digits\
--or-null
-                |           +--ro raman-direction?
-                |           |       enumeration
-                |           +--ro raman-pump* []
-                |           |  +--ro frequency?
-                |           |  |       l0-types:frequency-thz
-                |           |  +--ro power?
-                |           |          l0-types:decimal-2-digits-or-\
-null
+                |           |     +--:(power-spectral-density)
+                |           |        +--ro nominal-psd
+                |           |                l0-types:psd-or-null
                 |           +--ro pdl?
-                |           |       l0-types:loss-in-db-or-null
-                |           +--ro media-channel-groups
-                |              +--ro media-channel-group* []
-                |                 +--ro media-channels* []
-                |                    +--ro flexi-n?
-                |                    |       l0-types:flexi-n
-                |                    +--ro flexi-m?
-                |                    |       l0-types:flexi-m
-                |                    +--ro delta-power?
-                |                            l0-types:gain-in-db-or-\
+                |           |       l0-types:power-loss-or-null
+                |           +--ro (amplifier-element-type)
+                |              +--:(optical-amplifier)
+                |              |  +--ro optical-amplifier
+                |              |     +--ro actual-gain
+                |              |     |       l0-types:power-gain-or-\
 null
+                |              |     +--ro in-voa?
+                |              |     |       l0-types:power-loss-or-\
+null
+                |              |     +--ro out-voa?
+                |              |     |       l0-types:power-loss-or-\
+null
+                |              |     +--ro tilt-target
+                |              |     |       l0-types:decimal-2-or-n\
+ull
+                |              |     +--ro total-output-power
+                |              |     |       l0-types:power-dbm-or-n\
+ull
+                |              |     +--ro raman-direction?
+                |              |     |       enumeration
+                |              |     +--ro raman-pump* []
+                |              |        +--ro frequency?
+                |              |        |       l0-types:frequency-t\
+hz
+                |              |        +--ro power?
+                |              |                l0-types:decimal-2-o\
+r-null
+                |              +--:(dynamic-gain-equalyzer)
+                |                 +--ro dynamic-gain-equalyzer!
+                |                    +--ro media-channel-groups
+                |                       +--ro media-channel-group* []
+                |                          +--ro media-channels* []
+                |                             +--ro flexi-n?
+                |                             |       l0-types:flexi\
+-n
+                |                             +--ro flexi-m?
+                |                             |       l0-types:flexi\
+-m
+                |                             +--ro delta-power?
+                |                                     l0-types:power\
+-ratio-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
                 |     +--ro length
-                |     |       l0-types:decimal-2-digits-or-null
+                |     |       l0-types:decimal-2-or-null
                 |     +--ro loss-coef
-                |     |       l0-types:decimal-2-digits-or-null
+                |     |       l0-types:decimal-2-or-null
                 |     +--ro total-loss
-                |     |       l0-types:loss-in-db-or-null
+                |     |       l0-types:power-loss-or-null
                 |     +--ro pmd?
-                |     |       l0-types:decimal-2-digits-or-null
+                |     |       l0-types:decimal-2-or-null
                 |     +--ro conn-in?
-                |     |       l0-types:loss-in-db-or-null
+                |     |       l0-types:power-loss-or-null
                 |     +--ro conn-out?
-                |             l0-types:loss-in-db-or-null
+                |             l0-types:power-loss-or-null
                 +--:(concentratedloss)
                    +--ro concentratedloss
-                      +--ro loss    l0-types:loss-in-db-or-null
+                      +--ro loss    l0-types:power-loss-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
        |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:tunnel-termination-point:
-    +--ro sliceable-transponder-list* [carrier-id]
-       +--ro carrier-id    uint32
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/nt:termination-point
@@ -3153,69 +3222,6 @@ null
     +--rw inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
-    +--ro roadm-path-impairments* [roadm-path-impairments-id]
-       +--ro roadm-path-impairments-id    uint32
-       +--ro (impairment-type)?
-          +--:(roadm-express-path)
-          |  +--ro roadm-express-path* []
-          |     +--ro frequency-range
-          |     |  +--ro lower-frequency    frequency-thz
-          |     |  +--ro upper-frequency    frequency-thz
-          |     +--ro roadm-pmd?                union
-          |     +--ro roadm-cd?
-          |     |       l0-types:decimal-5-digits-or-null
-          |     +--ro roadm-pdl?
-          |     |       l0-types:loss-in-db-or-null
-          |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:decimal-2-digits-or-null
-          |     +--ro roadm-maxloss?
-          |             l0-types:loss-in-db-or-null
-          +--:(roadm-add-path)
-          |  +--ro roadm-add-path* []
-          |     +--ro frequency-range
-          |     |  +--ro lower-frequency    frequency-thz
-          |     |  +--ro upper-frequency    frequency-thz
-          |     +--ro roadm-pmd?                union
-          |     +--ro roadm-cd?
-          |     |       l0-types:decimal-5-digits-or-null
-          |     +--ro roadm-pdl?
-          |     |       l0-types:loss-in-db-or-null
-          |     +--ro roadm-inband-crosstalk?
-          |     |       l0-types:decimal-2-digits-or-null
-          |     +--ro roadm-maxloss?
-          |     |       l0-types:loss-in-db-or-null
-          |     +--ro roadm-pmax?
-          |     |       l0-types:power-in-dbm-or-null
-          |     +--ro roadm-osnr?               l0-types:snr-or-null
-          |     +--ro roadm-noise-figure?
-          |             l0-types:decimal-5-digits-or-null
-          +--:(roadm-drop-path)
-             +--ro roadm-drop-path* []
-                +--ro frequency-range
-                |  +--ro lower-frequency    frequency-thz
-                |  +--ro upper-frequency    frequency-thz
-                +--ro roadm-pmd?                union
-                +--ro roadm-cd?
-                |       l0-types:decimal-5-digits-or-null
-                +--ro roadm-pdl?
-                |       l0-types:loss-in-db-or-null
-                +--ro roadm-inband-crosstalk?
-                |       l0-types:decimal-2-digits-or-null
-                +--ro roadm-maxloss?
-                |       l0-types:loss-in-db-or-null
-                +--ro roadm-minloss?
-                |       l0-types:loss-in-db-or-null
-                +--ro roadm-typloss?
-                |       l0-types:loss-in-db-or-null
-                +--ro roadm-pmin?
-                |       l0-types:power-in-dbm-or-null
-                +--ro roadm-pmax?
-                |       l0-types:power-in-dbm-or-null
-                +--ro roadm-ptyp?
-                |       l0-types:power-in-dbm-or-null
-                +--ro roadm-osnr?               l0-types:snr-or-null
-                +--ro roadm-noise-figure?
-                        l0-types:decimal-5-digits-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
     +--ro roadm-path-impairments?   leafref
@@ -3225,8 +3231,7 @@ null
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?
-            -> ../../roadm-path-impairments/roadm-path-impairments-id
+    +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix:
@@ -3288,10 +3293,8 @@ null
     <![CDATA[
 module ietf-optical-impairment-topology {
   yang-version 1.1;
-
   namespace "urn:ietf:params:xml"
           + ":ns:yang:ietf-optical-impairment-topology";
-
   prefix "oit";
 
   import ietf-network {
@@ -3358,7 +3361,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2023 IETF Trust and the persons identified as
+     Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -3375,7 +3378,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2023-10-19 {
+  revision 2024-02-22 {
     description
       "Initial Version";
     reference
@@ -3394,22 +3397,6 @@ module ietf-optical-impairment-topology {
     reference
       "ITU-T G.873.1 v5.2 (02/2022): Optical transport network: 
       Linear protection";
-  }
-
-  // groupings
-
-  grouping sliceable-transponder-attributes {
-    description
-      "Configuration of a sliceable transponder.";
-    list sliceable-transponder-list {
-      key "carrier-id";
-      config false;
-      description "List of carriers";
-      leaf carrier-id {
-        type uint32;
-        description "Identifier of the carrier";
-      }
-    }
   }
 
   /*
@@ -3441,6 +3428,17 @@ module ietf-optical-impairment-topology {
               the vendor's specification associated with the
               type-variety.";
           }
+          leaf type-variety {
+            type string;
+            description
+              "String identifier of amplifier element type
+              referencing a specification in a separate equipment
+              catalog.
+              
+              This attributes applies only when the type-variety of
+              the amplifier is not sufficient to describe the
+              amplifier element type.";
+          }
           leaf is-dynamic-gain-equalyzer {
             type boolean;
             description
@@ -3453,112 +3451,165 @@ module ietf-optical-impairment-topology {
               element.";
             uses l0-types:frequency-range;
           }
-          leaf actual-gain {
-            type l0-types:gain-in-db-or-null;
-            mandatory true ;
+          leaf stage-order {
+            type uint8;
+            default 1;
             description
-              "The value of the gain provided by the amplification 
-              stage of the optical amplifier.";
+              "It allows defining for each spectrum badwidth the
+              cascade order of each amplifier-element.";
           }
-          leaf tilt-target {
-            type l0-types:decimal-2-digits-or-null;
-            units "dB";
-            mandatory true ;
+          container power-param {
             description
-              "The tilt target defined between lower and upper
-              frequency of the amplifier frequency range.";
-          }
-          leaf out-voa {
-            type l0-types:loss-in-db-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the output of the amplification stage of 
-              the amplifier, if present.";
-          }
-          leaf in-voa {
-            type l0-types:loss-in-db-or-null;
-            mandatory true;
-            description
-              "Loss introduced by the Variable Optical Attenuator 
-              (VOA) at the input of the amplification stage of the 
-              amplifier, if present";
-          }
-          leaf total-output-power {
-            type l0-types:power-in-dbm-or-null;
-            mandatory true;
-            description
-              "It represent total output power measured in the range
-              specified by the frequency-range.
-              
-              Optical power is especially needed to re-compute/check
-              consistency of span (fiber+ concentrated loss) loss
-              value, with respect to loss/gain information on
-              elements.";
-          }
-          uses power-param;
-          leaf raman-direction {
-            type enumeration {
-              enum co-propagating {
-                description
-                  "Co-propagating indicates that optical pump light
-                  is injected in the same direction to the optical
-                  signal that is amplified (forward pump).";
+              "The optical power after the out-voa of each amplifier
+              element.";
+            choice power-param {
+              mandatory true;
+              description
+                "Select the mode: channel power or power spectral
+                density (PSD).";
+              case channel-power {
+                leaf nominal-carrier-power {
+                  type l0-types:power-dbm-or-null;
+                  mandatory true;
+                  description
+                    "Reference channel power.";
+                }
               }
-              enum counter-propagating {
-                description
-                  "Counter-propagating indicates that optical pump
-                  light is injected in opposite direction to the
-                  optical signal that is amplified (backward pump).";
+              case power-spectral-density {
+                leaf nominal-psd {
+                  type l0-types:psd-or-null;
+                  mandatory true;
+                  description
+                    "Reference power spectral density (PSD).";
+                }
               }
             }
-            description
-              "The direction of injection of the raman pump.";
-          }
-          list raman-pump {
-            description
-              "The list of pumps for the Raman amplifier.";
-            leaf frequency {
-              type l0-types:frequency-thz;
-              description
-                "The raman pump central frequency.";
-            }
-            leaf power {
-              type l0-types:decimal-2-digits-or-null;
-              units "Watts";
-              description
-                "The total pump power considering a depolarized pump
-                at the raman pump central frequency.";
-            }
-          }
+          }   // container power-param
           leaf pdl {
-            type l0-types:loss-in-db-or-null;
+            type l0-types:power-loss-or-null;
             description "Polarization Dependent Loss (PDL)";
           }
-          container media-channel-groups {
+          choice amplifier-element-type {
+            mandatory true;
             description
-              "The top level container for the list of media channel 
-              groups.";
-            list media-channel-group {
+              "Identifies whether the amplifier element is an
+              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              (DGE).";
+            container optical-amplifier {
               description
-                "The list of media channel groups";
-              list media-channels {
-                // key "flexi-n";
+                "The attributes applicable only to amplifier
+                elements";
+              leaf actual-gain {
+                type l0-types:power-gain-or-null;
+                mandatory true;
                 description
-                  "List of media channels represented as (n,m)";
-
-                // this grouping add both n.m values
-                uses l0-types:flexi-grid-frequency-slot;
-
-                leaf delta-power {
-                  type l0-types:gain-in-db-or-null;
-                  description
-                    " Deviation from the reference carrier power 
-                    defined for the OMS.";
+                  "The value of the gain provided by the
+                  amplification  stage of the optical amplifier.";
+              }
+              leaf in-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the input of the amplification stage of
+                  the amplifier, if present";
+              }
+              leaf out-voa {
+                type l0-types:power-loss-or-null;
+                description
+                  "Loss introduced by the Variable Optical Attenuator
+                  (VOA) at the output of the amplification stage of
+                  the amplifier, if present.";
+              }
+              leaf tilt-target {
+                type l0-types:decimal-2-or-null;
+                units "dB";
+                mandatory true ;
+                description
+                  "The tilt target defined between lower and upper
+                  frequency of the amplifier frequency range.";
+              }
+              leaf total-output-power {
+                type l0-types:power-dbm-or-null;
+                mandatory true;
+                description
+                  "It represent total output power measured in the
+                  range specified by the frequency-range.
+                  
+                  Optical power is especially needed to
+                  re-compute/check consistency of span
+                  (fiber + concentrated loss) loss value, with
+                  respect to loss/gain information on elements.";
+              }
+              leaf raman-direction {
+                type enumeration {
+                  enum co-propagating {
+                    description
+                      "Co-propagating indicates that optical pump
+                      light is injected in the same direction to the
+                      optical signal that is amplified
+                      (forward pump).";
+                  }
+                  enum counter-propagating {
+                    description
+                      "Counter-propagating indicates that optical
+                      pump light is injected in opposite direction
+                      to the optical signal that is amplified
+                      (backward pump).";
+                  }
                 }
-              } // media channels list
-            } // media-channel-groups list
-          }
+                description
+                  "The direction of injection of the raman pump.";
+              }
+              list raman-pump {
+                description
+                  "The list of pumps for the Raman amplifier.";
+                leaf frequency {
+                  type l0-types:frequency-thz;
+                  description
+                    "The raman pump central frequency.";
+                }
+                leaf power {
+                  type l0-types:decimal-2-or-null;
+                  units "Watts";
+                  description
+                    "The total pump power considering a depolarized
+                    pump at the raman pump central frequency.";
+                }
+              }
+            }   // container optical-amplifier
+            container dynamic-gain-equalyzer {
+              presence
+                "When present it indicates that the amplifier element
+                is a Dynamic Gain Equalyzer (DGE)";
+              description
+                "The attributes applicable only to DEG amplifier
+                elements.";
+              container media-channel-groups {
+                description
+                  "The top level container for the list of media
+                  channel groups.";
+                list media-channel-group {
+                  description
+                    "The list of media channel groups";
+                  list media-channels {
+                    // key "flexi-n";
+                    description
+                      "List of media channels represented as (n,m)";
+
+                    // this grouping add both n.m values
+                    uses l0-types:flexi-grid-frequency-slot;
+
+                    leaf delta-power {
+                      type l0-types:power-ratio-or-null;
+                      description
+                        " Deviation from the reference carrier power 
+                        defined for the OMS.";
+                    }
+                  } // media channels list
+                } // media-channel-groups list
+              }   // container media-channel-groups
+            }   // container dynamic-gain-equalyzer
+          } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational
     }  // container amplifier
@@ -3576,35 +3627,35 @@ module ietf-optical-impairment-topology {
         description "fiber type";
       }
       leaf length {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units km;
         mandatory true ;
         description "length of fiber";
       }
       leaf loss-coef {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units dB/km;
         mandatory true ;
         description "loss coefficient of the fiber";
       }
       leaf total-loss {
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         mandatory true ;
         description
           "includes all losses: fiber loss and conn-in and 
            conn-out losses";
       }
       leaf pmd {
-        type l0-types:decimal-2-digits-or-null;
+        type l0-types:decimal-2-or-null;
         units "ps";
         description "pmd of the fiber";
       }
       leaf conn-in{
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         description "connector-in";
       }
       leaf conn-out{
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         description "connector-out";
       }
     }
@@ -3628,16 +3679,16 @@ module ietf-optical-impairment-topology {
         empty value when unknown.";
     }
     leaf roadm-cd {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "ps/nm";
       description "Chromatic Dispersion (CD)";
     }            
     leaf roadm-pdl {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description "Polarization Dependent Loss (PDL)";
     }
     leaf roadm-inband-crosstalk {
-      type l0-types:decimal-2-digits-or-null;
+      type l0-types:decimal-2-or-null;
       units "dB";
       description
         "In-band crosstalk, or coherent crosstalk, can occur in 
@@ -3646,7 +3697,7 @@ module ietf-optical-impairment-topology {
         or all but one blocked";
     }
     leaf roadm-maxloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description
         "This is the maximum expected path loss from the 
         ROADM ingress to the ROADM egress 
@@ -3692,7 +3743,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-pmax {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "This is the maximum (per carrier) power level 
         permitted at the add block input ports,
@@ -3717,7 +3768,7 @@ module ietf-optical-impairment-topology {
         (if both are defined).";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "dB"; 
       description 
         "Noise Figure. If the add path contains an amplifier, 
@@ -3762,7 +3813,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-minloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description 
         "The net loss from the ROADM input, to the 
         output of the drop block.
@@ -3775,7 +3826,7 @@ module ietf-optical-impairment-topology {
         including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
-      type l0-types:loss-in-db-or-null;
+      type l0-types:power-loss-or-null;
       description 
         "The net loss from the ROADM input, 
         to the output of the drop block.
@@ -3790,7 +3841,7 @@ module ietf-optical-impairment-topology {
         expected loss.";
     }
     leaf roadm-pmin {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss
         that is added, for example,
@@ -3808,7 +3859,7 @@ module ietf-optical-impairment-topology {
         detailed in section xxx of the document yyy."; 
     }
     leaf roadm-pmax {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss that is added, 
         for example, to hit target power levels into a 
@@ -3824,7 +3875,7 @@ module ietf-optical-impairment-topology {
         is detailed in section xxx of the document yyy";        
     }
     leaf roadm-ptyp {
-      type l0-types:power-in-dbm-or-null;
+      type l0-types:power-dbm-or-null;
       description 
         "If the drop path has additional loss that is added,
         for example, to hit target power levels into a 
@@ -3854,7 +3905,7 @@ module ietf-optical-impairment-topology {
         the minimum value between these two should be used";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-digits-or-null;
+      type l0-types:decimal-5-or-null;
       units "dB"; 
       description 
         "Drop path Noise Figure. 
@@ -3878,44 +3929,10 @@ module ietf-optical-impairment-topology {
     container concentratedloss{
       description "concentrated loss";
       leaf loss {
-        type l0-types:loss-in-db-or-null;
+        type l0-types:power-loss-or-null;
         mandatory true;
         description
           "Loss introduced by the concentrated loss element.";
-      }
-    }
-  }
-
-  grouping power-param {
-    description
-      "optical power or PSD after the ROADM or after the out-voa";
-    choice power-param {
-      description
-        "select the mode: channel power or power spectral density";
-      case channel-power {
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='carrier-power'";
-        leaf nominal-carrier-power{
-          type l0-types:power-in-dbm-or-null;
-          description
-            " Reference channel power. Same grouping is used for the
-            OMS power after the ROADM (input of the OMS) or after the
-            out-voa of each amplifier. ";
-        }
-      }
-      case power-spectral-density{
-        when "/nw:networks/nw:network/nt:link/tet:te
-            /tet:te-link-attributes/OMS-attributes
-            /equalization-mode='power-spectral-density'";
-        leaf nominal-power-spectral-density{
-          type l0-types:decimal-16-digits-or-null;
-          units W/Hz ;
-          description
-            " Reference power spectral density after 
-              the ROADM or after the out-voa.
-              Typical value : 3.9 E-14, resolution 0.1nW/MHz";
-        }
       }
     }
   }
@@ -3939,8 +3956,26 @@ module ietf-optical-impairment-topology {
         Reporting this value is needed to support optical 
         impairments applications.";
     }
-    uses power-param;
-  }
+    container power-param {
+      description
+        "Optical channel power or power spectral densitity (PSD)
+        after the ROADM.";
+      leaf nominal-carrier-power {
+        when "derived-from-or-self(../../equalization-mode, "
+           + "'l0-types:carrier-power')";
+        type l0-types:power-dbm-or-null;
+        description
+          "Reference channel power.";
+      }
+      leaf nominal-psd {
+        when "derived-from-or-self(../../equalization-mode, "
+           + "'l0-types:power-spectral-density')";
+        type l0-types:psd-or-null;
+        description
+          " Reference power spectral density (PSD).";
+      }
+    }   // container power-param
+  } // grouping oms-general-optical-params
 
   grouping otsi-group {
     description "OTSiG definition , representing client
@@ -4048,7 +4083,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:gain-in-db-or-null;
+            type l0-types:power-ratio-or-null;
             description
               " Deviation from the reference carrier power defined 
               for the OMS.";
@@ -4205,7 +4240,102 @@ module ietf-optical-impairment-topology {
         uses otsi-group;
       } // list of OTSiG
     }
-  }
+
+    container templates {
+      config false;
+      description
+        "Templates for set of parameters which can be common to
+        multiple elements.";
+      container roadm-path-impairments {
+        description
+          "The top level container for the list of the set of
+          optical impairments related to ROADM paths.";
+        list roadm-path-impairment {
+          key "roadm-path-impairments-id";
+          description
+            "The list of the set of optical impairments related to
+            ROADM paths.";
+
+          leaf roadm-path-impairments-id {
+            type string; 
+            description
+              "The identifier of the set of optical impairments
+              related to a ROADM path.";
+          }
+          choice impairment-type {
+            description "type path impairment";
+            case roadm-express-path {
+              list roadm-express-path {
+                description
+                  "The list of optical impairments on a ROADM express
+                  path for different frequency ranges.
+                  
+                  Two elements in the list must not have the same
+                  range or overlapping ranges.";
+                container frequency-range {
+                  description
+                    "The frequency range for which these optical
+                    impairments apply.";
+                  uses l0-types:frequency-range;
+                }
+                uses roadm-express-path;
+              } 
+            }
+            case roadm-add-path {
+              list roadm-add-path {
+                description
+                  "The list of optical impairments on a ROADM add
+                  path for different frequency ranges.
+                  
+                  Two elements in the list must not have the same
+                  range or overlapping ranges.";
+                container frequency-range {
+                  description
+                    "The frequency range for which these optical
+                    impairments apply.";
+                  uses l0-types:frequency-range;
+                }
+                uses roadm-add-path; 
+              }
+            }          
+            case roadm-drop-path {
+              list roadm-drop-path {
+                description
+                  "The list of optical impairments on a ROADM add
+                  path for different frequency ranges.
+                  
+                  Two elements in the list must not have the same
+                  range or overlapping ranges.";
+                container frequency-range {
+                  description
+                    "The frequency range for which these optical
+                    impairments apply.";
+                  uses l0-types:frequency-range;
+                }
+                uses roadm-drop-path; 
+              }
+            }
+          }
+        } // list roadm-path-impairments 
+      } // container roadm-path-impairments 
+      container explicit-transceiver-modes {
+        description
+          "The top level container for the list of the
+          transceivers' explicit modes.";
+        list explicit-transceiver-mode {
+          key explicit-transceiver-mode-id;
+          description
+            "The list of the transceivers' explicit modes.";
+          leaf explicit-transceiver-mode-id {
+            type string;
+            description
+              "The identifier of the transceivers' explicit mode.";
+          }
+          uses l0-types:explicit-mode;
+        }   // list explicit-transceiver-mode
+      }   // container explicit-transceiver-modes
+    }   // container templates
+  } // augment network
 
   augment "/nw:networks/nw:network/nw:node" {
     when "../nw:network-types/tet:te-topology" +
@@ -4283,7 +4413,25 @@ module ietf-optical-impairment-topology {
             type uint32;
             description "transceiver identifier";
           }
-          uses l0-types:transceiver-capabilities;
+          uses l0-types:transceiver-capabilities {
+            augment "supported-modes/supported-mode/mode/"
+                  + "explicit-mode/explicit-mode" {
+              description
+                "Augment the explicit-mode container with the
+                proper leafref.";
+              leaf explicit-transceiver-mode-ref {
+                type leafref {
+                  path "../../../../../../../../oit:templates"
+                      + "/oit:explicit-transceiver-modes"
+                      + "/oit:explicit-transceiver-mode"
+                      + "/oit:explicit-transceiver-mode-id";
+                }
+                description
+                  "The refernce to the explicit transceiver
+                  mode template.";
+              }
+            }
+          }
           leaf configured-mode {
             type union {
               type empty;
@@ -4301,7 +4449,7 @@ module ietf-optical-impairment-topology {
               When not present, the configured-mode is not reported 
               by the server.";
           }
-          uses l0-types:common-transceiver-configured-param;
+          uses l0-types:common-transceiver-param;
           container outgoing-otsi {
             when "../../../../../otsis" {
               description
@@ -4412,12 +4560,11 @@ module ietf-optical-impairment-topology {
     when "../../../nw:network-types/tet:te-topology/"
        + "oit:optical-impairment-topology" {
       description
-        "This augment is only valid for Impairment with
-         non-sliceable transponder model";
+        "This augment is only valid for Optical Impairment 
+        topology.";
     }
     description
-      "Tunnel termination point augmentation for non-sliceable
-       transponder model.";
+      "Tunnel termination point augmentation for impairment data.";
 
     list ttp-transceiver {
       when "../../../transponders" {
@@ -4449,20 +4596,6 @@ module ietf-optical-impairment-topology {
       }
     } // list of transceivers
   } // end of augment
-
-  augment "/nw:networks/nw:network/nw:node/tet:te"
-        + "/tet:tunnel-termination-point" {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
-      description
-        "This augment is only valid for optical impairment
-       with sliceable transponder model";
-    }
-    description
-      "Tunnel termination point augmentation for sliceable
-      transponder model.";
-    uses sliceable-transponder-attributes;
-  }
 
   // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
@@ -4532,71 +4665,6 @@ module ietf-optical-impairment-topology {
       "node attributes augmentantion for optical-impairment ROADM
        node";
 
-    list roadm-path-impairments {
-      key "roadm-path-impairments-id";
-      config false;
-      description
-        "The set of optical impairments related to a ROADM path.";
-
-      leaf roadm-path-impairments-id {
-        type uint32; 
-        description "index of the ROADM path-impairment list";
-      }
-      choice impairment-type {
-        description "type path impairment";
-        case roadm-express-path {
-          list roadm-express-path {
-            description
-              "The list of optical impairments on a ROADM express
-              path for different frequency ranges.
-              
-              Two elements in the list must not have the same range
-              or overlapping ranges.";
-            container frequency-range {
-              description
-                "The frequency range for which these optical
-                impairments apply.";
-              uses l0-types:frequency-range;
-            }
-            uses roadm-express-path;
-          } 
-        }
-        case roadm-add-path {
-          list roadm-add-path {
-            description
-              "The list of optical impairments on a ROADM add
-              path for different frequency ranges.
-              
-              Two elements in the list must not have the same range
-              or overlapping ranges.";
-            container frequency-range {
-              description
-                "The frequency range for which these optical
-                impairments apply.";
-              uses l0-types:frequency-range;
-            }
-            uses roadm-add-path; 
-          }
-        }          
-        case roadm-drop-path {
-          list roadm-drop-path {
-            description
-              "The list of optical impairments on a ROADM add
-              path for different frequency ranges.
-              
-              Two elements in the list must not have the same range
-              or overlapping ranges.";
-            container frequency-range {
-              description
-                "The frequency range for which these optical
-                impairments apply.";
-              uses l0-types:frequency-range;
-            }
-            uses roadm-drop-path; 
-          }
-        }
-      }
-    } // list path impairments 
   } // augmentation for optical-impairment ROADM 
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
@@ -4613,8 +4681,9 @@ module ietf-optical-impairment-topology {
 
     leaf roadm-path-impairments {
       type leafref {
-        path "../../../tet:te-node-attributes/"
-           + "roadm-path-impairments/roadm-path-impairments-id";
+        path "../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
       }
       config false;
       description
@@ -4636,8 +4705,9 @@ module ietf-optical-impairment-topology {
       source.";
     leaf roadm-path-impairments {
       type leafref {
-        path "../../../../tet:te-node-attributes/"
-           + "roadm-path-impairments/roadm-path-impairments-id";
+        path "../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
       }
       config false;
       description
@@ -4657,8 +4727,9 @@ module ietf-optical-impairment-topology {
       "Augment default TE node connectivity matrix.";
     leaf roadm-path-impairments {
       type leafref {
-        path "../../roadm-path-impairments/"
-        + "roadm-path-impairments-id";
+        path "../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
       }
       config false; /*the identifier in the list */
        /*"roadm-path-impairments" of ROADM optical impairment*/
@@ -4681,8 +4752,9 @@ module ietf-optical-impairment-topology {
       "Augment TE node connectivity matrix entry.";
     leaf roadm-path-impairments {
       type leafref {
-        path "../../../roadm-path-impairments/"
-        + "roadm-path-impairments-id";
+        path "../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
       }
       config false;
       description "pointer to the list set of ROADM optical
@@ -4734,8 +4806,9 @@ module ietf-optical-impairment-topology {
       }
       leaf roadm-path-impairments {
         type leafref {
-          path "../../../../../../../tet:te/tet:te-node-attributes/"
-             + "roadm-path-impairments/roadm-path-impairments-id";
+          path "../../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
         }
         description
           "Pointer to ROADM optical impairments of the ROADM path 
@@ -4789,8 +4862,9 @@ module ietf-optical-impairment-topology {
       }
       leaf roadm-path-impairments {
         type leafref {
-          path "../../../../../../../tet:te/tet:te-node-attributes/"
-             + "roadm-path-impairments/roadm-path-impairments-id";
+          path "../../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id";
         }
         description
           "Pointer to ROADM optical impairments of the ROADM path 
@@ -4812,8 +4886,9 @@ module ietf-optical-impairment-topology {
       "Augment default TTP LLC.";
     leaf add-path-impairments {
       type leafref {
-        path "../../../tet:te-node-attributes/"
-        + "roadm-path-impairments/roadm-path-impairments-id" ;
+        path "../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
       }
       config false;
       description "pointer to the list set of ROADM optical
@@ -4821,8 +4896,9 @@ module ietf-optical-impairment-topology {
     }
     leaf drop-path-impairments {
       type leafref {
-        path "../../../tet:te-node-attributes/"
-        + "roadm-path-impairments/roadm-path-impairments-id" ;
+        path "../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
       }
       config false;
       description "pointer to the list set of ROADM 
@@ -4844,8 +4920,9 @@ module ietf-optical-impairment-topology {
       "Augment TTP LLC entry.";
     leaf add-path-impairments {
       type leafref {
-        path "../../../../tet:te-node-attributes/"
-        + "roadm-path-impairments/roadm-path-impairments-id" ;
+        path "../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
       }
       config false;
       description "pointer to the list set of ROADM optical
@@ -4853,8 +4930,9 @@ module ietf-optical-impairment-topology {
     }
     leaf drop-path-impairments {
       type leafref {
-        path "../../../../tet:te-node-attributes/"
-        + "roadm-path-impairments/roadm-path-impairments-id" ;
+        path "../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
       }
       config false;
       description "pointer to the list set of ROADM optical 
@@ -4890,16 +4968,18 @@ module ietf-optical-impairment-topology {
       }
       leaf add-path-impairments {
         type leafref {
-          path "../../../../../tet:te-node-attributes/"
-          + "roadm-path-impairments/roadm-path-impairments-id" ;
+          path "../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
         }
         description "pointer to the list set of ROADM optical
         impairments";
       }
       leaf drop-path-impairments {
         type leafref {
-          path "../../../../../tet:te-node-attributes/"
-          + "roadm-path-impairments/roadm-path-impairments-id" ;
+          path "../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
         }
         description "pointer to the list set of ROADM 
         optical impairments";
@@ -4932,24 +5012,25 @@ module ietf-optical-impairment-topology {
       }
       leaf add-path-impairments {
         type leafref {
-          path "../../../../../tet:te-node-attributes/"
-          + "roadm-path-impairments/roadm-path-impairments-id" ;
+          path "../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
         }
         description "pointer to the list set of ROADM optical
         impairments";
       }
       leaf drop-path-impairments {
         type leafref {
-          path "../../../../../tet:te-node-attributes/"
-          + "roadm-path-impairments/roadm-path-impairments-id" ;
+          path "../../../../../../../oit:templates"
+           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
+           + "/oit:roadm-path-impairments-id" ;
         }
         description "pointer to the list set of ROADM 
         optical impairments";
       }
     }
   } // augmentation local-link-connectivity
-}
-]]>
+}]]>
   </sourcecode>
   
   </section>
