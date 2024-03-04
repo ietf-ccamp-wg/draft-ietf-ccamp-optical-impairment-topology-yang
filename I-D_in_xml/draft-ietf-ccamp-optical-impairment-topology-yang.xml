@@ -1430,18 +1430,24 @@
   <t>
    The loss of a fiber span can be described in two ways: it should be
    described by specifying the loss coefficient (loss-coef) of the
-   fiber type and the length of the fiber as well as the total-loss
-   attribute when the loss can be measured with an egress amplifier
-   power measurement facility (power measured at the output of the
-   egress amplifier = input of the fiber span) and an ingress amplifier
-   power measurement facility (power measured at the input of the
-   ingress amplifier in the next node = output of the fiber span).
+   fiber type in combination with the length of the fiber and it can be
+   described by the total-loss attribute.
+   The total-loss should be provided when it can be measured with a
+   power measurement facility at the output of the upstream node (input
+   of the fiber span) and a power measurement facility at the input of
+   the downstream node (output of the fiber span).
    This measured loss typically differs from the calculated loss based
    on loss-coef and length as it includes all loss contributions
    including possible accumulated loss due to imperfect fiber splices
    and connector losses. In case the total-loss cannot be measured (no
    power measurement facilities in place), this optional attribute
    shall be omitted.
+  </t>
+  
+  <t>
+   N.B.: In case of Raman amplifiers, the Raman gain shall not be
+   included in the measured loss to properly reflect loss of the fiber
+   span only in the total-loss attribute.
   </t>
 
   <t>
@@ -3091,7 +3097,8 @@ module: ietf-optical-impairment-topology
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
           +--ro transponder-ref*
-                  -> ../../../transponders/transponder/transponder-id
+                  -> ../../../transponders/transponder/transponder-i\
+d
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
@@ -3122,8 +3129,10 @@ module: ietf-optical-impairment-topology
                 +--:(amplifier)
                 |  +--ro geolocation
                 |  |  +--ro altitude?    int64
-                |  |  +--ro latitude?    geographic-coordinate-degree
-                |  |  +--ro longitude?   geographic-coordinate-degree
+                |  |  +--ro latitude?    geographic-coordinate-degre\
+e
+                |  |  +--ro longitude?   geographic-coordinate-degre\
+e
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
@@ -3135,8 +3144,10 @@ module: ietf-optical-impairment-topology
                 |           +--ro is-dynamic-gain-equalyzer?
                 |           |       boolean
                 |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-thz
-                |           |  +--ro upper-frequency    frequency-thz
+                |           |  +--ro lower-frequency    frequency-th\
+z
+                |           |  +--ro upper-frequency    frequency-th\
+z
                 |           +--ro stage-order?
                 |           |       uint8
                 |           +--ro power-param
@@ -3180,7 +3191,8 @@ r-null
                 |              +--:(dynamic-gain-equalyzer)
                 |                 +--ro dynamic-gain-equalyzer!
                 |                    +--ro media-channel-groups
-                |                       +--ro media-channel-group* []
+                |                       +--ro media-channel-group* [\
+]
                 |                          +--ro media-channels* []
                 |                             +--ro flexi-n?
                 |                             |       l0-types:flexi\
@@ -3213,7 +3225,8 @@ r-null
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
-       |       -> ../../../../transponders/transponder/transponder-id
+       |       -> ../../../../transponders/transponder/transponder-i\
+d
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
