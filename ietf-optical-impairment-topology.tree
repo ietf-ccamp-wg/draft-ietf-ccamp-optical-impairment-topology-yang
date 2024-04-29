@@ -16,7 +16,8 @@ module: ietf-optical-impairment-topology
        |     +--ro roadm-path-impairments-id    string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
-       |        |  +--ro roadm-express-path* []
+       |        |  +--ro roadm-express-path* [express-path-id]
+       |        |     +--ro express-path-id           uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -30,7 +31,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-maxloss?
        |        |             l0-types:power-loss-or-null
        |        +--:(roadm-add-path)
-       |        |  +--ro roadm-add-path* []
+       |        |  +--ro roadm-add-path* [add-path-id]
+       |        |     +--ro add-path-id               uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -50,7 +52,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-noise-figure?
        |        |             l0-types:decimal-5-or-null
        |        +--:(roadm-drop-path)
-       |           +--ro roadm-drop-path* []
+       |           +--ro roadm-drop-path* [drop-path-id]
+       |              +--ro drop-path-id              uint16
        |              +--ro frequency-range
        |              |  +--ro lower-frequency    frequency-thz
        |              |  +--ro upper-frequency    frequency-thz
@@ -217,15 +220,17 @@ module: ietf-optical-impairment-topology
        |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
        |  +--ro nominal-psd?             l0-types:psd-or-null
        +--ro media-channel-groups!
-       |  +--ro media-channel-group* []
-       |     +--ro media-channels* []
-       |        +--ro flexi-n?          l0-types:flexi-n
-       |        +--ro flexi-m?          l0-types:flexi-m
-       |        +--ro otsi-group-ref?   leafref
-       |        +--ro otsi-ref* []
-       |        |  +--ro otsi-carrier-ref?   leafref
+       |  +--ro media-channel-group* [otsi-group-ref]
+       |     +--ro otsi-group-ref    leafref
+       |     +--ro media-channels* [media-channel-id]
+       |        +--ro media-channel-id    int16
+       |        +--ro flexi-n?            l0-types:flexi-n
+       |        +--ro flexi-m?            l0-types:flexi-m
+       |        +--ro otsi-ref* [otsi-carrier-ref]
+       |        |  +--ro otsi-carrier-ref    leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-ratio-or-null
+       |        +--ro delta-power?
+       |                l0-types:power-ratio-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -243,7 +248,12 @@ module: ietf-optical-impairment-topology
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
-                |        +--ro amplifier-element* []
+                |        +--ro amplifier-element*
+                |                [amplifier-path-id stage-order]
+                |           +--ro amplifier-path-id
+                |           |       uint16
+                |           +--ro stage-order
+                |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
@@ -253,8 +263,6 @@ module: ietf-optical-impairment-topology
                 |           +--ro frequency-range
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
-                |           +--ro stage-order?
-                |           |       uint8
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -280,7 +288,8 @@ module: ietf-optical-impairment-topology
                 |              |     |       l0-types:power-dbm-or-null
                 |              |     +--ro raman-direction?
                 |              |     |       enumeration
-                |              |     +--ro raman-pump* []
+                |              |     +--ro raman-pump* [pump-id]
+                |              |        +--ro pump-id      uint16
                 |              |        +--ro frequency?
                 |              |        |       l0-types:frequency-thz
                 |              |        +--ro power?
@@ -288,9 +297,13 @@ module: ietf-optical-impairment-topology
                 |              +--:(dynamic-gain-equalyzer)
                 |                 +--ro dynamic-gain-equalyzer!
                 |                    +--ro media-channel-groups
-                |                       +--ro media-channel-group* []
-                |                          +--ro media-channels* []
-                |                             +--ro flexi-n?
+                |                       +--ro media-channel-group*
+                |                               [otsi-group-ref]
+                |                          +--ro otsi-group-ref
+                |                          |       leafref
+                |                          +--ro media-channels*
+                |                                  [flexi-n]
+                |                             +--ro flexi-n
                 |                             |       l0-types:flexi-n
                 |                             +--ro flexi-m?
                 |                             |       l0-types:flexi-m
