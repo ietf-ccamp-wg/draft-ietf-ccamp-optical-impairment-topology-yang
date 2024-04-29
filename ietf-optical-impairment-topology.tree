@@ -303,7 +303,7 @@ module: ietf-optical-impairment-topology
                 |     |       l0-types:decimal-2-or-null
                 |     +--ro loss-coef
                 |     |       l0-types:decimal-2-or-null
-                |     +--ro total-loss
+                |     +--ro total-loss?
                 |     |       l0-types:power-loss-or-null
                 |     +--ro pmd?
                 |     |       l0-types:decimal-2-or-null

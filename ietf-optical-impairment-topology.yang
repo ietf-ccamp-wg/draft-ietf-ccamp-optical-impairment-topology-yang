@@ -85,7 +85,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-02-22 {
+  revision 2024-04-29 {
     description
       "Initial Version";
     reference
@@ -347,10 +347,13 @@ module ietf-optical-impairment-topology {
       }
       leaf total-loss {
         type l0-types:power-loss-or-null;
-        mandatory true ;
         description
-          "includes all losses: fiber loss and conn-in and 
-           conn-out losses";
+          "The measured total loss of the fiber, which includes
+          all possible losses: fiber loss and conn-in and conn-out
+          losses.
+           
+          This attribute is not present when the total loss cannot
+          be measured.";
       }
       leaf pmd {
         type l0-types:decimal-2-or-null;
