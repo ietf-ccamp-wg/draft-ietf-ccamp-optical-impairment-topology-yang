@@ -301,7 +301,7 @@ module: ietf-optical-impairment-topology
                 |                    +--ro media-channel* [flexi-n]
                 |                       +--ro flexi-n
                 |                       |       l0-types:flexi-n
-                |                       +--ro flexi-m?
+                |                       +--ro flexi-m
                 |                       |       l0-types:flexi-m
                 |                       +--ro delta-power?
                 |                               l0-types:power-ratio-or-null

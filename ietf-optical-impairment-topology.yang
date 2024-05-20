@@ -315,7 +315,11 @@ module ietf-optical-impairment-topology {
                 description
                   "List of media channels represented as (n,m)";
 
-                uses l0-types:flexi-grid-frequency-slot;
+                uses l0-types:flexi-grid-frequency-slot {
+                  refine flexi-m {
+                    mandatory true;
+                  }
+                }
 
                 leaf delta-power {
                   type l0-types:power-ratio-or-null;
