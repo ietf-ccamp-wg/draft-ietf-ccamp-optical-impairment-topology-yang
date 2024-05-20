@@ -306,25 +306,20 @@ module ietf-optical-impairment-topology {
               description
                 "The attributes applicable only to DEG amplifier
                 elements.";
-              container media-channels {
+              list media-channel {
+                key "flexi-n";
                 description
-                  "The top level container for the list of media
-                  channels.";
-                list media-channel {
-                  key "flexi-n";
+                  "List of media channels represented as (n,m)";
+
+                uses l0-types:flexi-grid-frequency-slot;
+
+                leaf delta-power {
+                  type l0-types:power-ratio-or-null;
                   description
-                    "List of media channels represented as (n,m)";
-
-                  uses l0-types:flexi-grid-frequency-slot;
-
-                  leaf delta-power {
-                    type l0-types:power-ratio-or-null;
-                    description
-                      " Deviation from the reference carrier power 
-                      defined for the OMS.";
-                  }
-                } // media channels list
-              }   // container media-channel-groups
+                    " Deviation from the reference carrier power 
+                    defined for the OMS.";
+                }
+              } // media channels list
             }   // container dynamic-gain-equalyzer
           } // choice amplifier-element-type
         }  // list amplifier-element
