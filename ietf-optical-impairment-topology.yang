@@ -306,40 +306,24 @@ module ietf-optical-impairment-topology {
               description
                 "The attributes applicable only to DEG amplifier
                 elements.";
-              container media-channel-groups {
+              container media-channels {
                 description
                   "The top level container for the list of media
-                  channel groups.";
-                list media-channel-group {
-                  key "otsi-group-ref";
+                  channels.";
+                list media-channel {
+                  key "flexi-n";
                   description
-                    "The list of media channel groups";
-                  leaf otsi-group-ref {
-                    type leafref {
-                      path "../../../../../../../../../../../../" +
-                           "../otsis/otsi-group/otsi-group-id";
-                    }
+                    "List of media channels represented as (n,m)";
+
+                  uses l0-types:flexi-grid-frequency-slot;
+
+                  leaf delta-power {
+                    type l0-types:power-ratio-or-null;
                     description
-                      "Reference to the OTSiG to which the OTSis
-                      carried by this media channel group belong
-                      to.";
+                      " Deviation from the reference carrier power 
+                      defined for the OMS.";
                   }
-                  list media-channels {
-                    key "flexi-n";
-                    description
-                      "List of media channels represented as (n,m)";
-
-                    // this grouping add both n.m values
-                    uses l0-types:flexi-grid-frequency-slot;
-
-                    leaf delta-power {
-                      type l0-types:power-ratio-or-null;
-                      description
-                        " Deviation from the reference carrier power 
-                        defined for the OMS.";
-                    }
-                  } // media channels list
-                } // media-channel-groups list
+                } // media channels list
               }   // container media-channel-groups
             }   // container dynamic-gain-equalyzer
           } // choice amplifier-element-type
@@ -781,9 +765,10 @@ module ietf-optical-impairment-topology {
             "Reference to the OTSiG to which the OTSis carried by 
             this media channel group belong to.";
         }
-        list media-channels {
+        list media-channel {
           // key "flexi-n";
           key "media-channel-id";
+          unique "flexi-n";
           description
             "list of media channels represented as (n,m)";
           leaf media-channel-id {

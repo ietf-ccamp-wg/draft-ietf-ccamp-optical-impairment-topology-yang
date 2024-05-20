@@ -226,7 +226,7 @@ module: ietf-optical-impairment-topology
        +--ro media-channel-groups!
        |  +--ro media-channel-group* [otsi-group-ref]
        |     +--ro otsi-group-ref    leafref
-       |     +--ro media-channels* [media-channel-id]
+       |     +--ro media-channel* [media-channel-id]
        |        +--ro media-channel-id    int16
        |        +--ro flexi-n?            l0-types:flexi-n
        |        +--ro flexi-m?            l0-types:flexi-m
@@ -300,19 +300,15 @@ module: ietf-optical-impairment-topology
                 |              |                l0-types:decimal-2-or-null
                 |              +--:(dynamic-gain-equalyzer)
                 |                 +--ro dynamic-gain-equalyzer!
-                |                    +--ro media-channel-groups
-                |                       +--ro media-channel-group*
-                |                               [otsi-group-ref]
-                |                          +--ro otsi-group-ref
-                |                          |       leafref
-                |                          +--ro media-channels*
-                |                                  [flexi-n]
-                |                             +--ro flexi-n
-                |                             |       l0-types:flexi-n
-                |                             +--ro flexi-m?
-                |                             |       l0-types:flexi-m
-                |                             +--ro delta-power?
-                |                                     l0-types:power-ratio-or-null
+                |                    +--ro media-channels
+                |                       +--ro media-channel*
+                |                               [flexi-n]
+                |                          +--ro flexi-n
+                |                          |       l0-types:flexi-n
+                |                          +--ro flexi-m?
+                |                          |       l0-types:flexi-m
+                |                          +--ro delta-power?
+                |                                  l0-types:power-ratio-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
