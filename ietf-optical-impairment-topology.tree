@@ -262,8 +262,6 @@ module: ietf-optical-impairment-topology
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro is-dynamic-gain-equalyzer?
-                |           |       boolean
                 |           +--ro frequency-range
                 |           |  +--ro lower-frequency    frequency-thz
                 |           |  +--ro upper-frequency    frequency-thz
