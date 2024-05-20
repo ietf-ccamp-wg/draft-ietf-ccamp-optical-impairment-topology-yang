@@ -16,8 +16,8 @@ module: ietf-optical-impairment-topology
        |     +--ro roadm-path-impairments-id    string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
-       |        |  +--ro roadm-express-path* [express-path-id]
-       |        |     +--ro express-path-id           uint16
+       |        |  +--ro roadm-express-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -31,8 +31,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-maxloss?
        |        |             l0-types:power-loss-or-null
        |        +--:(roadm-add-path)
-       |        |  +--ro roadm-add-path* [add-path-id]
-       |        |     +--ro add-path-id               uint16
+       |        |  +--ro roadm-add-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -52,8 +52,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-noise-figure?
        |        |             l0-types:decimal-5-or-null
        |        +--:(roadm-drop-path)
-       |           +--ro roadm-drop-path* [drop-path-id]
-       |              +--ro drop-path-id              uint16
+       |           +--ro roadm-drop-path* [frequency-range-id]
+       |              +--ro frequency-range-id        uint16
        |              +--ro frequency-range
        |              |  +--ro lower-frequency    frequency-thz
        |              |  +--ro upper-frequency    frequency-thz
@@ -87,23 +87,27 @@ module: ietf-optical-impairment-topology
              +--ro line-coding-bitrate?                identityref
              +--ro bitrate?                            uint16
              +--ro max-diff-group-delay?               decimal-2
-             +--ro max-chromatic-dispersion?           decimal64
-             +--ro cd-penalty* []
+             +--ro max-chromatic-dispersion?           decimal-2
+             +--ro cd-penalty* [cd-index]
+             |  +--ro cd-index         decimal-2
              |  +--ro cd-value         union
              |  +--ro penalty-value    union
-             +--ro max-polarization-mode-dispersion?   decimal64
-             +--ro pmd-penalty* []
+             +--ro max-polarization-mode-dispersion?   decimal-2
+             +--ro pmd-penalty* [pmd-index]
+             |  +--ro pmd-index        decimal-2
              |  +--ro pmd-value        union
              |  +--ro penalty-value    union
              +--ro max-polarization-dependant-loss
              |       power-loss-or-null
-             +--ro pdl-penalty* []
+             +--ro pdl-penalty* [pdl-index]
+             |  +--ro pdl-index        decimal-2
              |  +--ro pdl-value        power-loss-or-null
              |  +--ro penalty-value    union
              +--ro available-modulation-type?          identityref
              +--ro min-OSNR?                           snr
              +--ro rx-ref-channel-power?               power-dbm
-             +--ro rx-channel-power-penalty* []
+             +--ro rx-channel-power-penalty* [rx-channel-power-index]
+             |  +--ro rx-channel-power-index    decimal-2
              |  +--ro rx-channel-power-value    power-dbm-or-null
              |  +--ro penalty-value             union
              +--ro min-Q-factor?                       decimal-2
@@ -116,7 +120,7 @@ module: ietf-optical-impairment-topology
              +--ro in-band-osnr?                       snr
              +--ro out-of-band-osnr?                   snr
              +--ro tx-polarization-power-difference?   power-ratio
-             +--ro polarization-skew?                  decimal64
+             +--ro polarization-skew?                  decimal-2
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -249,8 +253,8 @@ module: ietf-optical-impairment-topology
                 |     +--ro type-variety    string
                 |     +--ro operational
                 |        +--ro amplifier-element*
-                |                [amplifier-path-id stage-order]
-                |           +--ro amplifier-path-id
+                |                [frequency-range-id stage-order]
+                |           +--ro frequency-range-id
                 |           |       uint16
                 |           +--ro stage-order
                 |           |       uint8

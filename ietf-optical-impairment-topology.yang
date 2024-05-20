@@ -85,7 +85,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-04-29 {
+  revision 2024-05-20 {
     description
       "Initial Version";
     reference
@@ -125,11 +125,14 @@ module ietf-optical-impairment-topology {
       container operational {
         description "amplifier operational parameters";
         list amplifier-element {
-          key "amplifier-path-id stage-order";
+          key "frequency-range-id stage-order";
           description
             "The list of parallel amplifier elements within an
-            amplifier used to amplify different frequency ranges.";
-          leaf amplifier-path-id {
+            amplifier used to amplify different frequency ranges.
+
+            Two elements in the list must not have the same range
+            or overlapping ranges.";
+          leaf frequency-range-id {
             type uint16;
             description
               "The identifier of an amplifier path.";
@@ -1010,14 +1013,14 @@ module ietf-optical-impairment-topology {
             description "type path impairment";
             case roadm-express-path {
               list roadm-express-path {
-                key express-path-id;
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM express
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf express-path-id {
+                leaf frequency-range-id {
                   type uint16;
                   description
                     "The identifier of a ROADM express path.";
@@ -1033,14 +1036,14 @@ module ietf-optical-impairment-topology {
             }
             case roadm-add-path {
               list roadm-add-path {
-                key add-path-id;
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf add-path-id {
+                leaf frequency-range-id {
                   type uint16;
                   description
                     "The identifier of a ROADM add path.";
@@ -1056,14 +1059,14 @@ module ietf-optical-impairment-topology {
             }          
             case roadm-drop-path {
               list roadm-drop-path {
-                key drop-path-id;
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf drop-path-id {
+                leaf frequency-range-id {
                   type uint16;
                   description
                     "The identifier of a ROADM drop path.";
