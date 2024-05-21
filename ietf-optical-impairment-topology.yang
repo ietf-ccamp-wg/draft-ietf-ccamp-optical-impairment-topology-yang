@@ -135,7 +135,7 @@ module ietf-optical-impairment-topology {
           leaf frequency-range-id {
             type uint16;
             description
-              "The identifier of an amplifier path.";
+              "The identifier of the frequency range.";
           }
           leaf stage-order {
             type uint8;
@@ -1001,7 +1001,7 @@ module ietf-optical-impairment-topology {
                 leaf frequency-range-id {
                   type uint16;
                   description
-                    "The identifier of a ROADM express path.";
+                    "The identifier of the frequency range.";
                 }
                 container frequency-range {
                   description
@@ -1024,7 +1024,7 @@ module ietf-optical-impairment-topology {
                 leaf frequency-range-id {
                   type uint16;
                   description
-                    "The identifier of a ROADM add path.";
+                    "The identifier of a frequency range.";
                 }
                 container frequency-range {
                   description
@@ -1047,7 +1047,7 @@ module ietf-optical-impairment-topology {
                 leaf frequency-range-id {
                   type uint16;
                   description
-                    "The identifier of a ROADM drop path.";
+                    "The identifier of a frequency range.";
                 }
                 container frequency-range {
                   description
