@@ -90,27 +90,23 @@ module: ietf-optical-impairment-topology
              +--ro bitrate?                            uint16
              +--ro max-diff-group-delay?               decimal-2
              +--ro max-chromatic-dispersion?           decimal-2
-             +--ro cd-penalty* [cd-index]
-             |  +--ro cd-index         decimal-2
-             |  +--ro cd-value         union
+             +--ro cd-penalty* [cd-value]
+             |  +--ro cd-value         decimal-2
              |  +--ro penalty-value    union
              +--ro max-polarization-mode-dispersion?   decimal-2
-             +--ro pmd-penalty* [pmd-index]
-             |  +--ro pmd-index        decimal-2
-             |  +--ro pmd-value        union
+             +--ro pmd-penalty* [pmd-value]
+             |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
              +--ro max-polarization-dependant-loss
              |       power-loss-or-null
-             +--ro pdl-penalty* [pdl-index]
-             |  +--ro pdl-index        decimal-2
-             |  +--ro pdl-value        power-loss-or-null
+             +--ro pdl-penalty* [pdl-value]
+             |  +--ro pdl-value        power-loss
              |  +--ro penalty-value    union
              +--ro available-modulation-type?          identityref
              +--ro min-OSNR?                           snr
              +--ro rx-ref-channel-power?               power-dbm
-             +--ro rx-channel-power-penalty* [rx-channel-power-index]
-             |  +--ro rx-channel-power-index    decimal-2
-             |  +--ro rx-channel-power-value    power-dbm-or-null
+             +--ro rx-channel-power-penalty* [rx-channel-power-value]
+             |  +--ro rx-channel-power-value    power-dbm
              |  +--ro penalty-value             union
              +--ro min-Q-factor?                       decimal-2
              +--ro available-baud-rate?                decimal64

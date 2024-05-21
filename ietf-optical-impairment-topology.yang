@@ -85,7 +85,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-05-20 {
+  revision 2024-05-21 {
     description
       "Initial Version";
     reference
@@ -161,16 +161,6 @@ module ietf-optical-impairment-topology {
               the amplifier is not sufficient to describe the
               amplifier element type.";
           }
-          /* Removed because redundant with the
-             choice amplifier-element-type
-
-          leaf is-dynamic-gain-equalyzer {
-            type boolean;
-            description
-              "Indicates whether the amplifier element is a Dynamic 
-              Gain Equalizer (DGE).";
-          }
-          */
           container frequency-range {
             description
               "The frequency range amplified by the amplifier
