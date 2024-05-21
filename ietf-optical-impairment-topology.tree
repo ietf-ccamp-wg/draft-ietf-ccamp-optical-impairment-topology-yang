@@ -292,8 +292,8 @@ module: ietf-optical-impairment-topology
                 |              |        |       l0-types:frequency-thz
                 |              |        +--ro power?
                 |              |                l0-types:decimal-2-or-null
-                |              +--:(dynamic-gain-equalyzer)
-                |                 +--ro dynamic-gain-equalyzer!
+                |              +--:(dynamic-gain-equalizer)
+                |                 +--ro dynamic-gain-equalizer!
                 |                    +--ro media-channel* [flexi-n]
                 |                       +--ro flexi-n
                 |                       |       l0-types:flexi-n

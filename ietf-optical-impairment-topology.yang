@@ -202,7 +202,7 @@ module ietf-optical-impairment-topology {
             mandatory true;
             description
               "Identifies whether the amplifier element is an
-              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              Optical Amplifier (OA) or a Dynamic Gain Equalizer
               (DGE).";
             container optical-amplifier {
               description
@@ -293,10 +293,10 @@ module ietf-optical-impairment-topology {
                 }
               }
             }   // container optical-amplifier
-            container dynamic-gain-equalyzer {
+            container dynamic-gain-equalizer {
               presence
                 "When present it indicates that the amplifier element
-                is a Dynamic Gain Equalyzer (DGE)";
+                is a Dynamic Gain Equalizer (DGE)";
               description
                 "The attributes applicable only to DEG amplifier
                 elements.";
@@ -318,7 +318,7 @@ module ietf-optical-impairment-topology {
                     defined for the OMS.";
                 }
               } // media channels list
-            }   // container dynamic-gain-equalyzer
+            }   // container dynamic-gain-equalizer
           } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational

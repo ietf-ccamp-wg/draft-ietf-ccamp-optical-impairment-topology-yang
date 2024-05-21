@@ -302,8 +302,8 @@ hz
                 |              |        +--ro power?
                 |              |                l0-types:decimal-2-o\
 r-null
-                |              +--:(dynamic-gain-equalyzer)
-                |                 +--ro dynamic-gain-equalyzer!
+                |              +--:(dynamic-gain-equalizer)
+                |                 +--ro dynamic-gain-equalizer!
                 |                    +--ro media-channel* [flexi-n]
                 |                       +--ro flexi-n
                 |                       |       l0-types:flexi-n
