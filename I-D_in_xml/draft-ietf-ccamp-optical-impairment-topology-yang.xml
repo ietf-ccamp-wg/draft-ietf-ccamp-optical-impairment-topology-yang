@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-15"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-16"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2024" month="March" day="04" />
+  <date year="2024" month="July" day="8" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -1428,26 +1428,41 @@
   </t>
   
   <t>
-   The loss of a fiber span can be described in two ways: it should be
-   described by specifying the loss coefficient (loss-coef) of the
-   fiber type in combination with the length of the fiber and it can be
-   described by the total-loss attribute.
+   The loss of a fiber span can be described in two ways:
+  </t>
+
+  <t>
+    <ol type="i">
+      <li>
+        As calculated loss using the provided loss coefficient
+        (loss-coef) and length of the fiber.
+      </li>
+      <li>
+        As measured loss provided by the total-loss attribute.
+      </li>
+    </ol>
+  </t>
+
+  <t>
    The total-loss should be provided when it can be measured with a
    power measurement facility at the output of the upstream node (input
    of the fiber span) and a power measurement facility at the input of
    the downstream node (output of the fiber span).
-   This measured loss typically differs from the calculated loss based
-   on loss-coef and length as it includes all loss contributions
-   including possible accumulated loss due to imperfect fiber splices
-   and connector losses. In case the total-loss cannot be measured (no
-   power measurement facilities in place), this optional attribute
-   shall be omitted.
+   This measured loss typically differs from the calculated loss
+   because it includes all loss contributions including possible
+   accumulated loss due to imperfect fiber splices and connector
+   losses.
+   It can also change over time due to changing fiber conditions, e.g.,
+   in case of a fiber cut.
+   In case the total-loss cannot be measured (no power measurement
+   facilities in place), the total-loss defined as optional leaf in
+   the YANG model shall be omitted.
   </t>
   
   <t>
    N.B.: In case of Raman amplifiers, the Raman gain shall not be
-   included in the measured loss to properly reflect loss of the fiber
-   span only in the total-loss attribute.
+   included in the measured loss to properly reflect only the loss of
+   the fiber span in the total-loss attribute.
   </t>
 
   <t>
@@ -5097,17 +5112,23 @@ module ietf-optical-impairment-topology {
   </t>
   
   <t>
-   The data nodes in this YANG module are not writable nor creatable
-   nor deletable (i.e., config true) the data nodes are readable only
-   (i.e., config false, which is the default). Although the data nodes
-   are not susceptible to write operations or attacks
-   (e.g., edit-config), network information may be exposed using read
-   access (e.g., get, get-config, or notification) operations. Thus,
-   controlling read access to specific data nodes containing sensitive
-   or vulnerable information is important. Below are the specific
-   subtrees, data nodes and subsequent sensitivity/vulnerability:
+   The data nodes defined in this YANG module are not writable/
+   creatable/deletable (i.e., "config true", which is the default) and
+   are therefore only readable  (i.e., config false). Although the data
+   nodes are not susceptible to write operations or attacks (for
+   instance, thought "edit-config"), some data nodes accessible for
+   reading might be considered sensitive or prone to vulnerabilities as
+   they expose network topology information, which may be confidential
+   information for some operators. Therefore, it is critical to manage
+   access to these readable nodes carefully (for instance, through
+   "get", "get-config", or "notification" commands) to safeguard them.
   </t>
   
+  <t>
+   These are the subtrees and data nodes and their
+   sensitivity/vulnerability:
+  </t>
+
   <t>
     <dl newline="true">
       <dt>/nw:networks/nw:network/nw:network-types/tet:te-topology</dt>
@@ -5236,6 +5257,8 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8795.xml"/>
 
+  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
+
   </references>
 
   <references title="Informative References">
@@ -5258,11 +5281,7 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
 
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9093.xml"/>
-
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
-
-  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
 
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml"/>
 
