@@ -18,7 +18,8 @@ module: ietf-optical-impairment-topology
        |     +--ro roadm-path-impairments-id    string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
-       |        |  +--ro roadm-express-path* []
+       |        |  +--ro roadm-express-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -32,7 +33,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-maxloss?
        |        |             l0-types:power-loss-or-null
        |        +--:(roadm-add-path)
-       |        |  +--ro roadm-add-path* []
+       |        |  +--ro roadm-add-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -52,7 +54,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-noise-figure?
        |        |             l0-types:decimal-5-or-null
        |        +--:(roadm-drop-path)
-       |           +--ro roadm-drop-path* []
+       |           +--ro roadm-drop-path* [frequency-range-id]
+       |              +--ro frequency-range-id        uint16
        |              +--ro frequency-range
        |              |  +--ro lower-frequency    frequency-thz
        |              |  +--ro upper-frequency    frequency-thz
@@ -86,24 +89,24 @@ module: ietf-optical-impairment-topology
              +--ro line-coding-bitrate?                identityref
              +--ro bitrate?                            uint16
              +--ro max-diff-group-delay?               decimal-2
-             +--ro max-chromatic-dispersion?           decimal64
-             +--ro cd-penalty* []
-             |  +--ro cd-value         union
+             +--ro max-chromatic-dispersion?           decimal-2
+             +--ro cd-penalty* [cd-value]
+             |  +--ro cd-value         decimal-2
              |  +--ro penalty-value    union
-             +--ro max-polarization-mode-dispersion?   decimal64
-             +--ro pmd-penalty* []
-             |  +--ro pmd-value        union
+             +--ro max-polarization-mode-dispersion?   decimal-2
+             +--ro pmd-penalty* [pmd-value]
+             |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
              +--ro max-polarization-dependant-loss
              |       power-loss-or-null
-             +--ro pdl-penalty* []
-             |  +--ro pdl-value        power-loss-or-null
+             +--ro pdl-penalty* [pdl-value]
+             |  +--ro pdl-value        power-loss
              |  +--ro penalty-value    union
              +--ro available-modulation-type?          identityref
              +--ro min-OSNR?                           snr
              +--ro rx-ref-channel-power?               power-dbm
-             +--ro rx-channel-power-penalty* []
-             |  +--ro rx-channel-power-value    power-dbm-or-null
+             +--ro rx-channel-power-penalty* [rx-channel-power-value]
+             |  +--ro rx-channel-power-value    power-dbm
              |  +--ro penalty-value             union
              +--ro min-Q-factor?                       decimal-2
              +--ro available-baud-rate?                decimal64
@@ -115,7 +118,7 @@ module: ietf-optical-impairment-topology
              +--ro in-band-osnr?                       snr
              +--ro out-of-band-osnr?                   snr
              +--ro tx-polarization-power-difference?   power-ratio
-             +--ro polarization-skew?                  decimal64
+             +--ro polarization-skew?                  decimal-2
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -209,8 +212,7 @@ module: ietf-optical-impairment-topology
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
           +--ro transponder-ref*
-                  -> ../../../transponders/transponder/transponder-i\
-d
+                  -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
@@ -220,15 +222,17 @@ d
        |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
        |  +--ro nominal-psd?             l0-types:psd-or-null
        +--ro media-channel-groups!
-       |  +--ro media-channel-group* []
-       |     +--ro media-channels* []
-       |        +--ro flexi-n?          l0-types:flexi-n
-       |        +--ro flexi-m?          l0-types:flexi-m
-       |        +--ro otsi-group-ref?   leafref
-       |        +--ro otsi-ref* []
-       |        |  +--ro otsi-carrier-ref?   leafref
+       |  +--ro media-channel-group* [otsi-group-ref]
+       |     +--ro otsi-group-ref    leafref
+       |     +--ro media-channel* [media-channel-id]
+       |        +--ro media-channel-id    int16
+       |        +--ro flexi-n?            l0-types:flexi-n
+       |        +--ro flexi-m?            l0-types:flexi-m
+       |        +--ro otsi-ref* [otsi-carrier-ref]
+       |        |  +--ro otsi-carrier-ref    leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-ratio-or-null
+       |        +--ro delta-power?
+       |                l0-types:power-ratio-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -241,27 +245,24 @@ d
                 +--:(amplifier)
                 |  +--ro geolocation
                 |  |  +--ro altitude?    int64
-                |  |  +--ro latitude?    geographic-coordinate-degre\
-e
-                |  |  +--ro longitude?   geographic-coordinate-degre\
-e
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
-                |        +--ro amplifier-element* []
+                |        +--ro amplifier-element*
+                |                [frequency-range-id stage-order]
+                |           +--ro frequency-range-id
+                |           |       uint16
+                |           +--ro stage-order
+                |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro is-dynamic-gain-equalyzer?
-                |           |       boolean
                 |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-th\
-z
-                |           |  +--ro upper-frequency    frequency-th\
-z
-                |           +--ro stage-order?
-                |           |       uint8
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -293,28 +294,24 @@ ull
 ull
                 |              |     +--ro raman-direction?
                 |              |     |       enumeration
-                |              |     +--ro raman-pump* []
+                |              |     +--ro raman-pump* [pump-id]
+                |              |        +--ro pump-id      uint16
                 |              |        +--ro frequency?
                 |              |        |       l0-types:frequency-t\
 hz
                 |              |        +--ro power?
                 |              |                l0-types:decimal-2-o\
 r-null
-                |              +--:(dynamic-gain-equalyzer)
-                |                 +--ro dynamic-gain-equalyzer!
-                |                    +--ro media-channel-groups
-                |                       +--ro media-channel-group* [\
-]
-                |                          +--ro media-channels* []
-                |                             +--ro flexi-n?
-                |                             |       l0-types:flexi\
--n
-                |                             +--ro flexi-m?
-                |                             |       l0-types:flexi\
--m
-                |                             +--ro delta-power?
-                |                                     l0-types:power\
--ratio-or-null
+                |              +--:(dynamic-gain-equalizer)
+                |                 +--ro dynamic-gain-equalizer!
+                |                    +--ro media-channel* [flexi-n]
+                |                       +--ro flexi-n
+                |                       |       l0-types:flexi-n
+                |                       +--ro flexi-m
+                |                       |       l0-types:flexi-m
+                |                       +--ro delta-power?
+                |                               l0-types:power-ratio\
+-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -322,7 +319,7 @@ r-null
                 |     |       l0-types:decimal-2-or-null
                 |     +--ro loss-coef
                 |     |       l0-types:decimal-2-or-null
-                |     +--ro total-loss
+                |     +--ro total-loss?
                 |     |       l0-types:power-loss-or-null
                 |     +--ro pmd?
                 |     |       l0-types:decimal-2-or-null
@@ -337,8 +334,7 @@ r-null
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
-       |       -> ../../../../transponders/transponder/transponder-i\
-d
+       |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref

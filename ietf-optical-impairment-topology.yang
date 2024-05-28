@@ -85,7 +85,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-02-22 {
+  revision 2024-05-21 {
     description
       "Initial Version";
     reference
@@ -125,9 +125,24 @@ module ietf-optical-impairment-topology {
       container operational {
         description "amplifier operational parameters";
         list amplifier-element {
+          key "frequency-range-id stage-order";
           description
             "The list of parallel amplifier elements within an
-            amplifier used to amplify different frequency ranges.";
+            amplifier used to amplify different frequency ranges.
+
+            Two elements in the list must not have the same range
+            or overlapping ranges.";
+          leaf frequency-range-id {
+            type uint16;
+            description
+              "The identifier of the frequency range.";
+          }
+          leaf stage-order {
+            type uint8;
+            description
+              "It allows defining for each spectrum badwidth the
+              cascade order of each amplifier-element.";
+          }
           leaf name {
             type string;
             description
@@ -146,24 +161,11 @@ module ietf-optical-impairment-topology {
               the amplifier is not sufficient to describe the
               amplifier element type.";
           }
-          leaf is-dynamic-gain-equalyzer {
-            type boolean;
-            description
-              "Indicates whether the amplifier element is a Dynamic 
-              Gain Equalizer (DGE).";
-          }
           container frequency-range {
             description
               "The frequency range amplified by the amplifier
               element.";
             uses l0-types:frequency-range;
-          }
-          leaf stage-order {
-            type uint8;
-            default 1;
-            description
-              "It allows defining for each spectrum badwidth the
-              cascade order of each amplifier-element.";
           }
           container power-param {
             description
@@ -200,7 +202,7 @@ module ietf-optical-impairment-topology {
             mandatory true;
             description
               "Identifies whether the amplifier element is an
-              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              Optical Amplifier (OA) or a Dynamic Gain Equalizer
               (DGE).";
             container optical-amplifier {
               description
@@ -268,8 +270,15 @@ module ietf-optical-impairment-topology {
                   "The direction of injection of the raman pump.";
               }
               list raman-pump {
+                key pump-id;
                 description
                   "The list of pumps for the Raman amplifier.";
+                leaf pump-id {
+                  type uint16;
+                  description
+                    "The identifier of a pump within an amplifier
+                    element.";
+                }
                 leaf frequency {
                   type l0-types:frequency-thz;
                   description
@@ -284,38 +293,32 @@ module ietf-optical-impairment-topology {
                 }
               }
             }   // container optical-amplifier
-            container dynamic-gain-equalyzer {
+            container dynamic-gain-equalizer {
               presence
                 "When present it indicates that the amplifier element
-                is a Dynamic Gain Equalyzer (DGE)";
+                is a Dynamic Gain Equalizer (DGE)";
               description
                 "The attributes applicable only to DEG amplifier
                 elements.";
-              container media-channel-groups {
+              list media-channel {
+                key "flexi-n";
                 description
-                  "The top level container for the list of media
-                  channel groups.";
-                list media-channel-group {
+                  "List of media channels represented as (n,m)";
+
+                uses l0-types:flexi-grid-frequency-slot {
+                  refine flexi-m {
+                    mandatory true;
+                  }
+                }
+
+                leaf delta-power {
+                  type l0-types:power-ratio-or-null;
                   description
-                    "The list of media channel groups";
-                  list media-channels {
-                    // key "flexi-n";
-                    description
-                      "List of media channels represented as (n,m)";
-
-                    // this grouping add both n.m values
-                    uses l0-types:flexi-grid-frequency-slot;
-
-                    leaf delta-power {
-                      type l0-types:power-ratio-or-null;
-                      description
-                        " Deviation from the reference carrier power 
-                        defined for the OMS.";
-                    }
-                  } // media channels list
-                } // media-channel-groups list
-              }   // container media-channel-groups
-            }   // container dynamic-gain-equalyzer
+                    " Deviation from the reference carrier power 
+                    defined for the OMS.";
+                }
+              } // media channels list
+            }   // container dynamic-gain-equalizer
           } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational
@@ -347,10 +350,13 @@ module ietf-optical-impairment-topology {
       }
       leaf total-loss {
         type l0-types:power-loss-or-null;
-        mandatory true ;
         description
-          "includes all losses: fiber loss and conn-in and 
-           conn-out losses";
+          "The measured total loss of the fiber, which includes
+          all possible losses: fiber loss and conn-in and conn-out
+          losses.
+           
+          This attribute is not present when the total loss cannot
+          be measured.";
       }
       leaf pmd {
         type l0-types:decimal-2-or-null;
@@ -740,26 +746,38 @@ module ietf-optical-impairment-topology {
         "The top level container for the list of media channel 
         groups.";
       list media-channel-group {
+        key "otsi-group-ref";
         description
           "The list of media channel groups";
-        list media-channels {
+        leaf otsi-group-ref {
+          type leafref {
+            path "../../../../../../../otsis/" +
+                "otsi-group/otsi-group-id";
+          }
+          description
+            "Reference to the OTSiG to which the OTSis carried by 
+            this media channel group belong to.";
+        }
+        list media-channel {
           // key "flexi-n";
+          key "media-channel-id";
+          unique "flexi-n";
           description
             "list of media channels represented as (n,m)";
-
+          leaf media-channel-id {
+            type int16;
+            description
+              "The identifier of media channel within media channel
+              group.
+              
+              It may be equal to the flexi-n attribute, when the
+              flexi-n attribute is present.";
+          }
           // this grouping add both n.m values
           uses l0-types:flexi-grid-frequency-slot;
 
-          leaf otsi-group-ref {
-            type leafref {
-              path "../../../../../../../../otsis/" +
-                  "otsi-group/otsi-group-id";
-            }
-            description
-              "Reference to the OTSiG to which the OTSis carried by 
-              this media channel belong to.";
-          }
           list otsi-ref {
+            key "otsi-carrier-ref";
             description
               "The list of references to the OTSis and their 
               end-to-end Media Channel (e2e-MC) paths within the 
@@ -768,7 +786,7 @@ module ietf-optical-impairment-topology {
               type leafref {
                 path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
-                      "/../../otsi-group-ref]/" +
+                      "/../../../otsi-group-ref]/" +
                       "otsi/otsi-carrier-id" ;
               }
               description
@@ -779,7 +797,7 @@ module ietf-optical-impairment-topology {
               type leafref {
                 path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
-                      "/../../otsi-group-ref]/" +
+                      "/../../../otsi-group-ref]/" +
                       "otsi[otsi-carrier-id=current()" +
                       "/../otsi-carrier-ref]/e2e-mc-path-id";
               }
@@ -973,12 +991,18 @@ module ietf-optical-impairment-topology {
             description "type path impairment";
             case roadm-express-path {
               list roadm-express-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM express
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of the frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
@@ -990,12 +1014,18 @@ module ietf-optical-impairment-topology {
             }
             case roadm-add-path {
               list roadm-add-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of a frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
@@ -1007,12 +1037,18 @@ module ietf-optical-impairment-topology {
             }          
             case roadm-drop-path {
               list roadm-drop-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of a frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
