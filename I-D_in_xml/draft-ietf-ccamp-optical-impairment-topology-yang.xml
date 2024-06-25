@@ -1003,11 +1003,12 @@
   <t>
    A standard mode is related to an optical specification developed
    by an SDO organization. Currently, the "Standard Modes" can only
-   be referred to ITU-T G.698.2 <xref target="G.698.2"/> since G.698.2
-   is the only specification defining "Standard Modes" today.
+   be referred to ITU-T Recommendation G.698.2 <xref target="G.698.2"/>
+   since ITU-T Recommendation G.698.2 is the only standard defining
+   "Standard Modes" today.
    Nothing is precluding, however, to consider other specifications
    provided by any other SDO in the Standard Mode context as soon as
-   such sepcifications will be available. An application code as
+   such specifications will be available. An application code as
    defined in ITU-T G.698.2 <xref target="G.698.2"/> is representing
    a standard ITU-T G.698.2 optical interface specification towards
    the realization of transversely compatible DWDM systems.
@@ -1016,6 +1017,28 @@
    application code will interoperate. As the characteristics are
    encoded in the application code, the YANG model in this document
    only defines a string, which represents that application code.
+  </t>
+  
+  <t>
+   For the standard modes, some additional attributes are defined.
+   The most important one is the line-coding-bitrate attribute, which
+   was added because <xref target="G.698.2"/> lists 100gpbs application
+   codes supporting two data formats, an OTU4 related data format and a
+   Flex-O related data format. The supported data formats for an
+   application code can be described by listing the supported data
+   formats via the line-coding-bitrate attribute as transceiver
+   capability.
+  </t>
+  
+  <t>
+   Moreover, the transceiver properties like optical carrier frequency
+   range, optical carrier tunability, and transmitter/receiver optical
+   power ranges can be described as optional attributes in case they
+   differ from the specification for the standard mode, i.e., as
+   defined in <xref target="G.698.2"/>. A transceiver may support
+   extended optical frequency ranges or optical power ranges or a finer
+   optical carrier tunability. These capabilities can be described
+   explicitly if needed.
   </t>
   
   </section>
@@ -5411,22 +5434,111 @@ reference: RFC XXXX (TDB)
   <section anchor="JSON Examples" numbered="true">
   <name>JSON Code Examples for Optical Protection Uses Cases</name>
   
-  <t>
-   [Editor's note: JSON examples for optical protection use cases TBA!
-  </t>
-  
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (i)"/>:</li>
+    <li>
+      JSON example for use case in
+      <xref target="Protection UC (i)"/> with full and with restricted
+      connectivity:
+    </li>
   </ol>
   
   <t>
-   [Editor's note: The JSON example below needs to be updated and
-   aligned with <xref target="Figure-11"/> and
-   <xref target="Figure-12"/>.]
+   The JSON example below addresses the optical protection use case
+   for TTPs associated with local optical transponders (integrated
+   WDM-TE-node):
   </t>
   
-  <sourcecode type="json" markers="false">
+  <t>
+   <ul spacing="compact">
+     <li>
+       where full connectivity exists between the ROADM add-drop ports
+       and the ROADM ports for the different ROADM degrees illustrated
+       in <xref target="JSON_Example_1a"/> below.
+     </li>
+     <li>
+       where restricted connectivity exists between the ROADM add-drop
+       ports and the ROADM ports for the different ROADM degrees
+       illustrated in <xref target="JSON_Example_1b"/> below.
+     </li>   
+   </ul>
+  </t>
+  
+  <t>
+   The connectivity is reflected in the local-link-connectivities
+   between the TTP associated with the transceiver of the local OT
+   and the LTPs that can be reached including the optical impairments
+   for the different paths.
+  </t>
+
+  <figure align="center" title="Protected TTP with Full Connectivity
+    between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_1a">
+    <artwork><![CDATA[
+
+   +--------------------------------------------------------------+
+   |                                       ROADM                  |
+   |                          +--------------------------------+  |
+   |  Local OT     Splitter   |                        ___     |  |
+   |  +-------+   +-------+  AD1      ___             |   \  Line |
+   |  |    TTP|   |    ---o-->o-     /   |       /----o    | LTP 1|
+   |  |  +----|   |   /   |   | \   |    o------/     | 1  o------o->
+ --o->|  | Tx o-->o--o  5 |   |  \  |    |           -o    |   |  |
+   |  |  +----|   |   \   |  AD2  --o  4 o-\        / |___/    |  |
+ <-o--|  | Rx o   |    ---o-->o-    |    |  \      /       DEG1|  |
+   |  |  +----|   +-------+   | \   |    o-  \    /    ___     |  |
+   |  |       |               |  |   \___| \  \  /    |   \  Line |
+   |  +-------+      internal |  |          \  \------o    | LTP 2|
+   |                 AD ports |  |           \ /      | 2  o------o->
+   |                          |  |    ___     \   /---o    |   |  |
+   |                          o  |   /   |   / \ /    |___/    |  |
+   |                          |  |  |    o--/   \          DEG2|  |
+   |                          |   \ |    |     / \     ___     |  |
+   |                          |    -o  6 o----/   \   |   \  Line |
+   |                          |     |    |         \--o    | LTP 3|
+   |                          |     |    o----\       | 3  o------o->
+   |                          o      \___|     \------o    |   |  |
+   |                          |                       |___/    |  |
+   |                          |                            DEG3|  |
+   |                          +--------------------------------+  |
+   +--------------------------------------------------------------+
+
+]]> </artwork>
+  </figure>
+    
+  <figure align="center" title="Protected TTP with Restricted
+    Connectivity between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_1b">
+    <artwork><![CDATA[
+
+   +--------------------------------------------------------------+
+   |                                       ROADM                  |
+   |                          +--------------------------------+  |
+   |  Local OT     Splitter   |                        ___     |  |
+   |  +-------+   +-------+  AD1       ___            |   \  Line |
+   |  |    TTP|   |    ---o-->o--     /   |       /---o    | LTP 1|
+   |  |  +----|   |   /   |   |  \   |    o------/    | 1  o------o->
+ --o->|  | Tx o-->o--o  5 |   |   ---o  4 |         /-o    |   |  |
+   |  |  +----|   |   \   |  AD2     |    o-\      /  |___/    |  |
+ <-o--|  | Rx o   |    ---o-->o--     \___|  \    /        DEG1|  |
+   |  |  +----|   +-------+   |  \     ___    \   |    ___     |  |
+   |  |       |               |   \   /   |    \  |   |   \  Line |
+   |  +-------+      internal |    \ |    o-------/   o    | LTP 2|
+   |                 AD ports |     -o  6 |      \    | 2  o------o->
+   |                          |      |    o-------\---o    |   |  |
+   |                          o       \___|        |  |___/    |  |
+   |                          |                    |       DEG2|  |
+   |                          |                    |   ___     |  |
+   |                          |                    |  |   \  Line |
+   |                          |                    \--o    | LTP 3|
+   |                          |                       | 3  o------o->
+   |                          o                       o    |   |  |
+   |                          |                       |___/    |  |
+   |                          |                            DEG3|  |
+   |                          +--------------------------------+  |
+   +--------------------------------------------------------------+
+
+]]> </artwork>
+  </figure>  <sourcecode type="json" markers="false">
     <![CDATA[
 {
   "roadm-path-impairments": [
@@ -5586,21 +5698,75 @@ reference: RFC XXXX (TDB)
     }
   ]
 }
-    ]]>
+]]>
   </sourcecode>
 
   
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (ii)"/> with connectivity constraints:
+    <li>
+      JSON example for use case in
+      <xref target="Protection UC (ii)"/> with restricted connectivity:
     </li>
   </ol>
   
   <t>
-   [Editor's note: UC (ii) JSON example below needs to be updated and
-   aligned with <xref target="Figure-13"/> and
-   <xref target="Figure-14"/>.]
+   The JSON example below addresses the optical protection use case
+   where the optical transponder is not part of the WDM-TE-node 
+   containing the ROADM function (WDM-TE-Node-2) but is part of a
+   separate WDM-TE-node (WDM-TE-Node-1) containing one or more optical
+   transponders (remote OTs).
+   As described in <xref target="Protection UC (ii)"/>, a TE-link
+   interconnects the remote OT with an add-drop port of WDM-TE-Node-2.
+   This is illustrated in <xref target="JSON_Example_2"/>.
   </t>
+
+  <t>
+   In this use case, the connectivity is reflected in the
+   connectivity-matrix describing the connectivity between the LTPs
+   representing an add-drop port in WDM-TE-Node-2 connected to the
+   transceiver of a remote OT and the LTPs associated with the
+   different ROADM degrees including the optical impairments for the
+   different paths.
+  </t>
+
+  <figure align="center" title="JSON Example for Restricted Connectivity
+    between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_2">
+    <artwork><![CDATA[
+
+  WDM-TE-node 1                   WDM-TE-node 2
+
+               +--------------------------------------------------+
+               |  LTP 20                               ___        |
+   +-------+   |  +-------+     AD 1  ___             |   \  Line |
+   |   TTP1|   |  |    ---o-----     /   |       /----o    | LTP 1|
+   |  +----|   |  |   /   |     \   |    o------/     | 1  o------o->
+ --o->| Tx o---o->o--o  5 |      \--o    |           -o    |      |
+   |  +----|   |  |   \   |         |  4 |          / |___/       |
+ <-o--| Rx o   |  |    ---o-\    /--o    |         /         DEG 1|
+   |  +----|   |  +-------+  \   |  |    o-       /    ___        |
+   |       |   |   Splitter   \  |   \___| \     /    |   \  Line |
+   |       |   |  +-------+   |  |          \         o    | LTP 2|
+   |   TTP2|   |  |    ---o---|--/           \ /      | 2  o------o->
+   |  +----|   |  |   /   |   |       ___     \   /---o    |      |
+ --o->| Tx o---o->o--o  5 |    \     /   |   / \ /    |___/       |
+   |  +----|   |  |   \   |     \   |    o--/   \           DEG 2 |
+ <-o--| Rx o   |  |    ---o--\   \--o    |     / \     ___        |
+   |  +----|   |  +-------+   \     |    |    /   \   |   \  Line |
+   |       |   |  LTP 30       \----o  6 |   /     \--o    | LTP 3|
+   |   TTP3|   |                    |    o--/         | 3  o------o->
+   |  +----|   |          /-------->o    |            o    |      |
+ --o->| Tx o---o---------/          |    |            |___/       |
+   |  +----|   |  LTP 40             \___|                  DEG 3 |
+ <-o--| Rx o   |                AD 2                              |
+   |  +----|   |                                                  |
+   |       |   |                                                  |
+   +-------+   |                                                  |
+               |                                                  |
+               +--------------------------------------------------+
+
+]]> </artwork>
+  </figure>
   
   <sourcecode type="json" markers="false">
     <![CDATA[
@@ -5759,18 +5925,8 @@ reference: RFC XXXX (TDB)
 
   ]
 }
-    ]]>
+]]>
   </sourcecode>
-
-  
-  <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (iii)"/></li>
-  </ol>
-  
-  <t>
-   [Editor's note: UC (iii) JSON example TBA!]
-  </t>
   
   </section>
   
@@ -7232,7 +7388,7 @@ eiver": [
   
   </section>
 
-  <section anchor="operational-mode_usage" numbered="true">
+<!--  <section anchor="operational-mode_usage" numbered="true">
   <name>Examples How to Use the organizational-mode Attribute</name>
   
   <t>
@@ -7330,6 +7486,7 @@ module vendor-b-operational-modes {
   </t>
 
   </section>
+-->
 
   
   <section anchor="Contributors" numbered="false">
