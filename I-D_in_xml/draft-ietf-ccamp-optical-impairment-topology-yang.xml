@@ -5581,38 +5581,38 @@ reference: RFC XXXX (TDB)
 {
   "roadm-path-impairments": [
     {
-      "roadm-path-impairments-id": 1,
+      "roadm-path-impairments-id": “1”,
       "roadm-add-path":
       "Add path impairments from TTP 1 or TTP 2 to any LTP."
     },
     {
-      "roadm-path-impairments-id": 2,
+      "roadm-path-impairments-id": “2”,
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-       to LTP 1 or LTP 3, through AD1."
+      to LTP 1 or LTP 3, through AD1."
     },
     {
-      "roadm-path-impairments-id": 3,
+      "roadm-path-impairments-id": “3”,
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-       to LTP 1 or LTP 2, through AD2."
+      to LTP 1 or LTP 2, through AD2."
     }
   ],
   "tunnel-termination-point": [
     {
-      "tunnel-tp-id": 1,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": “MQ==”,
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": true,
         "add-path-impairments": 1
       }
     },
     {
-      "tunnel-tp-id": 2,
+      "tunnel-tp-id": “Mg==”,
       "local-link-connectivities": {
         "is-allowed": true,
         "add-path-impairments": 1,
         "local-link-connectivity": [
           {
-            "ltp-ref": "LTP-1",
+            "link-tp-ref": "LTP-1",
             "additional-ltp": [
               {
                 "ltp-ref": "LTP-2",
@@ -5622,7 +5622,7 @@ reference: RFC XXXX (TDB)
             ]
           },
           {
-            "ltp-ref": "LTP-2",
+            "link-tp-ref": "LTP-2",
             "additional-ltp": [
               {
                 "ltp-ref": "LTP-1",
@@ -5632,7 +5632,7 @@ reference: RFC XXXX (TDB)
             ]
           },
           {
-            "ltp-ref": "LTP-3",
+            "link-tp-ref": "LTP-3",
             "additional-ltp": [
               {
                 "ltp-ref": "LTP-1",
@@ -5645,13 +5645,13 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": 3,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": “Mw==”,
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
         "local-link-connectivity": [
           {
-            "ltp-ref": "LTP-1",
+            "link-tp-ref": "LTP-1",
             "is-allowed": true,
             "add-path-impairments": 2,
             "additional-ltp": [
@@ -5666,7 +5666,7 @@ reference: RFC XXXX (TDB)
             ]
           },
           {
-            "ltp-ref": "LTP-3",
+            "link-tp-ref": "LTP-3",
             "is-allowed": true,
             "add-path-impairments": 2,
             "additional-ltp": [
@@ -5684,13 +5684,13 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": 4,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": “NA==”,
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
         "local-link-connectivity": [
           {
-            "ltp-ref": "LTP-1",
+            "link-tp-ref": "LTP-1",
             "is-allowed": true,
             "add-path-impairments": 2,
             "additional-ltp": [
@@ -5705,7 +5705,7 @@ reference: RFC XXXX (TDB)
             ]
           },
           {
-            "ltp-ref": "LTP-2",
+            "link-tp-ref": "LTP-2",
             "is-allowed": true,
             "add-path-impairments": 3,
             "additional-ltp": [
@@ -5720,7 +5720,7 @@ reference: RFC XXXX (TDB)
             ]
           },
           {
-            "ltp-ref": "LTP-3",
+            "link-tp-ref": "LTP-3",
             "is-allowed": true,
             "add-path-impairments": 2,
             "additional-ltp": [
