@@ -5815,13 +5815,13 @@ reference: RFC XXXX (TDB)
   "roadm-path-impairments": [
     
     {
-      "roadm-path-impairments-id": 2,
+      "roadm-path-impairments-id": "2",
       "roadm-add-path":
       "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
        through AD1."
     },
     {
-      "roadm-path-impairments-id": 3,
+      "roadm-path-impairments-id": "3",
       "roadm-add-path":
       "Add path impairments from LTP 20 or LTP 30 or LTP 40 to LTP 1
       or LTP 2, through AD2."
@@ -5967,9 +5967,6 @@ reference: RFC XXXX (TDB)
         "protection-type": "otsi-protection"
     }, {
         "tp-id": "30",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "40",
         "protection-type": "otsi-protection"
     }, {
         "tp-id": "1",

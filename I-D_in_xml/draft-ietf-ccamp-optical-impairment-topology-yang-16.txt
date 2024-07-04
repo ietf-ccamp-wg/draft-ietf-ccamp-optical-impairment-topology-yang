@@ -6281,13 +6281,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2024
      "roadm-path-impairments": [
 
        {
-         "roadm-path-impairments-id": 2,
+         "roadm-path-impairments-id": "2",
          "roadm-add-path":
          "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
           through AD1."
        },
        {
-         "roadm-path-impairments-id": 3,
+         "roadm-path-impairments-id": "3",
          "roadm-add-path":
          "Add path impairments from LTP 20 or LTP 30 or LTP 40 to LTP 1
          or LTP 2, through AD2."
@@ -6459,9 +6459,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        July 2024
            "tp-id": "30",
            "protection-type": "otsi-protection"
        }, {
-           "tp-id": "40",
-           "protection-type": "otsi-protection"
-       }, {
            "tp-id": "1",
            "protection-type": "otsi-protection"
        }, {
@@ -6480,6 +6477,9 @@ Appendix B.  Optical Transponders in a Remote Shelf (Remote OTs)
 
    Figure 31 illustrates a configuration where the optical transponders
    and the ROADM are located in a different WDM-TE-nodes.
+
+
+
 
 
 
