@@ -5581,24 +5581,24 @@ reference: RFC XXXX (TDB)
 {
   "roadm-path-impairments": [
     {
-      "roadm-path-impairments-id": “1”,
+      "roadm-path-impairments-id": "1",
       "roadm-add-path":
       "Add path impairments from TTP 1 or TTP 2 to any LTP."
     },
     {
-      "roadm-path-impairments-id": “2”,
+      "roadm-path-impairments-id": "2",
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
       to LTP 1 or LTP 3, through AD1."
     },
     {
-      "roadm-path-impairments-id": “3”,
+      "roadm-path-impairments-id": "3",
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
       to LTP 1 or LTP 2, through AD2."
     }
   ],
   "tunnel-termination-point": [
     {
-      "tunnel-tp-id": “MQ==”,
+      "tunnel-tp-id": "MQ==",
       "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": true,
@@ -5606,7 +5606,7 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": “Mg==”,
+      "tunnel-tp-id": "Mg==",
       "local-link-connectivities": {
         "is-allowed": true,
         "add-path-impairments": 1,
@@ -5645,7 +5645,7 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": “Mw==”,
+      "tunnel-tp-id": "Mw==",
       "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
@@ -5684,7 +5684,7 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": “NA==”,
+      "tunnel-tp-id": "NA==",
       "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
@@ -5828,140 +5828,163 @@ reference: RFC XXXX (TDB)
     }
   ],
 
-  "connectivity-matrix"[
-    { 
-      "id": 1,
-      "from": {
-        "tp-ref" : 20
-      },
-      "to" :  {
-        "tp-ref" : 1,       
-        "additional-ltp": [
-           {
-              "ltp-ref": 1,
-              "roadm-path-impairments": 3
-           },
-           {
-              "ltp-ref": 2,
-              "roadm-path-impairments": 3
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 2,
-      "from": {
-        "tp-ref" : 20
-      },
-      "to" :  {
-        "tp-ref" : 3,        
-        "additional-ltp": [
-           {
-              "ltp-ref": 1,
-              "roadm-path-impairments": 3
-           },
-           {
-              "ltp-ref": 2,
-              "roadm-path-impairments": 3
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 3,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 1,        
-        "additional-ltp": [
-           {
-              "ltp-ref": 1,
-              "roadm-path-impairments": 2
-           },
-           {
-              "ltp-ref": 2,
-              "roadm-path-impairments": 2            
-
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 4,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 2,        
-        "additional-ltp": [
-           {
-            "ltp-ref": 1,
-            "roadm-path-impairments": 2
-           },
-           {
-            "ltp-ref": 3,
-            "roadm-path-impairments": 2            
-
-           }
-        ]
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    },
-    {
-      "id": 5,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 3,        
-        "additional-ltp": [
-           {
-            "ltp-ref": 1,
-            "roadm-path-impairments": 3
-           },
-           {
-            "ltp-ref": 2,
-            "roadm-path-impairments": 3            
-
-           }
-        ]
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 6,
-      "from": {
-        "tp-ref" : 40
-      },
-      "to" :  {
-        "tp-ref" : 1        
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    },
-    {
-      "id": 7,
-      "from": {
-        "tp-ref" : 40
-      },
-      "to" :  {
-        "tp-ref" : 2,        
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    }    
-
-  ]
+"connectivity-matrices": {
+    "connectivity-matrix": [
+        {
+            "id": 1,
+            "from": {
+                "tp-ref": "20"
+            },
+            "to": {
+                "tp-ref": "1",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 2,
+            "from": {
+                "tp-ref": "20"
+            },
+            "to": {
+                "tp-ref": "3",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 3,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "1",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "2"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "2"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 4,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "2",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "2"
+                    },
+                    {
+                        "ltp-ref": "3",
+                        "roadm-path-impairments": "2"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        },
+        {
+            "id": 5,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "3",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 6,
+            "from": {
+                "tp-ref": "40"
+            },
+            "to": {
+                "tp-ref": "1"
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        },
+        {
+            "id": 7,
+            "from": {
+                "tp-ref": "40"
+            },
+            "to": {
+                "tp-ref": "2"
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        }
+    ]
 }
+
+
+"ietf-network-topology:termination-point": [
+    {
+        "tp-id": "20",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "30",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "40",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "1",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "2",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "3",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "4",
+        "protection-type": "otsi-protection"
+    }
+]
 ]]>
   </sourcecode>
   
