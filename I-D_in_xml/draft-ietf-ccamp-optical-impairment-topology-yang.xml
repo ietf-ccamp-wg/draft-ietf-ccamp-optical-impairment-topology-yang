@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-15"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-16"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2024" month="March" day="04" />
+  <date year="2024" month="July" day="5" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -1003,11 +1003,12 @@
   <t>
    A standard mode is related to an optical specification developed
    by an SDO organization. Currently, the "Standard Modes" can only
-   be referred to ITU-T G.698.2 <xref target="G.698.2"/> since G.698.2
-   is the only specification defining "Standard Modes" today.
+   be referred to ITU-T Recommendation G.698.2 <xref target="G.698.2"/>
+   since ITU-T Recommendation G.698.2 is the only standard defining
+   "Standard Modes" today.
    Nothing is precluding, however, to consider other specifications
    provided by any other SDO in the Standard Mode context as soon as
-   such sepcifications will be available. An application code as
+   such specifications will be available. An application code as
    defined in ITU-T G.698.2 <xref target="G.698.2"/> is representing
    a standard ITU-T G.698.2 optical interface specification towards
    the realization of transversely compatible DWDM systems.
@@ -1016,6 +1017,28 @@
    application code will interoperate. As the characteristics are
    encoded in the application code, the YANG model in this document
    only defines a string, which represents that application code.
+  </t>
+  
+  <t>
+   For the standard modes, some additional attributes are defined.
+   The most important one is the line-coding-bitrate attribute, which
+   was added because <xref target="G.698.2"/> lists 100gpbs application
+   codes supporting two data formats, an OTU4 related data format and a
+   Flex-O related data format. The supported data formats for an
+   application code can be described by listing the supported data
+   formats via the line-coding-bitrate attribute as transceiver
+   capability.
+  </t>
+  
+  <t>
+   Moreover, the transceiver properties like optical carrier frequency
+   range, optical carrier tunability, and transmitter/receiver optical
+   power ranges can be described as optional attributes in case they
+   differ from the specification for the standard mode, i.e., as
+   defined in <xref target="G.698.2"/>. A transceiver may support
+   extended optical frequency ranges or optical power ranges or a finer
+   optical carrier tunability. These capabilities can be described
+   explicitly if needed.
   </t>
   
   </section>
@@ -1428,26 +1451,41 @@
   </t>
   
   <t>
-   The loss of a fiber span can be described in two ways: it should be
-   described by specifying the loss coefficient (loss-coef) of the
-   fiber type in combination with the length of the fiber and it can be
-   described by the total-loss attribute.
+   The loss of a fiber span can be described in two ways:
+  </t>
+
+  <t>
+    <ol type="i">
+      <li>
+        As calculated loss using the provided loss coefficient
+        (loss-coef) and length of the fiber.
+      </li>
+      <li>
+        As measured loss provided by the total-loss attribute.
+      </li>
+    </ol>
+  </t>
+
+  <t>
    The total-loss should be provided when it can be measured with a
    power measurement facility at the output of the upstream node (input
    of the fiber span) and a power measurement facility at the input of
    the downstream node (output of the fiber span).
-   This measured loss typically differs from the calculated loss based
-   on loss-coef and length as it includes all loss contributions
-   including possible accumulated loss due to imperfect fiber splices
-   and connector losses. In case the total-loss cannot be measured (no
-   power measurement facilities in place), this optional attribute
-   shall be omitted.
+   This measured loss typically differs from the calculated loss
+   because it includes all loss contributions including possible
+   accumulated loss due to imperfect fiber splices and connector
+   losses.
+   It can also change over time due to changing fiber conditions, e.g.,
+   in case of a fiber cut.
+   In case the total-loss cannot be measured (no power measurement
+   facilities in place), the total-loss defined as optional leaf in
+   the YANG model shall be omitted.
   </t>
   
   <t>
    N.B.: In case of Raman amplifiers, the Raman gain shall not be
-   included in the measured loss to properly reflect loss of the fiber
-   span only in the total-loss attribute.
+   included in the measured loss to properly reflect only the loss of
+   the fiber span in the total-loss attribute.
   </t>
 
   <t>
@@ -2886,8 +2924,6 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
   <sourcecode name="ietf-optical-impairment-topolog.tree" type="text"
   markers="false">
     <![CDATA[
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module: ietf-optical-impairment-topology
 
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
@@ -2906,7 +2942,8 @@ module: ietf-optical-impairment-topology
        |     +--ro roadm-path-impairments-id    string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
-       |        |  +--ro roadm-express-path* []
+       |        |  +--ro roadm-express-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -2920,7 +2957,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-maxloss?
        |        |             l0-types:power-loss-or-null
        |        +--:(roadm-add-path)
-       |        |  +--ro roadm-add-path* []
+       |        |  +--ro roadm-add-path* [frequency-range-id]
+       |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
        |        |     |  +--ro lower-frequency    frequency-thz
        |        |     |  +--ro upper-frequency    frequency-thz
@@ -2940,7 +2978,8 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-noise-figure?
        |        |             l0-types:decimal-5-or-null
        |        +--:(roadm-drop-path)
-       |           +--ro roadm-drop-path* []
+       |           +--ro roadm-drop-path* [frequency-range-id]
+       |              +--ro frequency-range-id        uint16
        |              +--ro frequency-range
        |              |  +--ro lower-frequency    frequency-thz
        |              |  +--ro upper-frequency    frequency-thz
@@ -2974,24 +3013,24 @@ module: ietf-optical-impairment-topology
              +--ro line-coding-bitrate?                identityref
              +--ro bitrate?                            uint16
              +--ro max-diff-group-delay?               decimal-2
-             +--ro max-chromatic-dispersion?           decimal64
-             +--ro cd-penalty* []
-             |  +--ro cd-value         union
+             +--ro max-chromatic-dispersion?           decimal-2
+             +--ro cd-penalty* [cd-value]
+             |  +--ro cd-value         decimal-2
              |  +--ro penalty-value    union
-             +--ro max-polarization-mode-dispersion?   decimal64
-             +--ro pmd-penalty* []
-             |  +--ro pmd-value        union
+             +--ro max-polarization-mode-dispersion?   decimal-2
+             +--ro pmd-penalty* [pmd-value]
+             |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
              +--ro max-polarization-dependant-loss
              |       power-loss-or-null
-             +--ro pdl-penalty* []
-             |  +--ro pdl-value        power-loss-or-null
+             +--ro pdl-penalty* [pdl-value]
+             |  +--ro pdl-value        power-loss
              |  +--ro penalty-value    union
              +--ro available-modulation-type?          identityref
              +--ro min-OSNR?                           snr
              +--ro rx-ref-channel-power?               power-dbm
-             +--ro rx-channel-power-penalty* []
-             |  +--ro rx-channel-power-value    power-dbm-or-null
+             +--ro rx-channel-power-penalty* [rx-channel-power-value]
+             |  +--ro rx-channel-power-value    power-dbm
              |  +--ro penalty-value             union
              +--ro min-Q-factor?                       decimal-2
              +--ro available-baud-rate?                decimal64
@@ -3003,7 +3042,7 @@ module: ietf-optical-impairment-topology
              +--ro in-band-osnr?                       snr
              +--ro out-of-band-osnr?                   snr
              +--ro tx-polarization-power-difference?   power-ratio
-             +--ro polarization-skew?                  decimal64
+             +--ro polarization-skew?                  decimal-2
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -3097,8 +3136,7 @@ module: ietf-optical-impairment-topology
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
           +--ro transponder-ref*
-                  -> ../../../transponders/transponder/transponder-i\
-d
+                  -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
@@ -3108,15 +3146,17 @@ d
        |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
        |  +--ro nominal-psd?             l0-types:psd-or-null
        +--ro media-channel-groups!
-       |  +--ro media-channel-group* []
-       |     +--ro media-channels* []
-       |        +--ro flexi-n?          l0-types:flexi-n
-       |        +--ro flexi-m?          l0-types:flexi-m
-       |        +--ro otsi-group-ref?   leafref
-       |        +--ro otsi-ref* []
-       |        |  +--ro otsi-carrier-ref?   leafref
+       |  +--ro media-channel-group* [otsi-group-ref]
+       |     +--ro otsi-group-ref    leafref
+       |     +--ro media-channel* [media-channel-id]
+       |        +--ro media-channel-id    int16
+       |        +--ro flexi-n?            l0-types:flexi-n
+       |        +--ro flexi-m?            l0-types:flexi-m
+       |        +--ro otsi-ref* [otsi-carrier-ref]
+       |        |  +--ro otsi-carrier-ref    leafref
        |        |  +--ro e2e-mc-path-ref*    leafref
-       |        +--ro delta-power?      l0-types:power-ratio-or-null
+       |        +--ro delta-power?
+       |                l0-types:power-ratio-or-null
        +--ro OMS-elements!
           +--ro OMS-element* [elt-index]
              +--ro elt-index                 uint16
@@ -3129,27 +3169,24 @@ d
                 +--:(amplifier)
                 |  +--ro geolocation
                 |  |  +--ro altitude?    int64
-                |  |  +--ro latitude?    geographic-coordinate-degre\
-e
-                |  |  +--ro longitude?   geographic-coordinate-degre\
-e
+                |  |  +--ro latitude?    geographic-coordinate-degree
+                |  |  +--ro longitude?   geographic-coordinate-degree
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
-                |        +--ro amplifier-element* []
+                |        +--ro amplifier-element*
+                |                [frequency-range-id stage-order]
+                |           +--ro frequency-range-id
+                |           |       uint16
+                |           +--ro stage-order
+                |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro is-dynamic-gain-equalyzer?
-                |           |       boolean
                 |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-th\
-z
-                |           |  +--ro upper-frequency    frequency-th\
-z
-                |           +--ro stage-order?
-                |           |       uint8
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -3181,28 +3218,24 @@ ull
 ull
                 |              |     +--ro raman-direction?
                 |              |     |       enumeration
-                |              |     +--ro raman-pump* []
+                |              |     +--ro raman-pump* [pump-id]
+                |              |        +--ro pump-id      uint16
                 |              |        +--ro frequency?
                 |              |        |       l0-types:frequency-t\
 hz
                 |              |        +--ro power?
                 |              |                l0-types:decimal-2-o\
 r-null
-                |              +--:(dynamic-gain-equalyzer)
-                |                 +--ro dynamic-gain-equalyzer!
-                |                    +--ro media-channel-groups
-                |                       +--ro media-channel-group* [\
-]
-                |                          +--ro media-channels* []
-                |                             +--ro flexi-n?
-                |                             |       l0-types:flexi\
--n
-                |                             +--ro flexi-m?
-                |                             |       l0-types:flexi\
--m
-                |                             +--ro delta-power?
-                |                                     l0-types:power\
--ratio-or-null
+                |              +--:(dynamic-gain-equalizer)
+                |                 +--ro dynamic-gain-equalizer!
+                |                    +--ro media-channel* [flexi-n]
+                |                       +--ro flexi-n
+                |                       |       l0-types:flexi-n
+                |                       +--ro flexi-m
+                |                       |       l0-types:flexi-m
+                |                       +--ro delta-power?
+                |                               l0-types:power-ratio\
+-or-null
                 +--:(fiber)
                 |  +--ro fiber
                 |     +--ro type-variety    string
@@ -3210,7 +3243,7 @@ r-null
                 |     |       l0-types:decimal-2-or-null
                 |     +--ro loss-coef
                 |     |       l0-types:decimal-2-or-null
-                |     +--ro total-loss
+                |     +--ro total-loss?
                 |     |       l0-types:power-loss-or-null
                 |     +--ro pmd?
                 |     |       l0-types:decimal-2-or-null
@@ -3225,8 +3258,7 @@ r-null
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
        +--ro transponder-ref
-       |       -> ../../../../transponders/transponder/transponder-i\
-d
+       |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
     +--rw protection-type?   identityref
@@ -3391,7 +3423,7 @@ module ietf-optical-impairment-topology {
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
-  revision 2024-02-22 {
+  revision 2024-05-21 {
     description
       "Initial Version";
     reference
@@ -3431,9 +3463,24 @@ module ietf-optical-impairment-topology {
       container operational {
         description "amplifier operational parameters";
         list amplifier-element {
+          key "frequency-range-id stage-order";
           description
             "The list of parallel amplifier elements within an
-            amplifier used to amplify different frequency ranges.";
+            amplifier used to amplify different frequency ranges.
+
+            Two elements in the list must not have the same range
+            or overlapping ranges.";
+          leaf frequency-range-id {
+            type uint16;
+            description
+              "The identifier of the frequency range.";
+          }
+          leaf stage-order {
+            type uint8;
+            description
+              "It allows defining for each spectrum badwidth the
+              cascade order of each amplifier-element.";
+          }
           leaf name {
             type string;
             description
@@ -3452,24 +3499,11 @@ module ietf-optical-impairment-topology {
               the amplifier is not sufficient to describe the
               amplifier element type.";
           }
-          leaf is-dynamic-gain-equalyzer {
-            type boolean;
-            description
-              "Indicates whether the amplifier element is a Dynamic 
-              Gain Equalizer (DGE).";
-          }
           container frequency-range {
             description
               "The frequency range amplified by the amplifier
               element.";
             uses l0-types:frequency-range;
-          }
-          leaf stage-order {
-            type uint8;
-            default 1;
-            description
-              "It allows defining for each spectrum badwidth the
-              cascade order of each amplifier-element.";
           }
           container power-param {
             description
@@ -3506,7 +3540,7 @@ module ietf-optical-impairment-topology {
             mandatory true;
             description
               "Identifies whether the amplifier element is an
-              Optical Amplifier (OA) or a Dynamic Gain Equalyzer
+              Optical Amplifier (OA) or a Dynamic Gain Equalizer
               (DGE).";
             container optical-amplifier {
               description
@@ -3574,8 +3608,15 @@ module ietf-optical-impairment-topology {
                   "The direction of injection of the raman pump.";
               }
               list raman-pump {
+                key pump-id;
                 description
                   "The list of pumps for the Raman amplifier.";
+                leaf pump-id {
+                  type uint16;
+                  description
+                    "The identifier of a pump within an amplifier
+                    element.";
+                }
                 leaf frequency {
                   type l0-types:frequency-thz;
                   description
@@ -3590,38 +3631,32 @@ module ietf-optical-impairment-topology {
                 }
               }
             }   // container optical-amplifier
-            container dynamic-gain-equalyzer {
+            container dynamic-gain-equalizer {
               presence
                 "When present it indicates that the amplifier element
-                is a Dynamic Gain Equalyzer (DGE)";
+                is a Dynamic Gain Equalizer (DGE)";
               description
                 "The attributes applicable only to DEG amplifier
                 elements.";
-              container media-channel-groups {
+              list media-channel {
+                key "flexi-n";
                 description
-                  "The top level container for the list of media
-                  channel groups.";
-                list media-channel-group {
+                  "List of media channels represented as (n,m)";
+
+                uses l0-types:flexi-grid-frequency-slot {
+                  refine flexi-m {
+                    mandatory true;
+                  }
+                }
+
+                leaf delta-power {
+                  type l0-types:power-ratio-or-null;
                   description
-                    "The list of media channel groups";
-                  list media-channels {
-                    // key "flexi-n";
-                    description
-                      "List of media channels represented as (n,m)";
-
-                    // this grouping add both n.m values
-                    uses l0-types:flexi-grid-frequency-slot;
-
-                    leaf delta-power {
-                      type l0-types:power-ratio-or-null;
-                      description
-                        " Deviation from the reference carrier power 
-                        defined for the OMS.";
-                    }
-                  } // media channels list
-                } // media-channel-groups list
-              }   // container media-channel-groups
-            }   // container dynamic-gain-equalyzer
+                    " Deviation from the reference carrier power 
+                    defined for the OMS.";
+                }
+              } // media channels list
+            }   // container dynamic-gain-equalizer
           } // choice amplifier-element-type
         }  // list amplifier-element
       }  // container operational
@@ -3653,10 +3688,13 @@ module ietf-optical-impairment-topology {
       }
       leaf total-loss {
         type l0-types:power-loss-or-null;
-        mandatory true ;
         description
-          "includes all losses: fiber loss and conn-in and 
-           conn-out losses";
+          "The measured total loss of the fiber, which includes
+          all possible losses: fiber loss and conn-in and conn-out
+          losses.
+           
+          This attribute is not present when the total loss cannot
+          be measured.";
       }
       leaf pmd {
         type l0-types:decimal-2-or-null;
@@ -4046,26 +4084,38 @@ module ietf-optical-impairment-topology {
         "The top level container for the list of media channel 
         groups.";
       list media-channel-group {
+        key "otsi-group-ref";
         description
           "The list of media channel groups";
-        list media-channels {
+        leaf otsi-group-ref {
+          type leafref {
+            path "../../../../../../../otsis/" +
+                "otsi-group/otsi-group-id";
+          }
+          description
+            "Reference to the OTSiG to which the OTSis carried by 
+            this media channel group belong to.";
+        }
+        list media-channel {
           // key "flexi-n";
+          key "media-channel-id";
+          unique "flexi-n";
           description
             "list of media channels represented as (n,m)";
-
+          leaf media-channel-id {
+            type int16;
+            description
+              "The identifier of media channel within media channel
+              group.
+              
+              It may be equal to the flexi-n attribute, when the
+              flexi-n attribute is present.";
+          }
           // this grouping add both n.m values
           uses l0-types:flexi-grid-frequency-slot;
 
-          leaf otsi-group-ref {
-            type leafref {
-              path "../../../../../../../../otsis/" +
-                  "otsi-group/otsi-group-id";
-            }
-            description
-              "Reference to the OTSiG to which the OTSis carried by 
-              this media channel belong to.";
-          }
           list otsi-ref {
+            key "otsi-carrier-ref";
             description
               "The list of references to the OTSis and their 
               end-to-end Media Channel (e2e-MC) paths within the 
@@ -4074,7 +4124,7 @@ module ietf-optical-impairment-topology {
               type leafref {
                 path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
-                      "/../../otsi-group-ref]/" +
+                      "/../../../otsi-group-ref]/" +
                       "otsi/otsi-carrier-id" ;
               }
               description
@@ -4085,7 +4135,7 @@ module ietf-optical-impairment-topology {
               type leafref {
                 path  "../../../../../../../../../otsis/" +
                       "otsi-group[otsi-group-id=current()" +
-                      "/../../otsi-group-ref]/" +
+                      "/../../../otsi-group-ref]/" +
                       "otsi[otsi-carrier-id=current()" +
                       "/../otsi-carrier-ref]/e2e-mc-path-id";
               }
@@ -4279,12 +4329,18 @@ module ietf-optical-impairment-topology {
             description "type path impairment";
             case roadm-express-path {
               list roadm-express-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM express
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of the frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
@@ -4296,12 +4352,18 @@ module ietf-optical-impairment-topology {
             }
             case roadm-add-path {
               list roadm-add-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of a frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
@@ -4313,12 +4375,18 @@ module ietf-optical-impairment-topology {
             }          
             case roadm-drop-path {
               list roadm-drop-path {
+                key frequency-range-id;
                 description
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
+                leaf frequency-range-id {
+                  type uint16;
+                  description
+                    "The identifier of a frequency range.";
+                }
                 container frequency-range {
                   description
                     "The frequency range for which these optical
@@ -5043,7 +5111,8 @@ module ietf-optical-impairment-topology {
       }
     }
   } // augmentation local-link-connectivity
-}]]>
+}
+]]>
   </sourcecode>
   
   </section>
@@ -5097,17 +5166,23 @@ module ietf-optical-impairment-topology {
   </t>
   
   <t>
-   The data nodes in this YANG module are not writable nor creatable
-   nor deletable (i.e., config true) the data nodes are readable only
-   (i.e., config false, which is the default). Although the data nodes
-   are not susceptible to write operations or attacks
-   (e.g., edit-config), network information may be exposed using read
-   access (e.g., get, get-config, or notification) operations. Thus,
-   controlling read access to specific data nodes containing sensitive
-   or vulnerable information is important. Below are the specific
-   subtrees, data nodes and subsequent sensitivity/vulnerability:
+   The data nodes defined in this YANG module are not writable/
+   creatable/deletable (i.e., "config true", which is the default) and
+   are therefore only readable  (i.e., config false). Although the data
+   nodes are not susceptible to write operations or attacks (for
+   instance, thought "edit-config"), some data nodes accessible for
+   reading might be considered sensitive or prone to vulnerabilities as
+   they expose network topology information, which may be confidential
+   information for some operators. Therefore, it is critical to manage
+   access to these readable nodes carefully (for instance, through
+   "get", "get-config", or "notification" commands) to safeguard them.
   </t>
   
+  <t>
+   These are the subtrees and data nodes and their
+   sensitivity/vulnerability:
+  </t>
+
   <t>
     <dl newline="true">
       <dt>/nw:networks/nw:network/nw:network-types/tet:te-topology</dt>
@@ -5236,6 +5311,8 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8795.xml"/>
 
+  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
+
   </references>
 
   <references title="Informative References">
@@ -5258,11 +5335,7 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
 
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9093.xml"/>
-
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
-
-  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
 
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml"/>
 
@@ -5392,52 +5465,148 @@ reference: RFC XXXX (TDB)
   <section anchor="JSON Examples" numbered="true">
   <name>JSON Code Examples for Optical Protection Uses Cases</name>
   
-  <t>
-   [Editor's note: JSON examples for optical protection use cases TBA!
-  </t>
-  
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (i)"/>:</li>
+    <li>
+      JSON example for use case in
+      <xref target="Protection UC (i)"/> with full and with restricted
+      connectivity:
+    </li>
   </ol>
   
   <t>
-   [Editor's note: The JSON example below needs to be updated and
-   aligned with <xref target="Figure-11"/> and
-   <xref target="Figure-12"/>.]
+   The JSON example below addresses the optical protection use case
+   for TTPs associated with local optical transponders (integrated
+   WDM-TE-node):
   </t>
   
-  <sourcecode type="json" markers="false">
+  <t>
+   <ul spacing="compact">
+     <li>
+       where full connectivity exists between the ROADM add-drop ports
+       and the ROADM ports for the different ROADM degrees illustrated
+       in <xref target="JSON_Example_1a"/> below.
+     </li>
+     <li>
+       where restricted connectivity exists between the ROADM add-drop
+       ports and the ROADM ports for the different ROADM degrees
+       illustrated in <xref target="JSON_Example_1b"/> below.
+     </li>   
+   </ul>
+  </t>
+  
+  <t>
+   Note that <xref target="JSON_Example_1a"/> and
+   <xref target="JSON_Example_1b"/> illustrate the connectivity for a
+   single TTP only, i.e., the figures are not showing TTP-1, TTP-2,
+   TTP-3, and TTP-4, which are used in the JSON code example below.
+  </t>
+  
+  <t>
+   The connectivity is reflected in the local-link-connectivities
+   between the TTP associated with the transceiver of the local OT
+   and the LTPs that can be reached including the optical impairments
+   for the different paths.
+  </t>
+
+  <figure align="center" title="Protected TTP with Full Connectivity
+    between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_1a">
+    <artwork><![CDATA[
+
+   +--------------------------------------------------------------+
+   |                                       ROADM                  |
+   |                          +--------------------------------+  |
+   |  Local OT     Splitter   |                        ___     |  |
+   |  +-------+   +-------+  AD1      ___             |   \  Line |
+   |  |    TTP|   |    ---o-->o-     /   |       /----o    | LTP 1|
+   |  |  +----|   |   /   |   | \   |    o------/     | 1  o------o->
+ --o->|  | Tx o-->o--o  5 |   |  \  |    |           -o    |   |  |
+   |  |  +----|   |   \   |  AD2  --o  4 o-\        / |___/    |  |
+ <-o--|  | Rx o   |    ---o-->o-    |    |  \      /       DEG1|  |
+   |  |  +----|   +-------+   | \   |    o-  \    /    ___     |  |
+   |  |       |               |  |   \___| \  \  /    |   \  Line |
+   |  +-------+      internal |  |          \  \------o    | LTP 2|
+   |                 AD ports |  |           \ /      | 2  o------o->
+   |                          |  |    ___     \   /---o    |   |  |
+   |                          o  |   /   |   / \ /    |___/    |  |
+   |                          |  |  |    o--/   \          DEG2|  |
+   |                          |   \ |    |     / \     ___     |  |
+   |                          |    -o  6 o----/   \   |   \  Line |
+   |                          |     |    |         \--o    | LTP 3|
+   |                          |     |    o----\       | 3  o------o->
+   |                          o      \___|     \------o    |   |  |
+   |                          |                       |___/    |  |
+   |                          |                            DEG3|  |
+   |                          +--------------------------------+  |
+   +--------------------------------------------------------------+
+
+]]> </artwork>
+  </figure>
+    
+  <figure align="center" title="Protected TTP with Restricted
+    Connectivity between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_1b">
+    <artwork><![CDATA[
+
+   +--------------------------------------------------------------+
+   |                                       ROADM                  |
+   |                          +--------------------------------+  |
+   |  Local OT     Splitter   |                        ___     |  |
+   |  +-------+   +-------+  AD1       ___            |   \  Line |
+   |  |    TTP|   |    ---o-->o--     /   |       /---o    | LTP 1|
+   |  |  +----|   |   /   |   |  \   |    o------/    | 1  o------o->
+ --o->|  | Tx o-->o--o  5 |   |   ---o  4 |         /-o    |   |  |
+   |  |  +----|   |   \   |  AD2     |    o-\      /  |___/    |  |
+ <-o--|  | Rx o   |    ---o-->o--     \___|  \    /        DEG1|  |
+   |  |  +----|   +-------+   |  \     ___    \   |    ___     |  |
+   |  |       |               |   \   /   |    \  |   |   \  Line |
+   |  +-------+      internal |    \ |    o-------/   o    | LTP 2|
+   |                 AD ports |     -o  6 |      \    | 2  o------o->
+   |                          |      |    o-------\---o    |   |  |
+   |                          o       \___|        |  |___/    |  |
+   |                          |                    |       DEG2|  |
+   |                          |                    |   ___     |  |
+   |                          |                    |  |   \  Line |
+   |                          |                    \--o    | LTP 3|
+   |                          |                       | 3  o------o->
+   |                          o                       o    |   |  |
+   |                          |                       |___/    |  |
+   |                          |                            DEG3|  |
+   |                          +--------------------------------+  |
+   +--------------------------------------------------------------+
+
+]]> </artwork>
+  </figure>  <sourcecode type="json" markers="false">
     <![CDATA[
 {
   "roadm-path-impairments": [
     {
-      "roadm-path-impairments-id": 1,
+      "roadm-path-impairments-id": "1",
       "roadm-add-path":
-      "Add path impairments from TTP 1 or TTP 2 to any LTPs."
+      "Add path impairments from TTP 1 or TTP 2 to any LTP."
     },
     {
-      "roadm-path-impairments-id": 2,
+      "roadm-path-impairments-id": "2",
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-       to LTP 1 or LTP 3, through AD1."
+      to LTP 1 or LTP 3, through AD1."
     },
     {
-      "roadm-path-impairments-id": 3,
+      "roadm-path-impairments-id": "3",
       "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-       to LTP 1 or LTP 2, through AD2."
+      to LTP 1 or LTP 2, through AD2."
     }
   ],
   "tunnel-termination-point": [
     {
-      "tunnel-tp-id": 1,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": "MQ==",
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": true,
         "add-path-impairments": 1
       }
     },
     {
-      "tunnel-tp-id": 2,
+      "tunnel-tp-id": "Mg==",
       "local-link-connectivities": {
         "is-allowed": true,
         "add-path-impairments": 1,
@@ -5446,8 +5615,9 @@ reference: RFC XXXX (TDB)
             "link-tp-ref": "LTP-1",
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-2",
-                "link-tp-ref": "LTP-3"
+                "ltp-ref": "LTP-2",
+              },{
+                "ltp-ref": "LTP-3"
               }
             ]
           },
@@ -5455,8 +5625,9 @@ reference: RFC XXXX (TDB)
             "link-tp-ref": "LTP-2",
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
-                "link-tp-ref": "LTP-3"
+                "ltp-ref": "LTP-1",
+              },{
+                "ltp-ref": "LTP-3"
               }
             ]
           },
@@ -5464,8 +5635,9 @@ reference: RFC XXXX (TDB)
             "link-tp-ref": "LTP-3",
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
-                "link-tp-ref": "LTP-2"
+                "ltp-ref": "LTP-1",
+              },{
+                "ltp-ref": "LTP-2"
               }
             ]
           }
@@ -5473,8 +5645,8 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": 3,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": "Mw==",
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
         "local-link-connectivity": [
@@ -5484,11 +5656,11 @@ reference: RFC XXXX (TDB)
             "add-path-impairments": 2,
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
+                "ltp-ref": "LTP-1",
                 "add-path-impairments": 3
               },
               {
-                "link-tp-ref": "LTP-2",
+                "ltp-ref": "LTP-2",
                 "add-path-impairments": 3
               }
             ]
@@ -5499,11 +5671,11 @@ reference: RFC XXXX (TDB)
             "add-path-impairments": 2,
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
+                "ltp-ref": "LTP-1",
                 "add-path-impairments": 3
               },
               {
-                "link-tp-ref": "LTP-2",
+                "ltp-ref": "LTP-2",
                 "add-path-impairments": 3
               }
             ]
@@ -5512,8 +5684,8 @@ reference: RFC XXXX (TDB)
       }
     },
     {
-      "tunnel-tp-id": 4,
-      "protection-type": "ops-protection",
+      "tunnel-tp-id": "NA==",
+      "protection-type": "otsi-protection",
       "local-link-connectivities": {
         "is-allowed": false,
         "local-link-connectivity": [
@@ -5523,11 +5695,11 @@ reference: RFC XXXX (TDB)
             "add-path-impairments": 2,
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
+                "ltp-ref": "LTP-1",
                 "add-path-impairments": 3
               },
               {
-                "link-tp-ref": "LTP-2",
+                "ltp-ref": "LTP-2",
                 "add-path-impairments": 3
               }
             ]
@@ -5538,11 +5710,11 @@ reference: RFC XXXX (TDB)
             "add-path-impairments": 3,
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
+                "ltp-ref": "LTP-1",
                 "add-path-impairments": 2
               },
               {
-                "link-tp-ref": "LTP-3",
+                "ltp-ref": "LTP-3",
                 "add-path-impairments": 2
               }
             ]
@@ -5553,11 +5725,11 @@ reference: RFC XXXX (TDB)
             "add-path-impairments": 2,
             "additional-ltp": [
               {
-                "link-tp-ref": "LTP-1",
+                "ltp-ref": "LTP-1",
                 "add-path-impairments": 3
               },
               {
-                "link-tp-ref": "LTP-2",
+                "ltp-ref": "LTP-2",
                 "add-path-impairments": 3
               }
             ]
@@ -5567,191 +5739,251 @@ reference: RFC XXXX (TDB)
     }
   ]
 }
-    ]]>
+]]>
   </sourcecode>
 
   
   <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (ii)"/> with connectivity constraints:
+    <li>
+      JSON example for use case in
+      <xref target="Protection UC (ii)"/> with restricted connectivity:
     </li>
   </ol>
   
   <t>
-   [Editor's note: UC (ii) JSON example below needs to be updated and
-   aligned with <xref target="Figure-13"/> and
-   <xref target="Figure-14"/>.]
+   The JSON example below addresses the optical protection use case
+   where the optical transponder is not part of the WDM-TE-node 
+   containing the ROADM function (WDM-TE-Node-2) but is part of a
+   separate WDM-TE-node (WDM-TE-Node-1) containing one or more optical
+   transponders (remote OTs).
+   As described in <xref target="Protection UC (ii)"/>, a TE-link
+   interconnects the remote OT with an add-drop port of WDM-TE-Node-2.
+   This is illustrated in <xref target="JSON_Example_2"/>.
   </t>
+
+  <t>
+   In this use case, the connectivity is reflected in the
+   connectivity-matrix describing the connectivity between the LTPs
+   representing an add-drop port in WDM-TE-Node-2 connected to the
+   transceiver of a remote OT and the LTPs associated with the
+   different ROADM degrees including the optical impairments for the
+   different paths.
+  </t>
+
+  <figure align="center" title="JSON Example for Restricted Connectivity
+    between ROADM Add-Drop Ports and ROADM Degree Ports"
+    anchor="JSON_Example_2">
+    <artwork><![CDATA[
+
+  WDM-TE-node 1                   WDM-TE-node 2
+
+               +--------------------------------------------------+
+               |  LTP 20                               ___        |
+   +-------+   |  +-------+     AD 1  ___             |   \  Line |
+   |   TTP1|   |  |    ---o-----     /   |       /----o    | LTP 1|
+   |  +----|   |  |   /   |     \   |    o------/     | 1  o------o->
+ --o->| Tx o---o->o--o  5 |      \--o    |           -o    |      |
+   |  +----|   |  |   \   |         |  4 |          / |___/       |
+ <-o--| Rx o   |  |    ---o-\    /--o    |         /         DEG 1|
+   |  +----|   |  +-------+  \   |  |    o-       /    ___        |
+   |       |   |   Splitter   \  |   \___| \     /    |   \  Line |
+   |       |   |  +-------+   |  |          \         o    | LTP 2|
+   |   TTP2|   |  |    ---o---|--/           \ /      | 2  o------o->
+   |  +----|   |  |   /   |   |       ___     \   /---o    |      |
+ --o->| Tx o---o->o--o  5 |    \     /   |   / \ /    |___/       |
+   |  +----|   |  |   \   |     \   |    o--/   \           DEG 2 |
+ <-o--| Rx o   |  |    ---o--\   \--o    |     / \     ___        |
+   |  +----|   |  +-------+   \     |    |    /   \   |   \  Line |
+   |       |   |  LTP 30       \----o  6 |   /     \--o    | LTP 3|
+   |   TTP3|   |                    |    o--/         | 3  o------o->
+   |  +----|   |          /-------->o    |            o    |      |
+ --o->| Tx o---o---------/          |    |            |___/       |
+   |  +----|   |  LTP 40             \___|                  DEG 3 |
+ <-o--| Rx o   |                AD 2                              |
+   |  +----|   |                                                  |
+   |       |   |                                                  |
+   +-------+   |                                                  |
+               |                                                  |
+               +--------------------------------------------------+
+
+]]> </artwork>
+  </figure>
   
   <sourcecode type="json" markers="false">
     <![CDATA[
 {
   "roadm-path-impairments": [
+    
     {
-      "roadm-path-impairments-id": 1,
-      "roadm-add-path":
-      "Add path impairments from LTP 10 to LTP 1 or LTP 2 or LTP 3."
-    },
-    {
-      "roadm-path-impairments-id": 2,
+      "roadm-path-impairments-id": "2",
       "roadm-add-path":
       "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
        through AD1."
     },
     {
-      "roadm-path-impairments-id": 3,
+      "roadm-path-impairments-id": "3",
       "roadm-add-path":
-      "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 2,
-      through AD2."
+      "Add path impairments from LTP 20 or LTP 30 or LTP 40 to LTP 1
+      or LTP 2, through AD2."
     }
   ],
 
-  "connectivity-matrix"[
-    { 
-      "id": 1,
-      "from": {
-        "tp-ref" : 20
-      },
-      "to" :  {
-        "tp-ref" : 1,       
-        "additional-ltp": [
-           {
-              "link-tp-ref": 1,
-              "roadm-path-impairments": 3
-           },
-           {
-              "link-tp-ref": 2,
-              "roadm-path-impairments": 3
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 2,
-      "from": {
-        "tp-ref" : 20
-      },
-      "to" :  {
-        "tp-ref" : 3,        
-        "additional-ltp": [
-           {
-              "link-tp-ref": 1,
-              "roadm-path-impairments": 3
-           },
-           {
-              "link-tp-ref": 2,
-              "roadm-path-impairments": 3
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 3,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 1,        
-        "additional-ltp": [
-           {
-              "link-tp-ref": 1,
-              "roadm-path-impairments": 2
-           },
-           {
-              "link-tp-ref": 2,
-              "roadm-path-impairments": 2            
-
-           }
-        ]
-      },
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 4,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 2,        
-        "additional-ltp": [
-           {
-            "link-tp-ref": 1,
-            "roadm-path-impairments": 2
-           },
-           {
-            "link-tp-ref": 3,
-            "roadm-path-impairments": 2            
-
-           }
-        ]
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    },
-    {
-      "id": 5,
-      "from": {
-        "tp-ref" : 30
-      },
-      "to" :  {
-        "tp-ref" : 3,        
-        "additional-ltp": [
-           {
-            "link-tp-ref": 1,
-            "roadm-path-impairments": 3
-           },
-           {
-            "link-tp-ref": 2,
-            "roadm-path-impairments": 3            
-
-           }
-        ]
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 2
-    },
-    {
-      "id": 6,
-      "from": {
-        "tp-ref" : 40
-      },
-      "to" :  {
-        "tp-ref" : 1        
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    },
-    {
-      "id": 7,
-      "from": {
-        "tp-ref" : 40
-      },
-      "to" :  {
-        "tp-ref" : 2,        
-      },      
-      "is-allowed": true,
-      "roadm-path-impairments": 3
-    }    
-
-  ]
+"connectivity-matrices": {
+    "connectivity-matrix": [
+        {
+            "id": 1,
+            "from": {
+                "tp-ref": "20"
+            },
+            "to": {
+                "tp-ref": "1",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 2,
+            "from": {
+                "tp-ref": "20"
+            },
+            "to": {
+                "tp-ref": "3",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 3,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "1",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "2"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "2"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 4,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "2",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "2"
+                    },
+                    {
+                        "ltp-ref": "3",
+                        "roadm-path-impairments": "2"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        },
+        {
+            "id": 5,
+            "from": {
+                "tp-ref": "30"
+            },
+            "to": {
+                "tp-ref": "3",
+                "additional-ltp": [
+                    {
+                        "ltp-ref": "1",
+                        "roadm-path-impairments": "3"
+                    },
+                    {
+                        "ltp-ref": "2",
+                        "roadm-path-impairments": "3"
+                    }
+                ]
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "2"
+        },
+        {
+            "id": 6,
+            "from": {
+                "tp-ref": "40"
+            },
+            "to": {
+                "tp-ref": "1"
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        },
+        {
+            "id": 7,
+            "from": {
+                "tp-ref": "40"
+            },
+            "to": {
+                "tp-ref": "2"
+            },
+            "is-allowed": true,
+            "roadm-path-impairments": "3"
+        }
+    ]
 }
-    ]]>
-  </sourcecode>
 
-  
-  <ol type="(%d)" group="JSON examples">
-    <li>JSON example for use case in
-    <xref target="Protection UC (iii)"/></li>
-  </ol>
-  
-  <t>
-   [Editor's note: UC (iii) JSON example TBA!]
-  </t>
+
+"ietf-network-topology:termination-point": [
+    {
+        "tp-id": "20",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "30",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "1",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "2",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "3",
+        "protection-type": "otsi-protection"
+    }, {
+        "tp-id": "4",
+        "protection-type": "otsi-protection"
+    }
+]
+]]>
+  </sourcecode>
   
   </section>
   
@@ -7213,7 +7445,7 @@ eiver": [
   
   </section>
 
-  <section anchor="operational-mode_usage" numbered="true">
+<!--  <section anchor="operational-mode_usage" numbered="true">
   <name>Examples How to Use the organizational-mode Attribute</name>
   
   <t>
@@ -7311,6 +7543,7 @@ module vendor-b-operational-modes {
   </t>
 
   </section>
+-->
 
   
   <section anchor="Contributors" numbered="false">
