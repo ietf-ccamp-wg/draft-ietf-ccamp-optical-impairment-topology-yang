@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-16"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-17"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2024" month="July" day="5" />
+  <date year="2024" month="October" day="21" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
