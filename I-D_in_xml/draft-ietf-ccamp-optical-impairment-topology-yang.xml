@@ -1223,7 +1223,7 @@
   <t>
    It is possible that the set of parameter values defined for an
    explicit mode may also be represented in form of an organizational
-   mode or one or more application codes. The "supported-mode"
+   mode or one or more application codes. The "compatible-modes"
    container may provide two different lists with pointers to
    application codes and organizational modes, respectively.
   </t>
