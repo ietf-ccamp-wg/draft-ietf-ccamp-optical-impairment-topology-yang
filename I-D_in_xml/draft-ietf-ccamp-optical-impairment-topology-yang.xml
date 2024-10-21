@@ -3021,7 +3021,7 @@ module: ietf-optical-impairment-topology
              +--ro pmd-penalty* [pmd-value]
              |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
-             +--ro max-polarization-dependant-loss
+             +--ro max-polarization-dependent-loss
              |       power-loss-or-null
              +--ro pdl-penalty* [pdl-value]
              |  +--ro pdl-value        power-loss
