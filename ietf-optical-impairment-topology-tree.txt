@@ -2,7 +2,8 @@
 
 module: ietf-optical-impairment-topology
 
-  augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
+  augment /nw:networks/nw:network/nw:network-types
+            /tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
     +--rw otsis!
@@ -14,15 +15,19 @@ module: ietf-optical-impairment-topology
     |        +--ro e2e-mc-path-id*           uint16
     +--ro templates
        +--ro roadm-path-impairments
-       |  +--ro roadm-path-impairment* [roadm-path-impairments-id]
+       |  +--ro roadm-path-impairment*
+       |          [roadm-path-impairments-id]
        |     +--ro roadm-path-impairments-id    string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
-       |        |  +--ro roadm-express-path* [frequency-range-id]
+       |        |  +--ro roadm-express-path*
+       |        |          [frequency-range-id]
        |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
-       |        |     |  +--ro lower-frequency    frequency-thz
-       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     |  +--ro lower-frequency
+       |        |     |  |       frequency-thz
+       |        |     |  +--ro upper-frequency
+       |        |     |          frequency-thz
        |        |     +--ro roadm-pmd?                union
        |        |     +--ro roadm-cd?
        |        |     |       l0-types:decimal-5-or-null
@@ -33,11 +38,14 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-maxloss?
        |        |             l0-types:power-loss-or-null
        |        +--:(roadm-add-path)
-       |        |  +--ro roadm-add-path* [frequency-range-id]
+       |        |  +--ro roadm-add-path*
+       |        |          [frequency-range-id]
        |        |     +--ro frequency-range-id        uint16
        |        |     +--ro frequency-range
-       |        |     |  +--ro lower-frequency    frequency-thz
-       |        |     |  +--ro upper-frequency    frequency-thz
+       |        |     |  +--ro lower-frequency
+       |        |     |  |       frequency-thz
+       |        |     |  +--ro upper-frequency
+       |        |     |          frequency-thz
        |        |     +--ro roadm-pmd?                union
        |        |     +--ro roadm-cd?
        |        |     |       l0-types:decimal-5-or-null
@@ -54,11 +62,14 @@ module: ietf-optical-impairment-topology
        |        |     +--ro roadm-noise-figure?
        |        |             l0-types:decimal-5-or-null
        |        +--:(roadm-drop-path)
-       |           +--ro roadm-drop-path* [frequency-range-id]
+       |           +--ro roadm-drop-path*
+       |                   [frequency-range-id]
        |              +--ro frequency-range-id        uint16
        |              +--ro frequency-range
-       |              |  +--ro lower-frequency    frequency-thz
-       |              |  +--ro upper-frequency    frequency-thz
+       |              |  +--ro lower-frequency
+       |              |  |       frequency-thz
+       |              |  +--ro upper-frequency
+       |              |          frequency-thz
        |              +--ro roadm-pmd?                union
        |              +--ro roadm-cd?
        |              |       l0-types:decimal-5-or-null
@@ -85,15 +96,21 @@ module: ietf-optical-impairment-topology
        +--ro explicit-transceiver-modes
           +--ro explicit-transceiver-mode*
                   [explicit-transceiver-mode-id]
-             +--ro explicit-transceiver-mode-id        string
-             +--ro line-coding-bitrate?                identityref
-             +--ro bitrate?                            uint16
-             +--ro max-diff-group-delay?               decimal-2
-             +--ro max-chromatic-dispersion?           decimal-2
+             +--ro explicit-transceiver-mode-id
+             |       string
+             +--ro line-coding-bitrate?
+             |       identityref
+             +--ro bitrate?
+             |       uint16
+             +--ro max-diff-group-delay?
+             |       decimal-2
+             +--ro max-chromatic-dispersion?
+             |       decimal-2
              +--ro cd-penalty* [cd-value]
              |  +--ro cd-value         decimal-2
              |  +--ro penalty-value    union
-             +--ro max-polarization-mode-dispersion?   decimal-2
+             +--ro max-polarization-mode-dispersion?
+             |       decimal-2
              +--ro pmd-penalty* [pmd-value]
              |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
@@ -102,23 +119,35 @@ module: ietf-optical-impairment-topology
              +--ro pdl-penalty* [pdl-value]
              |  +--ro pdl-value        power-loss
              |  +--ro penalty-value    union
-             +--ro available-modulation-type?          identityref
+             +--ro available-modulation-type?
+             |       identityref
              +--ro min-OSNR?                           snr
-             +--ro rx-ref-channel-power?               power-dbm
-             +--ro rx-channel-power-penalty* [rx-channel-power-value]
+             +--ro rx-ref-channel-power?
+             |       power-dbm
+             +--ro rx-channel-power-penalty*
+             |       [rx-channel-power-value]
              |  +--ro rx-channel-power-value    power-dbm
              |  +--ro penalty-value             union
-             +--ro min-Q-factor?                       decimal-2
-             +--ro available-baud-rate?                decimal64
-             +--ro roll-off?                           decimal64
-             +--ro min-carrier-spacing?                frequency-ghz
-             +--ro available-fec-type?                 identityref
-             +--ro fec-code-rate?                      decimal64
-             +--ro fec-threshold?                      decimal64
+             +--ro min-Q-factor?
+             |       decimal-2
+             +--ro available-baud-rate?
+             |       decimal64
+             +--ro roll-off?
+             |       decimal64
+             +--ro min-carrier-spacing?
+             |       frequency-ghz
+             +--ro available-fec-type?
+             |       identityref
+             +--ro fec-code-rate?
+             |       decimal64
+             +--ro fec-threshold?
+             |       decimal64
              +--ro in-band-osnr?                       snr
              +--ro out-of-band-osnr?                   snr
-             +--ro tx-polarization-power-difference?   power-ratio
-             +--ro polarization-skew?                  decimal-2
+             +--ro tx-polarization-power-difference?
+             |       power-ratio
+             +--ro polarization-skew?
+                     decimal-2
   augment /nw:networks/nw:network/nw:node:
     +--rw transponders!
     |  +--ro transponder* [transponder-id]
@@ -129,23 +158,31 @@ module: ietf-optical-impairment-topology
     |        +--ro transceiver-id                 uint32
     |        +--ro supported-modes!
     |        |  +--ro supported-mode* [mode-id]
-    |        |     +--ro mode-id                         string
+    |        |     +--ro mode-id
+    |        |     |       string
     |        |     +--ro (mode)
     |        |        +--:(G.698.2)
     |        |        |  +--ro standard-mode?
     |        |        |  |       standard-mode
-    |        |        |  +--ro line-coding-bitrate*      identityref
-    |        |        |  +--ro min-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro max-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro transceiver-tunability?
-    |        |        |  |       frequency-ghz
-    |        |        |  +--ro tx-channel-power-min?     power-dbm
-    |        |        |  +--ro tx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-channel-power-min?     power-dbm
-    |        |        |  +--ro rx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-total-power-max?       power-dbm
+    |        |        |  +--ro line-coding-bitrate*
+    |        |        |  |       identityref
+    |        |        |  +--ro transceiver-tuning-range
+    |        |        |  |  +--ro min-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro max-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro transceiver-tunability-granularity?
+    |        |        |  |          frequency-ghz
+    |        |        |  +--ro tx-channel-power-min?
+    |        |        |  |       power-dbm
+    |        |        |  +--ro tx-channel-power-max?
+    |        |        |  |       power-dbm
+    |        |        |  +--ro rx-channel-power-min?
+    |        |        |  |       power-dbm
+    |        |        |  +--ro rx-channel-power-max?
+    |        |        |  |       power-dbm
+    |        |        |  +--ro rx-total-power-max?
+    |        |        |          power-dbm
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
     |        |        |     +--ro operational-mode?
@@ -154,12 +191,14 @@ module: ietf-optical-impairment-topology
     |        |        |     |       organization-identifier
     |        |        |     +--ro line-coding-bitrate*
     |        |        |     |       identityref
-    |        |        |     +--ro min-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro max-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro transceiver-tunability?
-    |        |        |     |       frequency-ghz
+    |        |        |     +--ro transceiver-tuning-range
+    |        |        |     |  +--ro min-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro max-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro transceiver-tunability-granular\
+ity?
+    |        |        |     |          frequency-ghz
     |        |        |     +--ro tx-channel-power-min?
     |        |        |     |       power-dbm
     |        |        |     +--ro tx-channel-power-max?
@@ -172,12 +211,14 @@ module: ietf-optical-impairment-topology
     |        |        |             power-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro min-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro max-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro transceiver-tunability?
-    |        |              |       frequency-ghz
+    |        |              +--ro transceiver-tuning-range
+    |        |              |  +--ro min-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro max-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro transceiver-tunability-granular\
+ity?
+    |        |              |          frequency-ghz
     |        |              +--ro tx-channel-power-min?
     |        |              |       power-dbm
     |        |              +--ro tx-channel-power-max?
@@ -196,31 +237,37 @@ module: ietf-optical-impairment-topology
     |        |              +--ro explicit-transceiver-mode-ref?
     |        |                      leafref
     |        +--ro configured-mode?               union
-    |        +--ro line-coding-bitrate?           identityref
-    |        +--ro tx-channel-power?              power-dbm-or-null
-    |        +--ro rx-channel-power?              power-dbm-or-null
-    |        +--ro rx-total-power?                power-dbm-or-null
+    |        +--ro line-coding-bitrate?
+    |        |       identityref
+    |        +--ro tx-channel-power?
+    |        |       power-dbm-or-null
+    |        +--ro rx-channel-power?
+    |        |       power-dbm-or-null
+    |        +--ro rx-total-power?
+    |        |       power-dbm-or-null
     |        +--ro outgoing-otsi
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
     |        +--ro incoming-otsi
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
-    |        +--ro configured-termination-type?   enumeration
+    |        +--ro configured-termination-type?
+    |                enumeration
     +--rw regen-groups!
        +--ro regen-group* [group-id]
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
-          +--ro transponder-ref*
-                  -> ../../../transponders/transponder/transponder-id
+          +--ro transponder-ref*   leafref
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
     +--ro OMS-attributes
        +--ro generalized-snr?        l0-types:snr
        +--ro equalization-mode?      identityref
        +--ro power-param
-       |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
-       |  +--ro nominal-psd?             l0-types:psd-or-null
+       |  +--ro nominal-carrier-power?
+       |  |       l0-types:power-dbm-or-null
+       |  +--ro nominal-psd?
+       |          l0-types:psd-or-null
        +--ro media-channel-groups!
        |  +--ro media-channel-group* [otsi-group-ref]
        |     +--ro otsi-group-ref    leafref
@@ -238,15 +285,16 @@ module: ietf-optical-impairment-topology
              +--ro elt-index                 uint16
              +--ro oms-element-uid?          union
              +--ro reverse-element-ref
-             |  +--ro link-ref?
-             |  |       -> ../../../../../../../../nt:link/link-id
+             |  +--ro link-ref?          leafref
              |  +--ro oms-element-ref*   leafref
              +--ro (element)
                 +--:(amplifier)
                 |  +--ro geolocation
                 |  |  +--ro altitude?    int64
-                |  |  +--ro latitude?    geographic-coordinate-degree
-                |  |  +--ro longitude?   geographic-coordinate-degree
+                |  |  +--ro latitude?
+                |  |  |       geographic-coordinate-degree
+                |  |  +--ro longitude?
+                |  |          geographic-coordinate-degree
                 |  +--ro amplifier
                 |     +--ro type-variety    string
                 |     +--ro operational
@@ -261,8 +309,10 @@ module: ietf-optical-impairment-topology
                 |           +--ro type-variety?
                 |           |       string
                 |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-thz
-                |           |  +--ro upper-frequency    frequency-thz
+                |           |  +--ro lower-frequency
+                |           |  |       frequency-thz
+                |           |  +--ro upper-frequency
+                |           |          frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -294,8 +344,10 @@ ull
 ull
                 |              |     +--ro raman-direction?
                 |              |     |       enumeration
-                |              |     +--ro raman-pump* [pump-id]
-                |              |        +--ro pump-id      uint16
+                |              |     +--ro raman-pump*
+                |              |             [pump-id]
+                |              |        +--ro pump-id
+                |              |        |       uint16
                 |              |        +--ro frequency?
                 |              |        |       l0-types:frequency-t\
 hz
@@ -304,7 +356,8 @@ hz
 r-null
                 |              +--:(dynamic-gain-equalizer)
                 |                 +--ro dynamic-gain-equalizer!
-                |                    +--ro media-channel* [flexi-n]
+                |                    +--ro media-channel*
+                |                            [flexi-n]
                 |                       +--ro flexi-n
                 |                       |       l0-types:flexi-n
                 |                       +--ro flexi-m
@@ -329,47 +382,52 @@ r-null
                 |             l0-types:power-loss-or-null
                 +--:(concentratedloss)
                    +--ro concentratedloss
-                      +--ro loss    l0-types:power-loss-or-null
+                      +--ro loss
+                              l0-types:power-loss-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
     +--ro ttp-transceiver* [transponder-ref transceiver-ref]
-       +--ro transponder-ref
-       |       -> ../../../../transponders/transponder/transponder-id
+       +--ro transponder-ref    leafref
        +--ro transceiver-ref    leafref
-  augment /nw:networks/nw:network/nw:node/nt:termination-point:
+  augment /nw:networks/nw:network/nw:node
+            /nt:termination-point:
     +--rw protection-type?   identityref
-  augment /nw:networks/nw:network/nw:node/nt:termination-point
-            /tet:te:
+  augment /nw:networks/nw:network/nw:node
+            /nt:termination-point/tet:te:
     +--rw inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes:
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:information-source-entry/tet:connectivity-matrices:
+            /tet:information-source-entry
+            /tet:connectivity-matrices:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:information-source-entry/tet:connectivity-matrices
+            /tet:information-source-entry
+            /tet:connectivity-matrices
             /tet:connectivity-matrix:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes/tet:connectivity-matrices:
+            /tet:te-node-attributes
+            /tet:connectivity-matrices:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:te-node-attributes
+            /tet:connectivity-matrices
             /tet:connectivity-matrix:
     +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:te-node-attributes
+            /tet:connectivity-matrices
             /tet:connectivity-matrix/tet:from:
     +--ro additional-ltp* [ltp-ref]
-       +--ro ltp-ref
-       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro ltp-ref                   leafref
        +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes/tet:connectivity-matrices
+            /tet:te-node-attributes
+            /tet:connectivity-matrices
             /tet:connectivity-matrix/tet:to:
     +--ro additional-ltp* [ltp-ref]
-       +--ro ltp-ref
-       |       -> ../../../../../../../nt:termination-point/tp-id
+       +--ro ltp-ref                   leafref
        +--ro roadm-path-impairments?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
@@ -382,7 +440,8 @@ r-null
             /tet:local-link-connectivity:
     +--ro add-path-impairments?    leafref
     +--ro drop-path-impairments?   leafref
-    +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
+    +--ro llc-transceiver*
+    |       [ttp-transponder-ref ttp-transceiver-ref]
     |  +--ro ttp-transponder-ref
     |  |       -> ../../../../ttp-transceiver/transponder-ref
     |  +--ro ttp-transceiver-ref
@@ -391,7 +450,6 @@ r-null
     |  +--ro add-path-impairments?    leafref
     |  +--ro drop-path-impairments?   leafref
     +--ro additional-ltp* [ltp-ref]
-       +--ro ltp-ref
-       |       -> ../../../../../../nt:termination-point/tp-id
+       +--ro ltp-ref                  leafref
        +--ro add-path-impairments?    leafref
        +--ro drop-path-impairments?   leafref
