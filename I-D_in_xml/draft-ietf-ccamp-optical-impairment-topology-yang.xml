@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2025" month="February" day="21" />
+  <date year="2025" month="March" day="17" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -3053,23 +3053,25 @@ module: ietf-optical-impairment-topology
     |        +--ro transceiver-id                 uint32
     |        +--ro supported-modes!
     |        |  +--ro supported-mode* [mode-id]
-    |        |     +--ro mode-id                         string
+    |        |     +--ro mode-id                           string
     |        |     +--ro (mode)
     |        |        +--:(G.698.2)
     |        |        |  +--ro standard-mode?
     |        |        |  |       standard-mode
-    |        |        |  +--ro line-coding-bitrate*      identityref
-    |        |        |  +--ro min-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro max-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro transceiver-tunability?
-    |        |        |  |       frequency-ghz
-    |        |        |  +--ro tx-channel-power-min?     power-dbm
-    |        |        |  +--ro tx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-channel-power-min?     power-dbm
-    |        |        |  +--ro rx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-total-power-max?       power-dbm
+    |        |        |  +--ro line-coding-bitrate*
+    |        |        |  |       identityref
+    |        |        |  +--ro transceiver-tuning-range
+    |        |        |  |  +--ro min-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro max-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro transceiver-tunability-granularity?
+    |        |        |  |          frequency-ghz
+    |        |        |  +--ro tx-channel-power-min?       power-dbm
+    |        |        |  +--ro tx-channel-power-max?       power-dbm
+    |        |        |  +--ro rx-channel-power-min?       power-dbm
+    |        |        |  +--ro rx-channel-power-max?       power-dbm
+    |        |        |  +--ro rx-total-power-max?         power-dbm
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
     |        |        |     +--ro operational-mode?
@@ -3078,12 +3080,14 @@ module: ietf-optical-impairment-topology
     |        |        |     |       organization-identifier
     |        |        |     +--ro line-coding-bitrate*
     |        |        |     |       identityref
-    |        |        |     +--ro min-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro max-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro transceiver-tunability?
-    |        |        |     |       frequency-ghz
+    |        |        |     +--ro transceiver-tuning-range
+    |        |        |     |  +--ro min-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro max-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro transceiver-tunability-granular\
+ity?
+    |        |        |     |          frequency-ghz
     |        |        |     +--ro tx-channel-power-min?
     |        |        |     |       power-dbm
     |        |        |     +--ro tx-channel-power-max?
@@ -3096,12 +3100,14 @@ module: ietf-optical-impairment-topology
     |        |        |             power-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro min-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro max-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro transceiver-tunability?
-    |        |              |       frequency-ghz
+    |        |              +--ro transceiver-tuning-range
+    |        |              |  +--ro min-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro max-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro transceiver-tunability-granular\
+ity?
+    |        |              |          frequency-ghz
     |        |              +--ro tx-channel-power-min?
     |        |              |       power-dbm
     |        |              +--ro tx-channel-power-max?
