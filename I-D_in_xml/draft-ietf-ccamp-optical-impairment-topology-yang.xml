@@ -910,11 +910,6 @@
    through the network. The channel power can be configured explicitly
    or in the form of power-spectral-density.
   </t>
-
-  <t>
-   [Editor's note: This sub-section needs to be completed and is still
-   work in progress.]
-  </t>
   
   </section>
 
@@ -1218,6 +1213,21 @@
    max CD, max PDL, Q-factor limit, are explicitly defined for the
    explicit modes while they are  defined implicitly for the
    application codes and organizational modes.
+  </t>
+  
+  <t>
+   The model provides information about the maximum accumulated
+   impairments supported by the transceiver modes (i.e.,
+   max-chromatic-dispersion, max-polarization-dependent-loss,
+   max-polarization-mode-dispersion, max-diff-group-delay). For CD,
+   PMD and PDL impairments, the model aslo supports the option to
+   to provide more detailed OSNR penalties as a function of the
+   accumulated impairments (i.e., cd-penalty, pmd-penalty and
+   pdl-penalty). In this case the attributes providing the maximum
+   accumulated impairments may be omitted and the maximum accumulated
+   impairment should be listed in the penalty list. In case both are
+   present, there should not be any value in the penalty list above
+   the maximum accumulated impairment.
   </t>
   
   <t>

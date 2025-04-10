@@ -921,9 +921,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    through the network.  The channel power can be configured explicitly
    or in the form of power-spectral-density.
 
-   [Editor's note: This sub-section needs to be completed and is still
-   work in progress.]
-
 2.6.  Transponders
 
    [Editor's note: The relationship between the transponder and the OTSi
@@ -946,6 +943,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    tunnels) are typically bidirectional, a TTP is also modeled as a
    bidirectional entity like the LTP described above.  Moreover, a TTP
    can terminate one or several OTSiG signals (tunnels) as described in
+   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and each OTSiG consists
+   of one or multiple OTSi signals as described in Section 2.3.2.
+   Therefore, a TTP may be associated with multiple transceivers.
 
 
 
@@ -953,10 +953,6 @@ Beller, et al.          Expires 18 September 2025              [Page 17]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
-
-   [I-D.ietf-teas-te-topo-and-tunnel-modeling] and each OTSiG consists
-   of one or multiple OTSi signals as described in Section 2.3.2.
-   Therefore, a TTP may be associated with multiple transceivers.
 
    A transponder is typically characterized by its data/symbol rate and
    the maximum distance the signal can travel.  Other transponder
@@ -996,9 +992,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    code, the YANG model in this document only defines a string, which
    represents that application code.
 
-
-
-
+   For the standard modes, some additional attributes are defined.  The
+   most important one is the line-coding-bitrate attribute, which was
+   added because [G.698.2] lists 100gpbs application codes supporting
+   two data formats, an OTU4 related data format and a Flex-O related
+   data format.  The supported data formats for an application code can
+   be described by listing the supported data formats via the line-
+   coding-bitrate attribute as transceiver capability.
 
 
 
@@ -1009,14 +1009,6 @@ Beller, et al.          Expires 18 September 2025              [Page 18]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
-
-   For the standard modes, some additional attributes are defined.  The
-   most important one is the line-coding-bitrate attribute, which was
-   added because [G.698.2] lists 100gpbs application codes supporting
-   two data formats, an OTU4 related data format and a Flex-O related
-   data format.  The supported data formats for an application code can
-   be described by listing the supported data formats via the line-
-   coding-bitrate attribute as transceiver capability.
 
    Moreover, the transceiver properties like optical carrier frequency
    range, optical carrier tunability, and transmitter/receiver optical
@@ -1059,13 +1051,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    *  Encoding (mapping of bit patterns (code words) to symbols in the
       constellation diagram)
 
-
-
-Beller, et al.          Expires 18 September 2025              [Page 19]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
-
-
    *  Baud rate (symbol rate)
 
    *  Carrier bandwidth (typically measured in GHz)
@@ -1073,6 +1058,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    The major reason for these transceiver presets is the fact that the
    attribute values typically cannot be configured independently and are
    therefore advertised as supported operational mode capabilities.  It
+
+
+
+Beller, et al.          Expires 18 September 2025              [Page 19]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
+
+
    is the responsibility of the organization to assign operational modes
    and to ensure that operational modes are unique and not ambiguous
    within the scope of the organization.
@@ -1112,6 +1105,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    the implicitly defined range.  Path computation policy is outside the
    scope of this topology YANG model.
 
+   In summary, the optical power and carrier frequency related
+   attributes shall either be described implicitly by the operational
+   mode following the definition provided by that organization or shall
+   be described explicitly when the optical power and carrier frequency
+   related properties are not included in the operational mode
+   definition.
+
 
 
 
@@ -1121,13 +1121,6 @@ Beller, et al.          Expires 18 September 2025              [Page 20]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
-
-   In summary, the optical power and carrier frequency related
-   attributes shall either be described implicitly by the operational
-   mode following the definition provided by that organization or shall
-   be described explicitly when the optical power and carrier frequency
-   related properties are not included in the operational mode
-   definition.
 
 2.6.3.  Explicit Modes
 
@@ -1171,17 +1164,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
    *  Supported transmitter power range [p_tx-min, p_tx_max]
 
+   *  Supported receiver channel power range [p_rx-min, p_rx_max]
+
+   *  Supported maximum total power, rx power for all channels fed into
+      the receiver
+
+
+
 
 
 Beller, et al.          Expires 18 September 2025              [Page 21]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
-
-   *  Supported receiver channel power range [p_rx-min, p_rx_max]
-
-   *  Supported maximum total power, rx power for all channels fed into
-      the receiver
 
    These optical transceiver properties are explicitly defined in the
    model for explicit and organizational modes, while they are
@@ -1192,6 +1187,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    CD, max PDL, Q-factor limit, are explicitly defined for the explicit
    modes while they are defined implicitly for the application codes and
    organizational modes.
+
+   The model provides information about the maximum accumulated
+   impairments supported by the transceiver modes (i.e., max-chromatic-
+   dispersion, max-polarization-dependent-loss, max-polarization-mode-
+   dispersion, max-diff-group-delay).  For CD, PMD and PDL impairments,
+   the model aslo supports the option to to provide more detailed OSNR
+   penalties as a function of the accumulated impairments (i.e., cd-
+   penalty, pmd-penalty and pdl-penalty).  In this case the attributes
+   providing the maximum accumulated impairments may be omitted and the
+   maximum accumulated impairment should be listed in the penalty list.
+   In case both are present, there should not be any value in the
+   penalty list above the maximum accumulated impairment.
 
    It is possible that the set of parameter values defined for an
    explicit mode may also be represented in form of an organizational
@@ -1220,19 +1227,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
    *  currently transmitted channel power
 
-   *  currently received channel power
-
-   *  currently received total power
-
-
-
-
 
 
 Beller, et al.          Expires 18 September 2025              [Page 22]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
 
+
+   *  currently received channel power
+
+   *  currently received total power
 
 2.7.  3R Regenerators
 
@@ -1274,10 +1278,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
       receives and transmits the optical signal from/to the same segment
       of the end-to-end tunnel.  This means that each transceiver is
       operated in a bi-directional mode.
-
-
-
-
 
 
 
@@ -5741,9 +5741,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
               Belotti, S., Busi, I., Beller, D., Le Rouzic, E., and A.
               Guo, "Common YANG Data Types for Layer 0 Networks", Work
               in Progress, Internet-Draft, draft-ietf-ccamp-rfc9093-bis-
-              12, 4 December 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-
-              rfc9093-bis-12>.
+              13, 17 March 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-ccamp-rfc9093-bis-13>.
 
 8.2.  Informative References
 
@@ -5758,6 +5757,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
               Wavelength Switched Optical Networks", RFC 7446,
               DOI 10.17487/RFC7446, February 2015,
               <https://www.rfc-editor.org/info/rfc7446>.
+
 
 
 
