@@ -1158,9 +1158,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model       March 2025
    *  Supported transmitter tuning range with min/max nominal carrier
       frequency [f_tx_min, f_tx_max]
 
-   *  Supported transmitter tunability describing the transmitter's
-      frequency fine tuning steps (the minimum distance between two
-      adjacent carrier frequencies in GHz)
+   *  Supported transceiver tunability describing the transmitter's
+      frequency fine tuning granularity (the minimum distance between
+      two adjacent carrier frequencies in GHz)
 
    *  Supported transmitter power range [p_tx-min, p_tx_max]
 
