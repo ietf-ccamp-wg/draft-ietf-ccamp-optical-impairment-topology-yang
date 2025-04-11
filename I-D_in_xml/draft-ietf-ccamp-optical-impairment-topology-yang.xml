@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-17"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-18"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2024" month="October" day="21" />
+  <date year="2025" month="April" day="11" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -910,22 +910,12 @@
    through the network. The channel power can be configured explicitly
    or in the form of power-spectral-density.
   </t>
-
-  <t>
-   [Editor's note: This sub-section needs to be completed and is still
-   work in progress.]
-  </t>
   
   </section>
 
 
   <section title="Transponders" anchor="transponders">
-  <t>
-   [Editor's note: The relationship between the transponder and the
-   OTSi in the YANG model described in <xref target="sect-3"></xref>
-   needs further clarification and refinement.]
-  </t>
-
+  
   <t>
    A Transponder is the element that sends and receives the optical
    signal from a DWDM network. A transponder can comprise one or more
@@ -1196,8 +1186,8 @@
   <t><list style="symbols"><?rfc subcompact="yes"?>
    <t>Supported transmitter tuning range with min/max nominal carrier
       frequency [f_tx_min, f_tx_max]</t>
-   <t>Supported transmitter tunability describing the transmitter's
-      frequency fine tuning steps (the minimum distance between two
+   <t>Supported transceiver tunability describing the transmitter's
+      frequency fine tuning granularity (the minimum distance between two
       adjacent carrier frequencies in GHz)</t>
    <t>Supported transmitter power range [p_tx-min, p_tx_max]</t>
    <t>Supported receiver channel power range [p_rx-min, p_rx_max]</t>
@@ -1218,6 +1208,21 @@
    max CD, max PDL, Q-factor limit, are explicitly defined for the
    explicit modes while they are  defined implicitly for the
    application codes and organizational modes.
+  </t>
+  
+  <t>
+   The model provides information about the maximum accumulated
+   impairments supported by the transceiver modes (i.e.,
+   max-chromatic-dispersion, max-polarization-dependent-loss,
+   max-polarization-mode-dispersion, max-diff-group-delay). For CD,
+   PMD and PDL impairments, the model also supports the option to
+   provide more detailed OSNR penalties as a function of the
+   accumulated impairments (i.e., cd-penalty, pmd-penalty and
+   pdl-penalty). In this case the attributes providing the maximum
+   accumulated impairments may be omitted and the maximum accumulated
+   impairment should be listed in the penalty list. In case both are
+   present, there should not be any value in the penalty list above
+   the maximum accumulated impairment.
   </t>
   
   <t>
@@ -1617,7 +1622,8 @@
   </t>
   
   <t>
-   [Editor's note: this requires further study].
+   [Editor's note: This will be addressed in a future revision of this
+   document. See Editor's note above.]
   </t>
 
   <figure align="center" title="Integrated WDM-node Architectiure with
@@ -1730,12 +1736,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
 
   <section title="Optical Impairments Imposed by WDM-TE-Nodes"
    anchor="sect-2.9.4">
-  
-  <t>
-   [Editor's note: the following text still needs to be updated based
-   on the agreed terminology]
-  </t>
-  
+    
   <t>
    When an optical OTSi signal traverses a ROADM node, optical
    impairments are imposed on the signal by various passive or active
@@ -2915,12 +2916,7 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
 
 
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
-  
-  <t>
-   [Editor's note: tree view below always has to be updated before
-   submitting a new revision!]
-  </t>
-  
+    
   <sourcecode name="ietf-optical-impairment-topolog.tree" type="text"
   markers="false">
     <![CDATA[
@@ -3021,7 +3017,7 @@ module: ietf-optical-impairment-topology
              +--ro pmd-penalty* [pmd-value]
              |  +--ro pmd-value        decimal-2
              |  +--ro penalty-value    union
-             +--ro max-polarization-dependant-loss
+             +--ro max-polarization-dependent-loss
              |       power-loss-or-null
              +--ro pdl-penalty* [pdl-value]
              |  +--ro pdl-value        power-loss
@@ -3053,23 +3049,25 @@ module: ietf-optical-impairment-topology
     |        +--ro transceiver-id                 uint32
     |        +--ro supported-modes!
     |        |  +--ro supported-mode* [mode-id]
-    |        |     +--ro mode-id                         string
+    |        |     +--ro mode-id                           string
     |        |     +--ro (mode)
     |        |        +--:(G.698.2)
     |        |        |  +--ro standard-mode?
     |        |        |  |       standard-mode
-    |        |        |  +--ro line-coding-bitrate*      identityref
-    |        |        |  +--ro min-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro max-central-frequency?
-    |        |        |  |       frequency-thz
-    |        |        |  +--ro transceiver-tunability?
-    |        |        |  |       frequency-ghz
-    |        |        |  +--ro tx-channel-power-min?     power-dbm
-    |        |        |  +--ro tx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-channel-power-min?     power-dbm
-    |        |        |  +--ro rx-channel-power-max?     power-dbm
-    |        |        |  +--ro rx-total-power-max?       power-dbm
+    |        |        |  +--ro line-coding-bitrate*
+    |        |        |  |       identityref
+    |        |        |  +--ro transceiver-tuning-range
+    |        |        |  |  +--ro min-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro max-central-frequency?
+    |        |        |  |  |       frequency-thz
+    |        |        |  |  +--ro transceiver-tunability-granularity?
+    |        |        |  |          frequency-ghz
+    |        |        |  +--ro tx-channel-power-min?       power-dbm
+    |        |        |  +--ro tx-channel-power-max?       power-dbm
+    |        |        |  +--ro rx-channel-power-min?       power-dbm
+    |        |        |  +--ro rx-channel-power-max?       power-dbm
+    |        |        |  +--ro rx-total-power-max?         power-dbm
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
     |        |        |     +--ro operational-mode?
@@ -3078,12 +3076,14 @@ module: ietf-optical-impairment-topology
     |        |        |     |       organization-identifier
     |        |        |     +--ro line-coding-bitrate*
     |        |        |     |       identityref
-    |        |        |     +--ro min-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro max-central-frequency?
-    |        |        |     |       frequency-thz
-    |        |        |     +--ro transceiver-tunability?
-    |        |        |     |       frequency-ghz
+    |        |        |     +--ro transceiver-tuning-range
+    |        |        |     |  +--ro min-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro max-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro transceiver-tunability-granular\
+ity?
+    |        |        |     |          frequency-ghz
     |        |        |     +--ro tx-channel-power-min?
     |        |        |     |       power-dbm
     |        |        |     +--ro tx-channel-power-max?
@@ -3096,12 +3096,14 @@ module: ietf-optical-impairment-topology
     |        |        |             power-dbm
     |        |        +--:(explicit-mode)
     |        |           +--ro explicit-mode
-    |        |              +--ro min-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro max-central-frequency?
-    |        |              |       frequency-thz
-    |        |              +--ro transceiver-tunability?
-    |        |              |       frequency-ghz
+    |        |              +--ro transceiver-tuning-range
+    |        |              |  +--ro min-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro max-central-frequency?
+    |        |              |  |       frequency-thz
+    |        |              |  +--ro transceiver-tunability-granular\
+ity?
+    |        |              |          frequency-ghz
     |        |              +--ro tx-channel-power-min?
     |        |              |       power-dbm
     |        |              +--ro tx-channel-power-max?
@@ -3328,11 +3330,6 @@ r-null
   <section title="Optical Impairment Topology YANG Model"
   anchor="sect-4">
   
-  <t>
-   [Editor's note: YANG code below always has to be updated before
-   submitting a new revision!]
-  </t>
-
   <sourcecode name="ietf-optical-impairment-topology.yang" type="yang"
   markers="true">
     <![CDATA[
@@ -6125,16 +6122,14 @@ reference: RFC XXXX (TDB)
    the ROADM add/drop ports.
   </t>
   
-  <section anchor="JSON Examples - Remote OTs" numbered="true">
+  <section anchor="JSON Example - Remote OTs" numbered="true">
   <name>JSON Examples for Optical Transponders in a Remote Shelf
    (Remote OTs)</name>
  
   <t>
-   [Editor's note: Introductory text TBA here.]
-  </t>
-  
-  <t>
-   The JSON example below describes ... (TBA)
+   The JSON example below describes a topology where the optical
+   transponders are located in a remote WDM-TE-Node as depicted in
+   <xref target="Figure-Appendix-B"/>).
   </t>
   
   <t>
