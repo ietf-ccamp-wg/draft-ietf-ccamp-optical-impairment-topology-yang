@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2025" month="March" day="17" />
+  <date year="2025" month="April" day="11" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -915,12 +915,7 @@
 
 
   <section title="Transponders" anchor="transponders">
-  <t>
-   [Editor's note: The relationship between the transponder and the
-   OTSi in the YANG model described in <xref target="sect-3"></xref>
-   needs further clarification and refinement.]
-  </t>
-
+  
   <t>
    A Transponder is the element that sends and receives the optical
    signal from a DWDM network. A transponder can comprise one or more
@@ -1220,8 +1215,8 @@
    impairments supported by the transceiver modes (i.e.,
    max-chromatic-dispersion, max-polarization-dependent-loss,
    max-polarization-mode-dispersion, max-diff-group-delay). For CD,
-   PMD and PDL impairments, the model aslo supports the option to
-   to provide more detailed OSNR penalties as a function of the
+   PMD and PDL impairments, the model also supports the option to
+   provide more detailed OSNR penalties as a function of the
    accumulated impairments (i.e., cd-penalty, pmd-penalty and
    pdl-penalty). In this case the attributes providing the maximum
    accumulated impairments may be omitted and the maximum accumulated
@@ -1627,7 +1622,8 @@
   </t>
   
   <t>
-   [Editor's note: this requires further study].
+   [Editor's note: This will be addressed in a future revision of this
+   document. See Edito's note above.]
   </t>
 
   <figure align="center" title="Integrated WDM-node Architectiure with
@@ -1740,12 +1736,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
 
   <section title="Optical Impairments Imposed by WDM-TE-Nodes"
    anchor="sect-2.9.4">
-  
-  <t>
-   [Editor's note: the following text still needs to be updated based
-   on the agreed terminology]
-  </t>
-  
+    
   <t>
    When an optical OTSi signal traverses a ROADM node, optical
    impairments are imposed on the signal by various passive or active
@@ -2925,12 +2916,7 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
 
 
   <section title="YANG Model (Tree Structure)" anchor="sect-3">
-  
-  <t>
-   [Editor's note: tree view below always has to be updated before
-   submitting a new revision!]
-  </t>
-  
+    
   <sourcecode name="ietf-optical-impairment-topolog.tree" type="text"
   markers="false">
     <![CDATA[
@@ -3344,11 +3330,6 @@ r-null
   <section title="Optical Impairment Topology YANG Model"
   anchor="sect-4">
   
-  <t>
-   [Editor's note: YANG code below always has to be updated before
-   submitting a new revision!]
-  </t>
-
   <sourcecode name="ietf-optical-impairment-topology.yang" type="yang"
   markers="true">
     <![CDATA[
@@ -6141,16 +6122,14 @@ reference: RFC XXXX (TDB)
    the ROADM add/drop ports.
   </t>
   
-  <section anchor="JSON Examples - Remote OTs" numbered="true">
+  <section anchor="JSON Example - Remote OTs" numbered="true">
   <name>JSON Examples for Optical Transponders in a Remote Shelf
    (Remote OTs)</name>
  
   <t>
-   [Editor's note: Introductory text TBA here.]
-  </t>
-  
-  <t>
-   The JSON example below describes ... (TBA)
+   The JSON example below describes a topology where the optical
+   transponders are located in a remote WDM-TE-Node as depicted in
+   <xref target="Figure-Appendix-B"/>).
   </t>
   
   <t>
