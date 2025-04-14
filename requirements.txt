@@ -1,4 +1,4 @@
-gitpython==3.1.37
+gitpython==3.1.41
 pyang==2.4.0
 pytest==3.8.2
 PyYAML==5.4
