@@ -17,7 +17,7 @@
               "roadm-path-impairment": [
                   {
                     "roadm-path-impairments-id": "1",
-                    
+                    // Add path impairments from TTP 1 or TTP 2 to any LTP
                     "roadm-add-path": [          
                       {
                         "frequency-range-id": 0,
@@ -30,7 +30,7 @@
                   },
                   {
                     "roadm-path-impairments-id": "2",
-                    
+                    // Add path impairments from TTP 3 or TTP 4 to LTP 1 or LTP 3, through AD1
                     "roadm-add-path": [                      
                       {
                         "frequency-range-id": 0,
@@ -43,7 +43,7 @@
                   },
                   {
                     "roadm-path-impairments-id": "3",
-                    
+                    // Add path impairments from TTP 3 or TTP 4 to LTP 1 or LTP 2, through AD2
                     "roadm-add-path": [
                       {              
                         "frequency-range-id": 0,
