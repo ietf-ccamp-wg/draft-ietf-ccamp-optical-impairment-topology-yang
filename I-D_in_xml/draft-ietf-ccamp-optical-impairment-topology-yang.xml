@@ -95,15 +95,12 @@
 
   <t>
    The intent of this document is to provide a YANG data model, which
-   can be utilized by a Multi-Domain Service Coordinator (MDSC) to
-   collect states of WSON impairment data from the Transport PNCs to
-   enable impairment-aware optical path computation according to the
+   can be utilized between controllers to
+   collect states of WSON impairment data to
+   enable impairment-aware optical path computation as e.g. described by
    ACTN Architecture <xref target="RFC8453"/>. The communication
    between controllers is done via a NETCONF <xref target="RFC8341"/>
-   or a RESTCONF <xref target="RFC8040"/>. Similarly,this model can
-   also be exported by the MDSC to a Customer Network Controller (CNC),
-   which can run an offline planning process to map latter the services
-   in the network.
+   or a RESTCONF <xref target="RFC8040"/>. 
   </t>
   
   <t>
@@ -127,8 +124,7 @@
    The optical impairment aware topology for a WSON/SSON network
    based on the YANG data model defined in this document is intended to
    be used for exposing the network topology including optical
-   impairments. Therefore, the topology information that is typically
-   provided by a Transport PNC is assumed to be read-only (ro) data,
+   impairments. Therefore, the topology information is assumed to be read-only (ro) data,
    i.e., not configurable (read-write). This may change when the same
    optical impairment-aware topology model is used for other use cases
    than exposing the network topology. E.g, for a path computation
@@ -281,9 +277,9 @@
   
   <figure align="center" title="Scope of RFC AAAA" anchor="Figure-1">
   <artwork><![CDATA[
-                          +--------+
-                          |  MDSC  |
-                          +--------+
+                +---------------------------+
+                |  Hierarchical Controller  |
+                +---------------------------+
  Scope of this ID  ------->   ||
                |              ||
                |  +------------------------+
@@ -323,9 +319,8 @@
   
   <t>
    The topology model developed in this document is an abstracted
-   topology YANG model that can be used at the interfaces between the
-   MDSC and the Optical Domain Controller (aka MPI) and between the
-   Optical Domain Controller and the Optical Device (aka SBI) in
+   topology YANG model that can be used at the interfaces between Controllers 
+   and between the Optical Domain Controller and the Optical Device in
    <xref target="Figure-1"/>.
    It is not intended to support a detailed low-level DWDM interface
    model. DWDM interface model is supported by the models presented in
@@ -1531,7 +1526,7 @@
    The TE topology YANG model augmentations including optical
    impairments for DWDM networks defined below intend to cover all the
    3 categories of WDM-node architectures listed above. In the case
-   of a disaggregated WDM-node architecture, it is assumed that the
+   of a disaggregated WDM-node architecture, it is assumed that an
    optical domain controller already performs some form of abstraction
    and presents the WDM-TE-node representing the disaggregated WDM-node
    in the same way as an integrated WDM-TE-node with local optical
@@ -1611,7 +1606,7 @@
    WDM-node. If the optical transponders and the WDM-node are
    collocated and if short single channel fiber links are used to
    interconnect the optical transponders with an add/drop port of the
-   WDM-node, the optical domain controller may present these optical
+   WDM-node, an optical domain controller may present these optical
    transponders in the same way as local  optical transponders. If,
    however, the optical impairments of the single channel fiber link
    between the optical transponder and the add/drop port of the
@@ -1685,7 +1680,7 @@
   <t>
    As this document defines TE topology YANG model augmentations
    <xref target="RFC8795"/> for the TE topology YANG
-   model provided at the north-bound interface of the optical domain
+   model provided at the north-bound interface of an optical domain
    controller, it is a valid assumption that the optical domain
    controller abstracts the subsystems of a disaggregated WDM-TE-node
    and presents the disaggregated WDM-TE-node in the same way as an
