@@ -1,0 +1,252 @@
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "WDM-Network-2",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-top\
+ology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-1"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:templates": {
+          "roadm-path-impairments": {
+              "roadm-path-impairment": [
+                  {
+                    "roadm-path-impairments-id": "1",
+                    // Add path impairments from TTP 1 or TTP 2 to a\
+ny LTP
+                    "roadm-add-path": [          
+                      {
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "roadm-path-impairments-id": "2",
+                    // Add path impairments from TTP 3 or TTP 4 to L\
+TP 1 or LTP 3, through AD1
+                    "roadm-add-path": [                      
+                      {
+                        "frequency-range-id": 0,
+                          "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                          }
+                      }                              
+                    ]            
+                  },
+                  {
+                    "roadm-path-impairments-id": "3",
+                    // Add path impairments from TTP 3 or TTP 4 to L\
+TP 1 or LTP 2, through AD2
+                    "roadm-add-path": [
+                      {              
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]                            
+                  }
+              ]
+          }
+        },
+        "node": [
+          {
+            "node-id": "WDM-TE-Node-1",
+            "ietf-te-topology:te-node-id": "192.0.2.1",
+            "ietf-te-topology:te": {
+              "tunnel-termination-point": [
+                {
+                  "tunnel-tp-id": "MQ==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": true,
+                    "ietf-optical-impairment-topology:add-path-impai\
+rments": "1"
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Mg==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": true,
+                    "ietf-optical-impairment-topology:add-path-impai\
+rments": "1",
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-2"
+                          },
+                          { 
+                            "ltp-ref": "LTP-3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-2",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-1"
+                          },
+                          {
+                            "ltp-ref": "LTP-3"
+                          }
+                        ]
+                      },
+                      {
+                      "link-tp-ref": "LTP-3",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-1"
+                          },{
+                            "ltp-ref": "LTP-2"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Mw==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+mpairments": "2",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments": "2"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments": "3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-3",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+mpairments": "2",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments": "3"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "NA==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+mpairments": "3",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments": "2"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments": "3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-2",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+mpairments": "3",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments": "2"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-3",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+mpairments": "2",
+                        "ietf-optical-impairment-topology:additional\
+-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments": "3"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "LTP-1"
+              },
+              {
+                "tp-id": "LTP-2"
+              },
+              {
+                "tp-id": "LTP-3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
