@@ -258,15 +258,15 @@ module: ietf-optical-impairment-topology
                 |                [frequency-range-id stage-order]
                 |           +--ro frequency-range-id
                 |           |       uint16
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro stage-order
                 |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-thz
-                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -338,53 +338,53 @@ module: ietf-optical-impairment-topology
             /tet:te-node-attributes:
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:from:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:to:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairment-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairment-set?   leafref
+    +--ro drop-path-impairments?     leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
             /tet:local-link-connectivity:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairment-set?   leafref
+    +--ro drop-path-impairments?     leafref
     +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
     |  +--ro ttp-transponder-ref
     |  |       -> ../../../../ttp-transceiver/transponder-ref
     |  +--ro ttp-transceiver-ref
     |  |       -> ../../../../ttp-transceiver/transceiver-ref
-    |  +--ro is-allowed?              boolean
-    |  +--ro add-path-impairments?    leafref
-    |  +--ro drop-path-impairments?   leafref
+    |  +--ro is-allowed?                boolean
+    |  +--ro add-path-impairment-set?   leafref
+    |  +--ro drop-path-impairments?     leafref
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../nt:termination-point/tp-id
-       +--ro add-path-impairments?    leafref
-       +--ro drop-path-impairments?   leafref
+       +--ro add-path-impairment-set?   leafref
+       +--ro drop-path-impairments?     leafref

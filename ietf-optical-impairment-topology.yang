@@ -130,11 +130,7 @@ module ietf-optical-impairment-topology {
 
             Two elements in the list must not have the same range
             or overlapping ranges.";
-          leaf frequency-range-id {
-            type uint16;
-            description
-              "The identifier of the frequency range.";
-          }
+          uses frequency-range-with-identifier;
           leaf stage-order {
             type uint8;
             description
@@ -158,12 +154,6 @@ module ietf-optical-impairment-topology {
               This attributes applies only when the type-variety of
               the amplifier is not sufficient to describe the
               amplifier element type.";
-          }
-          container frequency-range {
-            description
-              "The frequency range amplified by the amplifier
-              element.";
-            uses l0-types:frequency-range;
           }
           container power-param {
             description
@@ -930,6 +920,25 @@ module ietf-optical-impairment-topology {
     }
   }
 
+  grouping frequency-range-with-identifier {
+    description
+      "This grouping extends the frequency-range defined in
+      ietf-layer0-types with an identifier, which used as a key to
+      provide different impairments information on different
+      frequency ranges.";
+    leaf frequency-range-id {
+      type uint16;
+      description
+        "The identifier of the frequency range.";
+    }
+    container frequency-range {
+      description
+        "The frequency range for which these optical
+        impairments apply.";
+      uses l0-types:frequency-range;
+    }
+  }
+
 /* 
  * Data nodes
  */
@@ -1017,17 +1026,7 @@ module ietf-optical-impairment-topology {
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of the frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
+                uses frequency-range-with-identifier;
                 uses roadm-express-path;
               } 
             }
@@ -1040,17 +1039,7 @@ module ietf-optical-impairment-topology {
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of a frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
+                uses frequency-range-with-identifier;
                 uses roadm-add-path; 
               }
             }          
@@ -1063,23 +1052,13 @@ module ietf-optical-impairment-topology {
                   
                   Two elements in the list must not have the same
                   range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of a frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
+                uses frequency-range-with-identifier;
                 uses roadm-drop-path; 
               }
             }
           }
-        } // list roadm-path-impairments 
-      } // container roadm-path-impairments 
+        } // list roadm-path-impairment-set 
+      } // container roadm-path-impairment-sets
       container explicit-transceiver-modes {
         description
           "The top level container for the list of the
@@ -1444,7 +1423,7 @@ module ietf-optical-impairment-topology {
     description
       "Augment default TE node connectivity matrix information 
       source.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairment-set {
       type leafref {
         path "../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1469,7 +1448,7 @@ module ietf-optical-impairment-topology {
     description
       "Augment TE node connectivity matrix entry information 
       source.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairment-set {
       type leafref {
         path "../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1492,7 +1471,7 @@ module ietf-optical-impairment-topology {
     }  
     description
       "Augment default TE node connectivity matrix.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairment-set {
       type leafref {
         path "../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1519,7 +1498,7 @@ module ietf-optical-impairment-topology {
     }
     description
       "Augment TE node connectivity matrix entry.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairment-set {
       type leafref {
         path "../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1575,7 +1554,7 @@ module ietf-optical-impairment-topology {
           selected when the 'from' LTP of this connectivity matrix 
           entry is selected as a working LTP";
       }
-      leaf roadm-path-impairments {
+      leaf roadm-path-impairment-set {
         type leafref {
           path "../../../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1632,7 +1611,7 @@ module ietf-optical-impairment-topology {
           selected when the 'to' LTP of this connectivity matrix 
           entry is selected as a working LTP";
       }
-      leaf roadm-path-impairments {
+      leaf roadm-path-impairment-set {
         type leafref {
           path "../../../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1657,7 +1636,7 @@ module ietf-optical-impairment-topology {
     }
     description
       "Augment default TTP LLC.";
-    leaf add-path-impairments {
+    leaf add-path-impairment-set {
       type leafref {
         path "../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1695,7 +1674,7 @@ module ietf-optical-impairment-topology {
     }
     description
       "Augment TTP LLC entry.";
-    leaf add-path-impairments {
+    leaf add-path-impairment-set {
       type leafref {
         path "../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1747,7 +1726,7 @@ module ietf-optical-impairment-topology {
           'false' - connectivity from this transceiver is
           disallowed.";
       }
-      leaf add-path-impairments {
+      leaf add-path-impairment-set {
         type leafref {
           path "../../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
@@ -1795,7 +1774,7 @@ module ietf-optical-impairment-topology {
           selected when the LTP associated with this LLCP entry is 
           selected as a working LTP";
       }
-      leaf add-path-impairments {
+      leaf add-path-impairment-set {
         type leafref {
           path "../../../../../../../oit:templates"
            + "/oit:roadm-path-impairment-sets"
