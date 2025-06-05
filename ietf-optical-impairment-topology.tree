@@ -15,6 +15,7 @@ module: ietf-optical-impairment-topology
        |  +--ro roadm-path-impairment-set*
        |          [roadm-path-impairments-id]
        |     +--ro roadm-path-impairments-id    string
+       |     +--ro description?                 string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
        |        |  +--ro roadm-express-path* [frequency-range-id]

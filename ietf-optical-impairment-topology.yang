@@ -991,13 +991,19 @@ module ietf-optical-impairment-topology {
         list roadm-path-impairment-set {
           key "roadm-path-impairments-id";
           description
-            "The list of the set of optical impairments related to
-            ROADM paths.";
+            "The list of the set of optical impairments related to a
+            ROADM path.";
           leaf roadm-path-impairments-id {
             type string; 
             description
               "The identifier of the set of optical impairments
               related to a ROADM path.";
+          }
+          leaf description {
+            type string;
+            description
+              "The textual description of the the set of optical
+              impairments related to a ROADM path.";
           }
           choice impairment-type {
             description
