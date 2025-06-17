@@ -49,7 +49,7 @@ module ietf-optical-impairment-topology {
      Editor:   Haomian Zheng <zhenghaomian@huawei.com>
      Editor:   Nicola Sambo <nicosambo@gmail.com>
      Editor:   Victor Lopez <victor.lopez@nokia.com>
-     Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
+     Editor:   Gabriele Galimberti <gabriele.galimberti@nokia.com>
      Editor:   Giovanni Martinelli <giomarti@cisco.com>
      Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
@@ -63,7 +63,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -74,16 +74,22 @@ module ietf-optical-impairment-topology {
      (https://trustee.ietf.org/license-info).
 
      This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.";
+     the RFC itself for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
 
 // RFC Ed.: replace XXXX with actual RFC number and remove
 // this note
 // replace the revision date with the module publication date
 // the format is (year-month-day)
 
-  revision 2024-06-05 {
+  revision 2025-06-17 {
     description
-      "Initial Version";
+      "Initial version.";
     reference
       "RFC XXXX: A Yang Data Model for Impairment-aware
        Optical Networks";
@@ -128,7 +134,7 @@ module ietf-optical-impairment-topology {
             "The list of parallel amplifier elements within an
             amplifier used to amplify different frequency ranges.
 
-            Two elements in the list must not have the same range
+            Two elements in the list MUST NOT have the same range
             or overlapping ranges.";
           uses l0-types:frequency-range-with-identifier;
           leaf stage-order {
@@ -439,14 +445,16 @@ module ietf-optical-impairment-topology {
         description 
           "This is the maximum expected add path loss from 
           the add/drop port input to the ROADM egress, 
-          assuming no additional add path loss is added.  
+          assuming no additional add path loss is added.
+
           This is used to establish the minimum required
           transponder output power required 
           to hit the ROADM egress target power 
           levels and preventing 
           to hit the WSS attenuation limits.
+
           If the add path contains an internal amplifier 
-          this loss value should be based 
+          this loss value MUST be based 
           on worst case expected amplifier gain due to
           ripple or gain uncertainty";
       }
@@ -467,13 +475,15 @@ module ietf-optical-impairment-topology {
       type l0-types:snr-or-null;
       description 
         "Optical Signal-to-Noise Ratio (OSNR).
+
         If the add path contains the ability to adjust the 
         carrier power levels into an add path amplifier 
         (if present) to a target value,
         this reflects the OSNR contribution of the
         add amplifier assuming this target value is obtained.
+
         The worst case OSNR based on the input power and 
-        NF calculation method, and this value, should be used
+        NF calculation method, and this value, MUST be used
         (if both are defined).";
     }
     leaf roadm-noise-figure {
@@ -600,18 +610,20 @@ module ietf-optical-impairment-topology {
       type l0-types:snr-or-null; 
       description 
         "Optical Signal-to-Noise Ratio (OSNR).
+
         Expected OSNR contribution of the drop path
         amplifier(if present) 
         for the case of additional drop path loss
         (before this amplifier) 
         in order to hit a target power level (per carrier).
+
         If both, the OSNR based on the ROADM 
         input power level
         (Pcarrier = 
         Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
         and the input inferred NF(NF.drop), 
         and this OSNR value, are defined, 
-        the minimum value between these two should be used";
+        the minimum value between these two MUST be used";
     }
     leaf roadm-noise-figure {
       type l0-types:decimal-5-or-null;
@@ -759,7 +771,6 @@ module ietf-optical-impairment-topology {
             this media channel group belong to.";
         }
         list media-channel {
-          // key "flexi-n";
           key "media-channel-id";
           unique "flexi-n";
           description
@@ -773,7 +784,6 @@ module ietf-optical-impairment-topology {
               It may be equal to the flexi-n attribute, when the
               flexi-n attribute is present.";
           }
-          // this grouping add both n.m values
           uses l0-types:flexi-grid-frequency-slot;
           list otsi-ref {
             key "carrier-ref";
@@ -1005,7 +1015,7 @@ module ietf-optical-impairment-topology {
                   "The list of optical impairments on a ROADM express
                   path for different frequency ranges.
                   
-                  Two elements in the list must not have the same
+                  Two elements in the list MUST NOT have the same
                   range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
                 uses roadm-express-path;
@@ -1018,7 +1028,7 @@ module ietf-optical-impairment-topology {
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
-                  Two elements in the list must not have the same
+                  Two elements in the list MUST NOT have the same
                   range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
                 uses roadm-add-path; 
@@ -1031,7 +1041,7 @@ module ietf-optical-impairment-topology {
                   "The list of optical impairments on a ROADM add
                   path for different frequency ranges.
                   
-                  Two elements in the list must not have the same
+                  Two elements in the list MUST NOT have the same
                   range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
                 uses roadm-drop-path; 
@@ -1323,8 +1333,6 @@ module ietf-optical-impairment-topology {
       }
     } // list of transceivers
   } // end of augment
-
-  // Should this leaf be moved to te-topology?
 
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
     when '../../nw:network-types/tet:te-topology/'
