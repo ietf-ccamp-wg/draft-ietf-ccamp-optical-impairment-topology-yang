@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-06-17 {
+  revision 2025-06-24 {
     description
       "Initial version.";
     reference
@@ -465,8 +465,8 @@ module ietf-optical-impairment-topology {
         "This is the maximum (per carrier) power level
          permitted at the add block input ports,
          that can be handled by the ROADM node.
-         This may reflect either add amplifier power
-         contraints or WSS adjustment limits.
+         This can reflect either add amplifier power
+         constraints or WSS adjustment limits.
          Higher power transponders would need to have
          their launch power reduced
          to this value or lower";
@@ -520,11 +520,11 @@ module ietf-optical-impairment-topology {
         description
           "The net loss from the ROADM input,to the output
            of the drop block.
-           If ROADM ingress to drop path includes an amplifier,
+           If this ROADM ingress-to-drop path includes an amplifier,
            the amplifier gain reduces the net loss.
            This is before any additional drop path attenuation
            that may be required
-           due to drop amplifier power contraints.
+           due to drop amplifier power constraints.
            The max value correspond to worst case expected loss,
            including amplifier gain ripple or uncertainty.
            It is the maximum output power of the drop
@@ -536,11 +536,11 @@ module ietf-optical-impairment-topology {
       description
         "The net loss from the ROADM input, to the
          output of the drop block.
-         If this ROADM ingress to drop path includes
+         If this ROADM ingress-to-drop path includes
          an amplifier,the amplifier gain reduces the net loss.
          This is before any additional drop path attenuation
          that may be required due to drop amplifier power
-         contraints.
+         constraints.
          The min value correspond to best case expected loss,
          including amplifier gain ripple or uncertainty.";
     }
@@ -549,13 +549,13 @@ module ietf-optical-impairment-topology {
       description
         "The net loss from the ROADM input,
          to the output of the drop block.
-         If this ROADM ingress to drop path
+         If this ROADM ingress-to-drop path
          includes an amplifier,
          the amplifier gain reduces the net loss.
          This is before any additional drop path
          attenuation
          that may be required due to drop amplifier
-         power contraints.
+         power constraints.
          The typ value correspond to typical case
          expected loss.";
     }
