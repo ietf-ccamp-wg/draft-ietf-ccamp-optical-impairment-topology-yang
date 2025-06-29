@@ -1,5 +1,3 @@
-=============== NOTE: '\\' line wrapping per RFC 8792 ===============
-
 {
   "ietf-network:networks": {
     "network": [
@@ -7,8 +5,7 @@
         "network-id": "WDM-Network-1",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-top\
-\ology": {}
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -21,7 +18,7 @@
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -29,7 +26,7 @@
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -37,10 +34,10 @@
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -48,10 +45,10 @@
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -65,8 +62,7 @@
               "ietf-te-topology:tunnel-termination-point": [
                 {
                   "tunnel-tp-id": "AQ==",
-                  "ietf-optical-impairment-topology:ttp-transceiver"\
-\: [
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -77,8 +73,7 @@
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "1",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -91,8 +86,7 @@
                 },
                 {
                   "tunnel-tp-id": "Ag==",
-                  "ietf-optical-impairment-topology:ttp-transceiver"\
-\: [
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -107,8 +101,7 @@
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "2",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -118,8 +111,7 @@
                       },
                       {
                         "link-tp-ref": "3",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -217,7 +209,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -227,7 +219,7 @@
                             "media-channel-id": 1, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -247,7 +239,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -257,7 +249,7 @@
                             "media-channel-id": 2, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -277,7 +269,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -287,7 +279,7 @@
                             "media-channel-id": 2, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -307,7 +299,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                     "media-channel-groups": {
                       "media-channel-group": [
                         {
@@ -317,7 +309,7 @@
                               "media-channel-id": 3, 
                               "otsi-ref": [
                                 {
-                                  "otsi-carrier-ref": 1
+                                  "carrier-ref": 1
                                 } 
                               ]
                             }
@@ -337,7 +329,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -347,7 +339,7 @@
                             "media-channel-id": 4, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -367,7 +359,7 @@
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -377,7 +369,7 @@
                             "media-channel-id": 5, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -437,8 +429,7 @@
         "network-id": "WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-top\
-\ology": {}
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -451,7 +442,7 @@
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -459,7 +450,7 @@
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -467,10 +458,10 @@
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -478,10 +469,10 @@
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -541,19 +532,18 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "otsi-group-ref": "Red OTSiG (Forward)",    \
-\          
+                        "otsi-group-ref": "Red OTSiG (Forward)",              
                         "media-channel": [
                           {
                             "media-channel-id": -10, 
                             "flexi-n": -10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -573,7 +563,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -584,7 +574,7 @@
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -598,10 +588,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -621,7 +611,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -632,7 +622,7 @@
                             "flexi-n": -20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -652,7 +642,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -663,7 +653,7 @@
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -677,10 +667,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -700,7 +690,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -711,7 +701,7 @@
                             "flexi-n": -20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -731,7 +721,7 @@
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -742,7 +732,7 @@
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -756,10 +746,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -777,8 +767,7 @@
         "network-id": "WDM-Network-Complete",
         "network-types": {
           "ietf-te-topology:te-topology": {
-            "ietf-optical-impairment-topology:optical-impairment-top\
-\ology": {}
+            "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
@@ -791,7 +780,7 @@
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -799,7 +788,7 @@
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -807,10 +796,10 @@
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -818,10 +807,10 @@
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -835,8 +824,7 @@
               "ietf-te-topology:tunnel-termination-point": [
                 {
                   "tunnel-tp-id": "AQ==",
-                  "ietf-optical-impairment-topology:ttp-transceiver"\
-\: [
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -847,8 +835,7 @@
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "1",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -861,8 +848,7 @@
                 },
                 {
                   "tunnel-tp-id": "Ag==",
-                  "ietf-optical-impairment-topology:ttp-transceiver"\
-\: [
+                  "ietf-optical-impairment-topology:ttp-transceiver": [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -877,8 +863,7 @@
                     "local-link-connectivity": [
                       {
                         "link-tp-ref": "2",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -888,8 +873,7 @@
                       },
                       {
                         "link-tp-ref": "3",
-                        "ietf-optical-impairment-topology:llc-transc\
-\eiver": [
+                        "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -1027,7 +1011,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -1038,7 +1022,7 @@
                             "flexi-n": -10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1062,19 +1046,18 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "otsi-group-ref": "Red OTSiG (Reverse)",    \
-\          
+                        "otsi-group-ref": "Red OTSiG (Reverse)",              
                         "media-channel": [
                           {
                             "media-channel-id": 10, 
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1088,10 +1071,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -1115,7 +1098,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -1126,7 +1109,7 @@
                             "flexi-n": -20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1150,7 +1133,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -1161,7 +1144,7 @@
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1175,10 +1158,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -1202,7 +1185,7 @@
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -1213,7 +1196,7 @@
                             "flexi-n": -20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1237,7 +1220,7 @@
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
@@ -1248,7 +1231,7 @@
                             "flexi-n": 10,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -1262,10 +1245,10 @@
                             "flexi-n": 20,
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
