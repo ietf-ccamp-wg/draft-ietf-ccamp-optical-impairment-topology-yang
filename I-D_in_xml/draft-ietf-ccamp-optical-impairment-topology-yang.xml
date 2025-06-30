@@ -2908,14 +2908,16 @@ module: ietf-optical-impairment-topology
     +--rw otsis!
     |  +--ro otsi-group* [otsi-group-id]
     |     +--ro otsi-group-id    string
-    |     +--ro otsi* [otsi-carrier-id]
-    |        +--ro otsi-carrier-id           uint16
-    |        +--ro otsi-carrier-frequency?   union
-    |        +--ro e2e-mc-path-id*           uint16
+    |     +--ro otsi* [carrier-id]
+    |        +--ro carrier-id           uint16
+    |        +--ro carrier-frequency?   union
+    |        +--ro e2e-mc-path-id*      uint16
     +--ro templates
-       +--ro roadm-path-impairments
-       |  +--ro roadm-path-impairment* [roadm-path-impairments-id]
-       |     +--ro roadm-path-impairments-id    string
+       +--ro roadm-path-impairments-sets
+       |  +--ro roadm-path-impairments-set*
+       |          [roadm-path-impairments-set-id]
+       |     +--ro roadm-path-impairments-set-id    string
+       |     +--ro description?                     string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
        |        |  +--ro roadm-express-path* [frequency-range-id]
@@ -3095,9 +3097,9 @@ ity?
     |        |              +--ro rx-total-power-max?
     |        |              |       power-dbm
     |        |              +--ro compatible-modes
-    |        |              |  +--ro supported-application-codes*
+    |        |              |  +--ro supported-application-code*
     |        |              |  |       leafref
-    |        |              |  +--ro supported-organizational-modes*
+    |        |              |  +--ro supported-organizational-mode*
     |        |              |          leafref
     |        |              +--ro explicit-transceiver-mode-ref?
     |        |                      leafref
@@ -3121,7 +3123,7 @@ ity?
                   -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
-    +--ro OMS-attributes
+    +--ro oms-attributes
        +--ro generalized-snr?        l0-types:snr
        +--ro equalization-mode?      identityref
        +--ro power-param
@@ -3132,17 +3134,17 @@ ity?
        |     +--ro otsi-group-ref    leafref
        |     +--ro media-channel* [media-channel-id]
        |        +--ro media-channel-id    int16
-       |        +--ro flexi-n?            l0-types:flexi-n
-       |        +--ro flexi-m?            l0-types:flexi-m
-       |        +--ro otsi-ref* [otsi-carrier-ref]
-       |        |  +--ro otsi-carrier-ref    leafref
-       |        |  +--ro e2e-mc-path-ref*    leafref
+       |        +--ro flexi-n?            flexi-n
+       |        +--ro flexi-m?            flexi-m
+       |        +--ro otsi-ref* [carrier-ref]
+       |        |  +--ro carrier-ref        leafref
+       |        |  +--ro e2e-mc-path-ref*   leafref
        |        +--ro delta-power?
        |                l0-types:power-ratio-or-null
-       +--ro OMS-elements!
-          +--ro OMS-element* [elt-index]
-             +--ro elt-index                 uint16
-             +--ro oms-element-uid?          union
+       +--ro oms-elements!
+          +--ro oms-element* [elt-index]
+             +--ro elt-index                  uint16
+             +--ro oms-element-uid?           union
              +--ro reverse-element-ref
              |  +--ro link-ref?
              |  |       -> ../../../../../../../../nt:link/link-id
@@ -3160,15 +3162,15 @@ ity?
                 |                [frequency-range-id stage-order]
                 |           +--ro frequency-range-id
                 |           |       uint16
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro stage-order
                 |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-thz
-                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -3211,10 +3213,8 @@ r-null
                 |              +--:(dynamic-gain-equalizer)
                 |                 +--ro dynamic-gain-equalizer!
                 |                    +--ro media-channel* [flexi-n]
-                |                       +--ro flexi-n
-                |                       |       l0-types:flexi-n
-                |                       +--ro flexi-m
-                |                       |       l0-types:flexi-m
+                |                       +--ro flexi-n        flexi-n
+                |                       +--ro flexi-m        flexi-m
                 |                       +--ro delta-power?
                 |                               l0-types:power-ratio\
 -or-null
@@ -3233,8 +3233,8 @@ r-null
                 |     |       l0-types:power-loss-or-null
                 |     +--ro conn-out?
                 |             l0-types:power-loss-or-null
-                +--:(concentratedloss)
-                   +--ro concentratedloss
+                +--:(concentrated-loss)
+                   +--ro concentrated-loss
                       +--ro loss    l0-types:power-loss-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
@@ -3251,56 +3251,56 @@ r-null
             /tet:te-node-attributes:
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:from:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:to:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairments-set?    leafref
+    +--ro drop-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
             /tet:local-link-connectivity:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairments-set?    leafref
+    +--ro drop-path-impairments-set?   leafref
     +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
     |  +--ro ttp-transponder-ref
     |  |       -> ../../../../ttp-transceiver/transponder-ref
     |  +--ro ttp-transceiver-ref
     |  |       -> ../../../../ttp-transceiver/transceiver-ref
-    |  +--ro is-allowed?              boolean
-    |  +--ro add-path-impairments?    leafref
-    |  +--ro drop-path-impairments?   leafref
+    |  +--ro is-allowed?                  boolean
+    |  +--ro add-path-impairments-set?    leafref
+    |  +--ro drop-path-impairments-set?   leafref
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../nt:termination-point/tp-id
-       +--ro add-path-impairments?    leafref
-       +--ro drop-path-impairments?   leafref
+       +--ro add-path-impairments-set?    leafref
+       +--ro drop-path-impairments-set?   leafref
 ]]>
   </sourcecode>
 
