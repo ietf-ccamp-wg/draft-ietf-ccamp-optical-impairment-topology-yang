@@ -124,7 +124,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2025
    7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . 100
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . . 100
      8.1.  Normative References  . . . . . . . . . . . . . . . . . . 100
-     8.2.  Informative References  . . . . . . . . . . . . . . . . . 102
+     8.2.  Informative References  . . . . . . . . . . . . . . . . . 101
    Appendix A.  JSON Code Examples for Optical Protection Uses
            Cases . . . . . . . . . . . . . . . . . . . . . . . . . . 104
    Appendix B.  Optical Transponders in a Remote Shelf (Remote
@@ -5642,14 +5642,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2025
               DOI 10.17487/RFC8795, August 2020,
               <https://www.rfc-editor.org/info/rfc8795>.
 
-   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
-              L. Geng, "A Framework for Automating Service and Network
-              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
-              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
-
    [I-D.ietf-ccamp-rfc9093-bis]
               Belotti, S., Busi, I., Beller, D., Le Rouzic, E., and A.
               Guo, "Common YANG Data Types for Layer 0 Networks", Work
+              in Progress, Internet-Draft, draft-ietf-ccamp-rfc9093-bis-
+              15, 17 June 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-ccamp-rfc9093-bis-15>.
+
+8.2.  Informative References
 
 
 
@@ -5657,12 +5657,6 @@ Beller, et al.           Expires 1 January 2026               [Page 101]
 
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2025
 
-
-              in Progress, Internet-Draft, draft-ietf-ccamp-rfc9093-bis-
-              15, 17 June 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-ccamp-rfc9093-bis-15>.
-
-8.2.  Informative References
 
    [RFC6566]  Lee, Y., Ed., Bernstein, G., Ed., Li, D., and G.
               Martinelli, "A Framework for the Control of Wavelength
@@ -5704,6 +5698,12 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2025
               (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
               <https://www.rfc-editor.org/info/rfc8342>.
 
+   [RFC8453]  Ceccarelli, D., Ed. and Y. Lee, Ed., "Framework for
+              Abstraction and Control of TE Networks (ACTN)", RFC 8453,
+              DOI 10.17487/RFC8453, August 2018,
+              <https://www.rfc-editor.org/info/rfc8453>.
+
+
 
 
 
@@ -5714,15 +5714,15 @@ Beller, et al.           Expires 1 January 2026               [Page 102]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2025
 
 
-   [RFC8453]  Ceccarelli, D., Ed. and Y. Lee, Ed., "Framework for
-              Abstraction and Control of TE Networks (ACTN)", RFC 8453,
-              DOI 10.17487/RFC8453, August 2018,
-              <https://www.rfc-editor.org/info/rfc8453>.
-
    [RFC8792]  Watsen, K., Auerswald, E., Farrel, A., and Q. Wu,
               "Handling Long Lines in Content of Internet-Drafts and
               RFCs", RFC 8792, DOI 10.17487/RFC8792, June 2020,
               <https://www.rfc-editor.org/info/rfc8792>.
+
+   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
+              L. Geng, "A Framework for Automating Service and Network
+              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
+              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
 
    [RFC9094]  Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
               YANG Data Model for Wavelength Switched Optical Networks
