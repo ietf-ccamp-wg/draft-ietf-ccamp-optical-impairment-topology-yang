@@ -13,10 +13,10 @@
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:templates": {
-          "roadm-path-impairments": {
-              "roadm-path-impairment": [
+          "roadm-path-impairments-sets": {
+              "roadm-path-impairments-set": [
                   {
-                    "roadm-path-impairments-id": "1",
+                    "roadm-path-impairments-set-id": "1",
                     
                     "roadm-add-path": [          
                       {
@@ -29,7 +29,8 @@
                     ]
                   },
                   {
-                    "roadm-path-impairments-id": "2",
+                    "roadm-path-impairments-set-id": "2",
+                    "description": "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP3, through AD1",
                     
                     "roadm-add-path": [                      
                       {
@@ -42,8 +43,9 @@
                     ]            
                   },
                   {
-                    "roadm-path-impairments-id": "3",
-                    
+                    "roadm-path-impairments-set-id": "3",
+                    "description": "Add path impairments from LTP 20 or LTP 30 or LTP 40 to LTP 1 or LTP 2, through AD2",
+                                        
                     "roadm-add-path": [
                       {              
                         "frequency-range-id": 0,
@@ -75,16 +77,16 @@
                                "ietf-optical-impairment-topology:additional-ltp": [
                                   {
                                     "ltp-ref": "1",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   },
                                   {
                                     "ltp-ref": "2",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   }
                                ]
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                         },
                         {
                             "id": 2,
@@ -96,16 +98,16 @@
                                "ietf-optical-impairment-topology:additional-ltp": [
                                   {
                                     "ltp-ref": "1",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   },
                                   {
                                     "ltp-ref": "2",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   }
                                ]
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                         },
                         {
                             "id": 3,
@@ -117,16 +119,16 @@
                                "ietf-optical-impairment-topology:additional-ltp": [
                                   {
                                     "ltp-ref": "1",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   },
                                   {
                                     "ltp-ref": "2",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   }
                                ]
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                         },
                         {
                             "id": 4,
@@ -138,16 +140,16 @@
                                "ietf-optical-impairment-topology:additional-ltp": [
                                   {
                                     "ltp-ref": "1",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                                   },
                                   {
                                     "ltp-ref": "3",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                                   }
                                ]
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                         },
                         {
                             "id": 5,
@@ -159,16 +161,16 @@
                                "ietf-optical-impairment-topology:additional-ltp": [
                                   {
                                     "ltp-ref": "1",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   },
                                   {
                                     "ltp-ref": "2",
-                                    "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                                    "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                                   }
                                ]
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "2"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "2"
                         },
                         {
                             "id": 6,
@@ -179,7 +181,7 @@
                                "tp-ref": "1"
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                         },
                         {
                             "id": 7,
@@ -190,7 +192,7 @@
                                "tp-ref": "2"
                             },
                             "is-allowed": true,
-                            "ietf-optical-impairment-topology:roadm-path-impairments": "3"
+                            "ietf-optical-impairment-topology:roadm-path-impairments-set": "3"
                         }
                      ]
                   }
