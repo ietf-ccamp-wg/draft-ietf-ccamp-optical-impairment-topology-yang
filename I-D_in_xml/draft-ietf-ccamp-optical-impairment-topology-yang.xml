@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-18"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-19"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -37,7 +37,7 @@
   </author>
 
   <author initials="G." surname="Galimberti" fullname="G. Galimberti">
-    <organization>Individual</organization>
+    <organization>Nokia</organization>
     <address><email>ggalimbe56@gmail.com</email></address>
   </author>
   
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2025" month="April" day="11" />
+  <date year="2025" month="June" day="30" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -57,8 +57,9 @@
    and impairment constraints must be met to determine viable and
    optimal paths through the network. The determination of appropriate
    paths is known as Impairment-Aware Routing and Wavelength Assignment
-   (IA-RWA) for WSON, while it is known as Impairment-Aware Routing and
-   Spectrum Assignment (IA-RSA) for SSON.
+   (IA-RWA) for a Wavelength Switched Optical Network (WSON), while it
+   is known as Impairment-Aware Routing and Spectrum Assignment
+   (IA-RSA) for a Spectrum Switched Optical Network (SSON).
   </t>
 
   <t>
@@ -73,14 +74,19 @@
   <section title="Introduction" anchor="sect-1">
   <t>
    In order to provision an optical connection (an optical path)
-   through a wavelength switched optical networks (WSONs) or spectrum
-   switched optical networks (SSONs), a combination of path continuity,
-   resource availability, and impairment constraints must be met to
-   determine viable and optimal paths through the network. The
-   determination of appropriate paths is known as Impairment-Aware
-   Routing and Wavelength Assignment (IA-RWA) <xref target="RFC6566"/>
-   for WSON, while it is known as IA-Routing and Spectrum Assigment
-   (IA-RSA) for SSON.
+   through a wavelength switched optical networks (WSONs) as defined
+   in <xref target="RFC9094"/> or spectrum switched optical networks
+   (SSONs), a combination of path continuity, resource availability,
+   and impairment constraints must be met to determine viable and
+   optimal paths through the network. The determination of appropriate
+   paths is known as Impairment-Aware Routing and Wavelength Assignment
+  (IA-RWA) <xref target="RFC6566"/> for WSON, while it is known as
+  IA-Routing and Spectrum Assigment (IA-RSA) for SSON.
+  </t>
+  
+  <t>
+   An introduction to optical impairments and their impact on optical
+   signals (degradation) is provided in <xref target="RFC6566"/>.
   </t>
 
   <t>
@@ -111,11 +117,11 @@
    complex topic especially in a multi vendor environment and usually
    requires joint engineering, which is independent from control plane
    and management plane capabilities. The YANG data model defined in
-   this draft is providing sufficient information to enable optical
+   this document is providing sufficient information to enable optical
    impairment aware path computation.</t>
   <t> 
    Optical data plane interoperability is outside the scope of this
-   draft.
+   document.
   </t>
 
   <t>
@@ -211,8 +217,9 @@
    The term "add/drop TE-link" refers to a TE-link representing the
    media channel between a transceiver's media port of a remote optical
    transponder (OT) and an add/drop port of the ROADM in the adjacent
-   WDM-node. The add/drop TE-link typically carries a single OTSi
-   signal (modulated optical carrier).
+   WDM-node. The add/drop TE-link typically carries a single optical
+   tributary signal (OTSi, i.e., a modulated optical carrier, see
+   section <xref target="OTSi"/>).
   </t>
 
   <t>
@@ -220,6 +227,19 @@
    concept as defined in <xref target="RFC8795"/>. Multiple component
    links, add/drop TE-links in this case, are bundled into a single
    bundled add/drop TE-Link.
+  </t>
+  
+  <t>
+   In the context of this document, the term "layer 0" refers to the
+   photonic layer or WDM layer network in the architecture of the
+   optical transport network (OTN) as defined in ITU-T Recommendation
+   G.709 <xref target="G.709"/>, ITU-T Recommendation G.872
+   <xref target="G.872"/>, and ITU-T Recommendation G.807
+   <xref target="G.807"/> as opposed to the electrical switching layers
+   of the OTN, which are typically referred to as layer 1 (L1).
+   The term "layer 0" may also be used for other transport network
+   technologies (e.g. copper-based, radio-based, or free space
+   optics-based, etc.), which are outside the scope of this document.
   </t>
 
   </section>
@@ -264,7 +284,7 @@
   </texttable>
   
   <t>
-   [Editor's note: The RFC Editor will replace XXXX with the number
+   [Note to RFC editor: Please replace XXXX with the number
    assigned to the RFC once this draft becomes an RFC.]
   </t>
 
@@ -272,64 +292,25 @@
 
   </section>
 
-  <section title="Reference Architecture" anchor="sect-2">
-  <section title="Control Plane Architecture" anchor="sect-2.1">
-  <t>
-   <xref target="Figure-1"/> shows the control plane architecture.
-  </t>
-
-  
-  <figure align="center" title="Scope of RFC AAAA" anchor="Figure-1">
-  <artwork><![CDATA[
-                          +--------+
-                          |  MDSC  |
-                          +--------+
- Scope of this ID  ------->   ||
-               |              ||
-               |  +------------------------+
-               |  |        OPTICAL         |
-  +---------+  |  |         DOMAIN         |     +---------+
-  | Device  |  |  |       CONTROLLER       |     | Device  |
-  | config. |  |  +------------------------+     | config. |
-  +---------+  v  //          ||          \\     +---------+
- ______|______   //           ||           \\   ______|______
-/      OT     \ //            ||            \\ /      OT     \
-| +--------+  |//           __--__           \\|  +--------+ |
-| |Vend. A |--|----+       (      )       +----|--| Vend. A| |
-| +--------+  |    |    ~-(        )-~    |    |  +--------+ |
-| +--------+  |    +---/              \---+    |  +--------+ |
-| |Vend. B |--|--+    /                \    +--|--| Vend. B| |
-| +--------+  |  +---(   OLS Segment    )---+  |  +--------+ |
-| +--------+  |  +---(                  )---+  |  +--------+ |
-| |Vend. C |--|--+    \                /    +--|--| Vend. C| |
-| +--------+  |    +---\              /---+    |  +--------+ |
-| +--------+  |    |    ~-(        )-~    |    |  +--------+ |
-| |Vend. D |--|----+       (__  __)       +----|--| Vend. D| |
-| +--------+  |               --               |  +--------+ |
-\_____________/                                \_____________/
-          ^                                        ^
-          |                                        |
-          |                                        |
- Scope of RFC AAAA                        Scope of RFC AAAA
-
-]]></artwork>
-  </figure>
+  <section title="Scope of this document and Data Plane Reference
+  Architecture" anchor="sect-2">
+  <section title="Scope of this document" anchor="sect-2.1">
 
   <t>
-   Note: The RFC Editor will replace AAAA above with the number
-   assigned to the RFC once draft-ietf-ccamp-dwdm-if-param-yang will
-   become an RFC.
+   The optical impairment-aware topology YANG model defined in this
+   document is a network model as defined in <xref target="RFC8969"/>
+   and is applicable to devices and network controllers. The topology
+   model provides read-only network topolgy status information that is
+   typically used for path computation during service provisioning when
+   a new services is established on the network.
   </t>
   
   <t>
-   The topology model developed in this document is an abstracted
-   topology YANG model that can be used at the interfaces between the
-   MDSC and the Optical Domain Controller (aka MPI) and between the
-   Optical Domain Controller and the Optical Device (aka SBI) in
-   <xref target="Figure-1"/>.
-   It is not intended to support a detailed low-level DWDM interface
-   model. DWDM interface model is supported by the models presented in
-   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/>.
+   The DWDM interface YANG model defined in
+   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/> is a device
+   model as defined in <xref target="RFC8969"/> (a DWDM interface
+   management model to be precise) and is intended to be used for
+   device configuration.
   </t>
   
   </section>
@@ -372,7 +353,9 @@
    BA: Booster Amplifier (or egress amplifier)
    PA: Pre-Amplifier (or ingress amplifier)
    ILA: In-Line Amplifier
-   MCG: Media Channel Group
+   OTS MCG: Optical Transmission Section MCG [G.807]
+   OMS MCG: Optical Multiplex Section MCG [G.807]
+   MCG: Media Channel Group [G.807]
 ]]></artwork>
   </figure>
 
@@ -383,11 +366,11 @@
   </t>
   
   <t>
-   According to <xref target="G.807"/>, a Media Channel Group (MCG)
-   represents "a unidirectional point-to-point management/control
-   abstraction that represents a set of one or more media channels that
-   are co-routed. A media channel group (MCG) is bounded by a pair of
-   media ports." 
+   According to <xref target="G.807"/>, clause 3.2.4, a Media Channel
+   Group (MCG) represents "a unidirectional point-to-point
+   management/control abstraction that represents a set of one or more
+   media channels that are co-routed. A media channel group (MCG) is
+   bounded by a pair of media ports." 
   </t>
   
   </section>
@@ -431,9 +414,14 @@
   </t>
   
   <t>
-   An OMS MCG traverses a sequence of elements such as BA, fiber
-   section, ILA, PA, and concentrated loss wherever there is an
-   insertion loss caused for example by a fiber connector.
+   An OMS MCG traverses a sequence of optical elements between the
+   ROADM function of two adjacent WDM-nodes as depicted in
+   <xref target="Figure-2"/> where the OMS MCG is terminated.
+   These elemts can be in transmit direction: a Booster Amplifier (BA),
+   one or more fiber sections with in-line amplifiers (ILAs), and a
+   Pre-Amplifier. A concentrated loss element can be used to describe
+   an insertion loss caused for example by a fiber connector along the
+   sequence of optical elements.
   </t>
 
   <t>
@@ -478,8 +466,8 @@
    may consist of a single modulated optical carrier or a group of
    modulated optical carriers or subcarriers."
    
-   The YANG model defined below assumes that
-   a single OTSi consists of a single modulated optical carrier. This
+   The YANG model defined in <xref target="YANG-code"/> assumes that a
+   single OTSi consists of a single modulated optical carrier. This
    single modulated optical carrier conveys digital information.
    Characteristics of the OTSi signal are modulation scheme (e.g. QPSK,
    8-QAM, 16-QAM, etc.), baud rate (measure of the symbol rate), pulse
@@ -889,7 +877,7 @@
   </t>
   
   <t>
-   One modeling consideration of the ROADM internal is to model power
+   One modeling consideration of the ROADM internals is to model power
    parameter through the ROADM, factoring the output power from the
    Pre-Amplifier minus the ROADM power loss would give the input power
    to the Booster Amplifier. In other words, Power_in (@ ROADM Booster)
@@ -917,15 +905,16 @@
   <section title="Transponders" anchor="transponders">
   
   <t>
-   A Transponder is the element that sends and receives the optical
-   signal from a DWDM network. A transponder can comprise one or more
-   transceivers. A transceiver represents a transmitter/receiver
-   (Tx/Rx) pair as defined in ITU-T Recommendation G.698.2
-   <xref target="G.698.2"/>. In addition to the transceiver, which is
-   terminating an OTSi signal, a transponder typically provides
-   additional layer 1 functionality like for example aggregation
-   (multiplexing) of client layer signals, which is outside the scope
-   of this document addressing layer 0 aspects of transponders.
+   A transponder is an optical equipment that sends and receives the
+   optical signal from a DWDM network. A transponder can have one or
+   more transceiver modules. A transceiver represents a transmitter and
+   its corresponding receiver (Tx/Rx pair) as defined in ITU-T
+   Recommendation G.698.2 <xref target="G.698.2"/>. In addition to the
+   transceiver, which is terminating an OTSi signal, a transponder
+   typically provides additional layer 1 functionality like for example
+   aggregation (multiplexing) of client layer signals, which is outside
+   the scope of this document addressing layer 0 aspects of
+   transponders.
   </t>
   
   <t>
@@ -939,7 +928,7 @@
    <xref target="I-D.ietf-teas-te-topo-and-tunnel-modeling"/> and each
    OTSiG consists of one or multiple OTSi signals as described in
    <xref target="OTSiG"/>.
-   Therefore, a TTP may be associated with multiple transceivers.
+   Therefore, a TTP can be associated with multiple transceivers.
   </t>
   
   <t>
@@ -1045,7 +1034,7 @@
    An organizational mode is identified by the organization-identifier
    attribute defining the scope and an operational-mode that is
    meaningful within the scope of the organization. Hence, the two
-   attributes must always be considered together. It is the
+   attributes MUST always be considered together. It is the
    responsibility of the organization to assign operational modes and
    to ensure that operational modes are unique and unambiguous within
    the scope of the organization.
@@ -1109,17 +1098,17 @@
   </t>
   
   <t>
-   An organization may define the operational modes to include the
+   An organization MAY define the operational modes to include the
    optical power and carrier frequency related properties following the
    application code approach as defined in ITU-T Recommendation G.698.2
    <xref target="G.698.2"/>. In such a case, the explicit optical power
-   and carrier frequency related optional attributes shall be omitted
+   and carrier frequency related optional attributes should be omitted
    in order to avoid redundant information in the description of the
    transceiver capabilities. If these attributes are provided in
    addition to the operational modes including these attribute values
    implicitly, the parameter values provided explicitly replace the
-   implicit values and take precedence. This shall, however, only be
-   an done in exceptional cases and shall be avoided whenever possible.
+   implicit values and take precedence. This should, however, only be
+   an done in exceptional cases and should be avoided whenever possible.
    In case an implicitly given range is extended utilizing the explicit
    optional attributes, a path computation policy rule may be applied
    to select a value preferably from the range defined implicitly and
@@ -1144,7 +1133,7 @@
    The explicit mode allows to encode, explicitly, any subset of
    parameters e.g., FEC type, Modulation type, etc, to enable a
    controller entity to check for interoperability by means outside
-   of this draft. It shall be noted that using the explicit encoding
+   of this document. It shall be noted that using the explicit encoding
    does not guarantee interoperability between two transceivers even
    in case of identical parameter definitions. The explicit mode
    shall therefore be used with care, but it could be useful when no
@@ -1172,7 +1161,7 @@
   
   <t>
    The transceiver capabilities are described by the set of modes the
-   transceiver is supporting. Each mode MUST follow only one of the
+   transceiver is supporting. Each mode must follow only one of the
    three mode options defined above (choice in the YANG model). The
    YANG model allows to describe the transceiver capabilities by mixing
    different modes. A transceiver may support some ITU-T application
@@ -1219,9 +1208,9 @@
    provide more detailed OSNR penalties as a function of the
    accumulated impairments (i.e., cd-penalty, pmd-penalty and
    pdl-penalty). In this case the attributes providing the maximum
-   accumulated impairments may be omitted and the maximum accumulated
-   impairment should be listed in the penalty list. In case both are
-   present, there should not be any value in the penalty list above
+   accumulated impairments MAY be omitted and the maximum accumulated
+   impairment MUST be listed in the penalty list. In case both are
+   present, there MUST NOT be any value in the penalty list above
    the maximum accumulated impairment.
   </t>
   
@@ -1359,7 +1348,7 @@
    
    <t><list style="empty">
    <t>
-    Implemantations may support the change of the carrier frequency
+    Implemantations MAY support the change of the carrier frequency
     where the receiver may operate at a different optical frequency
     as the transmitter. The transceiver mode is a property of the
     transceiver and is applied to the transmitter and the receiver.
@@ -1409,7 +1398,7 @@
   <t>
    Due to the fact that 3R regenerators are composed of an optical
    transponder pair, the capability whether an optical transponder can
-   be used as a 3R regenerator is is added to the transponder
+   be used as a 3R regenerator is added to the transponder
    capabilities. Hence, no additional entity is required for describing
    3R regenerators in the TE-topology YANG model. The optical
    transponder capabilities regarding the 3R regenerator function are
@@ -1430,20 +1419,17 @@
    configuration of the transponder pair forming the 3R regenerator
    as described above.
   </t>
-  
-  <t>
-   More text to be added here!
-  </t>
 
   </section>
 
-  <section title="WSS/Filter" anchor="sect-2.7">
+  <section title="Wavelength Selective Switch (WSS)/Filter" anchor="sect-2.7">
   <t>
-   WSS separates the incoming light input spectrally as well as
-   spatially, then chooses the wavelength that is of interest by
-   deflecting it from the original optical path and then couple it to
-   another optical fibre port. WSS/Filter is internal to ROADM. So this
-   document does not model the inside of ROADM.
+   A WSS separates the incoming light from an input port spectrally as
+   well as spatially, then selects the wavelength that is of interest
+   by deflecting it from the original optical path, and finally couples
+   it to an outgoing optical fiber port. The WSS/Filter is internal to
+   a ROADM device. This document does not model the internals of a ROADM's
+   WSS.
   </t>
 
   </section>
@@ -1472,7 +1458,7 @@
   </t>
 
   <t>
-   The total-loss should be provided when it can be measured with a
+   The total-loss SHOULD be provided when it can be measured with a
    power measurement facility at the output of the upstream node (input
    of the fiber span) and a power measurement facility at the input of
    the downstream node (output of the fiber span).
@@ -1484,11 +1470,11 @@
    in case of a fiber cut.
    In case the total-loss cannot be measured (no power measurement
    facilities in place), the total-loss defined as optional leaf in
-   the YANG model shall be omitted.
+   the YANG model SHALL be omitted.
   </t>
   
   <t>
-   N.B.: In case of Raman amplifiers, the Raman gain shall not be
+   N.B.: In case of Raman amplifiers, the Raman gain SHALL NOT be
    included in the measured loss to properly reflect only the loss of
    the fiber span in the total-loss attribute.
   </t>
@@ -1529,15 +1515,16 @@
 
   <t>
    The TE topology YANG model augmentations including optical
-   impairments for DWDM networks defined below intend to cover all the
-   3 categories of WDM-node architectures listed above. In the case
-   of a disaggregated WDM-node architecture, it is assumed that the
-   optical domain controller already performs some form of abstraction
-   and presents the WDM-TE-node representing the disaggregated WDM-node
-   in the same way as an integrated WDM-TE-node with local optical
-   transponders if the optical transponder subsystems and the add/drop
-   subsystems are collocated (short fiber links not imposing any
-   significant optical impairments).
+   impairments for DWDM networks defined in <xref target="YANG-code"/>
+   intend to cover all the 3 categories of WDM-node architectures
+   listed above. In the case of a disaggregated WDM-node architecture,
+   it is assumed that the optical domain controller already performs
+   some form of abstraction and presents the WDM-TE-node representing
+   the disaggregated WDM-node in the same way as an integrated
+   WDM-TE-node with local optical transponders if the optical
+   transponder subsystems and the add/drop subsystems are co-located
+   (short fiber links are not imposing any significant optical
+   impairments).
   </t>
 
   <t>
@@ -1545,14 +1532,6 @@
    illustrated in the following subsections.
   </t>
 
-  <t>
-   [Editor's note: The modeling of remote optical transponders located
-   for example in the client device with a single channel link between
-   the OT and the add/drop port of the WDM-TE-node requires further
-   investigations and will be addressed in a future revision of this
-   document.]
-  </t>
-  
 
   <section title="Integrated WDM-node Architecture with Local Optical
    Transponders" anchor="sect-2.9.1">
@@ -1609,9 +1588,9 @@
    optical transponders are not integral parts of the WDM-node but are
    separate devices that are connected to the add/drop ports of the
    WDM-node. If the optical transponders and the WDM-node are
-   collocated and if short single channel fiber links are used to
+   co-located and if short single channel fiber links are used to
    interconnect the optical transponders with an add/drop port of the
-   WDM-node, the optical domain controller may present these optical
+   WDM-node, the optical domain controller MAY present these optical
    transponders in the same way as local  optical transponders. If,
    however, the optical impairments of the single channel fiber link
    between the optical transponder and the add/drop port of the
@@ -1658,10 +1637,11 @@
    Add/Drop, and Optical Transponder Subsystems" anchor="sect-2.9.3">
   
   <t>
-   Recently, some DWDM network operators started demanding WDM
-   subsystems from their vendors. An example is the OpenROADM project
-   where multiple operators and vendors are developing related YANG
-   models. The subsystems of a disaggregated WDM-TE-node are:
+   Some DWDM network operators are demanding WDM subsystems from their
+   vendors. An example is the OpenROADM project
+   <xref target="OpenROADM"/> where multiple operators and vendors are
+   developing related YANG models. The subsystems of a disaggregated
+   WDM-TE-node are:
   </t>
   
     <t>
@@ -1994,7 +1974,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    If a 3R regenerator is crossed on one of the two legs or even on
    both legs, the end-to-end MCs are terminated on both sides of the
    3R regenerator. The configured-termination-type attribute set to
-   "3r-regeneration" shall be used to indicate that the transceivers
+   "3r-regeneration" SHALL be used to indicate that the transceivers
    are forming a 3R regenerator instead of terminating the layer 0
    tunnel (layer 0 service).
    At WDM-nodes containing a 3R regenerator, the end-2-end MCs are
@@ -2172,13 +2152,13 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    For protected TTPs, the local-link-connectivity list has been
-   augmented such that is is capable of describing the potential
+   augmented such that is capable of describing the potential
    connectivity not only between the TTP and a single LTP a
    (unprotected case) but is now capable to describe the potential
    connectivity to additional LTPs including the related optical
    impairments. If the optical impairments are the same for all
    local-link-connectivity list entries for a particular TTP, which
-   is usually the case, the optical impairments shall be omitted for
+   is usually the case, the optical impairments should be omitted for
    the additional LTPs leading to a more compact topology description.
    If the optical impairments are different, however, they can be
    described for each additional LTP entry separately.
@@ -2303,7 +2283,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    line LTPs (protected case) including the related optical
    impairments. If the optical impairments are the same from the
    protected ad-drop LTP to all line LTPs, which is usually the case,
-   the optical impairments shall be omitted for the additional LTPs
+   the optical impairments should be omitted for the additional LTPs
    leading to a more compact connectivity matrix description. If the
    optical impairments are different, however, they can be described
    for each additional LTP separately.
@@ -2572,7 +2552,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    The optical impairments for the underlying primary and secondary
-   TE-link can be described as for unprotected TE-links. It may also be
+   TE-link can be described as for unprotected TE-links. It MAY also be
    possible to only describe the optical impairments for the 1+1
    protected TE-link. In this case the optical impairments of the worse
    of the two underlying TE-links shall be used. This should be 
@@ -2722,7 +2702,7 @@ LTP1'   |   RP1'|   |   /   |  prim.    |   \   |   |RP2'   |   LTP6'
   </sourcecode>
   
     <ul spacing="compact">
-      <li>"underlay": this container must not be present</li>
+      <li>"underlay": this container MUST NOT be present</li>
       <li>"link-protection-type" (identityref) set to
         'link-protection-1-plus-1' as defined in
         <xref target="I-D.ietf-teas-rfc8776-update"/>
@@ -2928,14 +2908,16 @@ module: ietf-optical-impairment-topology
     +--rw otsis!
     |  +--ro otsi-group* [otsi-group-id]
     |     +--ro otsi-group-id    string
-    |     +--ro otsi* [otsi-carrier-id]
-    |        +--ro otsi-carrier-id           uint16
-    |        +--ro otsi-carrier-frequency?   union
-    |        +--ro e2e-mc-path-id*           uint16
+    |     +--ro otsi* [carrier-id]
+    |        +--ro carrier-id           uint16
+    |        +--ro carrier-frequency?   union
+    |        +--ro e2e-mc-path-id*      uint16
     +--ro templates
-       +--ro roadm-path-impairments
-       |  +--ro roadm-path-impairment* [roadm-path-impairments-id]
-       |     +--ro roadm-path-impairments-id    string
+       +--ro roadm-path-impairments-sets
+       |  +--ro roadm-path-impairments-set*
+       |          [roadm-path-impairments-set-id]
+       |     +--ro roadm-path-impairments-set-id    string
+       |     +--ro description?                     string
        |     +--ro (impairment-type)?
        |        +--:(roadm-express-path)
        |        |  +--ro roadm-express-path* [frequency-range-id]
@@ -3115,9 +3097,9 @@ ity?
     |        |              +--ro rx-total-power-max?
     |        |              |       power-dbm
     |        |              +--ro compatible-modes
-    |        |              |  +--ro supported-application-codes*
+    |        |              |  +--ro supported-application-code*
     |        |              |  |       leafref
-    |        |              |  +--ro supported-organizational-modes*
+    |        |              |  +--ro supported-organizational-mode*
     |        |              |          leafref
     |        |              +--ro explicit-transceiver-mode-ref?
     |        |                      leafref
@@ -3141,7 +3123,7 @@ ity?
                   -> ../../../transponders/transponder/transponder-id
   augment /nw:networks/nw:network/nt:link/tet:te
             /tet:te-link-attributes:
-    +--ro OMS-attributes
+    +--ro oms-attributes
        +--ro generalized-snr?        l0-types:snr
        +--ro equalization-mode?      identityref
        +--ro power-param
@@ -3152,17 +3134,17 @@ ity?
        |     +--ro otsi-group-ref    leafref
        |     +--ro media-channel* [media-channel-id]
        |        +--ro media-channel-id    int16
-       |        +--ro flexi-n?            l0-types:flexi-n
-       |        +--ro flexi-m?            l0-types:flexi-m
-       |        +--ro otsi-ref* [otsi-carrier-ref]
-       |        |  +--ro otsi-carrier-ref    leafref
-       |        |  +--ro e2e-mc-path-ref*    leafref
+       |        +--ro flexi-n?            flexi-n
+       |        +--ro flexi-m?            flexi-m
+       |        +--ro otsi-ref* [carrier-ref]
+       |        |  +--ro carrier-ref        leafref
+       |        |  +--ro e2e-mc-path-ref*   leafref
        |        +--ro delta-power?
        |                l0-types:power-ratio-or-null
-       +--ro OMS-elements!
-          +--ro OMS-element* [elt-index]
-             +--ro elt-index                 uint16
-             +--ro oms-element-uid?          union
+       +--ro oms-elements!
+          +--ro oms-element* [elt-index]
+             +--ro elt-index                  uint16
+             +--ro oms-element-uid?           union
              +--ro reverse-element-ref
              |  +--ro link-ref?
              |  |       -> ../../../../../../../../nt:link/link-id
@@ -3180,15 +3162,15 @@ ity?
                 |                [frequency-range-id stage-order]
                 |           +--ro frequency-range-id
                 |           |       uint16
+                |           +--ro frequency-range
+                |           |  +--ro lower-frequency    frequency-thz
+                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro stage-order
                 |           |       uint8
                 |           +--ro name?
                 |           |       string
                 |           +--ro type-variety?
                 |           |       string
-                |           +--ro frequency-range
-                |           |  +--ro lower-frequency    frequency-thz
-                |           |  +--ro upper-frequency    frequency-thz
                 |           +--ro power-param
                 |           |  +--ro (power-param)
                 |           |     +--:(channel-power)
@@ -3231,10 +3213,8 @@ r-null
                 |              +--:(dynamic-gain-equalizer)
                 |                 +--ro dynamic-gain-equalizer!
                 |                    +--ro media-channel* [flexi-n]
-                |                       +--ro flexi-n
-                |                       |       l0-types:flexi-n
-                |                       +--ro flexi-m
-                |                       |       l0-types:flexi-m
+                |                       +--ro flexi-n        flexi-n
+                |                       +--ro flexi-m        flexi-m
                 |                       +--ro delta-power?
                 |                               l0-types:power-ratio\
 -or-null
@@ -3253,8 +3233,8 @@ r-null
                 |     |       l0-types:power-loss-or-null
                 |     +--ro conn-out?
                 |             l0-types:power-loss-or-null
-                +--:(concentratedloss)
-                   +--ro concentratedloss
+                +--:(concentrated-loss)
+                   +--ro concentrated-loss
                       +--ro loss    l0-types:power-loss-or-null
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point:
@@ -3271,56 +3251,56 @@ r-null
             /tet:te-node-attributes:
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix:
-    +--ro roadm-path-impairments?   leafref
+    +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:from:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:te-node-attributes/tet:connectivity-matrices
             /tet:connectivity-matrix/tet:to:
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../../nt:termination-point/tp-id
-       +--ro roadm-path-impairments?   leafref
+       +--ro roadm-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairments-set?    leafref
+    +--ro drop-path-impairments-set?   leafref
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:tunnel-termination-point
             /tet:local-link-connectivities
             /tet:local-link-connectivity:
-    +--ro add-path-impairments?    leafref
-    +--ro drop-path-impairments?   leafref
+    +--ro add-path-impairments-set?    leafref
+    +--ro drop-path-impairments-set?   leafref
     +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
     |  +--ro ttp-transponder-ref
     |  |       -> ../../../../ttp-transceiver/transponder-ref
     |  +--ro ttp-transceiver-ref
     |  |       -> ../../../../ttp-transceiver/transceiver-ref
-    |  +--ro is-allowed?              boolean
-    |  +--ro add-path-impairments?    leafref
-    |  +--ro drop-path-impairments?   leafref
+    |  +--ro is-allowed?                  boolean
+    |  +--ro add-path-impairments-set?    leafref
+    |  +--ro drop-path-impairments-set?   leafref
     +--ro additional-ltp* [ltp-ref]
        +--ro ltp-ref
        |       -> ../../../../../../nt:termination-point/tp-id
-       +--ro add-path-impairments?    leafref
-       +--ro drop-path-impairments?   leafref
+       +--ro add-path-impairments-set?    leafref
+       +--ro drop-path-impairments-set?   leafref
 ]]>
   </sourcecode>
 
@@ -3328,7 +3308,7 @@ r-null
   </section>
 
   <section title="Optical Impairment Topology YANG Model"
-  anchor="sect-4">
+  anchor="YANG-code">
   
   <sourcecode name="ietf-optical-impairment-topology.yang" type="yang"
   markers="true">
@@ -3337,39 +3317,36 @@ module ietf-optical-impairment-topology {
   yang-version 1.1;
   namespace "urn:ietf:params:xml"
           + ":ns:yang:ietf-optical-impairment-topology";
-  prefix "oit";
+  prefix oit;
 
   import ietf-network {
-    prefix "nw";
+    prefix nw;
     reference
       "RFC 8345: A YANG Data Model for Network Topologies";
   }
-
   import ietf-network-topology {
-    prefix "nt";
+    prefix nt;
     reference
       "RFC 8345: A YANG Data Model for Network Topologies";
   }
-
   import ietf-te-topology {
-    prefix "tet";
+    prefix tet;
     reference
-      "RFC 8795: YANG Data Model for Traffic Engineering (TE) 
-      Topologies";
+      "RFC 8795: YANG Data Model for Traffic Engineering (TE)
+       Topologies";
   }
-
   import ietf-te-types {
-    prefix "te-types";
+    prefix te-types;
     reference
       "RFC YYYY: Updated Common YANG Data Types for Traffic
-      Engineering";
+       Engineering";
   }
 
   /* Note: The RFC Editor will replace YYYY with the number assigned
      to the RFC once draft-ietf-teas-rfc8776-update becomes an RFC.*/
 
   import ietf-layer0-types {
-    prefix "l0-types";
+    prefix l0-types;
     reference
       "RFC ZZZZ: A YANG Data Model for Layer 0 Types";
   }
@@ -3379,7 +3356,6 @@ module ietf-optical-impairment-topology {
 
   organization
     "IETF CCAMP Working Group";
-
   contact
     "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
      WG List: <mailto:ccamp@ietf.org>
@@ -3388,7 +3364,7 @@ module ietf-optical-impairment-topology {
      Editor:   Haomian Zheng <zhenghaomian@huawei.com>
      Editor:   Nicola Sambo <nicosambo@gmail.com>
      Editor:   Victor Lopez <victor.lopez@nokia.com>
-     Editor:   Gabriele Galimberti <ggalimbe@cisco.com>
+     Editor:   Gabriele Galimberti <gabriele.galimberti@nokia.com>
      Editor:   Giovanni Martinelli <giomarti@cisco.com>
      Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
@@ -3398,12 +3374,11 @@ module ietf-optical-impairment-topology {
      Editor:   Sergio Belotti <Sergio.belotti@nokia.com>
      Editor:   Griseri Enrico <enrico.griseri@nokia.com>
      Editor:   Gert Grammel <ggrammel@juniper.net>";
-
   description
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -3414,15 +3389,22 @@ module ietf-optical-impairment-topology {
      (https://trustee.ietf.org/license-info).
 
      This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.";
+     the RFC itself for full legal notices.
 
-// RFC Ed.: replace XXXX with actual RFC number and remove
-// this note
-// replace the revision date with the module publication date
-// the format is (year-month-day)
-  revision 2024-05-21 {
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove
+  // this note
+  // replace the revision date with the module publication date
+  // the format is (year-month-day)
+
+  revision 2025-06-24 {
     description
-      "Initial Version";
+      "Initial version.";
     reference
       "RFC XXXX: A Yang Data Model for Impairment-aware
        Optical Networks";
@@ -3437,8 +3419,8 @@ module ietf-optical-impairment-topology {
     description
       "Individual OTSi(G) protection LSP protection type.";
     reference
-      "ITU-T G.873.1 v5.2 (02/2022): Optical transport network: 
-      Linear protection";
+      "ITU-T G.873.1 v5.2 (02/2022): Optical transport network:
+       Linear protection";
   }
 
   /*
@@ -3446,71 +3428,63 @@ module ietf-optical-impairment-topology {
    */
 
   grouping amplifier-params {
-    description "describes parameters for an amplifier";
+    description
+      "Describes parameters for an amplifier";
     container amplifier {
       description
-        "amplifier type, operatonal parameters are described.";
+        "Amplifier type, operational parameters are described.";
       leaf type-variety {
         type string;
-        mandatory true ;
+        mandatory true;
         description
           "String identifier of amplifier type referencing
-          a specification in a separate equipment catalog";
+           a specification in a separate equipment catalog";
       }
       container operational {
-        description "amplifier operational parameters";
+        description
+          "Amplifier operational parameters";
         list amplifier-element {
           key "frequency-range-id stage-order";
           description
             "The list of parallel amplifier elements within an
-            amplifier used to amplify different frequency ranges.
+             amplifier used to amplify different frequency ranges.
 
-            Two elements in the list must not have the same range
-            or overlapping ranges.";
-          leaf frequency-range-id {
-            type uint16;
-            description
-              "The identifier of the frequency range.";
-          }
+             Two elements in the list MUST NOT have the same range
+             or overlapping ranges.";
+          uses l0-types:frequency-range-with-identifier;
           leaf stage-order {
             type uint8;
             description
-              "It allows defining for each spectrum badwidth the
-              cascade order of each amplifier-element.";
+              "It allows defining for each spectrum bandwidth the
+               cascade order of each amplifier-element.";
           }
           leaf name {
             type string;
             description
               "The name of the amplifier element as specified in
-              the vendor's specification associated with the
-              type-variety.";
+               the vendor's specification associated with the
+               type-variety.";
           }
           leaf type-variety {
             type string;
             description
               "String identifier of amplifier element type
-              referencing a specification in a separate equipment
-              catalog.
-              
-              This attributes applies only when the type-variety of
-              the amplifier is not sufficient to describe the
-              amplifier element type.";
-          }
-          container frequency-range {
-            description
-              "The frequency range amplified by the amplifier
-              element.";
-            uses l0-types:frequency-range;
+               referencing a specification in a separate equipment
+               catalog.
+
+               This attributes applies only when the type-variety of
+               the amplifier is not sufficient to describe the
+               amplifier element type.";
           }
           container power-param {
             description
               "The optical power after the out-voa of each amplifier
-              element.";
+               element.";
             choice power-param {
               mandatory true;
               description
                 "Select the mode: channel power or power spectral
-                density (PSD).";
+                 density (PSD).";
               case channel-power {
                 leaf nominal-carrier-power {
                   type l0-types:power-dbm-or-null;
@@ -3528,91 +3502,92 @@ module ietf-optical-impairment-topology {
                 }
               }
             }
-          }   // container power-param
+          } // container power-param
           leaf pdl {
             type l0-types:power-loss-or-null;
-            description "Polarization Dependent Loss (PDL)";
+            description
+              "Polarization Dependent Loss (PDL)";
           }
           choice amplifier-element-type {
             mandatory true;
             description
               "Identifies whether the amplifier element is an
-              Optical Amplifier (OA) or a Dynamic Gain Equalizer
-              (DGE).";
+               Optical Amplifier (OA) or a Dynamic Gain Equalizer
+               (DGE).";
             container optical-amplifier {
               description
                 "The attributes applicable only to amplifier
-                elements";
+                 elements";
               leaf actual-gain {
                 type l0-types:power-gain-or-null;
                 mandatory true;
                 description
                   "The value of the gain provided by the
-                  amplification  stage of the optical amplifier.";
+                   amplification  stage of the optical amplifier.";
               }
               leaf in-voa {
                 type l0-types:power-loss-or-null;
                 description
                   "Loss introduced by the Variable Optical Attenuator
-                  (VOA) at the input of the amplification stage of
-                  the amplifier, if present";
+                   (VOA) at the input of the amplification stage of
+                   the amplifier, if present";
               }
               leaf out-voa {
                 type l0-types:power-loss-or-null;
                 description
                   "Loss introduced by the Variable Optical Attenuator
-                  (VOA) at the output of the amplification stage of
-                  the amplifier, if present.";
+                   (VOA) at the output of the amplification stage of
+                   the amplifier, if present.";
               }
               leaf tilt-target {
                 type l0-types:decimal-2-or-null;
                 units "dB";
-                mandatory true ;
+                mandatory true;
                 description
                   "The tilt target defined between lower and upper
-                  frequency of the amplifier frequency range.";
+                   frequency of the amplifier frequency range.";
               }
               leaf total-output-power {
                 type l0-types:power-dbm-or-null;
                 mandatory true;
                 description
                   "It represent total output power measured in the
-                  range specified by the frequency-range.
-                  
-                  Optical power is especially needed to
-                  re-compute/check consistency of span
-                  (fiber + concentrated loss) loss value, with
-                  respect to loss/gain information on elements.";
+                   range specified by the frequency-range.
+
+                   Optical power is especially needed to
+                   re-compute/check consistency of span
+                   (fiber + concentrated loss) loss value, with
+                   respect to loss/gain information on elements.";
               }
               leaf raman-direction {
                 type enumeration {
                   enum co-propagating {
                     description
                       "Co-propagating indicates that optical pump
-                      light is injected in the same direction to the
-                      optical signal that is amplified
-                      (forward pump).";
+                       light is injected in the same direction to the
+                       optical signal that is amplified
+                       (forward pump).";
                   }
                   enum counter-propagating {
                     description
                       "Counter-propagating indicates that optical
-                      pump light is injected in opposite direction
-                      to the optical signal that is amplified
-                      (backward pump).";
+                       pump light is injected in opposite direction
+                       to the optical signal that is amplified
+                       (backward pump).";
                   }
                 }
                 description
                   "The direction of injection of the raman pump.";
               }
               list raman-pump {
-                key pump-id;
+                key "pump-id";
                 description
                   "The list of pumps for the Raman amplifier.";
                 leaf pump-id {
                   type uint16;
                   description
                     "The identifier of a pump within an amplifier
-                    element.";
+                     element.";
                 }
                 leaf frequency {
                   type l0-types:frequency-thz;
@@ -3624,95 +3599,100 @@ module ietf-optical-impairment-topology {
                   units "Watts";
                   description
                     "The total pump power considering a depolarized
-                    pump at the raman pump central frequency.";
+                     pump at the raman pump central frequency.";
                 }
               }
-            }   // container optical-amplifier
+            } // container optical-amplifier
             container dynamic-gain-equalizer {
               presence
                 "When present it indicates that the amplifier element
-                is a Dynamic Gain Equalizer (DGE)";
+                 is a Dynamic Gain Equalizer (DGE)";
               description
                 "The attributes applicable only to DEG amplifier
-                elements.";
+                 elements.";
               list media-channel {
                 key "flexi-n";
                 description
                   "List of media channels represented as (n,m)";
-
                 uses l0-types:flexi-grid-frequency-slot {
-                  refine flexi-m {
+                  refine "flexi-m" {
                     mandatory true;
                   }
                 }
-
                 leaf delta-power {
                   type l0-types:power-ratio-or-null;
                   description
-                    " Deviation from the reference carrier power 
-                    defined for the OMS.";
+                    "Deviation from the reference carrier power
+                     defined for the OMS.";
                 }
               } // media channels list
-            }   // container dynamic-gain-equalizer
+            } // container dynamic-gain-equalizer
           } // choice amplifier-element-type
-        }  // list amplifier-element
-      }  // container operational
-    }  // container amplifier
-  }  // grouping amplifier-params
+        } // list amplifier-element
+      } // container operational
+    } // container amplifier
+  } // grouping amplifier-params
 
   grouping fiber-params {
-    description 
-      "String identifier of fiber type referencing a 
+    description
+      "String identifier of fiber type referencing a
        specification in a separate equipment catalog";
     container fiber {
-      description "fiber characteristics";
+      description
+        "Fiber characteristics";
       leaf type-variety {
-        type string ;
-        mandatory true ;
-        description "fiber type";
+        type string;
+        mandatory true;
+        description
+          "Fiber type";
       }
       leaf length {
         type l0-types:decimal-2-or-null;
-        units km;
-        mandatory true ;
-        description "length of fiber";
+        units "km";
+        mandatory true;
+        description
+          "Length of fiber";
       }
       leaf loss-coef {
         type l0-types:decimal-2-or-null;
-        units dB/km;
-        mandatory true ;
-        description "loss coefficient of the fiber";
+        units "dB/km";
+        mandatory true;
+        description
+          "Loss coefficient of the fiber";
       }
       leaf total-loss {
         type l0-types:power-loss-or-null;
         description
           "The measured total loss of the fiber, which includes
-          all possible losses: fiber loss and conn-in and conn-out
-          losses.
-           
-          This attribute is not present when the total loss cannot
-          be measured.";
+           all possible losses: fiber loss and conn-in and conn-out
+           losses.
+
+           This attribute is not present when the total loss cannot
+           be measured.";
       }
       leaf pmd {
         type l0-types:decimal-2-or-null;
         units "ps";
-        description "pmd of the fiber";
+        description
+          "PMD of the fiber";
       }
-      leaf conn-in{
+      leaf conn-in {
         type l0-types:power-loss-or-null;
-        description "connector-in";
+        description
+          "connector-in";
       }
-      leaf conn-out{
+      leaf conn-out {
         type l0-types:power-loss-or-null;
-        description "connector-out";
+        description
+          "connector-out";
       }
     }
   }
 
   grouping roadm-common-path {
     description
-      "The optical impairments of a ROADM which are common to all 
-      its paths (express path, add path or drop path).";
+      "The optical impairments of a ROADM which are common to all
+       its paths (express path, add path or drop path).";
     leaf roadm-pmd {
       type union {
         type decimal64 {
@@ -3722,34 +3702,36 @@ module ietf-optical-impairment-topology {
         type empty;
       }
       units "ps";
-      description 
-        "Polarization Mode Dispersion (PMD), when known, or an 
-        empty value when unknown.";
+      description
+        "Polarization Mode Dispersion (PMD), when known, or an
+         empty value when unknown.";
     }
     leaf roadm-cd {
       type l0-types:decimal-5-or-null;
       units "ps/nm";
-      description "Chromatic Dispersion (CD)";
-    }            
+      description
+        "Chromatic Dispersion (CD)";
+    }
     leaf roadm-pdl {
       type l0-types:power-loss-or-null;
-      description "Polarization Dependent Loss (PDL)";
+      description
+        "Polarization Dependent Loss (PDL)";
     }
     leaf roadm-inband-crosstalk {
       type l0-types:decimal-2-or-null;
       units "dB";
       description
-        "In-band crosstalk, or coherent crosstalk, can occur in 
-        components that can have multiple same wavelength inputs
-        with the inputs either routed to different output ports,
-        or all but one blocked";
+        "In-band crosstalk, or coherent crosstalk, can occur in
+         components that can have multiple same wavelength inputs
+         with the inputs either routed to different output ports,
+         or all but one blocked";
     }
     leaf roadm-maxloss {
       type l0-types:power-loss-or-null;
       description
-        "This is the maximum expected path loss from the 
-        ROADM ingress to the ROADM egress 
-        assuming no additional path loss is added";
+        "This is the maximum expected path loss from the
+         ROADM ingress to the ROADM egress
+         assuming no additional path loss is added";
     }
   } // grouping roadm-common-path
 
@@ -3763,69 +3745,73 @@ module ietf-optical-impairment-topology {
     description
       "The optical impairments of a ROADM add path.";
     uses roadm-common-path {
-      refine roadm-inband-crosstalk {
+      refine "roadm-inband-crosstalk" {
         description
-          "In-band crosstalk, or coherent crosstalk, 
-          can occur in components that can have multiple same
-          wavelength inputs,with the inputs either 
-          routed to different output ports,
-          or all but one blocked.
+          "In-band crosstalk, or coherent crosstalk,
+           can occur in components that can have multiple same
+           wavelength inputs,with the inputs either
+           routed to different output ports,
+           or all but one blocked.
 
-          In the case of add path it is the total 
-          of the add block + egress WSS crosstalk contributions.";
+           In the case of add path it is the total
+           of the add block + egress WSS crosstalk contributions.";
       }
-      refine roadm-maxloss {
-        description 
-          "This is the maximum expected add path loss from 
-          the add/drop port input to the ROADM egress, 
-          assuming no additional add path loss is added.  
-          This is used to establish the minimum required
-          transponder output power required 
-          to hit the ROADM egress target power 
-          levels and preventing 
-          to hit the WSS attenuation limits.
-          If the add path contains an internal amplifier 
-          this loss value should be based 
-          on worst case expected amplifier gain due to
-          ripple or gain uncertainty";
+      refine "roadm-maxloss" {
+        description
+          "This is the maximum expected add path loss from
+           the add/drop port input to the ROADM egress,
+           assuming no additional add path loss is added.
+
+           This is used to establish the minimum required
+           transponder output power required
+           to hit the ROADM egress target power
+           levels and preventing
+           to hit the WSS attenuation limits.
+
+           If the add path contains an internal amplifier
+           this loss value MUST be based
+           on worst case expected amplifier gain due to
+           ripple or gain uncertainty";
       }
     }
     leaf roadm-pmax {
       type l0-types:power-dbm-or-null;
-      description 
-        "This is the maximum (per carrier) power level 
-        permitted at the add block input ports,
-        that can be handled by the ROADM node. 
-        This may reflect either add amplifier power 
-        contraints or WSS adjustment limits.
-        Higher power transponders would need to have 
-        their launch power reduced 
-        to this value or lower";
+      description
+        "This is the maximum (per carrier) power level
+         permitted at the add block input ports,
+         that can be handled by the ROADM node.
+         This can reflect either add amplifier power
+         constraints or WSS adjustment limits.
+         Higher power transponders would need to have
+         their launch power reduced
+         to this value or lower";
     }
     leaf roadm-osnr {
       type l0-types:snr-or-null;
-      description 
+      description
         "Optical Signal-to-Noise Ratio (OSNR).
-        If the add path contains the ability to adjust the 
-        carrier power levels into an add path amplifier 
-        (if present) to a target value,
-        this reflects the OSNR contribution of the
-        add amplifier assuming this target value is obtained.
-        The worst case OSNR based on the input power and 
-        NF calculation method, and this value, should be used
-        (if both are defined).";
+
+         If the add path contains the ability to adjust the
+         carrier power levels into an add path amplifier
+         (if present) to a target value,
+         this reflects the OSNR contribution of the
+         add amplifier assuming this target value is obtained.
+
+         The worst case OSNR based on the input power and
+         NF calculation method, and this value, MUST be used
+         (if both are defined).";
     }
     leaf roadm-noise-figure {
       type l0-types:decimal-5-or-null;
-      units "dB"; 
-      description 
-        "Noise Figure. If the add path contains an amplifier, 
-        this is the noise figure of that amplifier inferred
-        to the add port.
-        This permits add path OSNR calculation based 
-        on the input power levels to the add block
-        without knowing the ROADM path losses to 
-        the add amplifier.";
+      units "dB";
+      description
+        "Noise Figure. If the add path contains an amplifier,
+         this is the noise figure of that amplifier inferred
+         to the add port.
+         This permits add path OSNR calculation based
+         on the input power levels to the add block
+         without knowing the ROADM path losses to
+         the add amplifier.";
     }
   } // grouping roadm-add-path 
 
@@ -3833,149 +3819,153 @@ module ietf-optical-impairment-topology {
     description
       "The optical impairments of a ROADM drop path";
     uses roadm-common-path {
-      refine roadm-inband-crosstalk {
+      refine "roadm-inband-crosstalk" {
         description
           "In-band crosstalk, or coherent crosstalk, can occur in
-          components that can have multiple same wavelength 
-          inputs,with the inputs either routed to different
-          output ports,or all but one blocked.
+           components that can have multiple same wavelength
+           inputs,with the inputs either routed to different
+           output ports,or all but one blocked.
 
-          In the case of drop path it is the total 
-          of the ingress
-          to drop e.g. WSS and drop block crosstalk
-          contributions.";
+           In the case of drop path it is the total
+           of the ingress
+           to drop e.g. WSS and drop block crosstalk
+           contributions.";
       }
-      refine roadm-maxloss {
-        description 
-          "The net loss from the ROADM input,to the output 
-          of the drop block. 
-          If ROADM ingress to drop path includes an amplifier,
-          the amplifier gain reduces the net loss.  
-          This is before any additional drop path attenuation
-          that may be required 
-          due to drop amplifier power contraints.
-          The max value correspond to worst case expected loss,
-          including amplifier gain ripple or uncertainty. 
-          It is the maximum output power of the drop 
-          amplifier.";
+      refine "roadm-maxloss" {
+        description
+          "The net loss from the ROADM input,to the output
+           of the drop block.
+           If this ROADM ingress-to-drop path includes an amplifier,
+           the amplifier gain reduces the net loss.
+           This is before any additional drop path attenuation
+           that may be required
+           due to drop amplifier power constraints.
+           The max value correspond to worst case expected loss,
+           including amplifier gain ripple or uncertainty.
+           It is the maximum output power of the drop
+           amplifier.";
       }
     }
     leaf roadm-minloss {
       type l0-types:power-loss-or-null;
-      description 
-        "The net loss from the ROADM input, to the 
-        output of the drop block.
-        If this ROADM ingress to drop path includes 
-        an amplifier,the amplifier gain reduces the net loss.  
-        This is before any additional drop path attenuation 
-        that may be required due to drop amplifier power 
-        contraints.
-        The min value correspond to best case expected loss, 
-        including amplifier gain ripple or uncertainty.";
+      description
+        "The net loss from the ROADM input, to the
+         output of the drop block.
+         If this ROADM ingress-to-drop path includes
+         an amplifier,the amplifier gain reduces the net loss.
+         This is before any additional drop path attenuation
+         that may be required due to drop amplifier power
+         constraints.
+         The min value correspond to best case expected loss,
+         including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
       type l0-types:power-loss-or-null;
-      description 
-        "The net loss from the ROADM input, 
-        to the output of the drop block.
-        If this ROADM ingress to drop path 
-        includes an amplifier, 
-        the amplifier gain reduces the net loss.  
-        This is before any additional drop path 
-        attenuation 
-        that may be required due to drop amplifier
-        power contraints.
-        The typ value correspond to typical case 
-        expected loss.";
+      description
+        "The net loss from the ROADM input,
+         to the output of the drop block.
+         If this ROADM ingress-to-drop path
+         includes an amplifier,
+         the amplifier gain reduces the net loss.
+         This is before any additional drop path
+         attenuation
+         that may be required due to drop amplifier
+         power constraints.
+         The typ value correspond to typical case
+         expected loss.";
     }
     leaf roadm-pmin {
       type l0-types:power-dbm-or-null;
-      description 
+      description
         "If the drop path has additional loss
-        that is added, for example,
-        to hit target power levels into a 
-        drop path amplifier, or simply, to reduce the
-        power of a strong carrier
-        (due to ripple,for example), 
-        then the use of the ROADM input power levels and 
-        the above drop losses is not appropriate.
-        This parameter corresponds to the min per
-        carrier power levels 
-        expected at the output of the drop block.
-        A detail example of the comparison using
-        these parameters is 
-        detailed in section xxx of the document yyy."; 
+         that is added, for example,
+         to hit target power levels into a
+         drop path amplifier, or simply, to reduce the
+         power of a strong carrier
+         (due to ripple,for example),
+         then the use of the ROADM input power levels and
+         the above drop losses is not appropriate.
+         This parameter corresponds to the min per
+         carrier power levels
+         expected at the output of the drop block.
+         A detail example of the comparison using
+         these parameters is
+         detailed in section xxx of the document yyy.";
     }
     leaf roadm-pmax {
       type l0-types:power-dbm-or-null;
-      description 
-        "If the drop path has additional loss that is added, 
-        for example, to hit target power levels into a 
-        drop path amplifier,or simply,to reduce the power 
-        of a strong carrier(due to ripple,for example), 
-        then the use of the ROADM input power levels and the 
-        above drop losses is not appropriate.
-        This parameter corresponds to the best case per 
-        carrier power levels expected at the output of the 
-        drop block.
-        A detail example of the comparison using 
-        these parameters 
-        is detailed in section xxx of the document yyy";        
+      description
+        "If the drop path has additional loss that is added,
+         for example, to hit target power levels into a
+         drop path amplifier,or simply,to reduce the power
+         of a strong carrier(due to ripple,for example),
+         then the use of the ROADM input power levels and the
+         above drop losses is not appropriate.
+         This parameter corresponds to the best case per
+         carrier power levels expected at the output of the
+         drop block.
+         A detail example of the comparison using
+         these parameters
+         is detailed in section xxx of the document yyy";
     }
     leaf roadm-ptyp {
       type l0-types:power-dbm-or-null;
-      description 
+      description
         "If the drop path has additional loss that is added,
-        for example, to hit target power levels into a 
-        drop path amplifier,or simply,to reduce the 
-        power of a strong carrier(due to ripple,for example), 
-        then the use of the ROADM input power levels and 
-        the above drop losses is not appropriate.
-        This parameter corresponds to the typical case
-        per carrier power levels expected 
-        at the output of the drop block.";        
+         for example, to hit target power levels into a
+         drop path amplifier,or simply,to reduce the
+         power of a strong carrier(due to ripple,for example),
+         then the use of the ROADM input power levels and
+         the above drop losses is not appropriate.
+         This parameter corresponds to the typical case
+         per carrier power levels expected
+         at the output of the drop block.";
     }
     leaf roadm-osnr {
-      type l0-types:snr-or-null; 
-      description 
+      type l0-types:snr-or-null;
+      description
         "Optical Signal-to-Noise Ratio (OSNR).
-        Expected OSNR contribution of the drop path
-        amplifier(if present) 
-        for the case of additional drop path loss
-        (before this amplifier) 
-        in order to hit a target power level (per carrier).
-        If both, the OSNR based on the ROADM 
-        input power level
-        (Pcarrier = 
-        Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
-        and the input inferred NF(NF.drop), 
-        and this OSNR value, are defined, 
-        the minimum value between these two should be used";
+
+         Expected OSNR contribution of the drop path
+         amplifier(if present)
+         for the case of additional drop path loss
+         (before this amplifier)
+         in order to hit a target power level (per carrier).
+
+         If both, the OSNR based on the ROADM
+         input power level
+         (Pcarrier =
+         Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
+         and the input inferred NF(NF.drop),
+         and this OSNR value, are defined,
+         the minimum value between these two MUST be used";
     }
     leaf roadm-noise-figure {
       type l0-types:decimal-5-or-null;
-      units "dB"; 
-      description 
-        "Drop path Noise Figure. 
-        If the drop path contains an amplifier,
-        this is the noise figure
-        of that amplifier, inferred to the 
-        ROADM ingress port.
-        This permits to determine 
-        amplifier OSNR contribution 
-        without having to specify the 
-        ROADM node's losses to that amplifier.
-        This applies for the case of no 
-        additional drop path loss, 
-        before the amplifier, in order to reduce the power
-        of the carriers to a target value";
+      units "dB";
+      description
+        "Drop path Noise Figure.
+         If the drop path contains an amplifier,
+         this is the noise figure
+         of that amplifier, inferred to the
+         ROADM ingress port.
+         This permits to determine
+         amplifier OSNR contribution
+         without having to specify the
+         ROADM node's losses to that amplifier.
+         This applies for the case of no
+         additional drop path loss,
+         before the amplifier, in order to reduce the power
+         of the carriers to a target value";
     }
   } // grouping roadm-drop-path
 
-  grouping concentratedloss-params {
-    description "concentrated loss";
-    container concentratedloss{
-      description "concentrated loss";
+  grouping concentrated-loss-params {
+    description
+      "Concentrated loss";
+    container concentrated-loss {
+      description
+        "Concentrated loss";
       leaf loss {
         type l0-types:power-loss-or-null;
         mandatory true;
@@ -3986,28 +3976,30 @@ module ietf-optical-impairment-topology {
   }
 
   grouping oms-general-optical-params {
-    description "OMS link optical parameters";
+    description
+      "OMS link optical parameters";
     leaf generalized-snr {
       type l0-types:snr;
-      description "generalized snr";
+      description
+        "Generalized SNR";
     }
-    leaf equalization-mode{
+    leaf equalization-mode {
       type identityref {
         base l0-types:type-power-mode;
       }
       description
         "The equalization mode.
-        
-        When not present it indicates that the information about 
-        the equalization mode is not reported.
-        
-        Reporting this value is needed to support optical 
-        impairments applications.";
+
+         When not present it indicates that the information about
+         the equalization mode is not reported.
+
+         Reporting this value is needed to support optical
+         impairments applications.";
     }
     container power-param {
       description
         "Optical channel power or power spectral densitity (PSD)
-        after the ROADM.";
+         after the ROADM.";
       leaf nominal-carrier-power {
         when "derived-from-or-self(../../equalization-mode, "
            + "'l0-types:carrier-power')";
@@ -4022,46 +4014,47 @@ module ietf-optical-impairment-topology {
         description
           " Reference power spectral density (PSD).";
       }
-    }   // container power-param
+    } // container power-param
   } // grouping oms-general-optical-params
 
   grouping otsi-group {
-    description "OTSiG definition , representing client
-     digital information stream supported by one or more OTSi";
-
+    description
+      "OTSiG definition , representing client
+       digital information stream supported by one or more OTSi";
     list otsi {
-      key "otsi-carrier-id";
+      key "carrier-id";
       config false;
       description
         "list of OTSi contained in one OTSiG.
-        The list could also be of only one element";
-      leaf otsi-carrier-id {
+         The list could also be of only one element";
+      leaf carrier-id {
         type uint16;
-        description "OTSi carrier-id";
+        description
+          "OTSi carrier-id";
       }
-      leaf otsi-carrier-frequency {
+      leaf carrier-frequency {
         type union {
           type l0-types:frequency-thz;
           type empty;
         }
         description
           "OTSi carrier frequency, equivalent to the
-          actual configured transmitter frequency, when known, or 
-          an empty value when unknown.";
+           actual configured transmitter frequency, when known, or
+           an empty value when unknown.";
       }
       leaf-list e2e-mc-path-id {
         type uint16;
         description
-          "The list of the possible end-to-end Media Channel 
-          (e2e-MC) paths associated with the OTSi which have 
-          different optical impairments.
+          "The list of the possible end-to-end Media Channel
+           (e2e-MC) paths associated with the OTSi which have
+           different optical impairments.
 
-          This list is meaningful in case the OTSi can be associated
-          with multiple end-to-end Media Channel (e2e-MC) paths
-          (e.g., when OPS protection is configured).
-          
-          The list can be empty when the OTSi has only one
-          e2e-MC path.";
+           This list is meaningful in case the OTSi can be associated
+           with multiple end-to-end Media Channel (e2e-MC) paths
+           (e.g., when OPS protection is configured).
+
+           The list can be empty when the OTSi has only one
+           e2e-MC path.";
       }
     } // OTSi list
   } // OTSiG grouping
@@ -4069,32 +4062,30 @@ module ietf-optical-impairment-topology {
   grouping media-channel-groups {
     description
       "media channel groups.
-      
-      This grouping is not intended to be reused outside of this 
-      module.";
 
+       This grouping is not intended to be reused outside of this
+       module.";
     container media-channel-groups {
       presence
-        "When present, it indicates that the list media channel 
-        groups is reported.";
+        "When present, it indicates that the list media channel
+         groups is reported.";
       description
-        "The top level container for the list of media channel 
-        groups.";
+        "The top level container for the list of media channel
+         groups.";
       list media-channel-group {
         key "otsi-group-ref";
         description
           "The list of media channel groups";
         leaf otsi-group-ref {
           type leafref {
-            path "../../../../../../../otsis/" +
-                "otsi-group/otsi-group-id";
+            path "../../../../../../../otsis/"
+               + "otsi-group/otsi-group-id";
           }
           description
-            "Reference to the OTSiG to which the OTSis carried by 
-            this media channel group belong to.";
+            "Reference to the OTSiG to which the OTSis carried by
+             this media channel group belong to.";
         }
         list media-channel {
-          // key "flexi-n";
           key "media-channel-id";
           unique "flexi-n";
           description
@@ -4103,50 +4094,48 @@ module ietf-optical-impairment-topology {
             type int16;
             description
               "The identifier of media channel within media channel
-              group.
-              
-              It may be equal to the flexi-n attribute, when the
-              flexi-n attribute is present.";
-          }
-          // this grouping add both n.m values
-          uses l0-types:flexi-grid-frequency-slot;
+               group.
 
+               It may be equal to the flexi-n attribute, when the
+               flexi-n attribute is present.";
+          }
+          uses l0-types:flexi-grid-frequency-slot;
           list otsi-ref {
-            key "otsi-carrier-ref";
+            key "carrier-ref";
             description
-              "The list of references to the OTSis and their 
-              end-to-end Media Channel (e2e-MC) paths within the 
-              OTSiG carried by this media channel.";
-            leaf otsi-carrier-ref {
+              "The list of references to the OTSis and their
+               end-to-end Media Channel (e2e-MC) paths within the
+               OTSiG carried by this media channel.";
+            leaf carrier-ref {
               type leafref {
-                path  "../../../../../../../../../otsis/" +
-                      "otsi-group[otsi-group-id=current()" +
-                      "/../../../otsi-group-ref]/" +
-                      "otsi/otsi-carrier-id" ;
+                path "../../../../../../../../../otsis/"
+                   + "otsi-group[otsi-group-id=current()"
+                   + "/../../../otsi-group-ref]/"
+                   + "otsi/carrier-id";
               }
               description
                 "Reference to the OTSi within the OTSiG carried
-                by this media channel.";
+                 by this media channel.";
             }
             leaf-list e2e-mc-path-ref {
               type leafref {
-                path  "../../../../../../../../../otsis/" +
-                      "otsi-group[otsi-group-id=current()" +
-                      "/../../../otsi-group-ref]/" +
-                      "otsi[otsi-carrier-id=current()" +
-                      "/../otsi-carrier-ref]/e2e-mc-path-id";
+                path "../../../../../../../../../otsis/"
+                   + "otsi-group[otsi-group-id=current()"
+                   + "/../../../otsi-group-ref]/"
+                   + "otsi[carrier-id=current()"
+                   + "/../carrier-ref]/e2e-mc-path-id";
               }
               description
-                "References to the end-to-end Media Channel (e2e-MC) 
-                paths of this OTSi which are routed through this 
-                media channel.";
+                "References to the end-to-end Media Channel (e2e-MC)
+                 paths of this OTSi which are routed through this
+                 media channel.";
             }
           }
           leaf delta-power {
             type l0-types:power-ratio-or-null;
             description
-              " Deviation from the reference carrier power defined 
-              for the OMS.";
+              " Deviation from the reference carrier power defined
+               for the OMS.";
           }
         } // media channels list
       } // media-channel-groups list
@@ -4154,24 +4143,27 @@ module ietf-optical-impairment-topology {
   } // media media-channel-groups grouping
 
   grouping oms-element {
-    description "OMS description";
-    container OMS-elements {
+    description
+      "OMS description";
+    container oms-elements {
       presence
-        "When present, it indicates that the list of OMS elements 
-        is reported.";
+        "When present, it indicates that the list of OMS elements
+         is reported.";
+      config false;
       description
         "The top level container for the list of OMS elements.";
-      list OMS-element {
+      list oms-element {
         key "elt-index";
         description
-          "defines the spans and the amplifier blocks of 
-          the amplified lines";
+          "The building blocks (e.g., fibers, amplifiers,
+           concentrated loss) that compose the WDM TE-link between
+           its link termination points.";
         leaf elt-index {
           type uint16;
           description
-            "ordered list of Index of OMS element 
-            (whether it's a Fiber, an EDFA or a
-            Concentratedloss)";
+            "An index allowing to sort the elements in their physical
+             order along the link without constraining their position
+             in the list.";
         }
         leaf oms-element-uid {
           type union {
@@ -4179,31 +4171,31 @@ module ietf-optical-impairment-topology {
             type empty;
           }
           description
-            "Unique id of the element, if it exists and it is known.
-            
-            When unknown, an empty value is reported.
-            
-            When it does not exist, the attribute is not present.";
+            "Unique id of the element, if it exists and is known.
+
+             When unknown, an empty value is reported.
+
+             When it does not exist, the attribute is not present.";
         }
         container reverse-element-ref {
           description
             "It contains references to the elements which are
-            associated with this element in the reverse
-            direction.";
+             associated with this element in the reverse
+             direction.";
           leaf link-ref {
             type leafref {
               path "../../../../../../../../nt:link/nt:link-id";
             }
             description
               "The reference to the OMS link which the OMS elements
-              belongs to.";
+               belongs to.";
           }
           leaf-list oms-element-ref {
             type leafref {
               path "../../../../../../../../nt:link[nt:link-id="
-                  + "current()/../link-ref]/tet:te/"
-                  + "tet:te-link-attributes/OMS-attributes/"
-                  + "OMS-elements/OMS-element/elt-index";
+                 + "current()/../link-ref]/tet:te/"
+                 + "tet:te-link-attributes/oms-attributes/"
+                 + "oms-elements/oms-element/elt-index";
             }
             description
               "The references to the OMS elements.";
@@ -4211,7 +4203,8 @@ module ietf-optical-impairment-topology {
         }
         choice element {
           mandatory true;
-          description "OMS element type";
+          description
+            "OMS element type";
           case amplifier {
             uses tet:geolocation-container;
             uses amplifier-params;
@@ -4219,8 +4212,8 @@ module ietf-optical-impairment-topology {
           case fiber {
             uses fiber-params;
           }
-          case concentratedloss {
-            uses concentratedloss-params ;
+          case concentrated-loss {
+            uses concentrated-loss-params;
           }
         }
       }
@@ -4231,34 +4224,35 @@ module ietf-optical-impairment-topology {
     description
       "References to an OTSi.
 
-      This grouping is intended to be reused within the
-      transceiver's list only.";
+       This grouping is intended to be reused within the
+       transceiver's list only.";
     leaf otsi-group-ref {
       type leafref {
-        path  "../../../../../../otsis/otsi-group/" +
-              "otsi-group-id";
+        path "../../../../../../otsis/otsi-group/"
+           + "otsi-group-id";
       }
       description
         "The OTSi generated by the transceiver's transmitter.";
     }
     leaf otsi-ref {
       type leafref {
-        path  "../../../../../../otsis/otsi-group" +
-              "[otsi-group-id=current()/../otsi-group-ref]/otsi/" +
-              "otsi-carrier-id";
+        path "../../../../../../otsis/otsi-group"
+           + "[otsi-group-id=current()/../otsi-group-ref]/otsi/"
+           + "carrier-id";
       }
       description
         "The OTSi generated by the transceiver's transmitter.";
     }
   }
 
-/* 
- * Data nodes
- */
+  /* 
+   * Data nodes
+   */
 
   augment "/nw:networks/nw:network/nw:network-types"
         + "/tet:te-topology" {
-    description "optical-impairment topology augmented";
+    description
+      "optical-impairment topology augmented";
     container optical-impairment-topology {
       presence
         "Indicates an impairment-aware topology of optical networks";
@@ -4266,142 +4260,116 @@ module ietf-optical-impairment-topology {
         "Container to identify impairment-aware topology type";
       reference
         "RFC8345: A YANG Data Model for Network Topologies.";
-   }
+    }
   }
 
   augment "/nw:networks/nw:network" {
-    when "./nw:network-types/tet:te-topology" +
-         "/oit:optical-impairment-topology" {
+    when './nw:network-types/tet:te-topology'
+       + '/oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology.";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Network augmentation for optical impairments data.";
     container otsis {
-      presence
-        "When present, it indicates that OTSi information is 
-        reported.";
+      presence "When present, it indicates that OTSi information is
+                reported.";
       description
-        "The information about the OTSis configured on the WDM-TE 
-        link.";
+        "The information about the OTSis configured on the WDM-TE
+         link.";
       list otsi-group {
         key "otsi-group-id";
         config false;
         description
           "the list of possible OTSiG representing client digital
-          stream";
+           stream";
         leaf otsi-group-id {
           type string;
           description
             "A network-wide unique identifier of otsi-group element.
-            It could be structured e.g., as an URI or as an UUID.";
+             It could be structured e.g., as an URI or as an UUID.";
         }
         uses otsi-group;
       } // list of OTSiG
     }
-
     container templates {
       config false;
       description
         "Templates for set of parameters which can be common to
-        multiple elements.";
-      container roadm-path-impairments {
+         multiple elements.";
+      container roadm-path-impairments-sets {
         description
           "The top level container for the list of the set of
-          optical impairments related to ROADM paths.";
-        list roadm-path-impairment {
-          key "roadm-path-impairments-id";
+           optical impairments related to ROADM paths.";
+        list roadm-path-impairments-set {
+          key "roadm-path-impairments-set-id";
           description
-            "The list of the set of optical impairments related to
-            ROADM paths.";
-
-          leaf roadm-path-impairments-id {
-            type string; 
+            "The list of the set of optical impairments related to a
+             ROADM path.";
+          leaf roadm-path-impairments-set-id {
+            type string;
             description
               "The identifier of the set of optical impairments
-              related to a ROADM path.";
+               related to a ROADM path.";
+          }
+          leaf description {
+            type string;
+            description
+              "The textual description of the the set of optical
+               impairments related to a ROADM path.";
           }
           choice impairment-type {
-            description "type path impairment";
+            description
+              "Type path impairment";
             case roadm-express-path {
               list roadm-express-path {
-                key frequency-range-id;
+                key "frequency-range-id";
                 description
                   "The list of optical impairments on a ROADM express
-                  path for different frequency ranges.
-                  
-                  Two elements in the list must not have the same
-                  range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of the frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
+                   path for different frequency ranges.
+
+                   Two elements in the list MUST NOT have the same
+                   range or overlapping ranges.";
+                uses l0-types:frequency-range-with-identifier;
                 uses roadm-express-path;
-              } 
+              }
             }
             case roadm-add-path {
               list roadm-add-path {
-                key frequency-range-id;
+                key "frequency-range-id";
                 description
                   "The list of optical impairments on a ROADM add
-                  path for different frequency ranges.
-                  
-                  Two elements in the list must not have the same
-                  range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of a frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
-                uses roadm-add-path; 
+                   path for different frequency ranges.
+
+                   Two elements in the list MUST NOT have the same
+                   range or overlapping ranges.";
+                uses l0-types:frequency-range-with-identifier;
+                uses roadm-add-path;
               }
-            }          
+            }
             case roadm-drop-path {
               list roadm-drop-path {
-                key frequency-range-id;
+                key "frequency-range-id";
                 description
                   "The list of optical impairments on a ROADM add
-                  path for different frequency ranges.
-                  
-                  Two elements in the list must not have the same
-                  range or overlapping ranges.";
-                leaf frequency-range-id {
-                  type uint16;
-                  description
-                    "The identifier of a frequency range.";
-                }
-                container frequency-range {
-                  description
-                    "The frequency range for which these optical
-                    impairments apply.";
-                  uses l0-types:frequency-range;
-                }
-                uses roadm-drop-path; 
+                   path for different frequency ranges.
+
+                   Two elements in the list MUST NOT have the same
+                   range or overlapping ranges.";
+                uses l0-types:frequency-range-with-identifier;
+                uses roadm-drop-path;
               }
             }
           }
-        } // list roadm-path-impairments 
-      } // container roadm-path-impairments 
+        } // list roadm-path-impairments-set 
+      } // container roadm-path-impairments-sets
       container explicit-transceiver-modes {
         description
           "The top level container for the list of the
-          transceivers' explicit modes.";
+           transceivers' explicit modes.";
         list explicit-transceiver-mode {
-          key explicit-transceiver-mode-id;
+          key "explicit-transceiver-mode-id";
           description
             "The list of the transceivers' explicit modes.";
           leaf explicit-transceiver-mode-id {
@@ -4410,14 +4378,14 @@ module ietf-optical-impairment-topology {
               "The identifier of the transceivers' explicit mode.";
           }
           uses l0-types:explicit-mode;
-        }   // list explicit-transceiver-mode
-      }   // container explicit-transceiver-modes
-    }   // container templates
+        } // list explicit-transceiver-mode
+      } // container explicit-transceiver-modes
+    } // container templates
   } // augment network
 
   augment "/nw:networks/nw:network/nw:node" {
-    when "../nw:network-types/tet:te-topology" +
-         "/oit:optical-impairment-topology" {
+    when '../nw:network-types/tet:te-topology'
+       + '/oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment.";
     }
@@ -4425,49 +4393,51 @@ module ietf-optical-impairment-topology {
       "Node augmentation for optical impairments data.";
     container transponders {
       presence
-        "If present, it indicates that the list of transponders is 
-        reported.";
+        "If present, it indicates that the list of transponders is
+         reported.";
       description
         "The top level container for the list of transponders.";
       list transponder {
         key "transponder-id";
         config false;
-        description "The list of transponders.";
+        description
+          "The list of transponders.";
         leaf transponder-id {
           type uint32;
-          description "transponder identifier";
+          description
+            "transponder identifier";
         }
         leaf termination-type-capabilities {
           type enumeration {
             enum tunnel-only {
               description
                 "The transponder can only be used in an Optical
-                Tunnel termination configuration.";
+                 Tunnel termination configuration.";
             }
             enum 3r-only {
               description
                 "The transponder can only be used in a 3R
-                configuration.";
+                 configuration.";
             }
             enum 3r-or-tunnel {
               description
                 "The transponder can be configure to be used either
-                in an Optical Tunnel termination configuration or in
-                a 3R configuration.";
+                 in an Optical Tunnel termination configuration or in
+                 a 3R configuration.";
             }
           }
           description
             "Describes whether the transponder can be used in an
-            Optical Tunnel termination configuration or in a 3R
-            configuration (or both).";
+             Optical Tunnel termination configuration or in a 3R
+             configuration (or both).";
         }
         leaf supported-3r-mode {
-          when '(../termination-type-capabilities = "3r-only") or
-                (../termination-type-capabilities = "3r-or-tunnel")'
-                {
+          when '(../termination-type-capabilities = "3r-only") '
+             + 'or (../termination-type-capabilities = '
+             + '"3r-or-tunnel")' {
             description
               "Applies only when the transponder supports 3R
-              configuration.";
+               configuration.";
           }
           type enumeration {
             enum unidir {
@@ -4480,33 +4450,35 @@ module ietf-optical-impairment-topology {
             }
           }
           description
-            "Describes the supported 3R configuration type."; 
+            "Describes the supported 3R configuration type.";
         }
         list transceiver {
           key "transceiver-id";
           config false;
           min-elements 1;
-          description "list of transceiver related to a transponder";
+          description
+            "List of transceiver related to a transponder";
           leaf transceiver-id {
             type uint32;
-            description "transceiver identifier";
+            description
+              "Transceiver identifier";
           }
           uses l0-types:transceiver-capabilities {
             augment "supported-modes/supported-mode/mode/"
                   + "explicit-mode/explicit-mode" {
               description
                 "Augment the explicit-mode container with the
-                proper leafref.";
+                 proper leafref.";
               leaf explicit-transceiver-mode-ref {
                 type leafref {
                   path "../../../../../../../../oit:templates"
-                      + "/oit:explicit-transceiver-modes"
-                      + "/oit:explicit-transceiver-mode"
-                      + "/oit:explicit-transceiver-mode-id";
+                     + "/oit:explicit-transceiver-modes"
+                     + "/oit:explicit-transceiver-mode"
+                     + "/oit:explicit-transceiver-mode-id";
                 }
                 description
                   "The refernce to the explicit transceiver
-                  mode template.";
+                   mode template.";
               }
             }
           }
@@ -4519,30 +4491,30 @@ module ietf-optical-impairment-topology {
             }
             description
               "Reference to the configured mode for transceiver
-              compatibility approach.
-              
-              The empty value is used to report that no mode has 
-              been configured and there is no default mode.
-              
-              When not present, the configured-mode is not reported 
-              by the server.";
+               compatibility approach.
+
+               The empty value is used to report that no mode has
+               been configured and there is no default mode.
+
+               When not present, the configured-mode is not reported
+               by the server.";
           }
           uses l0-types:common-transceiver-param;
           container outgoing-otsi {
-            when "../../../../../otsis" {
+            when '../../../../../otsis' {
               description
-                "It applies only when the OTSi information is 
-                reported.";
+                "It applies only when the OTSi information is
+                 reported.";
             }
             description
               "The OTSi generated by the transceiver's transmitter.";
             uses otsi-ref;
           }
           container incoming-otsi {
-            when "../../../../../otsis" {
+            when '../../../../../otsis' {
               description
-                "It applies only when the OTSi information is 
-                reported.";
+                "It applies only when the OTSi information is
+                 reported.";
             }
             description
               "The OTSi received by the transceiver's received.";
@@ -4557,29 +4529,28 @@ module ietf-optical-impairment-topology {
               enum tunnel-termination {
                 description
                   "The transceiver is currently used in an Optical
-                  Tunnel termination configuration.";
+                   Tunnel termination configuration.";
               }
               enum 3r-regeneration {
                 description
                   "The transceiver is currently used in a 3R
-                  configuration.";
+                   configuration.";
               }
             }
             description
               "Describes whether the current configuration of the
-              transceiver is used in an Optical Tunnel termination
-              configuration or in a 3R configuration.
-              
-              If empty, it means that the information about the 
-              configured-termination-type is not reported.";
+               transceiver is used in an Optical Tunnel termination
+               configuration or in a 3R configuration.
+
+               If empty, it means that the information about the
+               configured-termination-type is not reported.";
           }
         } // end of list of transceiver 
       } // end list of transponder
     }
     container regen-groups {
-      presence
-        "When present, it indicates that the list of 3R groups 
-        is reported.";
+      presence "When present, it indicates that the list of 3R groups
+                is reported.";
       description
         "The top level container for the list of 3R groups.";
       list regen-group {
@@ -4588,21 +4559,21 @@ module ietf-optical-impairment-topology {
         description
           "The list of 3R groups.
 
-          Any 3R group represent a group of transponder in which an 
-          a an electrical connectivity is either in place or could 
-          be dynamically provided, to associated transponders used 
-          for 3R regeneration.";
+           Any 3R group represent a group of transponder in which an
+           a an electrical connectivity is either in place or could
+           be dynamically provided, to associated transponders used
+           for 3R regeneration.";
         leaf group-id {
           type uint32;
           description
             "Group identifier used an index to access elements in the
-            list of 3R groups.";
+             list of 3R groups.";
         }
         leaf regen-metric {
           type uint32;
           description
             "The cost permits choice among different group of
-            transponders during path computation";
+             transponders during path computation";
         }
         leaf-list transponder-ref {
           type leafref {
@@ -4616,17 +4587,19 @@ module ietf-optical-impairment-topology {
   }
 
   augment "/nw:networks/nw:network/nt:link/tet:te"
-        + "/tet:te-link-attributes"   {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+        + "/tet:te-link-attributes" {
+    when '../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology.";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
-    description "Optical Link augmentation for impairment data.";
-    container OMS-attributes {
+    description
+      "Optical Link augmentation for impairment data.";
+    container oms-attributes {
       config false;
-      description "OMS attributes";
+      description
+        "OMS attributes";
       uses oms-general-optical-params;
       uses media-channel-groups;
       uses oms-element;
@@ -4635,20 +4608,19 @@ module ietf-optical-impairment-topology {
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:tunnel-termination-point" {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology.";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Tunnel termination point augmentation for impairment data.";
-
     list ttp-transceiver {
-      when "../../../transponders" {
+      when '../../../transponders' {
         description
-          "It applies only when the list of transponders is 
-          reported.";
+          "It applies only when the list of transponders is
+           reported.";
       }
       key "transponder-ref transceiver-ref";
       config false;
@@ -4661,13 +4633,13 @@ module ietf-optical-impairment-topology {
         }
         description
           "The reference to the transponder hosting the transceiver
-          of the TTP.";
+           of the TTP.";
       }
       leaf transceiver-ref {
         type leafref {
-          path "../../../../transponders/transponder" +
-               "[transponder-id=current()/../transponder-ref]/" +
-               "transceiver/transceiver-id";
+          path "../../../../transponders/transponder"
+             + "[transponder-id=current()/../transponder-ref]/"
+             + "transceiver/transceiver-id";
         }
         description
           "The reference to the transceiver of the TTP.";
@@ -4675,13 +4647,12 @@ module ietf-optical-impairment-topology {
     } // list of transceivers
   } // end of augment
 
-  // Should this leaf be moved to te-topology?
   augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
-    when "../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology";
+        "This augment is only valid for Optical Impairment
+         topology";
     }
     description
       "Augment LTP";
@@ -4691,167 +4662,170 @@ module ietf-optical-impairment-topology {
       }
       description
         "The protection type that this LTP is capable of.
-        
-        When not present it indicates that the information about 
-        the protection type is not reported.";
+
+         When not present it indicates that the information about
+         the protection type is not reported.";
     }
   }
 
   augment "/nw:networks/nw:network/nw:node/nt:termination-point"
         + "/tet:te" {
-    when "../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology";
+        "This augment is only valid for Optical Impairment
+         topology";
     }
     description
       "Augment TE attributes of an LTP";
-    
     leaf inter-layer-sequence-number {
       type uint32;
       description
-        "The inter-layer-sequence-number (ILSN) is used to report 
-        additional connectivity constraints between a client layer 
-        Link Termination Point (LTP), such as a muxponder port, and 
-        the server layer Tunnel Termination Point (TTP).
+        "The inter-layer-sequence-number (ILSN) is used to report
+         additional connectivity constraints between a client layer
+         Link Termination Point (LTP), such as a muxponder port, and
+         the server layer Tunnel Termination Point (TTP).
 
-        A client service cannot be setup between two client layer 
-        LTPs which report different values of the ILSN.
+         A client service cannot be setup between two client layer
+         LTPs which report different values of the ILSN.
 
-        This attribute is not reported when there are no additional 
-        connectivity constraints.
-        
-        Therefore, a client service can be setup when at least one 
-        of the two client layer LTPs does not report any ILSN or 
-        both client layer LTPs report the same ILSN value and the 
-        corresponding server layer TTPs have at least one common 
-        server-layer switching capability and at least one common 
-        client-layer switching capability.";
+         This attribute is not reported when there are no additional
+         connectivity constraints.
+
+         Therefore, a client service can be setup when at least one
+         of the two client layer LTPs does not report any ILSN or
+         both client layer LTPs report the same ILSN value and the
+         corresponding server layer TTPs have at least one common
+         server-layer switching capability and at least one common
+         client-layer switching capability.";
     }
   }
 
   augment "/nw:networks/nw:network/nw:node/tet:te"
         + "/tet:te-node-attributes" {
-    when "../../../nw:network-types/tet:te-topology"
-       + "/oit:optical-impairment-topology" {
+    when '../../../nw:network-types/tet:te-topology'
+       + '/oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology";
+        "This augment is only valid for Optical Impairment
+         topology";
     }
     description
       "node attributes augmentantion for optical-impairment ROADM
        node";
-
   } // augmentation for optical-impairment ROADM 
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
-        + "tet:information-source-entry/tet:connectivity-matrices"{
-    when "../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+        + "tet:information-source-entry/tet:connectivity-matrices" {
+    when '../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology ";
-    }  
+        "This augment is only valid for Optical Impairment
+         topology ";
+    }
     description
-      "Augment default TE node connectivity matrix information 
-      source.";
-
-    leaf roadm-path-impairments {
+      "Augment default TE node connectivity matrix information
+       source.";
+    leaf roadm-path-impairments-set {
       type leafref {
         path "../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
       description
         "Pointer to the list set of ROADM optical impairments";
     }
   } // augmentation connectivity-matrices information-source
-  
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices/"
         + "tet:connectivity-matrix" {
-    when "../../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
          topology ";
     }
     description
-      "Augment TE node connectivity matrix entry information 
-      source.";
-    leaf roadm-path-impairments {
+      "Augment TE node connectivity matrix entry information
+       source.";
+    leaf roadm-path-impairments-set {
       type leafref {
         path "../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
       description
         "Pointer to the list set of ROADM optical impairments";
-    } 
+    }
   } // augmentation connectivity-matrix information-source
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices" {
-    when "../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for Optical Impairment 
-        topology ";
-    }  
+        "This augment is only valid for Optical Impairment
+         topology ";
+    }
     description
       "Augment default TE node connectivity matrix.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairments-set {
       type leafref {
         path "../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false; /*the identifier in the list */
-       /*"roadm-path-impairments" of ROADM optical impairment*/
-                    /*is read-only as the rest of attributes*/ 
-      description "pointer to the list set of ROADM optical 
-      impairments";
-    } 
+      /*"roadm-path-impairments" of ROADM optical impairment*/
+      /*is read-only as the rest of attributes*/
+      description
+        "Pointer to the list set of ROADM optical
+         impairments";
+    }
   } // augmentation connectivity-matrices
-  
+
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/"
         + "tet:connectivity-matrices/tet:connectivity-matrix" {
-    when "../../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for 
-        Optical Impairment topology ";
+        "This augment is only valid for
+         Optical Impairment topology ";
     }
     description
       "Augment TE node connectivity matrix entry.";
-    leaf roadm-path-impairments {
+    leaf roadm-path-impairments-set {
       type leafref {
         path "../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
-      description "pointer to the list set of ROADM optical
-       impairments";
+      description
+        "Pointer to the list set of ROADM optical
+         impairments";
     }
   } // augmentation connectivity-matrix
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:from" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for 
-        Optical Impairment topology ";
+        "This augment is only valid for
+         Optical Impairment topology ";
     }
     description
-      "Augment the attributes for the 'from' LTP for the TE node 
-      connectivity matrix entry.";
+      "Augment the attributes for the 'from' LTP for the TE node
+       connectivity matrix entry.";
     list additional-ltp {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
@@ -4859,55 +4833,56 @@ module ietf-optical-impairment-topology {
          + "oit:protection-type,"
          + "'oit:otsi-protection')" {
         description
-          "This list applies only when the 'to' LTP for this 
-          connectivity matrix entry supports individual OTSi(G) 
-          protection.";
+          "This list applies only when the 'to' LTP for this
+           connectivity matrix entry supports individual OTSi(G)
+           protection.";
       }
       key "ltp-ref";
       config false;
       description
-        "The restricted list of the potential secondary LTPs that 
-        can be selected when the 'from' LTP of this connectivity 
-        matrix entry is selected as a working LTP.
-        
-        If this list is empty, all the other LTPs that can reach 
-        the 'to' LTP of this connectivity matrix entry can be 
-        selected as secondary LTPs.";
+        "The restricted list of the potential secondary LTPs that
+         can be selected when the 'from' LTP of this connectivity
+         matrix entry is selected as a working LTP.
+
+         If this list is empty, all the other LTPs that can reach
+         the 'to' LTP of this connectivity matrix entry can be
+         selected as secondary LTPs.";
       leaf ltp-ref {
         type leafref {
           path "../../../../../../../nt:termination-point/nt:tp-id";
         }
         description
-          "The reference to the potential secondary LTP that can be 
-          selected when the 'from' LTP of this connectivity matrix 
-          entry is selected as a working LTP";
+          "The reference to the potential secondary LTP that can be
+           selected when the 'from' LTP of this connectivity matrix
+           entry is selected as a working LTP";
       }
-      leaf roadm-path-impairments {
+      leaf roadm-path-impairments-set {
         type leafref {
           path "../../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path 
-          between this secondary 'from' LTP and the 'to' LTP of 
-          this connectivity matrix entry.";
-      }    
+          "Pointer to ROADM optical impairments of the ROADM path
+           between this secondary 'from' LTP and the 'to' LTP of
+           this connectivity matrix entry.";
+      }
     }
   } // augmentation connectivity-matrix from
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:te-node-attributes/tet:connectivity-matrices/"
         + "tet:connectivity-matrix/tet:to" {
-    when "../../../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for 
-        Optical Impairment topology ";
+        "This augment is only valid for
+         Optical Impairment topology ";
     }
     description
-      "Augment the attributes for the 'to' LTP for the TE node 
-      connectivity matrix entry.";
+      "Augment the attributes for the 'to' LTP for the TE node
+       connectivity matrix entry.";
     list additional-ltp {
       when "derived-from-or-self(../../../../../../"
          + "nt:termination-point"
@@ -4915,72 +4890,78 @@ module ietf-optical-impairment-topology {
          + "oit:protection-type,"
          + "'oit:otsi-protection')" {
         description
-          "This list applies only when the 'from' LTP for this 
-          connectivity matrix entry supports individual OTSi(G) 
-          protection.";
+          "This list applies only when the 'from' LTP for this
+           connectivity matrix entry supports individual OTSi(G)
+           protection.";
       }
       key "ltp-ref";
       config false;
       description
-        "The restricted list of the potential secondary LTPs that 
-        can be selected when the 'to' LTP of this connectivity 
-        matrix entry is selected as a working LTP.
-        
-        If this list is empty, all the other LTPs that can be 
-        reached from the 'from' LTP of this connectivity matrix 
-        entry can be selected as secondary LTPs.";
+        "The restricted list of the potential secondary LTPs that
+         can be selected when the 'to' LTP of this connectivity
+         matrix entry is selected as a working LTP.
+
+         If this list is empty, all the other LTPs that can be
+         reached from the 'from' LTP of this connectivity matrix
+         entry can be selected as secondary LTPs.";
       leaf ltp-ref {
         type leafref {
           path "../../../../../../../nt:termination-point/nt:tp-id";
         }
         description
-          "The reference to the potential secondary LTP that can be 
-          selected when the 'to' LTP of this connectivity matrix 
-          entry is selected as a working LTP";
+          "The reference to the potential secondary LTP that can be
+           selected when the 'to' LTP of this connectivity matrix
+           entry is selected as a working LTP";
       }
-      leaf roadm-path-impairments {
+      leaf roadm-path-impairments-set {
         type leafref {
           path "../../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id";
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path 
-          between the 'from' LTP of this connectivity matrix entry 
-          and this secondary LTP.";
-      }    
+          "Pointer to ROADM optical impairments of the ROADM path
+           between the 'from' LTP of this connectivity matrix entry
+           and this secondary LTP.";
+      }
     }
   } // augmentation connectivity-matrix to
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities" {
-    when "../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
-      "This augment is only valid for Optical Impairment topology ";
+        "This augment is only valid for Optical Impairment
+        topology.";
     }
     description
       "Augment default TTP LLC.";
-    leaf add-path-impairments {
+    leaf add-path-impairments-set {
       type leafref {
         path "../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
-      description "pointer to the list set of ROADM optical
-       impairments";
+      description
+        "Pointer to the list set of ROADM optical
+         impairments";
     }
-    leaf drop-path-impairments {
+    leaf drop-path-impairments-set {
       type leafref {
         path "../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
-      description "pointer to the list set of ROADM 
-      optical impairments";
+      description
+        "pointer to the list set of ROADM
+         optical impairments";
     }
   } // augmentation local-link-connectivities
 
@@ -4988,47 +4969,51 @@ module ietf-optical-impairment-topology {
         + "tet:tunnel-termination-point/"
         + "tet:local-link-connectivities/"
         + "tet:local-link-connectivity" {
-    when "../../../../../nw:network-types/tet:te-topology/"
-       + "oit:optical-impairment-topology" {
+    when '../../../../../nw:network-types/tet:te-topology/'
+       + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
          Optical Impairment topology ";
     }
     description
       "Augment TTP LLC entry.";
-    leaf add-path-impairments {
+    leaf add-path-impairments-set {
       type leafref {
         path "../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
-      description "pointer to the list set of ROADM optical
-       impairments";
+      description
+        "pointer to the list set of ROADM optical
+         impairments";
     }
-    leaf drop-path-impairments {
+    leaf drop-path-impairments-set {
       type leafref {
         path "../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+           + "/oit:roadm-path-impairments-sets"
+           + "/oit:roadm-path-impairments-set"
+           + "/oit:roadm-path-impairments-set-id";
       }
       config false;
-      description "pointer to the list set of ROADM optical 
-      impairments";
+      description
+        "pointer to the list set of ROADM optical
+         impairments";
     }
     list llc-transceiver {
       key "ttp-transponder-ref ttp-transceiver-ref";
       config false;
       description
         "The list of transceivers having a LLC different from the
-        default LLC.";
+         default LLC.";
       leaf ttp-transponder-ref {
         type leafref {
           path "../../../../ttp-transceiver/transponder-ref";
         }
         description
           "The reference to the transponder hosting the transceiver
-          of this LLCL entry.";
+           of this LLCL entry.";
       }
       leaf ttp-transceiver-ref {
         type leafref {
@@ -5041,73 +5026,82 @@ module ietf-optical-impairment-topology {
         type boolean;
         description
           "'true' - connectivity from this transceiver is allowed;
-          'false' - connectivity from this transceiver is
-          disallowed.";
+           'false' - connectivity from this transceiver is
+           disallowed.";
       }
-      leaf add-path-impairments {
+      leaf add-path-impairments-set {
         type leafref {
           path "../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
-        description "pointer to the list set of ROADM optical
-        impairments";
+        description
+          "pointer to the list set of ROADM optical
+           impairments";
       }
-      leaf drop-path-impairments {
+      leaf drop-path-impairments-set {
         type leafref {
           path "../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
-        description "pointer to the list set of ROADM 
-        optical impairments";
+        description
+          "pointer to the list set of ROADM
+           optical impairments";
       }
     }
     list additional-ltp {
       when "derived-from-or-self(../../../tet:protection-type,"
          + "'oit:otsi-protection')" {
         description
-          "This list applies only to TTPs that support individual 
-          OTSi(G) protection.";
+          "This list applies only to TTPs that support individual
+           OTSi(G) protection.";
       }
       key "ltp-ref";
       config false;
       description
-        "The restricted list of the potential secondary LTPs that 
-        can be selected when the LTP associated with this LLCP 
-        entry is selected as a working LTP.
-        
-        If this list is empty, all the other LTPs that can be 
-        reached by this TTP can be selected as secondary LTPs.";
+        "The restricted list of the potential secondary LTPs that
+         can be selected when the LTP associated with this LLCP
+         entry is selected as a working LTP.
+
+         If this list is empty, all the other LTPs that can be
+         reached by this TTP can be selected as secondary LTPs.";
       leaf ltp-ref {
         type leafref {
           path "../../../../../../nt:termination-point/nt:tp-id";
         }
         description
-          "The reference to potential secondary LTP that can be 
-          selected when the LTP associated with this LLCP entry is 
-          selected as a working LTP";
+          "The reference to potential secondary LTP that can be
+           selected when the LTP associated with this LLCP entry is
+           selected as a working LTP";
       }
-      leaf add-path-impairments {
+      leaf add-path-impairments-set {
         type leafref {
           path "../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
-        description "pointer to the list set of ROADM optical
-        impairments";
+        description
+          "pointer to the list set of ROADM optical
+           impairments";
       }
-      leaf drop-path-impairments {
+      leaf drop-path-impairments-set {
         type leafref {
           path "../../../../../../../oit:templates"
-           + "/oit:roadm-path-impairments/oit:roadm-path-impairment"
-           + "/oit:roadm-path-impairments-id" ;
+             + "/oit:roadm-path-impairments-sets"
+             + "/oit:roadm-path-impairments-set"
+             + "/oit:roadm-path-impairments-set-id";
         }
-        description "pointer to the list set of ROADM 
-        optical impairments";
+        description
+          "pointer to the list set of ROADM
+           optical impairments";
       }
     }
   } // augmentation local-link-connectivity
+
 }
 ]]>
   </sourcecode>
@@ -5245,7 +5239,7 @@ module ietf-optical-impairment-topology {
   <section title="IANA Considerations" anchor="sect-6">
   <t>
    This document registers the following namespace URIs in the IETF XML
-   registry [RFC3688]:
+   registry <xref target="RFC3688"/>:
   </t>
 
   <figure><artwork><![CDATA[
@@ -5288,6 +5282,8 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
 
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
+
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
@@ -5295,6 +5291,8 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
 
@@ -5331,6 +5329,8 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8453.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8969.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
 
@@ -5457,8 +5457,17 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T" value="Recommendation G.873.1"/>
   </reference>
   
+  <reference anchor="OpenROADM">
+   <front>
+   <title>OpenROADM Multi-Source Agreement (MSA) - http://openroadm.org
+   </title>
+   <author/>
+   </front>
+  </reference>
+  
   </references>
-    
+
+
   <section anchor="JSON Examples" numbered="true">
   <name>JSON Code Examples for Optical Protection Uses Cases</name>
   
@@ -5576,167 +5585,259 @@ reference: RFC XXXX (TDB)
   </figure>  <sourcecode type="json" markers="false">
     <![CDATA[
 {
-  "roadm-path-impairments": [
-    {
-      "roadm-path-impairments-id": "1",
-      "roadm-add-path":
-      "Add path impairments from TTP 1 or TTP 2 to any LTP."
-    },
-    {
-      "roadm-path-impairments-id": "2",
-      "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-      to LTP 1 or LTP 3, through AD1."
-    },
-    {
-      "roadm-path-impairments-id": "3",
-      "roadm-add-path": "Add path impairments from TTP 3 or TTP 4
-      to LTP 1 or LTP 2, through AD2."
-    }
-  ],
-  "tunnel-termination-point": [
-    {
-      "tunnel-tp-id": "MQ==",
-      "protection-type": "otsi-protection",
-      "local-link-connectivities": {
-        "is-allowed": true,
-        "add-path-impairments": 1
-      }
-    },
-    {
-      "tunnel-tp-id": "Mg==",
-      "local-link-connectivities": {
-        "is-allowed": true,
-        "add-path-impairments": 1,
-        "local-link-connectivity": [
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "WDM-Network-2",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-top\
+\ology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-1"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:templates": {
+          "roadm-path-impairments-sets": {
+              "roadm-path-impairments-set": [
+                  {
+                    "roadm-path-impairments-set-id": "1",
+                    "description": "Add path impairments from TTP 1 \
+\or TTP 2 to any LTP",
+                    
+                    "roadm-add-path": [          
+                      {
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "roadm-path-impairments-set-id": "2",
+                     "description": "Add path impairments from TTP 3\
+\ or TTP 4 to LTP1 or LTP3, thorugh AD1",
+                   
+                    "roadm-add-path": [                      
+                      {
+                        "frequency-range-id": 0,
+                          "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                          }
+                      }                              
+                    ]            
+                  },
+                  {
+                    "roadm-path-impairments-set-id": "3",
+                    "description": "Add path impairments from TTP 3 \
+\or TTP 4 to LTP1 or LTP2, thorugh AD2",                    
+                    
+                    "roadm-add-path": [
+                      {              
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]                            
+                  }
+              ]
+          }
+        },
+        "node": [
           {
-            "link-tp-ref": "LTP-1",
-            "additional-ltp": [
+            "node-id": "WDM-TE-Node-1",
+            "ietf-te-topology:te-node-id": "192.0.2.1",
+            "ietf-te-topology:te": {
+              "tunnel-termination-point": [
+                {
+                  "tunnel-tp-id": "MQ==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+\gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": true,
+                    "ietf-optical-impairment-topology:add-path-impai\
+\rments-set": "1"
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Mg==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+\gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": true,
+                    "ietf-optical-impairment-topology:add-path-impai\
+\rments-set": "1",
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-2"
+                          },
+                          { 
+                            "ltp-ref": "LTP-3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-2",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-1"
+                          },
+                          {
+                            "ltp-ref": "LTP-3"
+                          }
+                        ]
+                      },
+                      {
+                      "link-tp-ref": "LTP-3",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-1"
+                          },{
+                            "ltp-ref": "LTP-2"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "Mw==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+\gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+\mpairments-set": "2",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments-set": "2"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments-set": "3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-3",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+\mpairments-set": "2",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments-set": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments-set": "3"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tunnel-tp-id": "NA==",
+                  "protection-type": "ietf-optical-impairment-topolo\
+\gy:otsi-protection",
+                  "local-link-connectivities": {
+                    "is-allowed": false,
+                    "local-link-connectivity": [
+                      {
+                        "link-tp-ref": "LTP-1",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+\mpairments-set": "3",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments-set": "2"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments-set": "3"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-2",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+\mpairments-set": "3",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments-set": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-3",
+                            "add-path-impairments-set": "2"
+                          }
+                        ]
+                      },
+                      {
+                        "link-tp-ref": "LTP-3",
+                        "is-allowed": true,
+                        "ietf-optical-impairment-topology:add-path-i\
+\mpairments-set": "2",
+                        "ietf-optical-impairment-topology:additional\
+\-ltp": [
+                          {
+                            "ltp-ref": "LTP-1",
+                            "add-path-impairments-set": "3"
+                          },
+                          {
+                            "ltp-ref": "LTP-2",
+                            "add-path-impairments-set": "3"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "ietf-network-topology:termination-point": [
               {
-                "ltp-ref": "LTP-2",
-              },{
-                "ltp-ref": "LTP-3"
-              }
-            ]
-          },
-          {
-            "link-tp-ref": "LTP-2",
-            "additional-ltp": [
+                "tp-id": "LTP-1"
+              },
               {
-                "ltp-ref": "LTP-1",
-              },{
-                "ltp-ref": "LTP-3"
-              }
-            ]
-          },
-          {
-            "link-tp-ref": "LTP-3",
-            "additional-ltp": [
+                "tp-id": "LTP-2"
+              },
               {
-                "ltp-ref": "LTP-1",
-              },{
-                "ltp-ref": "LTP-2"
+                "tp-id": "LTP-3"
               }
             ]
           }
         ]
       }
-    },
-    {
-      "tunnel-tp-id": "Mw==",
-      "protection-type": "otsi-protection",
-      "local-link-connectivities": {
-        "is-allowed": false,
-        "local-link-connectivity": [
-          {
-            "link-tp-ref": "LTP-1",
-            "is-allowed": true,
-            "add-path-impairments": 2,
-            "additional-ltp": [
-              {
-                "ltp-ref": "LTP-1",
-                "add-path-impairments": 3
-              },
-              {
-                "ltp-ref": "LTP-2",
-                "add-path-impairments": 3
-              }
-            ]
-          },
-          {
-            "link-tp-ref": "LTP-3",
-            "is-allowed": true,
-            "add-path-impairments": 2,
-            "additional-ltp": [
-              {
-                "ltp-ref": "LTP-1",
-                "add-path-impairments": 3
-              },
-              {
-                "ltp-ref": "LTP-2",
-                "add-path-impairments": 3
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "tunnel-tp-id": "NA==",
-      "protection-type": "otsi-protection",
-      "local-link-connectivities": {
-        "is-allowed": false,
-        "local-link-connectivity": [
-          {
-            "link-tp-ref": "LTP-1",
-            "is-allowed": true,
-            "add-path-impairments": 2,
-            "additional-ltp": [
-              {
-                "ltp-ref": "LTP-1",
-                "add-path-impairments": 3
-              },
-              {
-                "ltp-ref": "LTP-2",
-                "add-path-impairments": 3
-              }
-            ]
-          },
-          {
-            "link-tp-ref": "LTP-2",
-            "is-allowed": true,
-            "add-path-impairments": 3,
-            "additional-ltp": [
-              {
-                "ltp-ref": "LTP-1",
-                "add-path-impairments": 2
-              },
-              {
-                "ltp-ref": "LTP-3",
-                "add-path-impairments": 2
-              }
-            ]
-          },
-          {
-            "link-tp-ref": "LTP-3",
-            "is-allowed": true,
-            "add-path-impairments": 2,
-            "additional-ltp": [
-              {
-                "ltp-ref": "LTP-1",
-                "add-path-impairments": 3
-              },
-              {
-                "ltp-ref": "LTP-2",
-                "add-path-impairments": 3
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    ]
+  }
 }
-]]>
+    ]]>
   </sourcecode>
 
   
@@ -5809,177 +5910,269 @@ reference: RFC XXXX (TDB)
   <sourcecode type="json" markers="false">
     <![CDATA[
 {
-  "roadm-path-impairments": [
-    
-    {
-      "roadm-path-impairments-id": "2",
-      "roadm-add-path":
-      "Add path impairments from LTP 20 or LTP 30 to LTP 1 or LTP 3,
-       through AD1."
-    },
-    {
-      "roadm-path-impairments-id": "3",
-      "roadm-add-path":
-      "Add path impairments from LTP 20 or LTP 30 or LTP 40 to LTP 1
-      or LTP 2, through AD2."
-    }
-  ],
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "WDM-Network-2",
+        "network-types": {
+          "ietf-te-topology:te-topology": {
+            "ietf-optical-impairment-topology:optical-impairment-top\
+\ology": {}
+          }
+        },
+        "ietf-te-topology:te-topology-identifier": {
+          "topology-id": "WDM-Network-1"
+        },
+        "ietf-te-topology:te": {},
+        "ietf-optical-impairment-topology:templates": {
+          "roadm-path-impairments-sets": {
+              "roadm-path-impairments-set": [
+                  {
+                    "roadm-path-impairments-set-id": "1",
+                    
+                    "roadm-add-path": [          
+                      {
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "roadm-path-impairments-set-id": "2",
+                    "description": "Add path impairments from LTP 20\
+\ or LTP 30 to LTP 1 or LTP3, through AD1",
+                    
+                    "roadm-add-path": [                      
+                      {
+                        "frequency-range-id": 0,
+                          "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                          }
+                      }                              
+                    ]            
+                  },
+                  {
+                    "roadm-path-impairments-set-id": "3",
+                    "description": "Add path impairments from LTP 20\
+\ or LTP 30 or LTP 40 to LTP 1 or LTP 2, through AD2",
+                                        
+                    "roadm-add-path": [
+                      {              
+                        "frequency-range-id": 0,
+                        "frequency-range": {
+                            "lower-frequency": "191.3",
+                            "upper-frequency": "196.1"
+                        }
+                      }
+                    ]                            
+                  }
+              ]
+          }
+        },
+        "node": [
+          {
+            "node-id": "WDM-TE-Node-1",
+            "ietf-te-topology:te-node-id": "192.0.2.1",
+            "ietf-te-topology:te": {
+               "te-node-attributes": {
+                  "connectivity-matrices": {
+                     "connectivity-matrix": [
+                        {           
+                            "id": 1,
+                            "from": {
+                               "tp-ref": "20"
+                            },
+                            "to": {
+                               "tp-ref": "1",
+                               "ietf-optical-impairment-topology:add\
+\itional-ltp": [
+                                  {
+                                    "ltp-ref": "1",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  },
+                                  {
+                                    "ltp-ref": "2",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  }
+                               ]
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "2"
+                        },
+                        {
+                            "id": 2,
+                            "from": {
+                               "tp-ref": "20"
+                            },
+                            "to": {
+                               "tp-ref": "3",
+                               "ietf-optical-impairment-topology:add\
+\itional-ltp": [
+                                  {
+                                    "ltp-ref": "1",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  },
+                                  {
+                                    "ltp-ref": "2",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  }
+                               ]
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "2"
+                        },
+                        {
+                            "id": 3,
+                            "from": {
+                               "tp-ref": "30"
+                            },
+                            "to": {
+                               "tp-ref": "1",
+                               "ietf-optical-impairment-topology:add\
+\itional-ltp": [
+                                  {
+                                    "ltp-ref": "1",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  },
+                                  {
+                                    "ltp-ref": "2",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  }
+                               ]
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "2"
+                        },
+                        {
+                            "id": 4,
+                            "from": {
+                               "tp-ref": "30"
+                            },
+                            "to": {
+                               "tp-ref": "2",
+                               "ietf-optical-impairment-topology:add\
+\itional-ltp": [
+                                  {
+                                    "ltp-ref": "1",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "2"
+                                  },
+                                  {
+                                    "ltp-ref": "3",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "2"
+                                  }
+                               ]
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "3"
+                        },
+                        {
+                            "id": 5,
+                            "from": {
+                               "tp-ref": "30"
+                            },
+                            "to": {
+                               "tp-ref": "3",
+                               "ietf-optical-impairment-topology:add\
+\itional-ltp": [
+                                  {
+                                    "ltp-ref": "1",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  },
+                                  {
+                                    "ltp-ref": "2",
+                                    "ietf-optical-impairment-topolog\
+\y:roadm-path-impairments-set": "3"
+                                  }
+                               ]
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "2"
+                        },
+                        {
+                            "id": 6,
+                            "from": {
+                               "tp-ref": "40"
+                            },
+                            "to": {
+                               "tp-ref": "1"
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "3"
+                        },
+                        {
+                            "id": 7,
+                            "from": {
+                               "tp-ref": "40"
+                            },
+                            "to": {
+                               "tp-ref": "2"
+                            },
+                            "is-allowed": true,
+                            "ietf-optical-impairment-topology:roadm-\
+\path-impairments-set": "3"
+                        }
+                     ]
+                  }
+               }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "20",
+                "ietf-optical-impairment-topology:protection-type": \
+\"ietf-optical-impairment-topology:otsi-protection"
+              }, 
+              {
+                "tp-id": "30",
+                "ietf-optical-impairment-topology:protection-type": \
+\"ietf-optical-impairment-topology:otsi-protection"
+              }, 
+              {
+                "tp-id": "40"
+              }, 
+              {
+                "tp-id": "1",
+                "ietf-optical-impairment-topology:protection-type": \
+\"ietf-optical-impairment-topology:otsi-protection"
+              }, 
+              {
+                "tp-id": "2",
+                "ietf-optical-impairment-topology:protection-type": \
+\"ietf-optical-impairment-topology:otsi-protection"
+              }, 
+              {
+                "tp-id": "3",
+                "ietf-optical-impairment-topology:protection-type": \
+\"ietf-optical-impairment-topology:otsi-protection"
+              } 
 
-"connectivity-matrices": {
-    "connectivity-matrix": [
-        {
-            "id": 1,
-            "from": {
-                "tp-ref": "20"
-            },
-            "to": {
-                "tp-ref": "1",
-                "additional-ltp": [
-                    {
-                        "ltp-ref": "1",
-                        "roadm-path-impairments": "3"
-                    },
-                    {
-                        "ltp-ref": "2",
-                        "roadm-path-impairments": "3"
-                    }
-                ]
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "2"
-        },
-        {
-            "id": 2,
-            "from": {
-                "tp-ref": "20"
-            },
-            "to": {
-                "tp-ref": "3",
-                "additional-ltp": [
-                    {
-                        "ltp-ref": "1",
-                        "roadm-path-impairments": "3"
-                    },
-                    {
-                        "ltp-ref": "2",
-                        "roadm-path-impairments": "3"
-                    }
-                ]
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "2"
-        },
-        {
-            "id": 3,
-            "from": {
-                "tp-ref": "30"
-            },
-            "to": {
-                "tp-ref": "1",
-                "additional-ltp": [
-                    {
-                        "ltp-ref": "1",
-                        "roadm-path-impairments": "2"
-                    },
-                    {
-                        "ltp-ref": "2",
-                        "roadm-path-impairments": "2"
-                    }
-                ]
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "2"
-        },
-        {
-            "id": 4,
-            "from": {
-                "tp-ref": "30"
-            },
-            "to": {
-                "tp-ref": "2",
-                "additional-ltp": [
-                    {
-                        "ltp-ref": "1",
-                        "roadm-path-impairments": "2"
-                    },
-                    {
-                        "ltp-ref": "3",
-                        "roadm-path-impairments": "2"
-                    }
-                ]
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "3"
-        },
-        {
-            "id": 5,
-            "from": {
-                "tp-ref": "30"
-            },
-            "to": {
-                "tp-ref": "3",
-                "additional-ltp": [
-                    {
-                        "ltp-ref": "1",
-                        "roadm-path-impairments": "3"
-                    },
-                    {
-                        "ltp-ref": "2",
-                        "roadm-path-impairments": "3"
-                    }
-                ]
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "2"
-        },
-        {
-            "id": 6,
-            "from": {
-                "tp-ref": "40"
-            },
-            "to": {
-                "tp-ref": "1"
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "3"
-        },
-        {
-            "id": 7,
-            "from": {
-                "tp-ref": "40"
-            },
-            "to": {
-                "tp-ref": "2"
-            },
-            "is-allowed": true,
-            "roadm-path-impairments": "3"
-        }
+            ]
+
+          }
+        ]
+      }         
     ]
+  }
 }
-
-
-"ietf-network-topology:termination-point": [
-    {
-        "tp-id": "20",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "30",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "1",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "2",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "3",
-        "protection-type": "otsi-protection"
-    }, {
-        "tp-id": "4",
-        "protection-type": "otsi-protection"
-    }
-]
-]]>
+    ]]>
   </sourcecode>
   
   </section>
@@ -6147,20 +6340,20 @@ reference: RFC XXXX (TDB)
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
-ology": {}
+\ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
           "topology-id": "WDM-Network-1"
         },
         "ietf-te-topology:te": {},
-        "ietf-optical-impairment-topology:otsi-information": {
+        "ietf-optical-impairment-topology:otsis": {
           "otsi-group": [
             {
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6168,7 +6361,7 @@ ology": {}
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6176,10 +6369,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -6187,10 +6380,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -6205,7 +6398,7 @@ ology": {}
                 {
                   "tunnel-tp-id": "AQ==",
                   "ietf-optical-impairment-topology:ttp-transceiver"\
-: [
+\: [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -6217,7 +6410,7 @@ ology": {}
                       {
                         "link-tp-ref": "1",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -6231,7 +6424,7 @@ eiver": [
                 {
                   "tunnel-tp-id": "Ag==",
                   "ietf-optical-impairment-topology:ttp-transceiver"\
-: [
+\: [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -6247,7 +6440,7 @@ eiver": [
                       {
                         "link-tp-ref": "2",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -6258,7 +6451,7 @@ eiver": [
                       {
                         "link-tp-ref": "3",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -6356,17 +6549,17 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Forward)",
+                        "media-channel": [
                           {
-                            "otsi-group-ref": "Red OTSiG (Forward)",
+                            "media-channel-id": 1, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -6386,17 +6579,17 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
+                            "media-channel-id": 2, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -6416,18 +6609,17 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
+                            "media-channel-id": 2, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -6447,18 +6639,17 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                     "media-channel-groups": {
                       "media-channel-group": [
                         {
-                          "i": 1,
-                          "media-channels": [
+                          "otsi-group-ref": "Green OTSiG (Reverse)",
+                          "media-channel": [
                             {
-                              "otsi-group-ref": "Green OTSiG (Revers\
-e)",
+                              "media-channel-id": 3, 
                               "otsi-ref": [
                                 {
-                                  "otsi-carrier-ref": 1
+                                  "carrier-ref": 1
                                 } 
                               ]
                             }
@@ -6478,18 +6669,17 @@ e)",
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
+                            "media-channel-id": 4, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6509,18 +6699,17 @@ e)",
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
+                            "media-channel-id": 5, 
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6581,20 +6770,20 @@ e)",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
-ology": {}
+\ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
           "topology-id": "WDM-Network-2"
         },
         "ietf-te-topology:te": {},
-        "ietf-optical-impairment-topology:otsi-information": {
+        "ietf-optical-impairment-topology:otsis": {
           "otsi-group": [
             {
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6602,7 +6791,7 @@ ology": {}
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6610,10 +6799,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -6621,10 +6810,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -6684,18 +6873,19 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Forward)",    \
+\          
+                        "media-channel": [
                           {
+                            "media-channel-id": -10, 
                             "flexi-n": -10,
-                            "otsi-group-ref": "Red OTSiG (Forward)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -6715,36 +6905,35 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6764,19 +6953,18 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
+                            "media-channel-id": -20, 
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -6796,36 +6984,35 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6845,19 +7032,18 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
+                            "media-channel-id": -20, 
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6877,36 +7063,35 @@ ology": {}
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -6925,20 +7110,20 @@ ology": {}
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
-ology": {}
+\ology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
           "topology-id": "WDM-Network-Complete"
         },
         "ietf-te-topology:te": {},
-        "ietf-optical-impairment-topology:otsi-information": {
+        "ietf-optical-impairment-topology:otsis": {
           "otsi-group": [
             {
               "otsi-group-id": "Red OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6946,7 +7131,7 @@ ology": {}
               "otsi-group-id": "Red OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 }
               ]
             },
@@ -6954,10 +7139,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Forward)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             },
@@ -6965,10 +7150,10 @@ ology": {}
               "otsi-group-id": "Green OTSiG (Reverse)",
               "otsi": [
                 {
-                  "otsi-carrier-id": 1
+                  "carrier-id": 1
                 },
                 {
-                  "otsi-carrier-id": 2
+                  "carrier-id": 2
                 }
               ]
             }
@@ -6983,7 +7168,7 @@ ology": {}
                 {
                   "tunnel-tp-id": "AQ==",
                   "ietf-optical-impairment-topology:ttp-transceiver"\
-: [
+\: [
                     {
                       "transponder-ref": 1,
                       "transceiver-ref": 1
@@ -6995,7 +7180,7 @@ ology": {}
                       {
                         "link-tp-ref": "1",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 1,
                             "ttp-transceiver-ref": 1,
@@ -7009,7 +7194,7 @@ eiver": [
                 {
                   "tunnel-tp-id": "Ag==",
                   "ietf-optical-impairment-topology:ttp-transceiver"\
-: [
+\: [
                     {
                       "transponder-ref": 2,
                       "transceiver-ref": 1
@@ -7025,7 +7210,7 @@ eiver": [
                       {
                         "link-tp-ref": "2",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 1,
@@ -7036,7 +7221,7 @@ eiver": [
                       {
                         "link-tp-ref": "3",
                         "ietf-optical-impairment-topology:llc-transc\
-eiver": [
+\eiver": [
                           {
                             "ttp-transponder-ref": 2,
                             "ttp-transceiver-ref": 2,
@@ -7174,18 +7359,18 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Forward)",
+                        "media-channel": [
                           {
+                            "media-channel-id": -10, 
                             "flexi-n": -10,
-                            "otsi-group-ref": "Red OTSiG (Forward)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -7209,36 +7394,36 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",    \
+\          
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -7262,19 +7447,18 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
+                            "media-channel-id": -20, 
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -7298,36 +7482,35 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
@@ -7351,19 +7534,18 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Forward)",
+                        "media-channel": [
                           {
+                            "media-channel-id": -20, 
                             "flexi-n": -20,
-                            "otsi-group-ref": "Green OTSiG (Forward)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
@@ -7387,36 +7569,35 @@ eiver": [
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
-                "ietf-optical-impairment-topology:OMS-attributes": {
+                "ietf-optical-impairment-topology:oms-attributes": {
                   "media-channel-groups": {
                     "media-channel-group": [
                       {
-                        "i": 1,
-                        "media-channels": [
+                        "otsi-group-ref": "Red OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 10, 
                             "flexi-n": 10,
-                            "otsi-group-ref": "Red OTSiG (Reverse)",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               }
                             ]
                           }
                         ]
                       },
                       {
-                        "i": 2,
-                        "media-channels": [
+                        "otsi-group-ref": "Green OTSiG (Reverse)",
+                        "media-channel": [
                           {
+                            "media-channel-id": 20, 
                             "flexi-n": 20,
-                            "otsi-group-ref": "Green OTSiG (Reverse)\
-",
                             "otsi-ref": [
                               {
-                                "otsi-carrier-ref": 1
+                                "carrier-ref": 1
                               },
                               {
-                                "otsi-carrier-ref": 2
+                                "carrier-ref": 2
                               }
                             ]
                           }
