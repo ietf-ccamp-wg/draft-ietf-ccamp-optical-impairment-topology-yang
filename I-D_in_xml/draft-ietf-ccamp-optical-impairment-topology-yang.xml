@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-19"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-20"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2025" month="July" day="07" />
+  <date year="2025" month="August" day="01" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -288,6 +288,18 @@
    assigned to the RFC once this draft becomes an RFC.]
   </t>
 
+  </section>
+  
+  <section title="Requirements Language" anchor="sect-1.4">
+  <t>
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+   "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+   RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+   interpreted as described in BCP 14 <xref target="RFC2119"/>
+   <xref target="RFC8174"/> when, and only when, they appear in
+   all capitals, as shown here.
+  </t>
+  
   </section>
 
   </section>
@@ -1599,11 +1611,6 @@
    also implies that the optical transponders belong to a separate
    TE-node.
   </t>
-  
-  <t>
-   [Editor's note: This will be addressed in a future revision of this
-   document. See Editor's note above.]
-  </t>
 
   <figure align="center" title="Integrated WDM-node Architectiure with
    Remote Transponders" anchor="Figure-7"><artwork><![CDATA[
@@ -1731,7 +1738,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <t>Optical amplifier noise due to amplified spontaneous emission
    (ASE)</t>
    <t>In-band cross-talk</t>
-   <t>Filtering effects (for further study)</t>
+   <t>Filtering effects (out of scope of this document)</t>
   <?rfc subcompact="no"?>
   </list></t>
   
