@@ -562,36 +562,36 @@ module ietf-optical-impairment-topology {
     leaf roadm-pmin {
       type l0-types:power-dbm-or-null;
       description
-        "If the drop path has additional loss
-         that is added, for example,
-         to hit target power levels into a
-         drop path amplifier, or simply, to reduce the
-         power of a strong carrier
-         (due to ripple,for example),
-         then the use of the ROADM input power levels and
-         the above drop losses is not appropriate.
-         This parameter corresponds to the min per
-         carrier power levels
-         expected at the output of the drop block.
-         A detail example of the comparison using
-         these parameters is
-         detailed in section xxx of the document yyy.";
+        "If the drop path has additional loss that is added, for
+         example, to hit target power levels into a drop path
+         amplifier, or simply, to reduce the power of a strong
+         carrier (due to ripple, for example), then the use of the
+         ROADM input power levels and the above drop losses is
+         not appropriate.
+
+         This parameter corresponds to the minimum value of the Drop
+         Channel output power range, as defined in table 8-6 of
+         ITU-T G.680.";
+      reference
+          "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                     optical network elements, table 8-6";
     }
     leaf roadm-pmax {
       type l0-types:power-dbm-or-null;
       description
-        "If the drop path has additional loss that is added,
-         for example, to hit target power levels into a
-         drop path amplifier,or simply,to reduce the power
-         of a strong carrier(due to ripple,for example),
-         then the use of the ROADM input power levels and the
-         above drop losses is not appropriate.
-         This parameter corresponds to the best case per
-         carrier power levels expected at the output of the
-         drop block.
-         A detail example of the comparison using
-         these parameters
-         is detailed in section xxx of the document yyy";
+        "If the drop path has additional loss that is added, for
+         example, to hit target power levels into a drop path
+         amplifier, or simply ,to reduce the power of a strong
+         carrier (due to ripple, for example), then the use of the
+         ROADM input power levels and the above drop losses is
+         not appropriate.
+
+         This parameter corresponds to the maximum value of the Drop
+         Channel output power range, as defined in table 8-6 of
+         ITU-T G.680.";
+      reference
+          "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                     optical network elements, table 8-6";
     }
     leaf roadm-ptyp {
       type l0-types:power-dbm-or-null;
