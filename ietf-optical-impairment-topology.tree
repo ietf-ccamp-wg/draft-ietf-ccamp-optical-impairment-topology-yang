@@ -129,30 +129,36 @@ module: ietf-optical-impairment-topology
     |        +--ro transceiver-id                 uint32
     |        +--ro supported-modes!
     |        |  +--ro supported-mode* [mode-id]
-    |        |     +--ro mode-id                           string
+    |        |     +--ro mode-id                      string
     |        |     +--ro (mode)
-    |        |        +--:(G.698.2)
-    |        |        |  +--ro standard-mode?
-    |        |        |  |       standard-mode
-    |        |        |  +--ro line-coding-bitrate*
-    |        |        |  |       identityref
-    |        |        |  +--ro transceiver-tuning-range
-    |        |        |  |  +--ro min-central-frequency?
-    |        |        |  |  |       frequency-thz
-    |        |        |  |  +--ro max-central-frequency?
-    |        |        |  |  |       frequency-thz
-    |        |        |  |  +--ro transceiver-tunability-granularity?
-    |        |        |  |          frequency-ghz
-    |        |        |  +--ro tx-channel-power-min?       power-dbm
-    |        |        |  +--ro tx-channel-power-max?       power-dbm
-    |        |        |  +--ro rx-channel-power-min?       power-dbm
-    |        |        |  +--ro rx-channel-power-max?       power-dbm
-    |        |        |  +--ro rx-total-power-max?         power-dbm
+    |        |        +--:(g.698.2)
+    |        |        |  +--ro g.698.2
+    |        |        |     +--ro standard-mode
+    |        |        |     |       standard-mode
+    |        |        |     +--ro line-coding-bitrate*
+    |        |        |     |       identityref
+    |        |        |     +--ro transceiver-tuning-range
+    |        |        |     |  +--ro min-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro max-central-frequency?
+    |        |        |     |  |       frequency-thz
+    |        |        |     |  +--ro transceiver-tunability-granularity?
+    |        |        |     |          frequency-ghz
+    |        |        |     +--ro tx-channel-power-min?
+    |        |        |     |       power-dbm
+    |        |        |     +--ro tx-channel-power-max?
+    |        |        |     |       power-dbm
+    |        |        |     +--ro rx-channel-power-min?
+    |        |        |     |       power-dbm
+    |        |        |     +--ro rx-channel-power-max?
+    |        |        |     |       power-dbm
+    |        |        |     +--ro rx-total-power-max?
+    |        |        |             power-dbm
     |        |        +--:(organizational-mode)
     |        |        |  +--ro organizational-mode
-    |        |        |     +--ro operational-mode?
+    |        |        |     +--ro operational-mode
     |        |        |     |       operational-mode
-    |        |        |     +--ro organization-identifier?
+    |        |        |     +--ro organization-identifier
     |        |        |     |       organization-identifier
     |        |        |     +--ro line-coding-bitrate*
     |        |        |     |       identityref
