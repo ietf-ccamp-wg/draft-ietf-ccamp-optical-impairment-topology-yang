@@ -707,7 +707,7 @@
   
   <t>
    The MCG is relevant for path computation because all end-to-end MCs
-   belonging to the same MCG Must be co-routed, i.e., MUST follow the
+   belonging to the same MCG MUST be co-routed, i.e., MUST follow the
    same path. Additional constraints may exist (e.g. differential
    delay).
   </t>
@@ -2921,7 +2921,7 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
-    +--rw otsis!
+    +--ro otsis!
     |  +--ro otsi-group* [otsi-group-id]
     |     +--ro otsi-group-id    string
     |     +--ro otsi* [carrier-id]
@@ -3038,7 +3038,7 @@ module: ietf-optical-impairment-topology
              +--ro tx-polarization-power-difference?   power-ratio
              +--ro polarization-skew?                  decimal-2
   augment /nw:networks/nw:network/nw:node:
-    +--rw transponders!
+    +--ro transponders!
     |  +--ro transponder* [transponder-id]
     |     +--ro transponder-id                   uint32
     |     +--ro termination-type-capabilities?   enumeration
@@ -3138,7 +3138,7 @@ ity?
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
     |        +--ro configured-termination-type?   enumeration
-    +--rw regen-groups!
+    +--ro regen-groups!
        +--ro regen-group* [group-id]
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
@@ -3266,12 +3266,10 @@ r-null
        |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
-    +--rw protection-type?   identityref
+    +--ro protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/nt:termination-point
             /tet:te:
-    +--rw inter-layer-sequence-number?   uint32
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes:
+    +--ro inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
     +--ro roadm-path-impairments-set?   leafref
@@ -3425,7 +3423,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-06-24 {
+  revision 2025-10-01 {
     description
       "Initial version.";
     reference
@@ -3911,8 +3909,8 @@ module ietf-optical-impairment-topology {
          Channel output power range, as defined in table 8-6 of
          ITU-T G.680.";
       reference
-          "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
-                     optical network elements, table 8-6";
+        "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                   optical network elements, table 8-6";
     }
     leaf roadm-pmax {
       type l0-types:power-dbm-or-null;
@@ -3928,8 +3926,8 @@ module ietf-optical-impairment-topology {
          Channel output power range, as defined in table 8-6 of
          ITU-T G.680.";
       reference
-          "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
-                     optical network elements, table 8-6";
+        "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                   optical network elements, table 8-6";
     }
     leaf roadm-ptyp {
       type l0-types:power-dbm-or-null;
@@ -4046,7 +4044,6 @@ module ietf-optical-impairment-topology {
        digital information stream supported by one or more OTSi";
     list otsi {
       key "carrier-id";
-      config false;
       description
         "list of OTSi contained in one OTSiG.
          The list could also be of only one element";
@@ -4172,7 +4169,6 @@ module ietf-optical-impairment-topology {
       presence
         "When present, it indicates that the list of OMS elements
          is reported.";
-      config false;
       description
         "The top level container for the list of OMS elements.";
       list oms-element {
@@ -4298,12 +4294,12 @@ module ietf-optical-impairment-topology {
     container otsis {
       presence "When present, it indicates that OTSi information is
                 reported.";
+      config false;
       description
         "The information about the OTSis configured on the WDM-TE
          link.";
       list otsi-group {
         key "otsi-group-id";
-        config false;
         description
           "the list of possible OTSiG representing client digital
            stream";
@@ -4418,11 +4414,11 @@ module ietf-optical-impairment-topology {
       presence
         "If present, it indicates that the list of transponders is
          reported.";
+      config false;
       description
         "The top level container for the list of transponders.";
       list transponder {
         key "transponder-id";
-        config false;
         description
           "The list of transponders.";
         leaf transponder-id {
@@ -4477,7 +4473,6 @@ module ietf-optical-impairment-topology {
         }
         list transceiver {
           key "transceiver-id";
-          config false;
           min-elements 1;
           description
             "List of transceiver related to a transponder";
@@ -4574,11 +4569,11 @@ module ietf-optical-impairment-topology {
     container regen-groups {
       presence "When present, it indicates that the list of 3R groups
                 is reported.";
+      config false;
       description
         "The top level container for the list of 3R groups.";
       list regen-group {
         key "group-id";
-        config false;
         description
           "The list of 3R groups.
 
@@ -4683,6 +4678,7 @@ module ietf-optical-impairment-topology {
       type identityref {
         base te-types:lsp-protection-type;
       }
+      config false;
       description
         "The protection type that this LTP is capable of.
 
@@ -4703,6 +4699,7 @@ module ietf-optical-impairment-topology {
       "Augment TE attributes of an LTP";
     leaf inter-layer-sequence-number {
       type uint32;
+      config false;
       description
         "The inter-layer-sequence-number (ILSN) is used to report
          additional connectivity constraints between a client layer
@@ -4723,19 +4720,6 @@ module ietf-optical-impairment-topology {
          client-layer switching capability.";
     }
   }
-
-  augment "/nw:networks/nw:network/nw:node/tet:te"
-        + "/tet:te-node-attributes" {
-    when '../../../nw:network-types/tet:te-topology'
-       + '/oit:optical-impairment-topology' {
-      description
-        "This augment is only valid for Optical Impairment
-         topology";
-    }
-    description
-      "node attributes augmentantion for optical-impairment ROADM
-       node";
-  } // augmentation for optical-impairment ROADM 
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices" {
@@ -4803,9 +4787,7 @@ module ietf-optical-impairment-topology {
            + "/oit:roadm-path-impairments-set"
            + "/oit:roadm-path-impairments-set-id";
       }
-      config false; /*the identifier in the list */
-      /*"roadm-path-impairments" of ROADM optical impairment*/
-      /*is read-only as the rest of attributes*/
+      config false;
       description
         "Pointer to the list set of ROADM optical
          impairments";
@@ -4958,7 +4940,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-        topology.";
+         topology.";
     }
     description
       "Augment default TTP LLC.";
