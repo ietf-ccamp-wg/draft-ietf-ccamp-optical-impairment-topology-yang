@@ -5,7 +5,7 @@ module: ietf-optical-impairment-topology
   augment /nw:networks/nw:network/nw:network-types/tet:te-topology:
     +--rw optical-impairment-topology!
   augment /nw:networks/nw:network:
-    +--rw otsis!
+    +--ro otsis!
     |  +--ro otsi-group* [otsi-group-id]
     |     +--ro otsi-group-id    string
     |     +--ro otsi* [carrier-id]
@@ -122,7 +122,7 @@ module: ietf-optical-impairment-topology
              +--ro tx-polarization-power-difference?   power-ratio
              +--ro polarization-skew?                  decimal-2
   augment /nw:networks/nw:network/nw:node:
-    +--rw transponders!
+    +--ro transponders!
     |  +--ro transponder* [transponder-id]
     |     +--ro transponder-id                   uint32
     |     +--ro termination-type-capabilities?   enumeration
@@ -222,7 +222,7 @@ ity?
     |        |  +--ro otsi-group-ref?   leafref
     |        |  +--ro otsi-ref?         leafref
     |        +--ro configured-termination-type?   enumeration
-    +--rw regen-groups!
+    +--ro regen-groups!
        +--ro regen-group* [group-id]
           +--ro group-id           uint32
           +--ro regen-metric?      uint32
@@ -350,12 +350,10 @@ r-null
        |       -> ../../../../transponders/transponder/transponder-id
        +--ro transceiver-ref    leafref
   augment /nw:networks/nw:network/nw:node/nt:termination-point:
-    +--rw protection-type?   identityref
+    +--ro protection-type?   identityref
   augment /nw:networks/nw:network/nw:node/nt:termination-point
             /tet:te:
-    +--rw inter-layer-sequence-number?   uint32
-  augment /nw:networks/nw:network/nw:node/tet:te
-            /tet:te-node-attributes:
+    +--ro inter-layer-sequence-number?   uint32
   augment /nw:networks/nw:network/nw:node/tet:te
             /tet:information-source-entry/tet:connectivity-matrices:
     +--ro roadm-path-impairments-set?   leafref
