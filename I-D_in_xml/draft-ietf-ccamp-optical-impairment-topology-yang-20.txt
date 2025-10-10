@@ -5,13 +5,13 @@
 CCAMP Working Group                                       D. Beller, Ed.
 Internet-Draft                                                     Nokia
 Intended status: Standards Track                            E. Le Rouzic
-Expires: 30 March 2026                                            Orange
+Expires: 13 April 2026                                            Orange
                                                               S. Belotti
                                                            G. Galimberti
                                                                    Nokia
                                                                  I. Busi
                                                      Huawei Technologies
-                                                       26 September 2025
+                                                         10 October 2025
 
 
         A YANG Data Model for Optical Impairment-aware Topology
@@ -46,16 +46,16 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 March 2026.
+   This Internet-Draft will expire on 13 April 2026.
 
 
 
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 1]
+Beller, et al.            Expires 13 April 2026                 [Page 1]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 2]
+Beller, et al.            Expires 13 April 2026                 [Page 2]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
        2.10.4.  Optical Impairments Imposed by WDM-TE-Nodes  . . . .  31
@@ -165,9 +165,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 3]
+Beller, et al.            Expires 13 April 2026                 [Page 3]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    computation according to the ACTN Architecture [RFC8453].  The
@@ -221,9 +221,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 4]
+Beller, et al.            Expires 13 April 2026                 [Page 4]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    *  data node
@@ -277,9 +277,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 5]
+Beller, et al.            Expires 13 April 2026                 [Page 5]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    In the context of this document, the term "layer 0" refers to the
@@ -333,9 +333,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 6]
+Beller, et al.            Expires 13 April 2026                 [Page 6]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 1.4.  Requirements Language
@@ -389,9 +389,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 7]
+Beller, et al.            Expires 13 April 2026                 [Page 7]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
      +-------------------+                      +-------------------+
@@ -445,9 +445,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 8]
+Beller, et al.            Expires 13 April 2026                 [Page 8]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    [G.807] defines an OMS MCG as "The topological relationship between
@@ -501,9 +501,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                 [Page 9]
+Beller, et al.            Expires 13 April 2026                 [Page 9]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    A WDM TE-link is terminated on both ends by a link termination point
@@ -557,9 +557,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 10]
+Beller, et al.            Expires 13 April 2026                [Page 10]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The OTSi signals in the YANG model are described by augmenting the
@@ -613,9 +613,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 11]
+Beller, et al.            Expires 13 April 2026                [Page 11]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 2.3.3.  Media Channel (MC)
@@ -669,9 +669,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 12]
+Beller, et al.            Expires 13 April 2026                [Page 12]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                     m=8
@@ -725,9 +725,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 13]
+Beller, et al.            Expires 13 April 2026                [Page 13]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                     MCG1 = {M1.1, M1.2}
@@ -781,9 +781,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 14]
+Beller, et al.            Expires 13 April 2026                [Page 14]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    describing the direction (raman-direction) with respect to the signal
@@ -837,9 +837,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 15]
+Beller, et al.            Expires 13 April 2026                [Page 15]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    *  stage-order describing the sequential order of the cascaded
@@ -893,9 +893,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 16]
+Beller, et al.            Expires 13 April 2026                [Page 16]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
       Figure 5: Example of a Dual-band, Multi-stage Amplifier with DGE
@@ -949,9 +949,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 17]
+Beller, et al.            Expires 13 April 2026                [Page 17]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    From a path computation perspective, the selection of the compatible
@@ -1005,9 +1005,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 18]
+Beller, et al.            Expires 13 April 2026                [Page 18]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 2.6.2.  Organizational Modes
@@ -1061,9 +1061,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 19]
+Beller, et al.            Expires 13 April 2026                [Page 19]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    variants (e.g. optical modules) with slightly different power and/or
@@ -1117,9 +1117,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 20]
+Beller, et al.            Expires 13 April 2026                [Page 20]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    common Application Codes or Organizational Modes cannot be met by the
@@ -1173,9 +1173,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 21]
+Beller, et al.            Expires 13 April 2026                [Page 21]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The set of optical impairment limits, e.g., min optical signal to
@@ -1229,9 +1229,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 22]
+Beller, et al.            Expires 13 April 2026                [Page 22]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    *  currently received total power
@@ -1285,9 +1285,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 23]
+Beller, et al.            Expires 13 April 2026                [Page 23]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
               Optical Transponder 1        Optical Transponder 2
@@ -1341,9 +1341,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 24]
+Beller, et al.            Expires 13 April 2026                [Page 24]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                              Optical Transponder 1
@@ -1397,9 +1397,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 25]
+Beller, et al.            Expires 13 April 2026                [Page 25]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The supported-termination-type attribute describes whether the
@@ -1453,9 +1453,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 26]
+Beller, et al.            Expires 13 April 2026                [Page 26]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    ITU-T G.652 defines Standard Singlemode Fiber; G.654 Cutoff Shifted
@@ -1509,9 +1509,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 27]
+Beller, et al.            Expires 13 April 2026                [Page 27]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                     . . . . . . . . . . . . . . . . . .
@@ -1565,9 +1565,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 28]
+Beller, et al.            Expires 13 April 2026                [Page 28]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                     . . . . . . . . . . . . . . . . . .
@@ -1621,9 +1621,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 29]
+Beller, et al.            Expires 13 April 2026                [Page 29]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    As this document defines TE topology YANG model augmentations for the
@@ -1677,9 +1677,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 30]
+Beller, et al.            Expires 13 April 2026                [Page 30]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 2.10.4.  Optical Impairments Imposed by WDM-TE-Nodes
@@ -1733,9 +1733,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 31]
+Beller, et al.            Expires 13 April 2026                [Page 31]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    node-attributes are augmented with a list of roadm-path-impairments
@@ -1789,9 +1789,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 32]
+Beller, et al.            Expires 13 April 2026                [Page 32]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    To achieve short protection switching times, it is necessary that the
@@ -1845,9 +1845,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 33]
+Beller, et al.            Expires 13 April 2026                [Page 33]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            end-to-end MC path1'
@@ -1901,9 +1901,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 34]
+Beller, et al.            Expires 13 April 2026                [Page 34]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    the layer 0 tunnel (layer 0 service).  This is reflected in the leaf
@@ -1957,9 +1957,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 35]
+Beller, et al.            Expires 13 April 2026                [Page 35]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            end-to-end MC path1
@@ -2013,9 +2013,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 36]
+Beller, et al.            Expires 13 April 2026                [Page 36]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            end-to-end MC path1'
@@ -2069,9 +2069,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 37]
+Beller, et al.            Expires 13 April 2026                [Page 37]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    *  Local optical transponder
@@ -2125,9 +2125,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 38]
+Beller, et al.            Expires 13 April 2026                [Page 38]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                  WDM-TE-Node
@@ -2181,9 +2181,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 39]
+Beller, et al.            Expires 13 April 2026                [Page 39]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                  WDM-TE-Node
@@ -2237,9 +2237,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 40]
+Beller, et al.            Expires 13 April 2026                [Page 40]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    In the network configuration shown in Figure 17 and Figure 18,
@@ -2293,9 +2293,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 41]
+Beller, et al.            Expires 13 April 2026                [Page 41]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
         WDM-TE-Node-1                      WDM-TE-Node-2
@@ -2349,9 +2349,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 42]
+Beller, et al.            Expires 13 April 2026                [Page 42]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
         WDM-TE-Node-1                      WDM-TE-Node-2
@@ -2405,9 +2405,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 43]
+Beller, et al.            Expires 13 April 2026                [Page 43]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                        WDM-TE-Node-2
@@ -2461,9 +2461,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 44]
+Beller, et al.            Expires 13 April 2026                [Page 44]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    Alternatively, it is possible to model the 1+1 OMS MCG protection as
@@ -2517,9 +2517,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 45]
+Beller, et al.            Expires 13 April 2026                [Page 45]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
 2.11.2.1.  OMS MCG Protection Modeled as Protected TE-link with
@@ -2573,9 +2573,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 46]
+Beller, et al.            Expires 13 April 2026                [Page 46]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2629,9 +2629,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 47]
+Beller, et al.            Expires 13 April 2026                [Page 47]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2685,9 +2685,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 48]
+Beller, et al.            Expires 13 April 2026                [Page 48]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The optical impairments of the splitter (outgoing direction) and the
@@ -2741,9 +2741,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 49]
+Beller, et al.            Expires 13 April 2026                [Page 49]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2797,9 +2797,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 50]
+Beller, et al.            Expires 13 April 2026                [Page 50]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2853,9 +2853,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 51]
+Beller, et al.            Expires 13 April 2026                [Page 51]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2909,9 +2909,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 52]
+Beller, et al.            Expires 13 April 2026                [Page 52]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
             WDM-TE-Node-1                         WDM-TE-Node-2
@@ -2965,9 +2965,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 53]
+Beller, et al.            Expires 13 April 2026                [Page 53]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
           |     +--ro roadm-path-impairments-set-id    string
@@ -2981,13 +2981,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
           |        |     |  +--ro upper-frequency    frequency-thz
           |        |     +--ro roadm-pmd?                union
           |        |     +--ro roadm-cd?
-          |        |     |       l0-types:decimal-5-or-null
+          |        |     |       l0-types:decimal-5-or-unknown
           |        |     +--ro roadm-pdl?
-          |        |     |       l0-types:power-loss-or-null
+          |        |     |       l0-types:power-loss-or-unknown
           |        |     +--ro roadm-inband-crosstalk?
-          |        |     |       l0-types:decimal-2-or-null
+          |        |     |       l0-types:decimal-2-or-unknown
           |        |     +--ro roadm-maxloss?
-          |        |             l0-types:power-loss-or-null
+          |        |             l0-types:power-loss-or-unknown
           |        +--:(roadm-add-path)
           |        |  +--ro roadm-add-path* [frequency-range-id]
           |        |     +--ro frequency-range-id        uint16
@@ -2996,19 +2996,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
           |        |     |  +--ro upper-frequency    frequency-thz
           |        |     +--ro roadm-pmd?                union
           |        |     +--ro roadm-cd?
-          |        |     |       l0-types:decimal-5-or-null
+          |        |     |       l0-types:decimal-5-or-unknown
           |        |     +--ro roadm-pdl?
-          |        |     |       l0-types:power-loss-or-null
+          |        |     |       l0-types:power-loss-or-unknown
           |        |     +--ro roadm-inband-crosstalk?
-          |        |     |       l0-types:decimal-2-or-null
+          |        |     |       l0-types:decimal-2-or-unknown
           |        |     +--ro roadm-maxloss?
-          |        |     |       l0-types:power-loss-or-null
+          |        |     |       l0-types:power-loss-or-unknown
           |        |     +--ro roadm-pmax?
-          |        |     |       l0-types:power-dbm-or-null
+          |        |     |       l0-types:power-dbm-or-unknown
           |        |     +--ro roadm-osnr?
-          |        |     |       l0-types:snr-or-null
+          |        |     |       l0-types:snr-or-unknown
           |        |     +--ro roadm-noise-figure?
-          |        |             l0-types:decimal-5-or-null
+          |        |             l0-types:decimal-5-or-unknown
           |        +--:(roadm-drop-path)
           |           +--ro roadm-drop-path* [frequency-range-id]
           |              +--ro frequency-range-id        uint16
@@ -3017,35 +3017,35 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
           |              |  +--ro upper-frequency    frequency-thz
           |              +--ro roadm-pmd?                union
           |              +--ro roadm-cd?
-          |              |       l0-types:decimal-5-or-null
+          |              |       l0-types:decimal-5-or-unknown
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 54]
+Beller, et al.            Expires 13 April 2026                [Page 54]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
           |              +--ro roadm-pdl?
-          |              |       l0-types:power-loss-or-null
+          |              |       l0-types:power-loss-or-unknown
           |              +--ro roadm-inband-crosstalk?
-          |              |       l0-types:decimal-2-or-null
+          |              |       l0-types:decimal-2-or-unknown
           |              +--ro roadm-maxloss?
-          |              |       l0-types:power-loss-or-null
+          |              |       l0-types:power-loss-or-unknown
           |              +--ro roadm-minloss?
-          |              |       l0-types:power-loss-or-null
+          |              |       l0-types:power-loss-or-unknown
           |              +--ro roadm-typloss?
-          |              |       l0-types:power-loss-or-null
+          |              |       l0-types:power-loss-or-unknown
           |              +--ro roadm-pmin?
-          |              |       l0-types:power-dbm-or-null
+          |              |       l0-types:power-dbm-or-unknown
           |              +--ro roadm-pmax?
-          |              |       l0-types:power-dbm-or-null
+          |              |       l0-types:power-dbm-or-unknown
           |              +--ro roadm-ptyp?
-          |              |       l0-types:power-dbm-or-null
+          |              |       l0-types:power-dbm-or-unknown
           |              +--ro roadm-osnr?
-          |              |       l0-types:snr-or-null
+          |              |       l0-types:snr-or-unknown
           |              +--ro roadm-noise-figure?
-          |                      l0-types:decimal-5-or-null
+          |                      l0-types:decimal-5-or-unknown
           +--ro explicit-transceiver-modes
              +--ro explicit-transceiver-mode*
                      [explicit-transceiver-mode-id]
@@ -3062,7 +3062,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                 |  +--ro pmd-value        decimal-2
                 |  +--ro penalty-value    union
                 +--ro max-polarization-dependent-loss
-                |       power-loss-or-null
+                |       power-loss-or-unknown
                 +--ro pdl-penalty* [pdl-value]
                 |  +--ro pdl-value        power-loss
                 |  +--ro penalty-value    union
@@ -3077,9 +3077,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 55]
+Beller, et al.            Expires 13 April 2026                [Page 55]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                 +--ro roll-off?                           decimal64
@@ -3133,9 +3133,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 56]
+Beller, et al.            Expires 13 April 2026                [Page 56]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
        |        |        |     |       operational-mode
@@ -3189,18 +3189,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 57]
+Beller, et al.            Expires 13 April 2026                [Page 57]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
        |        |              +--ro explicit-transceiver-mode-ref?
        |        |                      leafref
        |        +--ro configured-mode?               union
        |        +--ro line-coding-bitrate?           identityref
-       |        +--ro tx-channel-power?              power-dbm-or-null
-       |        +--ro rx-channel-power?              power-dbm-or-null
-       |        +--ro rx-total-power?                power-dbm-or-null
+       |        +--ro tx-channel-power?
+       |        |       power-dbm-or-unknown
+       |        +--ro rx-channel-power?
+       |        |       power-dbm-or-unknown
+       |        +--ro rx-total-power?
+       |        |       power-dbm-or-unknown
        |        +--ro outgoing-otsi
        |        |  +--ro otsi-group-ref?   leafref
        |        |  +--ro otsi-ref?         leafref
@@ -3220,8 +3223,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
           +--ro generalized-snr?        l0-types:snr
           +--ro equalization-mode?      identityref
           +--ro power-param
-          |  +--ro nominal-carrier-power?   l0-types:power-dbm-or-null
-          |  +--ro nominal-psd?             l0-types:psd-or-null
+          |  +--ro nominal-carrier-power?
+          |  |       l0-types:power-dbm-or-unknown
+          |  +--ro nominal-psd?             l0-types:psd-or-unknown
           +--ro media-channel-groups!
           |  +--ro media-channel-group* [otsi-group-ref]
           |     +--ro otsi-group-ref    leafref
@@ -3233,23 +3237,23 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
           |        |  +--ro carrier-ref        leafref
           |        |  +--ro e2e-mc-path-ref*   leafref
           |        +--ro delta-power?
-          |                l0-types:power-ratio-or-null
+          |                l0-types:power-ratio-or-unknown
           +--ro oms-elements!
              +--ro oms-element* [elt-index]
                 +--ro elt-index                  uint16
                 +--ro oms-element-uid?           union
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 58]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                 +--ro reverse-element-ref
                 |  +--ro link-ref?
                 |  |       -> ../../../../../../../../nt:link/link-id
                 |  +--ro oms-element-ref*   leafref
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 58]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                 +--ro (element)
                    +--:(amplifier)
                    |  +--ro geolocation
@@ -3276,39 +3280,39 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                    |           |  +--ro (power-param)
                    |           |     +--:(channel-power)
                    |           |     |  +--ro nominal-carrier-power
-                   |           |     |          l0-types:power-dbm-or-n\
-   ull
+                   |           |     |          l0-types:power-dbm-or-u\
+   nknown
                    |           |     +--:(power-spectral-density)
                    |           |        +--ro nominal-psd
-                   |           |                l0-types:psd-or-null
+                   |           |                l0-types:psd-or-unknown
                    |           +--ro pdl?
-                   |           |       l0-types:power-loss-or-null
+                   |           |       l0-types:power-loss-or-unknown
                    |           +--ro (amplifier-element-type)
                    |              +--:(optical-amplifier)
                    |              |  +--ro optical-amplifier
                    |              |     +--ro actual-gain
                    |              |     |       l0-types:power-gain-or-\
-   null
+   unknown
                    |              |     +--ro in-voa?
                    |              |     |       l0-types:power-loss-or-\
-   null
+   unknown
                    |              |     +--ro out-voa?
                    |              |     |       l0-types:power-loss-or-\
-   null
-                   |              |     +--ro tilt-target
-                   |              |     |       l0-types:decimal-2-or-n\
-   ull
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 59]
+Beller, et al.            Expires 13 April 2026                [Page 59]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
+   unknown
+                   |              |     +--ro tilt-target
+                   |              |     |       l0-types:decimal-2-or-u\
+   nknown
                    |              |     +--ro total-output-power
-                   |              |     |       l0-types:power-dbm-or-n\
-   ull
+                   |              |     |       l0-types:power-dbm-or-u\
+   nknown
                    |              |     +--ro raman-direction?
                    |              |     |       enumeration
                    |              |     +--ro raman-pump* [pump-id]
@@ -3318,7 +3322,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
    hz
                    |              |        +--ro power?
                    |              |                l0-types:decimal-2-o\
-   r-null
+   r-unknown
                    |              +--:(dynamic-gain-equalizer)
                    |                 +--ro dynamic-gain-equalizer!
                    |                    +--ro media-channel* [flexi-n]
@@ -3326,42 +3330,42 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                    |                       +--ro flexi-m        flexi-m
                    |                       +--ro delta-power?
                    |                               l0-types:power-ratio\
-   -or-null
+   -or-unknown
                    +--:(fiber)
                    |  +--ro fiber
                    |     +--ro type-variety    string
                    |     +--ro length
-                   |     |       l0-types:decimal-2-or-null
+                   |     |       l0-types:decimal-2-or-unknown
                    |     +--ro loss-coef
-                   |     |       l0-types:decimal-2-or-null
+                   |     |       l0-types:decimal-2-or-unknown
                    |     +--ro total-loss?
-                   |     |       l0-types:power-loss-or-null
+                   |     |       l0-types:power-loss-or-unknown
                    |     +--ro pmd?
-                   |     |       l0-types:decimal-2-or-null
+                   |     |       l0-types:decimal-2-or-unknown
                    |     +--ro conn-in?
-                   |     |       l0-types:power-loss-or-null
+                   |     |       l0-types:power-loss-or-unknown
                    |     +--ro conn-out?
-                   |             l0-types:power-loss-or-null
+                   |             l0-types:power-loss-or-unknown
                    +--:(concentrated-loss)
                       +--ro concentrated-loss
-                         +--ro loss    l0-types:power-loss-or-null
+                         +--ro loss    l0-types:power-loss-or-unknown
      augment /nw:networks/nw:network/nw:node/tet:te
                /tet:tunnel-termination-point:
        +--ro ttp-transceiver* [transponder-ref transceiver-ref]
           +--ro transponder-ref
           |       -> ../../../../transponders/transponder/transponder-id
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 60]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
           +--ro transceiver-ref    leafref
      augment /nw:networks/nw:network/nw:node/nt:termination-point:
        +--ro protection-type?   identityref
      augment /nw:networks/nw:network/nw:node/nt:termination-point
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 60]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                /tet:te:
        +--ro inter-layer-sequence-number?   uint32
      augment /nw:networks/nw:network/nw:node/tet:te
@@ -3406,18 +3410,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
        +--ro llc-transceiver* [ttp-transponder-ref ttp-transceiver-ref]
        |  +--ro ttp-transponder-ref
        |  |       -> ../../../../ttp-transceiver/transponder-ref
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 61]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
        |  +--ro ttp-transceiver-ref
        |  |       -> ../../../../ttp-transceiver/transceiver-ref
        |  +--ro is-allowed?                  boolean
        |  +--ro add-path-impairments-set?    leafref
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 61]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
        |  +--ro drop-path-impairments-set?   leafref
        +--ro additional-ltp* [ltp-ref]
           +--ro ltp-ref
@@ -3462,17 +3466,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
      import ietf-layer0-types {
        prefix l0-types;
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 62]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
        reference
          "RFC ZZZZ: A YANG Data Model for Layer 0 Types";
      }
-
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 62]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
 
      /* Note: The RFC Editor will replace ZZZZ with the number assigned
         to the RFC once draft-ietf-ccamp-rfc9093-bis becomes an RFC.*/
@@ -3518,22 +3522,22 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
         NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
         'MAY', and 'OPTIONAL' in this document are to be interpreted as
         described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 63]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
         they appear in all capitals, as shown here.";
 
      // RFC Ed.: replace XXXX with actual RFC number and remove
      // this note
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 63]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
      // replace the revision date with the module publication date
      // the format is (year-month-day)
 
-     revision 2025-10-01 {
+     revision 2025-10-10 {
        description
          "Initial version.";
        reference
@@ -3574,18 +3578,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          container operational {
            description
              "Amplifier operational parameters";
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 64]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
            list amplifier-element {
              key "frequency-range-id stage-order";
              description
                "The list of parallel amplifier elements within an
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 64]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                 amplifier used to amplify different frequency ranges.
 
                 Two elements in the list MUST NOT have the same range
@@ -3626,23 +3630,23 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                     density (PSD).";
                  case channel-power {
                    leaf nominal-carrier-power {
-                     type l0-types:power-dbm-or-null;
+                     type l0-types:power-dbm-or-unknown;
                      mandatory true;
                      description
                        "Reference channel power.";
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 65]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                    }
                  }
                  case power-spectral-density {
                    leaf nominal-psd {
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 65]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
-                     type l0-types:psd-or-null;
+                     type l0-types:psd-or-unknown;
                      mandatory true;
                      description
                        "Reference power spectral density (PSD).";
@@ -3651,7 +3655,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                }
              } // container power-param
              leaf pdl {
-               type l0-types:power-loss-or-null;
+               type l0-types:power-loss-or-unknown;
                description
                  "Polarization Dependent Loss (PDL)";
              }
@@ -3666,44 +3670,44 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                    "The attributes applicable only to amplifier
                     elements";
                  leaf actual-gain {
-                   type l0-types:power-gain-or-null;
+                   type l0-types:power-gain-or-unknown;
                    mandatory true;
                    description
                      "The value of the gain provided by the
                       amplification  stage of the optical amplifier.";
                  }
                  leaf in-voa {
-                   type l0-types:power-loss-or-null;
+                   type l0-types:power-loss-or-unknown;
                    description
                      "Loss introduced by the Variable Optical Attenuator
                       (VOA) at the input of the amplification stage of
                       the amplifier, if present";
                  }
                  leaf out-voa {
-                   type l0-types:power-loss-or-null;
+                   type l0-types:power-loss-or-unknown;
                    description
                      "Loss introduced by the Variable Optical Attenuator
                       (VOA) at the output of the amplification stage of
                       the amplifier, if present.";
                  }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 66]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                  leaf tilt-target {
-                   type l0-types:decimal-2-or-null;
+                   type l0-types:decimal-2-or-unknown;
                    units "dB";
                    mandatory true;
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 66]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                    description
                      "The tilt target defined between lower and upper
                       frequency of the amplifier frequency range.";
                  }
                  leaf total-output-power {
-                   type l0-types:power-dbm-or-null;
+                   type l0-types:power-dbm-or-unknown;
                    mandatory true;
                    description
                      "It represent total output power measured in the
@@ -3742,23 +3746,23 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                      type uint16;
                      description
                        "The identifier of a pump within an amplifier
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 67]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                         element.";
                    }
                    leaf frequency {
                      type l0-types:frequency-thz;
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 67]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                      description
                        "The raman pump central frequency.";
                    }
                    leaf power {
-                     type l0-types:decimal-2-or-null;
+                     type l0-types:decimal-2-or-unknown;
                      units "Watts";
                      description
                        "The total pump power considering a depolarized
@@ -3783,7 +3787,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                      }
                    }
                    leaf delta-power {
-                     type l0-types:power-ratio-or-null;
+                     type l0-types:power-ratio-or-unknown;
                      description
                        "Deviation from the reference carrier power
                         defined for the OMS.";
@@ -3798,18 +3802,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
      grouping fiber-params {
        description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 68]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
          "String identifier of fiber type referencing a
           specification in a separate equipment catalog";
        container fiber {
          description
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 68]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
            "Fiber characteristics";
          leaf type-variety {
            type string;
@@ -3818,21 +3822,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              "Fiber type";
          }
          leaf length {
-           type l0-types:decimal-2-or-null;
+           type l0-types:decimal-2-or-unknown;
            units "km";
            mandatory true;
            description
              "Length of fiber";
          }
          leaf loss-coef {
-           type l0-types:decimal-2-or-null;
+           type l0-types:decimal-2-or-unknown;
            units "dB/km";
            mandatory true;
            description
              "Loss coefficient of the fiber";
          }
          leaf total-loss {
-           type l0-types:power-loss-or-null;
+           type l0-types:power-loss-or-unknown;
            description
              "The measured total loss of the fiber, which includes
               all possible losses: fiber loss and conn-in and conn-out
@@ -3842,30 +3846,30 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               be measured.";
          }
          leaf pmd {
-           type l0-types:decimal-2-or-null;
+           type l0-types:decimal-2-or-unknown;
            units "ps";
            description
              "PMD of the fiber";
          }
          leaf conn-in {
-           type l0-types:power-loss-or-null;
+           type l0-types:power-loss-or-unknown;
            description
              "connector-in";
          }
          leaf conn-out {
-           type l0-types:power-loss-or-null;
+           type l0-types:power-loss-or-unknown;
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 69]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
            description
              "connector-out";
          }
        }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 69]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
      }
 
      grouping roadm-common-path {
@@ -3878,26 +3882,25 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              fraction-digits 8;
              range "0..max";
            }
-           type empty;
+           type l0-types:unknown-value;
          }
          units "ps";
          description
-           "Polarization Mode Dispersion (PMD), when known, or an
-            empty value when unknown.";
+           "Polarization Mode Dispersion (PMD).";
        }
        leaf roadm-cd {
-         type l0-types:decimal-5-or-null;
+         type l0-types:decimal-5-or-unknown;
          units "ps/nm";
          description
            "Chromatic Dispersion (CD)";
        }
        leaf roadm-pdl {
-         type l0-types:power-loss-or-null;
+         type l0-types:power-loss-or-unknown;
          description
            "Polarization Dependent Loss (PDL)";
        }
        leaf roadm-inband-crosstalk {
-         type l0-types:decimal-2-or-null;
+         type l0-types:decimal-2-or-unknown;
          units "dB";
          description
            "In-band crosstalk, or coherent crosstalk, can occur in
@@ -3906,21 +3909,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             or all but one blocked";
        }
        leaf roadm-maxloss {
-         type l0-types:power-loss-or-null;
+         type l0-types:power-loss-or-unknown;
          description
            "This is the maximum expected path loss from the
             ROADM ingress to the ROADM egress
             assuming no additional path loss is added";
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 70]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
        }
      } // grouping roadm-common-path
-
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 70]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
 
      grouping roadm-express-path {
        description
@@ -3962,27 +3965,27 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          }
        }
        leaf roadm-pmax {
-         type l0-types:power-dbm-or-null;
+         type l0-types:power-dbm-or-unknown;
          description
            "This is the maximum (per carrier) power level
             permitted at the add block input ports,
             that can be handled by the ROADM node.
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 71]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
             This can reflect either add amplifier power
             constraints or WSS adjustment limits.
             Higher power transponders would need to have
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 71]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             their launch power reduced
             to this value or lower";
        }
        leaf roadm-osnr {
-         type l0-types:snr-or-null;
+         type l0-types:snr-or-unknown;
          description
            "Optical Signal-to-Noise Ratio (OSNR).
 
@@ -3997,7 +4000,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             (if both are defined).";
        }
        leaf roadm-noise-figure {
-         type l0-types:decimal-5-or-null;
+         type l0-types:decimal-5-or-unknown;
          units "dB";
          description
            "Noise Figure. If the add path contains an amplifier,
@@ -4023,17 +4026,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
               In the case of drop path it is the total
               of the ingress
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 72]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
               to drop e.g. WSS and drop block crosstalk
               contributions.";
          }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 72]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          refine "roadm-maxloss" {
            description
              "The net loss from the ROADM input,to the output
@@ -4050,7 +4053,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          }
        }
        leaf roadm-minloss {
-         type l0-types:power-loss-or-null;
+         type l0-types:power-loss-or-unknown;
          description
            "The net loss from the ROADM input, to the
             output of the drop block.
@@ -4063,7 +4066,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             including amplifier gain ripple or uncertainty.";
        }
        leaf roadm-typloss {
-         type l0-types:power-loss-or-null;
+         type l0-types:power-loss-or-unknown;
          description
            "The net loss from the ROADM input,
             to the output of the drop block.
@@ -4078,18 +4081,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             expected loss.";
        }
        leaf roadm-pmin {
-         type l0-types:power-dbm-or-null;
+         type l0-types:power-dbm-or-unknown;
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 73]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
          description
            "If the drop path has additional loss that is added, for
             example, to hit target power levels into a drop path
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 73]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             amplifier, or simply, to reduce the power of a strong
             carrier (due to ripple, for example), then the use of the
             ROADM input power levels and the above drop losses is
@@ -4103,7 +4106,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                       optical network elements, table 8-6";
        }
        leaf roadm-pmax {
-         type l0-types:power-dbm-or-null;
+         type l0-types:power-dbm-or-unknown;
          description
            "If the drop path has additional loss that is added, for
             example, to hit target power levels into a drop path
@@ -4120,7 +4123,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                       optical network elements, table 8-6";
        }
        leaf roadm-ptyp {
-         type l0-types:power-dbm-or-null;
+         type l0-types:power-dbm-or-unknown;
          description
            "If the drop path has additional loss that is added,
             for example, to hit target power levels into a
@@ -4133,19 +4136,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             at the output of the drop block.";
        }
        leaf roadm-osnr {
-         type l0-types:snr-or-null;
+         type l0-types:snr-or-unknown;
          description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 74]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
            "Optical Signal-to-Noise Ratio (OSNR).
 
             Expected OSNR contribution of the drop path
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 74]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             amplifier(if present)
             for the case of additional drop path loss
             (before this amplifier)
@@ -4160,7 +4163,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             the minimum value between these two MUST be used";
        }
        leaf roadm-noise-figure {
-         type l0-types:decimal-5-or-null;
+         type l0-types:decimal-5-or-unknown;
          units "dB";
          description
            "Drop path Noise Figure.
@@ -4186,21 +4189,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          description
            "Concentrated loss";
          leaf loss {
-           type l0-types:power-loss-or-null;
+           type l0-types:power-loss-or-unknown;
            mandatory true;
            description
              "Loss introduced by the concentrated loss element.";
          }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 75]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
        }
      }
-
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 75]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
 
      grouping oms-general-optical-params {
        description
@@ -4230,14 +4233,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          leaf nominal-carrier-power {
            when "derived-from-or-self(../../equalization-mode, "
               + "'l0-types:carrier-power')";
-           type l0-types:power-dbm-or-null;
+           type l0-types:power-dbm-or-unknown;
            description
              "Reference channel power.";
          }
          leaf nominal-psd {
            when "derived-from-or-self(../../equalization-mode, "
               + "'l0-types:power-spectral-density')";
-           type l0-types:psd-or-null;
+           type l0-types:psd-or-unknown;
            description
              " Reference power spectral density (PSD).";
          }
@@ -4247,17 +4250,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
      grouping otsi-group {
        description
          "OTSiG definition , representing client
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 76]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
           digital information stream supported by one or more OTSi";
        list otsi {
          key "carrier-id";
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 76]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          description
            "list of OTSi contained in one OTSiG.
             The list could also be of only one element";
@@ -4269,12 +4272,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          leaf carrier-frequency {
            type union {
              type l0-types:frequency-thz;
-             type empty;
+             type l0-types:unknown-value;
            }
            description
              "OTSi carrier frequency, equivalent to the
-              actual configured transmitter frequency, when known, or
-              an empty value when unknown.";
+              actual configured transmitter frequency.";
          }
          leaf-list e2e-mc-path-id {
            type uint16;
@@ -4304,16 +4306,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            "When present, it indicates that the list media channel
             groups is reported.";
          description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 77]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
            "The top level container for the list of media channel
             groups.";
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 77]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          list media-channel-group {
            key "otsi-group-ref";
            description
@@ -4360,16 +4362,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                     by this media channel.";
                }
                leaf-list e2e-mc-path-ref {
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 78]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                  type leafref {
                    path "../../../../../../../../../otsis/"
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 78]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                       + "otsi-group[otsi-group-id=current()"
                       + "/../../../otsi-group-ref]/"
                       + "otsi[carrier-id=current()"
@@ -4382,7 +4384,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                }
              }
              leaf delta-power {
-               type l0-types:power-ratio-or-null;
+               type l0-types:power-ratio-or-unknown;
                description
                  " Deviation from the reference carrier power defined
                   for the OMS.";
@@ -4416,23 +4418,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            }
            leaf oms-element-uid {
              type union {
-               type string;
-               type empty;
 
 
 
-Beller, et al.            Expires 30 March 2026                [Page 79]
+Beller, et al.            Expires 13 April 2026                [Page 79]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
+               type string;
+               type l0-types:unknown-value;
              }
              description
-               "Unique id of the element, if it exists and is known.
-
-                When unknown, an empty value is reported.
-
-                When it does not exist, the attribute is not present.";
+               "Unique id of the element.";
            }
            container reverse-element-ref {
              description
@@ -4474,16 +4472,15 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              }
            }
          }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 80]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
        }
      }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 80]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
      grouping otsi-ref {
        description
@@ -4530,17 +4527,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
      augment "/nw:networks/nw:network" {
        when './nw:network-types/tet:te-topology'
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 81]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
           + '/oit:optical-impairment-topology' {
          description
            "This augment is only valid for Optical Impairment
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 81]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
             topology.";
        }
        description
@@ -4586,17 +4583,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                  "The identifier of the set of optical impairments
                   related to a ROADM path.";
              }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 82]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
              leaf description {
                type string;
                description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 82]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                  "The textual description of the the set of optical
                   impairments related to a ROADM path.";
              }
@@ -4642,17 +4639,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                    uses roadm-drop-path;
                  }
                }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 83]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
              }
            } // list roadm-path-impairments-set
          } // container roadm-path-impairments-sets
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 83]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
          container explicit-transceiver-modes {
            description
              "The top level container for the list of the
@@ -4698,17 +4695,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            }
            leaf termination-type-capabilities {
              type enumeration {
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 84]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                enum tunnel-only {
                  description
                    "The transponder can only be used in an Optical
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 84]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                     Tunnel termination configuration.";
                }
                enum 3r-only {
@@ -4754,17 +4751,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              min-elements 1;
              description
                "List of transceiver related to a transponder";
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 85]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
              leaf transceiver-id {
                type uint32;
                description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 85]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
                  "Transceiver identifier";
              }
              uses l0-types:transceiver-capabilities {
@@ -4788,7 +4785,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              }
              leaf configured-mode {
                type union {
-                 type empty;
+                 type l0-types:unknown-value;
                  type leafref {
                    path "../supported-modes/supported-mode/mode-id";
                  }
@@ -4797,7 +4794,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                  "Reference to the configured mode for transceiver
                   compatibility approach.
 
-                  The empty value is used to report that no mode has
+                  The 'unknown' value is used to report that no mode has
                   been configured and there is no default mode.
 
                   When not present, the configured-mode is not reported
@@ -4810,17 +4807,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                    "It applies only when the OTSi information is
                     reported.";
                }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 86]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
                description
                  "The OTSi generated by the transceiver's transmitter.";
                uses otsi-ref;
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 86]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
              }
              container incoming-otsi {
                when '../../../../../otsis' {
@@ -4866,17 +4863,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          config false;
          description
            "The top level container for the list of 3R groups.";
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 87]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          list regen-group {
            key "group-id";
            description
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 87]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
              "The list of 3R groups.
 
               Any 3R group represent a group of transponder in which an
@@ -4922,17 +4919,16 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            "OMS attributes";
          uses oms-general-optical-params;
          uses media-channel-groups;
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 88]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          uses oms-element;
        }
      }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 88]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
      augment "/nw:networks/nw:network/nw:node/tet:te"
            + "/tet:tunnel-termination-point" {
@@ -4978,18 +4974,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
      augment "/nw:networks/nw:network/nw:node/nt:termination-point" {
        when '../../nw:network-types/tet:te-topology/'
           + 'oit:optical-impairment-topology' {
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 89]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          description
            "This augment is only valid for Optical Impairment
             topology";
        }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 89]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
        description
          "Augment LTP";
        leaf protection-type {
@@ -5034,18 +5030,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
             of the two client layer LTPs does not report any ILSN or
             both client layer LTPs report the same ILSN value and the
             corresponding server layer TTPs have at least one common
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 90]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             server-layer switching capability and at least one common
             client-layer switching capability.";
        }
      }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 90]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:information-source-entry/tet:connectivity-matrices" {
@@ -5090,19 +5085,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               + "/oit:roadm-path-impairments-set"
               + "/oit:roadm-path-impairments-set-id";
          }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 91]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          config false;
          description
            "Pointer to the list set of ROADM optical impairments";
        }
      } // augmentation connectivity-matrix information-source
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 91]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices" {
@@ -5146,20 +5140,19 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               + "/oit:roadm-path-impairments-set"
               + "/oit:roadm-path-impairments-set-id";
          }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 92]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          config false;
          description
            "Pointer to the list set of ROADM optical
             impairments";
        }
      } // augmentation connectivity-matrix
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 92]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
      augment "/nw:networks/nw:network/nw:node/tet:te/"
            + "tet:te-node-attributes/tet:connectivity-matrices/"
@@ -5202,14 +5195,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
              "The reference to the potential secondary LTP that can be
               selected when the 'from' LTP of this connectivity matrix
               entry is selected as a working LTP";
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 93]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
          }
          leaf roadm-path-impairments-set {
            type leafref {
@@ -5217,6 +5202,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                 + "/oit:roadm-path-impairments-sets"
                 + "/oit:roadm-path-impairments-set"
                 + "/oit:roadm-path-impairments-set-id";
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 93]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
            }
            description
              "Pointer to ROADM optical impairments of the ROADM path
@@ -5258,14 +5251,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
             If this list is empty, all the other LTPs that can be
             reached from the 'from' LTP of this connectivity matrix
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 94]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             entry can be selected as secondary LTPs.";
          leaf ltp-ref {
            type leafref {
@@ -5273,6 +5258,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            }
            description
              "The reference to the potential secondary LTP that can be
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 94]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
               selected when the 'to' LTP of this connectivity matrix
               entry is selected as a working LTP";
          }
@@ -5314,14 +5307,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
            "Pointer to the list set of ROADM optical
             impairments";
        }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 95]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
        leaf drop-path-impairments-set {
          type leafref {
            path "../../../../../oit:templates"
@@ -5329,6 +5314,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               + "/oit:roadm-path-impairments-set"
               + "/oit:roadm-path-impairments-set-id";
          }
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 95]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
          config false;
          description
            "pointer to the list set of ROADM
@@ -5370,14 +5363,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          config false;
          description
            "pointer to the list set of ROADM optical
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 96]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
             impairments";
        }
        list llc-transceiver {
@@ -5385,6 +5370,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
          config false;
          description
            "The list of transceivers having a LLC different from the
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 96]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
             default LLC.";
          leaf ttp-transponder-ref {
            type leafref {
@@ -5426,14 +5419,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                 + "/oit:roadm-path-impairments-set"
                 + "/oit:roadm-path-impairments-set-id";
            }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 97]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
            description
              "pointer to the list set of ROADM
               optical impairments";
@@ -5441,6 +5426,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
        }
        list additional-ltp {
          when "derived-from-or-self(../../../tet:protection-type,"
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 97]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
+
             + "'oit:otsi-protection')" {
            description
              "This list applies only to TTPs that support individual
@@ -5482,20 +5475,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
                 + "/oit:roadm-path-impairments-set"
                 + "/oit:roadm-path-impairments-set-id";
            }
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 98]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
            description
              "pointer to the list set of ROADM
               optical impairments";
          }
        }
      } // augmentation local-link-connectivity
+
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 98]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
    }
    <CODE ENDS>
@@ -5537,15 +5530,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
    These are the subtrees and data nodes and their sensitivity/
    vulnerability:
 
-
-
-
-
-Beller, et al.            Expires 30 March 2026                [Page 99]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
    /nw:networks/nw:network/nw:network-types/tet:te-topology
       Unauthorized access to this subtree can disclose the TE topology
       type.
@@ -5553,6 +5537,14 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
    /nw:networks/tet:te
       Unauthorized access to this subtree can disclose the TE node
       templates and TE link templates.
+
+
+
+
+Beller, et al.            Expires 13 April 2026                [Page 99]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
    /nw:networks/nw:network
       Unauthorized access to this subtree can disclose the topology-wide
@@ -5595,15 +5587,20 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
    XML: N/A, the requested URI is an XML namespace.
    --------------------------------------------------------------------
 
-
-
-Beller, et al.            Expires 30 March 2026               [Page 100]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
    This document registers the following YANG modules in the YANG Module
    Names registry [RFC7950]:
+
+
+
+
+
+
+
+
+Beller, et al.            Expires 13 April 2026               [Page 100]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
    --------------------------------------------------------------------
    name:      ietf-optical-impairment-topology
@@ -5648,19 +5645,18 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
-
-
-
-
-
-Beller, et al.            Expires 30 March 2026               [Page 101]
-
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
-
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
+
+Beller, et al.            Expires 13 April 2026               [Page 101]
+
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
+
 
    [RFC8341]  Bierman, A. and M. Bjorklund, "Network Configuration
               Access Control Model", STD 91, RFC 8341,
@@ -5691,12 +5687,12 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
               <https://www.rfc-editor.org/info/rfc8795>.
 
    [I-D.ietf-ccamp-rfc9093-bis]
-              Belotti, S., Busi, I., Beller, D., Le Rouzic, E., and A.
+              Belotti, S., Busi, I., Beller, D., Rouzic, E. L., and A.
               Guo, "Common YANG Data Types for Layer 0 Optical
               Networks", Work in Progress, Internet-Draft, draft-ietf-
-              ccamp-rfc9093-bis-16, 7 August 2025,
+              ccamp-rfc9093-bis-18, 10 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ccamp-
-              rfc9093-bis-16>.
+              rfc9093-bis-18>.
 
 8.2.  Informative References
 
@@ -5709,9 +5705,13 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 102]
+
+
+
+
+Beller, et al.            Expires 13 April 2026               [Page 102]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    [RFC7446]  Lee, Y., Ed., Bernstein, G., Ed., Li, D., and W. Imajuku,
@@ -5765,9 +5765,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 103]
+Beller, et al.            Expires 13 April 2026               [Page 103]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    [RFC9094]  Zheng, H., Lee, Y., Guo, A., Lopez, V., and D. King, "A
@@ -5821,9 +5821,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 104]
+Beller, et al.            Expires 13 April 2026               [Page 104]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    [G.959.1]  "Optical transport network physical layer interfaces",
@@ -5877,9 +5877,9 @@ Appendix A.  JSON Code Examples for Optical Protection Uses Cases
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 105]
+Beller, et al.            Expires 13 April 2026               [Page 105]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
       +--------------------------------------------------------------+
@@ -5933,9 +5933,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 106]
+Beller, et al.            Expires 13 April 2026               [Page 106]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
       +--------------------------------------------------------------+
@@ -5989,9 +5989,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 107]
+Beller, et al.            Expires 13 April 2026               [Page 107]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  "roadm-path-impairments-set": [
@@ -6045,9 +6045,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 108]
+Beller, et al.            Expires 13 April 2026               [Page 108]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
            },
@@ -6101,9 +6101,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 109]
+Beller, et al.            Expires 13 April 2026               [Page 109]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            ]
@@ -6157,9 +6157,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 110]
+Beller, et al.            Expires 13 April 2026               [Page 110]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "ltp-ref": "LTP-1",
@@ -6213,9 +6213,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 111]
+Beller, et al.            Expires 13 April 2026               [Page 111]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "ltp-ref": "LTP-3",
@@ -6269,9 +6269,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 112]
+Beller, et al.            Expires 13 April 2026               [Page 112]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The JSON example below addresses the optical protection use case
@@ -6325,9 +6325,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 113]
+Beller, et al.            Expires 13 April 2026               [Page 113]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    {
@@ -6381,9 +6381,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 114]
+Beller, et al.            Expires 13 April 2026               [Page 114]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                        "description": "Add path impairments from LTP 20\
@@ -6437,9 +6437,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 115]
+Beller, et al.            Expires 13 April 2026               [Page 115]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            },
@@ -6493,9 +6493,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 116]
+Beller, et al.            Expires 13 April 2026               [Page 116]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "ietf-optical-impairment-topology:roadm-\
@@ -6549,9 +6549,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 117]
+Beller, et al.            Expires 13 April 2026               [Page 117]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                },
@@ -6605,9 +6605,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 118]
+Beller, et al.            Expires 13 April 2026               [Page 118]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    "tp-id": "1",
@@ -6661,9 +6661,9 @@ Appendix B.  Optical Transponders in a Remote Shelf (Remote OTs)
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 119]
+Beller, et al.            Expires 13 April 2026               [Page 119]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
            WDM-TE-Node-1                    WDM-TE-Node-2
@@ -6717,9 +6717,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 120]
+Beller, et al.            Expires 13 April 2026               [Page 120]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    Each add/drop TE-link carries a single OTSi between the transceiver
@@ -6773,9 +6773,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 121]
+Beller, et al.            Expires 13 April 2026               [Page 121]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    The connectivity matrix in the WDM-TE-Node which abstract the edge
@@ -6829,9 +6829,9 @@ B.1.  JSON Examples for Optical Transponders in a Remote Shelf (Remote
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 122]
+Beller, et al.            Expires 13 April 2026               [Page 122]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                {
@@ -6885,9 +6885,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 123]
+Beller, et al.            Expires 13 April 2026               [Page 123]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "ttp-transceiver-ref": 1,
@@ -6941,9 +6941,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 124]
+Beller, et al.            Expires 13 April 2026               [Page 124]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    }
@@ -6997,9 +6997,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 125]
+Beller, et al.            Expires 13 April 2026               [Page 125]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    {
@@ -7053,9 +7053,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 126]
+Beller, et al.            Expires 13 April 2026               [Page 126]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "otsi-ref": [
@@ -7109,9 +7109,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 127]
+Beller, et al.            Expires 13 April 2026               [Page 127]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  "source-tp": "2"
@@ -7165,9 +7165,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 128]
+Beller, et al.            Expires 13 April 2026               [Page 128]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                              ]
@@ -7221,9 +7221,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 129]
+Beller, et al.            Expires 13 April 2026               [Page 129]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                        "media-channel-group": [
@@ -7277,9 +7277,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 130]
+Beller, et al.            Expires 13 April 2026               [Page 130]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  "bundled-links": {
@@ -7333,9 +7333,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 131]
+Beller, et al.            Expires 13 April 2026               [Page 131]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  "otsi": [
@@ -7389,9 +7389,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 132]
+Beller, et al.            Expires 13 April 2026               [Page 132]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    }
@@ -7445,9 +7445,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 133]
+Beller, et al.            Expires 13 April 2026               [Page 133]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    }
@@ -7501,9 +7501,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 134]
+Beller, et al.            Expires 13 April 2026               [Page 134]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    }
@@ -7557,9 +7557,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 135]
+Beller, et al.            Expires 13 April 2026               [Page 135]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            "media-channel": [
@@ -7613,9 +7613,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 136]
+Beller, et al.            Expires 13 April 2026               [Page 136]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                            "media-channel": [
@@ -7669,9 +7669,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 137]
+Beller, et al.            Expires 13 April 2026               [Page 137]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                "flexi-n": 20,
@@ -7725,9 +7725,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 138]
+Beller, et al.            Expires 13 April 2026               [Page 138]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  ]
@@ -7781,9 +7781,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 139]
+Beller, et al.            Expires 13 April 2026               [Page 139]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                              {
@@ -7837,9 +7837,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 140]
+Beller, et al.            Expires 13 April 2026               [Page 140]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                        ]
@@ -7893,9 +7893,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 141]
+Beller, et al.            Expires 13 April 2026               [Page 141]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                          "transceiver-id": 1,
@@ -7949,9 +7949,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 142]
+Beller, et al.            Expires 13 April 2026               [Page 142]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                    "ietf-te-topology:te-tp-id": 4,
@@ -8005,9 +8005,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 143]
+Beller, et al.            Expires 13 April 2026               [Page 143]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                              }
@@ -8061,9 +8061,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 144]
+Beller, et al.            Expires 13 April 2026               [Page 144]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                                  },
@@ -8117,9 +8117,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 145]
+Beller, et al.            Expires 13 April 2026               [Page 145]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
              },
@@ -8173,9 +8173,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 146]
+Beller, et al.            Expires 13 April 2026               [Page 146]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                      }
@@ -8229,9 +8229,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 147]
+Beller, et al.            Expires 13 April 2026               [Page 147]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
                  "dest-tp": "3"
@@ -8285,9 +8285,9 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 148]
+Beller, et al.            Expires 13 April 2026               [Page 148]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    }
@@ -8341,9 +8341,9 @@ Additional Authors
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 149]
+Beller, et al.            Expires 13 April 2026               [Page 149]
 
-Internet-Draft    Opt. Impairment-Aware Topo YANG Model   September 2025
+Internet-Draft    Opt. Impairment-Aware Topo YANG Model     October 2025
 
 
    Victor Lopez
@@ -8397,4 +8397,4 @@ Authors' Addresses
 
 
 
-Beller, et al.            Expires 30 March 2026               [Page 150]
+Beller, et al.            Expires 13 April 2026               [Page 150]
