@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-06-24 {
+  revision 2025-10-10 {
     description
       "Initial version.";
     reference
@@ -172,7 +172,7 @@ module ietf-optical-impairment-topology {
                  density (PSD).";
               case channel-power {
                 leaf nominal-carrier-power {
-                  type l0-types:power-dbm-or-null;
+                  type l0-types:power-dbm-or-unknown;
                   mandatory true;
                   description
                     "Reference channel power.";
@@ -180,7 +180,7 @@ module ietf-optical-impairment-topology {
               }
               case power-spectral-density {
                 leaf nominal-psd {
-                  type l0-types:psd-or-null;
+                  type l0-types:psd-or-unknown;
                   mandatory true;
                   description
                     "Reference power spectral density (PSD).";
@@ -189,7 +189,7 @@ module ietf-optical-impairment-topology {
             }
           } // container power-param
           leaf pdl {
-            type l0-types:power-loss-or-null;
+            type l0-types:power-loss-or-unknown;
             description
               "Polarization Dependent Loss (PDL)";
           }
@@ -204,28 +204,28 @@ module ietf-optical-impairment-topology {
                 "The attributes applicable only to amplifier
                  elements";
               leaf actual-gain {
-                type l0-types:power-gain-or-null;
+                type l0-types:power-gain-or-unknown;
                 mandatory true;
                 description
                   "The value of the gain provided by the
                    amplification  stage of the optical amplifier.";
               }
               leaf in-voa {
-                type l0-types:power-loss-or-null;
+                type l0-types:power-loss-or-unknown;
                 description
                   "Loss introduced by the Variable Optical Attenuator
                    (VOA) at the input of the amplification stage of
                    the amplifier, if present";
               }
               leaf out-voa {
-                type l0-types:power-loss-or-null;
+                type l0-types:power-loss-or-unknown;
                 description
                   "Loss introduced by the Variable Optical Attenuator
                    (VOA) at the output of the amplification stage of
                    the amplifier, if present.";
               }
               leaf tilt-target {
-                type l0-types:decimal-2-or-null;
+                type l0-types:decimal-2-or-unknown;
                 units "dB";
                 mandatory true;
                 description
@@ -233,7 +233,7 @@ module ietf-optical-impairment-topology {
                    frequency of the amplifier frequency range.";
               }
               leaf total-output-power {
-                type l0-types:power-dbm-or-null;
+                type l0-types:power-dbm-or-unknown;
                 mandatory true;
                 description
                   "It represent total output power measured in the
@@ -280,7 +280,7 @@ module ietf-optical-impairment-topology {
                     "The raman pump central frequency.";
                 }
                 leaf power {
-                  type l0-types:decimal-2-or-null;
+                  type l0-types:decimal-2-or-unknown;
                   units "Watts";
                   description
                     "The total pump power considering a depolarized
@@ -305,7 +305,7 @@ module ietf-optical-impairment-topology {
                   }
                 }
                 leaf delta-power {
-                  type l0-types:power-ratio-or-null;
+                  type l0-types:power-ratio-or-unknown;
                   description
                     "Deviation from the reference carrier power
                      defined for the OMS.";
@@ -332,21 +332,21 @@ module ietf-optical-impairment-topology {
           "Fiber type";
       }
       leaf length {
-        type l0-types:decimal-2-or-null;
+        type l0-types:decimal-2-or-unknown;
         units "km";
         mandatory true;
         description
           "Length of fiber";
       }
       leaf loss-coef {
-        type l0-types:decimal-2-or-null;
+        type l0-types:decimal-2-or-unknown;
         units "dB/km";
         mandatory true;
         description
           "Loss coefficient of the fiber";
       }
       leaf total-loss {
-        type l0-types:power-loss-or-null;
+        type l0-types:power-loss-or-unknown;
         description
           "The measured total loss of the fiber, which includes
            all possible losses: fiber loss and conn-in and conn-out
@@ -356,18 +356,18 @@ module ietf-optical-impairment-topology {
            be measured.";
       }
       leaf pmd {
-        type l0-types:decimal-2-or-null;
+        type l0-types:decimal-2-or-unknown;
         units "ps";
         description
           "PMD of the fiber";
       }
       leaf conn-in {
-        type l0-types:power-loss-or-null;
+        type l0-types:power-loss-or-unknown;
         description
           "connector-in";
       }
       leaf conn-out {
-        type l0-types:power-loss-or-null;
+        type l0-types:power-loss-or-unknown;
         description
           "connector-out";
       }
@@ -384,26 +384,25 @@ module ietf-optical-impairment-topology {
           fraction-digits 8;
           range "0..max";
         }
-        type empty;
+        type l0-types:unknown-value;
       }
       units "ps";
       description
-        "Polarization Mode Dispersion (PMD), when known, or an
-         empty value when unknown.";
+        "Polarization Mode Dispersion (PMD).";
     }
     leaf roadm-cd {
-      type l0-types:decimal-5-or-null;
+      type l0-types:decimal-5-or-unknown;
       units "ps/nm";
       description
         "Chromatic Dispersion (CD)";
     }
     leaf roadm-pdl {
-      type l0-types:power-loss-or-null;
+      type l0-types:power-loss-or-unknown;
       description
         "Polarization Dependent Loss (PDL)";
     }
     leaf roadm-inband-crosstalk {
-      type l0-types:decimal-2-or-null;
+      type l0-types:decimal-2-or-unknown;
       units "dB";
       description
         "In-band crosstalk, or coherent crosstalk, can occur in
@@ -412,7 +411,7 @@ module ietf-optical-impairment-topology {
          or all but one blocked";
     }
     leaf roadm-maxloss {
-      type l0-types:power-loss-or-null;
+      type l0-types:power-loss-or-unknown;
       description
         "This is the maximum expected path loss from the
          ROADM ingress to the ROADM egress
@@ -460,7 +459,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-pmax {
-      type l0-types:power-dbm-or-null;
+      type l0-types:power-dbm-or-unknown;
       description
         "This is the maximum (per carrier) power level
          permitted at the add block input ports,
@@ -472,7 +471,7 @@ module ietf-optical-impairment-topology {
          to this value or lower";
     }
     leaf roadm-osnr {
-      type l0-types:snr-or-null;
+      type l0-types:snr-or-unknown;
       description
         "Optical Signal-to-Noise Ratio (OSNR).
 
@@ -487,7 +486,7 @@ module ietf-optical-impairment-topology {
          (if both are defined).";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-or-null;
+      type l0-types:decimal-5-or-unknown;
       units "dB";
       description
         "Noise Figure. If the add path contains an amplifier,
@@ -532,7 +531,7 @@ module ietf-optical-impairment-topology {
       }
     }
     leaf roadm-minloss {
-      type l0-types:power-loss-or-null;
+      type l0-types:power-loss-or-unknown;
       description
         "The net loss from the ROADM input, to the
          output of the drop block.
@@ -545,7 +544,7 @@ module ietf-optical-impairment-topology {
          including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
-      type l0-types:power-loss-or-null;
+      type l0-types:power-loss-or-unknown;
       description
         "The net loss from the ROADM input,
          to the output of the drop block.
@@ -560,41 +559,41 @@ module ietf-optical-impairment-topology {
          expected loss.";
     }
     leaf roadm-pmin {
-      type l0-types:power-dbm-or-null;
+      type l0-types:power-dbm-or-unknown;
       description
-        "If the drop path has additional loss
-         that is added, for example,
-         to hit target power levels into a
-         drop path amplifier, or simply, to reduce the
-         power of a strong carrier
-         (due to ripple,for example),
-         then the use of the ROADM input power levels and
-         the above drop losses is not appropriate.
-         This parameter corresponds to the min per
-         carrier power levels
-         expected at the output of the drop block.
-         A detail example of the comparison using
-         these parameters is
-         detailed in section xxx of the document yyy.";
+        "If the drop path has additional loss that is added, for
+         example, to hit target power levels into a drop path
+         amplifier, or simply, to reduce the power of a strong
+         carrier (due to ripple, for example), then the use of the
+         ROADM input power levels and the above drop losses is
+         not appropriate.
+
+         This parameter corresponds to the minimum value of the Drop
+         Channel output power range, as defined in table 8-6 of
+         ITU-T G.680.";
+      reference
+        "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                   optical network elements, table 8-6";
     }
     leaf roadm-pmax {
-      type l0-types:power-dbm-or-null;
+      type l0-types:power-dbm-or-unknown;
       description
-        "If the drop path has additional loss that is added,
-         for example, to hit target power levels into a
-         drop path amplifier,or simply,to reduce the power
-         of a strong carrier(due to ripple,for example),
-         then the use of the ROADM input power levels and the
-         above drop losses is not appropriate.
-         This parameter corresponds to the best case per
-         carrier power levels expected at the output of the
-         drop block.
-         A detail example of the comparison using
-         these parameters
-         is detailed in section xxx of the document yyy";
+        "If the drop path has additional loss that is added, for
+         example, to hit target power levels into a drop path
+         amplifier, or simply ,to reduce the power of a strong
+         carrier (due to ripple, for example), then the use of the
+         ROADM input power levels and the above drop losses is
+         not appropriate.
+
+         This parameter corresponds to the maximum value of the Drop
+         Channel output power range, as defined in table 8-6 of
+         ITU-T G.680.";
+      reference
+        "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
+                   optical network elements, table 8-6";
     }
     leaf roadm-ptyp {
-      type l0-types:power-dbm-or-null;
+      type l0-types:power-dbm-or-unknown;
       description
         "If the drop path has additional loss that is added,
          for example, to hit target power levels into a
@@ -607,7 +606,7 @@ module ietf-optical-impairment-topology {
          at the output of the drop block.";
     }
     leaf roadm-osnr {
-      type l0-types:snr-or-null;
+      type l0-types:snr-or-unknown;
       description
         "Optical Signal-to-Noise Ratio (OSNR).
 
@@ -626,7 +625,7 @@ module ietf-optical-impairment-topology {
          the minimum value between these two MUST be used";
     }
     leaf roadm-noise-figure {
-      type l0-types:decimal-5-or-null;
+      type l0-types:decimal-5-or-unknown;
       units "dB";
       description
         "Drop path Noise Figure.
@@ -652,7 +651,7 @@ module ietf-optical-impairment-topology {
       description
         "Concentrated loss";
       leaf loss {
-        type l0-types:power-loss-or-null;
+        type l0-types:power-loss-or-unknown;
         mandatory true;
         description
           "Loss introduced by the concentrated loss element.";
@@ -688,14 +687,14 @@ module ietf-optical-impairment-topology {
       leaf nominal-carrier-power {
         when "derived-from-or-self(../../equalization-mode, "
            + "'l0-types:carrier-power')";
-        type l0-types:power-dbm-or-null;
+        type l0-types:power-dbm-or-unknown;
         description
           "Reference channel power.";
       }
       leaf nominal-psd {
         when "derived-from-or-self(../../equalization-mode, "
            + "'l0-types:power-spectral-density')";
-        type l0-types:psd-or-null;
+        type l0-types:psd-or-unknown;
         description
           " Reference power spectral density (PSD).";
       }
@@ -708,7 +707,6 @@ module ietf-optical-impairment-topology {
        digital information stream supported by one or more OTSi";
     list otsi {
       key "carrier-id";
-      config false;
       description
         "list of OTSi contained in one OTSiG.
          The list could also be of only one element";
@@ -720,12 +718,11 @@ module ietf-optical-impairment-topology {
       leaf carrier-frequency {
         type union {
           type l0-types:frequency-thz;
-          type empty;
+          type l0-types:unknown-value;
         }
         description
           "OTSi carrier frequency, equivalent to the
-           actual configured transmitter frequency, when known, or
-           an empty value when unknown.";
+           actual configured transmitter frequency.";
       }
       leaf-list e2e-mc-path-id {
         type uint16;
@@ -817,7 +814,7 @@ module ietf-optical-impairment-topology {
             }
           }
           leaf delta-power {
-            type l0-types:power-ratio-or-null;
+            type l0-types:power-ratio-or-unknown;
             description
               " Deviation from the reference carrier power defined
                for the OMS.";
@@ -834,7 +831,6 @@ module ietf-optical-impairment-topology {
       presence
         "When present, it indicates that the list of OMS elements
          is reported.";
-      config false;
       description
         "The top level container for the list of OMS elements.";
       list oms-element {
@@ -853,14 +849,10 @@ module ietf-optical-impairment-topology {
         leaf oms-element-uid {
           type union {
             type string;
-            type empty;
+            type l0-types:unknown-value;
           }
           description
-            "Unique id of the element, if it exists and is known.
-
-             When unknown, an empty value is reported.
-
-             When it does not exist, the attribute is not present.";
+            "Unique id of the element.";
         }
         container reverse-element-ref {
           description
@@ -960,12 +952,12 @@ module ietf-optical-impairment-topology {
     container otsis {
       presence "When present, it indicates that OTSi information is
                 reported.";
+      config false;
       description
         "The information about the OTSis configured on the WDM-TE
          link.";
       list otsi-group {
         key "otsi-group-id";
-        config false;
         description
           "the list of possible OTSiG representing client digital
            stream";
@@ -1080,11 +1072,11 @@ module ietf-optical-impairment-topology {
       presence
         "If present, it indicates that the list of transponders is
          reported.";
+      config false;
       description
         "The top level container for the list of transponders.";
       list transponder {
         key "transponder-id";
-        config false;
         description
           "The list of transponders.";
         leaf transponder-id {
@@ -1139,7 +1131,6 @@ module ietf-optical-impairment-topology {
         }
         list transceiver {
           key "transceiver-id";
-          config false;
           min-elements 1;
           description
             "List of transceiver related to a transponder";
@@ -1169,7 +1160,7 @@ module ietf-optical-impairment-topology {
           }
           leaf configured-mode {
             type union {
-              type empty;
+              type l0-types:unknown-value;
               type leafref {
                 path "../supported-modes/supported-mode/mode-id";
               }
@@ -1178,7 +1169,7 @@ module ietf-optical-impairment-topology {
               "Reference to the configured mode for transceiver
                compatibility approach.
 
-               The empty value is used to report that no mode has
+               The 'unknown' value is used to report that no mode has
                been configured and there is no default mode.
 
                When not present, the configured-mode is not reported
@@ -1236,11 +1227,11 @@ module ietf-optical-impairment-topology {
     container regen-groups {
       presence "When present, it indicates that the list of 3R groups
                 is reported.";
+      config false;
       description
         "The top level container for the list of 3R groups.";
       list regen-group {
         key "group-id";
-        config false;
         description
           "The list of 3R groups.
 
@@ -1345,6 +1336,7 @@ module ietf-optical-impairment-topology {
       type identityref {
         base te-types:lsp-protection-type;
       }
+      config false;
       description
         "The protection type that this LTP is capable of.
 
@@ -1365,6 +1357,7 @@ module ietf-optical-impairment-topology {
       "Augment TE attributes of an LTP";
     leaf inter-layer-sequence-number {
       type uint32;
+      config false;
       description
         "The inter-layer-sequence-number (ILSN) is used to report
          additional connectivity constraints between a client layer
@@ -1385,19 +1378,6 @@ module ietf-optical-impairment-topology {
          client-layer switching capability.";
     }
   }
-
-  augment "/nw:networks/nw:network/nw:node/tet:te"
-        + "/tet:te-node-attributes" {
-    when '../../../nw:network-types/tet:te-topology'
-       + '/oit:optical-impairment-topology' {
-      description
-        "This augment is only valid for Optical Impairment
-         topology";
-    }
-    description
-      "node attributes augmentantion for optical-impairment ROADM
-       node";
-  } // augmentation for optical-impairment ROADM 
 
   augment "/nw:networks/nw:network/nw:node/tet:te/"
         + "tet:information-source-entry/tet:connectivity-matrices" {
@@ -1465,9 +1445,7 @@ module ietf-optical-impairment-topology {
            + "/oit:roadm-path-impairments-set"
            + "/oit:roadm-path-impairments-set-id";
       }
-      config false; /*the identifier in the list */
-      /*"roadm-path-impairments" of ROADM optical impairment*/
-      /*is read-only as the rest of attributes*/
+      config false;
       description
         "Pointer to the list set of ROADM optical
          impairments";
@@ -1620,7 +1598,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-        topology.";
+         topology.";
     }
     description
       "Augment default TTP LLC.";
