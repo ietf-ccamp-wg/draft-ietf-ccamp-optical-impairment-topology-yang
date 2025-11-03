@@ -105,12 +105,12 @@ module: ietf-optical-impairment-topology
              |  +--ro pdl-value        power-loss
              |  +--ro penalty-value    union
              +--ro available-modulation-type?          identityref
-             +--ro min-OSNR?                           snr
+             +--ro min-osnr?                           snr
              +--ro rx-ref-channel-power?               power-dbm
              +--ro rx-channel-power-penalty* [rx-channel-power-value]
              |  +--ro rx-channel-power-value    power-dbm
              |  +--ro penalty-value             union
-             +--ro min-Q-factor?                       decimal-2
+             +--ro min-q-factor?                       decimal-2
              +--ro available-baud-rate?                decimal64
              +--ro roll-off?                           decimal64
              +--ro min-carrier-spacing?                frequency-ghz
