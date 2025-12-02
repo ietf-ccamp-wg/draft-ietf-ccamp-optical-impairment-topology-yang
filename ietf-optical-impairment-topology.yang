@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-10-10 {
+  revision 2025-12-02 {
     description
       "Initial version.";
     reference
@@ -418,12 +418,6 @@ module ietf-optical-impairment-topology {
          assuming no additional path loss is added";
     }
   } // grouping roadm-common-path
-
-  grouping roadm-express-path {
-    description
-      "The optical impairments of a ROADM express path.";
-    uses roadm-common-path;
-  } // grouping roadm-express-path
 
   grouping roadm-add-path {
     description
@@ -1009,7 +1003,7 @@ module ietf-optical-impairment-topology {
                    Two elements in the list MUST NOT have the same
                    range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
-                uses roadm-express-path;
+                uses roadm-common-path;
               }
             }
             case roadm-add-path {
