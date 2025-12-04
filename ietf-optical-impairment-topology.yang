@@ -690,7 +690,7 @@ module ietf-optical-impairment-topology {
            + "'l0-types:power-spectral-density')";
         type l0-types:psd-or-unknown;
         description
-          " Reference power spectral density (PSD).";
+          "Reference power spectral density (PSD).";
       }
     } // container power-param
   } // grouping oms-general-optical-params
@@ -810,7 +810,7 @@ module ietf-optical-impairment-topology {
           leaf delta-power {
             type l0-types:power-ratio-or-unknown;
             description
-              " Deviation from the reference carrier power defined
+              "Deviation from the reference carrier power defined
                for the OMS.";
           }
         } // media channels list
@@ -1379,7 +1379,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix information
@@ -1393,7 +1393,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices information-source
 
@@ -1404,7 +1405,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment TE node connectivity matrix entry information
@@ -1418,7 +1419,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix information-source
 
@@ -1428,7 +1430,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix.";
@@ -1441,8 +1443,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices
 
@@ -1453,7 +1455,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment TE node connectivity matrix entry.";
@@ -1466,8 +1468,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix
 
@@ -1478,7 +1480,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment the attributes for the 'from' LTP for the TE node
@@ -1521,9 +1523,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between this secondary 'from' LTP and the 'to' LTP of
-           this connectivity matrix entry.";
+          "Pointer to optical impairments of the ROADM path between
+           this secondary 'from' LTP and the 'to' LTP of this
+           connectivity matrix entry.";
       }
     }
   } // augmentation connectivity-matrix from
@@ -1535,7 +1537,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment the attributes for the 'to' LTP for the TE node
@@ -1578,9 +1580,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between the 'from' LTP of this connectivity matrix entry
-           and this secondary LTP.";
+          "Pointer to optical impairments of the ROADM path between
+           the 'from' LTP of this connectivity matrix entry and this
+           secondary LTP.";
       }
     }
   } // augmentation connectivity-matrix to
@@ -1605,8 +1607,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -1617,8 +1619,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM
-         optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation local-link-connectivities
 
@@ -1630,7 +1632,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment TTP LLC entry.";
@@ -1643,8 +1645,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -1655,8 +1657,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     list llc-transceiver {
       key "ttp-transponder-ref ttp-transceiver-ref";
@@ -1694,8 +1696,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -1705,8 +1707,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
     list additional-ltp {
@@ -1742,8 +1744,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -1753,8 +1755,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
   } // augmentation local-link-connectivity
