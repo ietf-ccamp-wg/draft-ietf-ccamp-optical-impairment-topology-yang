@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-12-02 {
+  revision 2025-12-04 {
     description
       "Initial version.";
     reference
@@ -1092,9 +1092,9 @@ module ietf-optical-impairment-topology {
             }
             enum 3r-or-tunnel {
               description
-                "The transponder can be configure to be used either
-                 in an Optical Tunnel termination configuration or in
-                 a 3R configuration.";
+                "The transponder can be used either in an Optical
+                 Tunnel termination configuration or in a 3R
+                 configuration.";
             }
           }
           description
