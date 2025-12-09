@@ -117,7 +117,7 @@ module ietf-optical-impairment-topology {
       "Describes parameters for an amplifier";
     container amplifier {
       description
-        "Amplifier type, operational parameters are described.";
+        "The attributes of an amplifier.";
       leaf type-variety {
         type string;
         mandatory true;
@@ -347,6 +347,7 @@ module ietf-optical-impairment-topology {
       }
       leaf total-loss {
         type l0-types:power-loss-or-unknown;
+        config false;
         description
           "The measured total loss of the fiber, which includes
            all possible losses: fiber loss and conn-in and conn-out
