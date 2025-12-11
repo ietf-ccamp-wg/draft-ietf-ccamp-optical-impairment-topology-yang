@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-12-04 {
+  revision 2025-12-11 {
     description
       "Initial version.";
     reference
@@ -157,7 +157,7 @@ module ietf-optical-impairment-topology {
                referencing a specification in a separate equipment
                catalog.
 
-               This attributes applies only when the type-variety of
+               This attribute applies only when the type-variety of
                the amplifier is not sufficient to describe the
                amplifier element type.";
           }
@@ -236,8 +236,8 @@ module ietf-optical-impairment-topology {
                 type l0-types:power-dbm-or-unknown;
                 mandatory true;
                 description
-                  "It represent total output power measured in the
-                   range specified by the frequency-range.
+                  "It represents the total output power measured in
+                   the range specified by the frequency-range.
 
                    Optical power is especially needed to
                    re-compute/check consistency of span
@@ -519,8 +519,8 @@ module ietf-optical-impairment-topology {
            This is before any additional drop path attenuation
            that may be required
            due to drop amplifier power constraints.
-           The max value correspond to worst case expected loss,
-           including amplifier gain ripple or uncertainty.
+           The max value corresponds to the worst case expected
+           loss, including amplifier gain ripple or uncertainty.
            It is the maximum output power of the drop
            amplifier.";
       }
@@ -593,7 +593,7 @@ module ietf-optical-impairment-topology {
         "If the drop path has additional loss that is added,
          for example, to hit target power levels into a
          drop path amplifier,or simply,to reduce the
-         power of a strong carrier(due to ripple,for example),
+         power of a strong carrier(due to ripple, for example),
          then the use of the ROADM input power levels and
          the above drop losses is not appropriate.
          This parameter corresponds to the typical case
@@ -606,7 +606,7 @@ module ietf-optical-impairment-topology {
         "Optical Signal-to-Noise Ratio (OSNR).
 
          Expected OSNR contribution of the drop path
-         amplifier(if present)
+         amplifier (if present)
          for the case of additional drop path loss
          (before this amplifier)
          in order to hit a target power level (per carrier).
@@ -960,7 +960,7 @@ module ietf-optical-impairment-topology {
           type string;
           description
             "A network-wide unique identifier of otsi-group element.
-             It could be structured e.g., as an URI or as an UUID.";
+             It could be structured e.g., as a URI or as a UUID.";
         }
         uses otsi-group;
       } // list of OTSiG
@@ -988,7 +988,7 @@ module ietf-optical-impairment-topology {
           leaf description {
             type string;
             description
-              "The textual description of the the set of optical
+              "The textual description of the set of optical
                impairments related to a ROADM path.";
           }
           choice impairment-type {
@@ -1231,7 +1231,7 @@ module ietf-optical-impairment-topology {
           "The list of 3R groups.
 
            Any 3R group represent a group of transponder in which an
-           a an electrical connectivity is either in place or could
+           electrical connectivity is either in place or could
            be dynamically provided, to associated transponders used
            for 3R regeneration.";
         leaf group-id {
@@ -1680,7 +1680,7 @@ module ietf-optical-impairment-topology {
           path "../../../../ttp-transceiver/transceiver-ref";
         }
         description
-          "The reference to the the transceiver of this LLCL entry.";
+          "The reference to the transceiver of this LLCL entry.";
       }
       leaf is-allowed {
         type boolean;
