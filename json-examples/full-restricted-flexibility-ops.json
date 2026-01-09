@@ -2,7 +2,7 @@
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-topology": {}
@@ -62,7 +62,7 @@
         },
         "node": [
           {
-            "node-id": "WDM-TE-Node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "tunnel-termination-point": [
@@ -82,34 +82,35 @@
                     "ietf-optical-impairment-topology:add-path-impairments-set": "1",
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-2"
+                            "ltp-ref": "example:LTP-2"
                           },
                           { 
-                            "ltp-ref": "LTP-3"
+                            "ltp-ref": "example:LTP-3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-2",
+                        "link-tp-ref": "example:LTP-2",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-1"
+                            "ltp-ref": "example:LTP-1"
                           },
                           {
-                            "ltp-ref": "LTP-3"
+                            "ltp-ref": "example:LTP-3"
                           }
                         ]
                       },
                       {
-                      "link-tp-ref": "LTP-3",
+                      "link-tp-ref": "example:LTP-3",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-1"
-                          },{
-                            "ltp-ref": "LTP-2"
+                            "ltp-ref": "example:LTP-1"
+                          },
+                          {
+                            "ltp-ref": "example:LTP-2"
                           }
                         ]
                       }
@@ -123,31 +124,31 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-impairments-set": "2",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-3",
+                        "link-tp-ref": "example:LTP-3",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-impairments-set": "2",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
@@ -162,46 +163,46 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-impairments-set": "3",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-2",
+                        "link-tp-ref": "example:LTP-2",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-impairments-set": "3",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-3",
+                        "link-tp-ref": "example:LTP-3",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-impairments-set": "2",
                         "ietf-optical-impairment-topology:additional-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
@@ -213,13 +214,13 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "LTP-1"
+                "tp-id": "example:LTP-1"
               },
               {
-                "tp-id": "LTP-2"
+                "tp-id": "example:LTP-2"
               },
               {
-                "tp-id": "LTP-3"
+                "tp-id": "example:LTP-3"
               }
             ]
           }
