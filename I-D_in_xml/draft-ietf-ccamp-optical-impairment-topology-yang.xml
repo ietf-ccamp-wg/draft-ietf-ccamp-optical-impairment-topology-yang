@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-20"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-21"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2025" month="October" day="10" />
+  <date year="2025" month="December" day="5" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -63,8 +63,11 @@
   </t>
 
   <t>
-   This document provides a YANG data model for the impairment-aware TE
-   topology in optical networks.
+   This document provides a YANG data model supporting the provisioning
+   of optical connections in a impairment-aware traffic engineering
+   topology (TE topology) for optical networks.
+   It augments the technology agnostic YANG Data Model for Traffic
+   Engineering (TE) Topologies as defined in <xref target="RFC8795"/>.
   </t>
 
   </abstract>
@@ -74,7 +77,7 @@
   <section title="Introduction" anchor="sect-1">
   <t>
    In order to provision an optical connection (an optical path)
-   through a wavelength switched optical networks (WSONs) as defined
+   through wavelength switched optical networks (WSONs) as defined
    in <xref target="RFC9094"/> or spectrum switched optical networks
    (SSONs), a combination of path continuity, resource availability,
    and impairment constraints must be met to determine viable and
@@ -92,7 +95,7 @@
   <t>
    This document provides a YANG data model for the impairment-aware
    Traffic Engineering (TE) topology in WSONs and SSONs. The YANG model
-   described in this document is a WSON/SSON technology-specific Yang
+   described in this document is a WSON/SSON technology-specific YANG
    model based on the information model developed in
    <xref target="RFC7446"/> and the two encoding documents
    <xref target="RFC7581"/> and <xref target="RFC7579"/> that developed
@@ -100,13 +103,13 @@
   </t>
 
   <t>
-   The intent of this document is to provide a YANG data model, which
+   The intent of this document is to provide a YANG data model, that
    can be utilized by a Multi-Domain Service Coordinator (MDSC) to
-   collect WSON impairment data from the Provisioning Network
+   collect WSON or SSON impairment data from the Provisioning Network
    Controllers (PNCs) to enable impairment-aware optical path
    computation according to the ACTN Architecture
    <xref target="RFC8453"/>. The communication between controllers is
-   done via a NETCONF <xref target="RFC8341"/> or a RESTCONF interface.
+   done via a NETCONF <xref target="RFC6241"/> or a RESTCONF interface
    <xref target="RFC8040"/>.
   </t>
   
@@ -115,8 +118,10 @@
    complex topic especially in a multi-vendor environment and usually
    requires joint engineering, which is independent from control plane
    and management plane capabilities. The YANG data model defined in
-   this document is providing sufficient information to enable optical
-   impairment-aware path computation.</t>
+   this document provides sufficient optical impairment information to
+   enable impairment-aware path computation for optical networks.
+  </t>
+  
   <t> 
    Optical data plane interoperability is outside the scope of this
    document.
@@ -128,23 +133,24 @@
   </t>
   
   <t>
-   The optical impairment-aware topology for a WSON/SSON network
-   based on the YANG data model defined in this document is intended to
-   be used for exposing the network topology including optical
-   impairments. Therefore, the topology information that is typically
-   provided by a PNC is assumed to be read-only data, i.e., not
-   configurable (read-write). This may change when the same optical
-   impairment-aware topology model is used for other use cases than
-   exposing the network topology. E.g., for a path computation engine,
-   where topological elements could be added in the context of a
-   what-if scenario analysis. This is outside of the scope of this
+   The impairment-aware topology for a WSON/SSON network based on the
+   YANG data model defined in this document is intended to be used for
+   exposing the network topology including optical impairments.
+   Therefore, the topology information that is typically provided by a
+   PNC is assumed to be read-only data, i.e., not configurable
+   (read-write). This may change when the same impairment-aware
+   topology model is used for other optical network use cases than
+   exposing the network topology. For example, for a path computation
+   engine, where topological elements could be added in the context of
+   a what-if scenario analysis. This is outside of the scope of this
    document.
   </t>
 
   <t>
    This document defines one YANG module: ietf-optical-impairment-
-   topology (<xref target="sect-3"/>) according to the new Network
-   Management Datastore Architecture <xref target="RFC8342"/>.
+   topology (<xref target="sect-3"/>) according to the Network
+   Management Datastore Architecture as defined in
+   <xref target="RFC8342"/>.
   </t>
 
   <section title="Terminology" anchor="sect-1.1">
@@ -201,7 +207,7 @@
    The term WDM-TE-node refers to those parts of a WDM-node (physical
    device) that are modeled as a TE-node as defined in
    <xref target="RFC8795"/>, which may include a ROADM and/or multiple
-   local optical transponders (OTs). Hence, a WDM-TE-node may only
+   local optical transponders (OTs). Hence, a WDM-TE-node might only
    contain OTs.
   </t>
 
@@ -217,7 +223,7 @@
    transponder (OT) and an add/drop port of the ROADM in the adjacent
    WDM-node. The add/drop TE-link typically carries a single optical
    tributary signal (OTSi, i.e., a modulated optical carrier, see
-   section <xref target="OTSi"/>).
+   <xref target="OTSi"/>).
   </t>
 
   <t>
@@ -307,20 +313,22 @@
   <section title="Scope of this document" anchor="sect-2.1">
 
   <t>
-   The optical impairment-aware topology YANG model defined in this
-   document is a network model as defined in <xref target="RFC8969"/>
-   and is applicable to devices and network controllers. The topology
-   model provides read-only network topology status information that is
-   typically used for path computation during service provisioning when
-   a new service is established on the network.
+   The impairment-aware topology YANG model for optical networks
+   defined in this document is a network model as defined in
+   <xref target="RFC8969"/> and is applicable to devices and network
+   controllers. The topology model provides read-only network topology
+   status information that is typically used for path computation
+   during service provisioning when a new service is established on the
+   network.
   </t>
   
   <t>
-   The DWDM interface YANG model defined in
-   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/> is a device
-   model as defined in <xref target="RFC8969"/> (a DWDM interface
-   management model to be precise) and is intended to be used for
-   device configuration.
+   The model in this document does not provide device configuration
+   capabilities. Where those capabilities are needed, a device model
+   as defined in <xref target="RFC8969"/> can be used;
+   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/> defines such
+   a model for DWDM interfaces (DWDM = dense wavelength division
+   multiplexing). 
   </t>
   
   </section>
@@ -330,8 +338,9 @@
  
   <t>
    This section provides a description of the optical transport
-   network reference architecture and its relevant components to
-   support optical impairment-aware path computation.
+   network reference architecture and its relevant components and
+   their optical impairments needed to support impairment-aware
+   path computation.
   </t>
 
   <t>
@@ -363,16 +372,17 @@
    BA: Booster Amplifier (or egress amplifier)
    PA: Pre-Amplifier (or ingress amplifier)
    ILA: In-Line Amplifier
+   MCG: Media Channel Group [G.807]
    OTS MCG: Optical Transmission Section MCG [G.807]
    OMS MCG: Optical Multiplex Section MCG [G.807]
-   MCG: Media Channel Group [G.807]
 ]]></artwork>
   </figure>
 
   <t>
    BA (WDM-node 1) is the egress Amplifier and PA (WDM-node 2) is the
-   ingress amplifier for the OMS Media Channel Group (MCG) in the
-   direction from left to right in <xref target="Figure-2"/>.
+   ingress amplifier for the Optical Multiplex Section Media Channel
+   Group (OMS MCG) <xref target="G.807"/> in the direction from left to
+   right in <xref target="Figure-2"/>.
   </t>
   
   <t>
@@ -389,8 +399,8 @@
    
   <t>
    According to <xref target="G.807"/>, an
-   OTS Media Channel Group (MCG) represents a topological construct
-   between two adjacent amplifiers, such as:
+   Optical Transmission Section Media Channel Group (OTS MCG) represents
+   a topological construct between two adjacent amplifiers, such as:
   </t>
   
   <figure>
@@ -427,7 +437,7 @@
    An OMS MCG traverses a sequence of optical elements between the
    ROADM function of two adjacent WDM-nodes as depicted in
    <xref target="Figure-2"/> where the OMS MCG is terminated.
-   These elements can be in transmit direction: a Booster Amplifier
+   These elements can be in the transmit direction: a Booster Amplifier
    (BA), one or more fiber sections with in-line amplifiers (ILAs), and
    a Pre-Amplifier (PA). A concentrated loss element can be used to
    describe an insertion loss caused, for example, by a fiber connector
@@ -505,9 +515,9 @@
   </t>
 
   <t>
-   The optical impairment-aware topology YANG model in
-   <xref target="sect-3"/> defines the OTSi properties needed for
-   optical impairment-aware path computation including the spectrum
+   The impairment-aware topology YANG model for optical networks in
+   <xref target="sect-3"/> defines the optical OTSi properties needed
+   for impairment-aware path computation including the spectrum
    occupied by each OTSi signal. The model also defines a pointer
    (leafref) from the OTSi to the transceiver module terminating the
    OTSi signal.   
@@ -571,7 +581,8 @@
  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10  11  12
 --+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---
                                 n = 4
-               K1           K2           K3           K4
+
+  X: indicates the center of the frequency slot
 
 ]]></artwork>
   </figure>
@@ -616,7 +627,7 @@
   </t>
 
   <t>
-   In section <xref target="Prot"/>, the term "end-to-end MC path" is
+   In <xref target="Prot"/>, the term "end-to-end MC path" is
    used to describe the topological aspect of the end-to-end MC, i.e.,
    the path through the media (see: <xref target="G.807 Amd1"/>,
    section 7.1.2). This is in line with the TE path defined in
@@ -638,9 +649,10 @@
  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10  11  12
 --+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-
                    |             n=4             |
-                   K1                            K2
 
   <------------------------ Media Channel ----------------------->
+
+  X: indicates the center of the frequency slot
 
 ]]></artwork>
   </figure>
@@ -720,8 +732,8 @@
   <t>
    Optical amplifiers are used in WDM networks for amplifying the
    optical signal in the optical domain without any optical to
-   electrical and electrical to optical conversion. Three
-   major optical amplifier technologies are existing today:
+   electrical and electrical to optical conversion. Three major optical
+   amplifier technologies are existing at the time of writing:
    
    <ul spacing="compact">
      <li>Erbium Doped Fiber Amplifiers (EDFAs)</li>
@@ -788,10 +800,10 @@
 
   <t>
    ILAs may have a variable optical attenuator on the ingress side
-   (in-voa attribute) allowing to control the input power of the WDM
+   (in-voa attribute) allowing control of the input power of the WDM
    signal (OMS MCG) entering the gain stage of the ILA. It may also
    have a variable optical attenuator on the egress side, which allows
-   to control the optical power of the WDM output signal (OMS MCG) of
+   control of the optical power of the WDM output signal (OMS MCG) of
    the ILA. The actual-gain attribute reflects the gain of the ILA gain
    stage and does not include the attenuation of the in-voa and/or
    out-voa.
@@ -832,7 +844,7 @@
    Multi-band amplifiers like the dual-band amplifier depicted in
    <xref target="multi-band_multi-stage_amp"/> have a band-separating
    filter at the input and a band-combining multiplexer combining all
-   the bands at the output. This filter and multiplexer functions are
+   the bands at the output. These filter and multiplexer functions are
    not modeled explicitly and their optical impairments are subsumed
    in the optical impairments of the amplifier components.
   </t>
@@ -913,9 +925,9 @@
    its corresponding receiver (Tx/Rx pair) as defined in ITU-T
    Recommendation G.698.2 <xref target="G.698.2"/>. In addition to the
    transceiver, which is terminating an OTSi signal, a transponder
-   typically provides additional layer 1 functionality like for example
-   aggregation (multiplexing) of client layer signals, which is outside
-   the scope of this document addressing layer 0 aspects of
+   typically provides additional layer 1 functionality such as, for
+   example, aggregation (multiplexing) of client layer signals, which
+   is outside the scope of this document addressing layer 0 aspects of
    transponders.
   </t>
   
@@ -937,9 +949,10 @@
   <t>
    A transponder is typically characterized by its data/symbol rate
    and the maximum distance the signal can travel. Other transponder
-   properties are: carrier frequency for the optical channels,
-   output power per channel, measured input power, modulation scheme,
-   FEC, etc.
+   properties are for example but are not limited to: carrier frequency
+   range for the optical channel, output power per channel, measured
+   input power, modulation scheme, Forward Error Correction (FEC),
+   etc.
   </t>
 
   <t>
@@ -984,16 +997,19 @@
   <section title="Standard Modes" anchor="sect-2.5.1">
   <t>
    A standard mode is related to an optical specification developed
-   by an SDO organization. Currently, the "Standard Modes" can only
-   be referred to ITU-T Recommendation G.698.2 <xref target="G.698.2"/>
-   since ITU-T Recommendation G.698.2 is the only standard defining
-   "Standard Modes" today.
-   Nothing is precluding, however, to consider other specifications
-   provided by any other SDO in the Standard Mode context as soon as
-   such specifications will be available. An application code as
-   defined in ITU-T G.698.2 <xref target="G.698.2"/> represents
-   a standard ITU-T G.698.2 optical interface specification towards
-   the realization of transversely compatible DWDM systems.
+   by a Standards Development Organization (SDO). Currently, the
+   "Standard Modes" can only be referred to ITU-T Recommendation
+   G.698.2 <xref target="G.698.2"/> since ITU-T Recommendation G.698.2
+   is the only standard defining "Standard Modes" today.
+   Nothing is precluding, however, consideration of other
+   specifications provided by any other SDO in the Standard Mode
+   context as soon as such specifications might be available. An
+   application code as defined in ITU-T G.698.2
+   <xref target="G.698.2"/> represents a standard ITU-T G.698.2 optical
+   interface specification towards the realization of transversely
+   compatible DWDM systems that it is a standard that ensures
+   transceivers from different vendors can work together in a DWDM
+   network.
    Two transceivers supporting the same application code and a line
    system matching the constraints, defined in ITU-T G.698.2, for that
    application code will interoperate. As the characteristics are
@@ -1008,7 +1024,7 @@
    codes supporting two data formats, an OTU4 related data format and a
    Flex-O related data format. The supported data formats for an
    application code can be described by listing the supported data
-   formats via the line-coding-bitrate attribute as transceiver
+   formats via the line-coding-bitrate attribute as a transceiver
    capability.
   </t>
   
@@ -1133,7 +1149,7 @@
 
   <section title="Explicit Modes" anchor="sect-2.5.3">
   <t>
-   The explicit mode allows to encode, explicitly, any subset of
+   The explicit mode allows the encoding, explicitly, of any subset of
    parameters e.g., FEC type, Modulation type, etc, to enable a
    controller entity to check for interoperability by means outside
    of this document. It shall be noted that using the explicit encoding
@@ -1168,10 +1184,10 @@
    three mode options defined in <xref target="sect-2.5.1"/>,
    <xref target="organizational-modes"/>, and
    <xref target="sect-2.5.3"/> (choice in the YANG model).
-   The YANG model allows to describe the transceiver capabilities by
-   mixing different modes. A transceiver may support some ITU-T
-   application codes and in addition some organizational or explicit
-   modes.
+   The YANG model allows the description of the transceiver
+   capabilities by mixing different modes. A transceiver may support
+   some ITU-T application codes and in addition some organizational or
+   explicit modes.
   </t>
   
   <t>
@@ -1358,7 +1374,7 @@
    <t>
     Implementations MAY support the change of the carrier frequency
     where the receiver may operate at a different optical frequency
-    as the transmitter. The transceiver mode is a property of the
+    than the transmitter. The transceiver mode is a property of the
     transceiver and is applied to the transmitter and the receiver.
     Therefore, the transceiver mode is the same for the two segments
     on the two sides of the 3R regeneratator realized by two
@@ -1405,7 +1421,7 @@
   
   <t>
    Since 3R regenerators are composed of an optical transponder pair,
-   the capability whether an optical transponder can be used as a 3R
+   the capability that an optical transponder can be used as a 3R
    regenerator is added to the transponder capabilities. Hence, no
    additional entity is required for describing 3R regenerators in the
    TE-topology YANG model. The optical transponder capabilities
@@ -1524,7 +1540,7 @@
   <t>
    The TE topology YANG model augmentations for DWDM networks including
    optical impairments  defined in <xref target="YANG-code"/>
-   intend to cover all the 3 categories of WDM-node architectures
+   intends to cover all the 3 categories of WDM-node architectures
    listed above. In the case of a disaggregated WDM-node architecture,
    it is assumed that the optical domain controller already performs
    some form of abstraction and presents the WDM-TE-node representing
@@ -1608,6 +1624,12 @@
    also implies that the optical transponders belong to a separate
    TE-node.
   </t>
+  
+  <t>
+   <xref target="Remote OT configurations"/> provides a modeling
+   example for a configuration where the optical transponders and the
+   ROADM are different WDM-TE-nodes (remote OT configuration).
+  </t>
 
   <figure align="center" title="Integrated WDM-node Architecture with
    Remote Transponders" anchor="Figure-7"><artwork><![CDATA[
@@ -1623,9 +1645,9 @@
       |  \| . |  |--|                 |--|  | . |/  |
       |     .  \ |--|                 |--| /  .     |
       |     .   \|  +-----------------+  |/   .     |
-      +-----.---------|----|---|----|---------.-----|
- Colored OT .       +-+   ++   ++   +-+       .
- line I/F   .       |     |     |     |       .
+      +-----.---------|----|---|----|---------.-----+
+   OT       .       +-+   ++   ++   +-+       .
+   line I/F .       |     |     |     |       .
             .     +---+ +---+ +---+ +---+     .
             .     | O | | O | | O | | O |     .
             .     | T | | T | | T | | T |     .
@@ -1833,9 +1855,9 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    This protection architecture requires dedicated photonic protection
    functions in the optical domain that are typically provided by
    dedicated protection hardware. These photonic protection functions
-   are a photonic splitter function splitting the OTSi signal in
+   are a photonic splitter function splitting the OTSi signal in the
    transmit direction and a photonic selector function selecting the
-   OTSi signal in receive direction from one of the two protection
+   OTSi signal in the receive direction from one of the two protection
    legs between the two protection functions terminating the individual
    OTSi protection.
    This individual OTSi protection scheme can be considered as a
@@ -1856,7 +1878,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    In case of individual OTSi protection without 3R regenerators,
    two end-to-end MC paths are associated with the OTSi signal. In the
-   YANG model, this is modeled as leaf list of the otsi providing the
+   YANG model, this is modeled as leaf list of the OTSi providing the
    e2e-mc-path-id for the two end-to-end MC paths associated with the
    individually 1+1 protected OTSi. This scenario is depicted in
    <xref target="OTSi_prot_no_3R_fwd"/> (forward direction) and
@@ -1954,14 +1976,14 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
 -->
 
   <t>
-   For each OMS MCG (TE-link) along the two end-to-end MC paths in
+   For each OMS MCG (TE-link) along the two end-to-end MC paths in the
    forward direction (end-to-end MC path1 and end-to-end MC path2) as
-   well as the two end-to-end MC paths in reverse direction (end-to-end
-   MC path1' and end-to-end MC path2'), the e2e-mc-path-id is provided
-   for the individually protected OTSi signal. Based on this
-   information, it is possible to construct the end-to-end MC paths
-   between the optical transponders terminating the individually 1+1
-   protected OTSi.
+   well as the two end-to-end MC paths in the reverse direction
+   (end-to-end MC path1' and end-to-end MC path2'), the e2e-mc-path-id
+   is provided for the individually protected OTSi signal. Based on
+   this information, it is possible to construct the end-to-end MC
+   paths between the optical transponders terminating the individually
+   1+1 protected OTSi.
   </t>
   
   <t>
@@ -1994,36 +2016,37 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    and <xref target="OTSi_prot_with_3R_rev"/> below where a 3R
    regenerator is crossed in WDM Node6 on the lower leg, the
    e2e-mc-path-id leaf list has 3 entries (assumption: the same
-   e2e-mc-path-id can be used for the path in forward and reverse
-   direction):
+   e2e-mc-path-id can be used for the path in the forward and reverse
+   directions):
    
    <ol>
      <li>
        The e2e-mc-path-id identifying end-to-end MC path1 from WDM
        Node1 via WDM Node3 and WDM Node4 to WDM Node2 as well as
-       end-to-end MC path1' in reverse direction (upper leg)
+       end-to-end MC path1' in the reverse direction (upper leg)
      </li>
      <li>
        The e2e-mc-path-id identifying end-to-end MC path2 from WDM
        Node1 via WDM Node5 to WDM Node6 containing the 3R regenerator
-       as well as end-to-end MC path2' in reverse direction (left
+       as well as end-to-end MC path2' in the reverse direction (left
        hand segment of the lower leg)
      </li>
      <li>
        The e2e-mc-path-id identifying end-to-end MC path3 from WDM
        Node6 containing the 3R regenerator via WDM Node7 to WDM
-       Node2 as well as end-to-end MC path3' in reverse direction
+       Node2 as well as end-to-end MC path3' in the reverse direction
        (right hand segment of the lower leg)
      </li>
    </ol>
 
    Based on this modeling approach it is possible to identify the
    end-2-end MCs stitched together at 3R regenerators on each of the
-   two legs of the individually protected 1+1 OTSi signal. Like for
-   the case without 3R regenerators is also possible to associate
-   two end-to-end paths in forward and reverse direction for the two
-   legs between the optical transponders terminating the individually
-   1+1 protected OTSi in WDM Node1 and WDM Node2, respectively:
+   two legs of the individually protected 1+1 OTSi signal. Similarly,
+   for the case without 3R regenerators it is also possible to
+   associate two end-to-end paths in the forward and reverse directions
+   for the two legs between the optical transponders terminating the
+   individually 1+1 protected OTSi in WDM Node1 and WDM Node2,
+   respectively:
    
    <ol spacing="compact">
      <li>end-to-end MC path1 and end-to-end MC path1' (upper leg)</li>
@@ -2106,9 +2129,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
     </ol>
   
   <t>
-   The different use cases are described in following sub-sections and
-   examples are provided how these uses cases can be modeled properly
-   using the optical impairment-aware TE-topology YANG data model.
+   The different use cases are described in the following sub-sections
+   and examples are provided as to how these uses cases can be modeled
+   properly using the impairment-aware TE-topology YANG data model for
+   optical networks.
   </t>
   
   <section anchor="Protection UC (i)">
@@ -2127,9 +2151,9 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
     </ul>
     
    <xref target="Figure-11"/> illustrates such a WDM-TE-node
-   configuration in transmit/forward direction where the protection
+   configuration in the transmit/forward direction where the protection
    function is an optical splitter and <xref target="Figure-12"/>
-   illustrates the same WDM-TE-node configuration in receive/reverse
+   illustrates the same WDM-TE-node configuration in the receive/reverse
    direction where the protection function is an optical selector
    selecting one of the two incoming OTSi signals and switching to the
    other incoming OTSi signal when the optical power of the selected
@@ -2148,10 +2172,11 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   
   <t>
    For unprotected TTPs associated with an optical transceiver, the
-   local-link-connectivity list (LLCL) describes the potential
-   connectivity between the TTP and the LTPs of the WDM-TE-node that
-   are the local end-points of the TE-links (OMS MCGs) interconnecting
-   the WDM-TE-node with its neighbors, also often called degrees of the
+   local-link-connectivity list (LLCL) as defined in
+   <xref target="RFC8795"/> describes the potential connectivity between
+   the TTP and the LTPs of the WDM-TE-node that are the local
+   end-points of the TE-links (OMS MCGs) interconnecting the
+   WDM-TE-node with its neighbors, also often called degrees of the
    WDM-TE-node as opposed to its add-drop ports.
   </t>
   
@@ -2252,10 +2277,10 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
     </ul>
     
    <xref target="Figure-13"/> illustrates such a network configuration
-   in transmit/forward direction showing the two WDM-TE-nodes where the
-   protection function is the optical splitter in WDM-TE-Node-2 and
+   in the transmit/forward direction showing the two WDM-TE-nodes where
+   the protection function is the optical splitter in WDM-TE-Node-2 and
    <xref target="Figure-14"/> illustrates the same network
-   configuration in receive/reverse direction where the protection
+   configuration in the receive/reverse direction where the protection
    function is the optical selector in WDM-TE-Node-2 selecting one of
    the two incoming OTSi signals and switching to the other incoming
    OTSi signal when the optical power of the selected OTSi signal drops
@@ -2287,7 +2312,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    impairments. Without this new capability, it was only possible to
    describe the potential connectivity between an add-drop LTP and a
    single line LTP (unprotected case). 
-   If the optical impairments are the same from the protected ad-drop
+   If the optical impairments are the same from the protected add-drop
    LTP to all line LTPs, which is usually the case, the optical
    impairments should be omitted for the additional LTPs leading to a
    more compact connectivity matrix description. If the optical
@@ -2366,8 +2391,8 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    The use case illustrated in <xref target="Figure-15"/> is similar to
    the use case in <xref target="Protection UC (i)"/>. The difference
-   compared to use case (i) is  that WDM-TE-Node-1 does not contain the
-   ROADM function but contains:
+   is that WDM-TE-Node-1 does not contain the ROADM function but
+   contains:
    
     <ul spacing="compact">
       <li>Optical transponder function including the transceiver</li>
@@ -2380,8 +2405,9 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <xref target="Figure-7"/>. WDM-TE-Node-1 and WDM-TE-Node-2 are
    interconnected via two separate TE-links, each carrying a single
    OTSi signal. The protection configuration for the protected TTP in
-   WDM-TE-Node-1 can be described in the same way as for use case (i)
-   using the local-link-connectivity list.
+   WDM-TE-Node-1 can be described in the same way as for the use in
+   <xref target="Protection UC (i)"/> using the local-link-connectivity
+   list.
   </t>
   
   
@@ -2513,7 +2539,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    forming the 1+1 protection group. The following "te-link-attributes"
    already defined in <xref target="RFC8795"/> and
    <xref target="I-D.ietf-teas-rfc8776-update"/> can be used for
-   modeling the 1+1 protected TE-link ("te-link-attributes"
+   modeling the 1+1 protected TE-link ("te-link-attributes")
    augmentation copied from <xref target="RFC8795"/>:
    
   <sourcecode name="TE-topology subtree underlay" type="text" markers="false">
@@ -2674,12 +2700,12 @@ LTP1'   |   RP1'|   |   /   |  prim.    |   \   |   |RP2'   |   LTP6'
    impairments described by the connectivity matrix and the local link
    connectivity list for the TE node.
    For the example shown in <xref target="OMS_MCG_prot_link_1_fwd"/>
-   in forward direction, the connectivity matrix describes the optical
-   impairments between LPT1 and LTP2 as well as LTP1 and LTP3 for
-   WDM-TE-Node-1. Likewise, the connectivity matrix describes the
+   in the forward direction, the connectivity matrix describes the
+   optical impairments between LPT1 and LTP2 as well as LTP1 and LTP3
+   for WDM-TE-Node-1. Likewise, the connectivity matrix describes the
    optical impairments between LPT4 and LTP6 as well as LTP5 and LTP6
    in WDM-TE-Node-2. The same applies to the corresponding LTPs in
-   reverse direction.
+   the reverse direction.
   </t>
   
   </section>
@@ -3324,7 +3350,7 @@ r-unknown
   <section title="Optical Impairment Topology YANG Model"
   anchor="YANG-code">
   
-  <sourcecode name="ietf-optical-impairment-topology.yang" type="yang"
+  <sourcecode name="ietf-optical-impairment-topology@2025-10-10.yang" type="yang"
   markers="true">
     <![CDATA[
 module ietf-optical-impairment-topology {
@@ -3416,11 +3442,11 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-10-10 {
+  revision 2025-12-11 {
     description
       "Initial version.";
     reference
-      "RFC XXXX: A Yang Data Model for Impairment-aware
+      "RFC XXXX: A YANG Data Model for Impairment-aware
        Optical Networks";
   }
 
@@ -3446,7 +3472,7 @@ module ietf-optical-impairment-topology {
       "Describes parameters for an amplifier";
     container amplifier {
       description
-        "Amplifier type, operational parameters are described.";
+        "The attributes of an amplifier.";
       leaf type-variety {
         type string;
         mandatory true;
@@ -3486,7 +3512,7 @@ module ietf-optical-impairment-topology {
                referencing a specification in a separate equipment
                catalog.
 
-               This attributes applies only when the type-variety of
+               This attribute applies only when the type-variety of
                the amplifier is not sufficient to describe the
                amplifier element type.";
           }
@@ -3565,8 +3591,8 @@ module ietf-optical-impairment-topology {
                 type l0-types:power-dbm-or-unknown;
                 mandatory true;
                 description
-                  "It represent total output power measured in the
-                   range specified by the frequency-range.
+                  "It represents the total output power measured in
+                   the range specified by the frequency-range.
 
                    Optical power is especially needed to
                    re-compute/check consistency of span
@@ -3676,6 +3702,7 @@ module ietf-optical-impairment-topology {
       }
       leaf total-loss {
         type l0-types:power-loss-or-unknown;
+        config false;
         description
           "The measured total loss of the fiber, which includes
            all possible losses: fiber loss and conn-in and conn-out
@@ -3747,12 +3774,6 @@ module ietf-optical-impairment-topology {
          assuming no additional path loss is added";
     }
   } // grouping roadm-common-path
-
-  grouping roadm-express-path {
-    description
-      "The optical impairments of a ROADM express path.";
-    uses roadm-common-path;
-  } // grouping roadm-express-path
 
   grouping roadm-add-path {
     description
@@ -3853,8 +3874,8 @@ module ietf-optical-impairment-topology {
            This is before any additional drop path attenuation
            that may be required
            due to drop amplifier power constraints.
-           The max value correspond to worst case expected loss,
-           including amplifier gain ripple or uncertainty.
+           The max value corresponds to the worst case expected
+           loss, including amplifier gain ripple or uncertainty.
            It is the maximum output power of the drop
            amplifier.";
       }
@@ -3927,7 +3948,7 @@ module ietf-optical-impairment-topology {
         "If the drop path has additional loss that is added,
          for example, to hit target power levels into a
          drop path amplifier,or simply,to reduce the
-         power of a strong carrier(due to ripple,for example),
+         power of a strong carrier(due to ripple, for example),
          then the use of the ROADM input power levels and
          the above drop losses is not appropriate.
          This parameter corresponds to the typical case
@@ -3940,7 +3961,7 @@ module ietf-optical-impairment-topology {
         "Optical Signal-to-Noise Ratio (OSNR).
 
          Expected OSNR contribution of the drop path
-         amplifier(if present)
+         amplifier (if present)
          for the case of additional drop path loss
          (before this amplifier)
          in order to hit a target power level (per carrier).
@@ -4025,7 +4046,7 @@ module ietf-optical-impairment-topology {
            + "'l0-types:power-spectral-density')";
         type l0-types:psd-or-unknown;
         description
-          " Reference power spectral density (PSD).";
+          "Reference power spectral density (PSD).";
       }
     } // container power-param
   } // grouping oms-general-optical-params
@@ -4145,7 +4166,7 @@ module ietf-optical-impairment-topology {
           leaf delta-power {
             type l0-types:power-ratio-or-unknown;
             description
-              " Deviation from the reference carrier power defined
+              "Deviation from the reference carrier power defined
                for the OMS.";
           }
         } // media channels list
@@ -4294,7 +4315,7 @@ module ietf-optical-impairment-topology {
           type string;
           description
             "A network-wide unique identifier of otsi-group element.
-             It could be structured e.g., as an URI or as an UUID.";
+             It could be structured e.g., as a URI or as a UUID.";
         }
         uses otsi-group;
       } // list of OTSiG
@@ -4322,7 +4343,7 @@ module ietf-optical-impairment-topology {
           leaf description {
             type string;
             description
-              "The textual description of the the set of optical
+              "The textual description of the set of optical
                impairments related to a ROADM path.";
           }
           choice impairment-type {
@@ -4338,7 +4359,7 @@ module ietf-optical-impairment-topology {
                    Two elements in the list MUST NOT have the same
                    range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
-                uses roadm-express-path;
+                uses roadm-common-path;
               }
             }
             case roadm-add-path {
@@ -4427,9 +4448,9 @@ module ietf-optical-impairment-topology {
             }
             enum 3r-or-tunnel {
               description
-                "The transponder can be configure to be used either
-                 in an Optical Tunnel termination configuration or in
-                 a 3R configuration.";
+                "The transponder can be used either in an Optical
+                 Tunnel termination configuration or in a 3R
+                 configuration.";
             }
           }
           description
@@ -4565,7 +4586,7 @@ module ietf-optical-impairment-topology {
           "The list of 3R groups.
 
            Any 3R group represent a group of transponder in which an
-           a an electrical connectivity is either in place or could
+           electrical connectivity is either in place or could
            be dynamically provided, to associated transponders used
            for 3R regeneration.";
         leaf group-id {
@@ -4714,7 +4735,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix information
@@ -4728,7 +4749,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices information-source
 
@@ -4739,7 +4761,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment TE node connectivity matrix entry information
@@ -4753,7 +4775,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix information-source
 
@@ -4763,7 +4786,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix.";
@@ -4776,8 +4799,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices
 
@@ -4788,7 +4811,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment TE node connectivity matrix entry.";
@@ -4801,8 +4824,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix
 
@@ -4813,7 +4836,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment the attributes for the 'from' LTP for the TE node
@@ -4856,9 +4879,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between this secondary 'from' LTP and the 'to' LTP of
-           this connectivity matrix entry.";
+          "Pointer to optical impairments of the ROADM path between
+           this secondary 'from' LTP and the 'to' LTP of this
+           connectivity matrix entry.";
       }
     }
   } // augmentation connectivity-matrix from
@@ -4870,7 +4893,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment the attributes for the 'to' LTP for the TE node
@@ -4913,9 +4936,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between the 'from' LTP of this connectivity matrix entry
-           and this secondary LTP.";
+          "Pointer to optical impairments of the ROADM path between
+           the 'from' LTP of this connectivity matrix entry and this
+           secondary LTP.";
       }
     }
   } // augmentation connectivity-matrix to
@@ -4940,8 +4963,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -4952,8 +4975,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM
-         optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation local-link-connectivities
 
@@ -4965,7 +4988,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for
-         Optical Impairment topology ";
+         Optical Impairment topology.";
     }
     description
       "Augment TTP LLC entry.";
@@ -4978,8 +5001,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -4990,8 +5013,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     list llc-transceiver {
       key "ttp-transponder-ref ttp-transceiver-ref";
@@ -5012,7 +5035,7 @@ module ietf-optical-impairment-topology {
           path "../../../../ttp-transceiver/transceiver-ref";
         }
         description
-          "The reference to the the transceiver of this LLCL entry.";
+          "The reference to the transceiver of this LLCL entry.";
       }
       leaf is-allowed {
         type boolean;
@@ -5029,8 +5052,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -5040,8 +5063,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
     list additional-ltp {
@@ -5077,8 +5100,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -5088,8 +5111,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
   } // augmentation local-link-connectivity
@@ -5139,7 +5162,7 @@ module ietf-optical-impairment-topology {
   
   <t>
    The YANG module specified in this document imports the ietf-network
-   and ietf-network-topology models defined in
+   and ietf-network-topology modules defined in
    <xref target="RFC8345"/>. This YANG module augments te-topology
    defined in <xref target="RFC8795"/> and consequently inherits
    te-topology subtrees and data nodes and their potential
@@ -5243,7 +5266,7 @@ XML: N/A, the requested URI is an XML namespace.
 ]]></artwork>
   </figure>
   <t>
-   This document registers the following YANG modules in the YANG
+   This document registers the following YANG module in the YANG
    Module Names registry <xref target="RFC7950"/>:</t>
 
   <figure><artwork><![CDATA[
@@ -6269,7 +6292,7 @@ reference: RFC XXXX (TDB)
 
   <t>
    In this case only the incoming-otsi and outgoing-otsi can be
-   reported within anend-to-end MC with an unspecified frequency-slot
+   reported within an end-to-end MC with an unspecified frequency-slot
    (i.e., without reporting flexi-n and flexi-m configuration of the
    end-to-end MC).
   </t>
@@ -7728,7 +7751,7 @@ module vendor-b-operational-modes {
   <section anchor="Contributors" numbered="false">
   <name>Contributors</name>
     <t>Thanks to all contributors.</t>
- 
+
     <contact fullname="Aihua Guo" initials="A" surname="Guo">
       <organization>Huawei Technologies</organization>
       <address>
@@ -7743,12 +7766,6 @@ module vendor-b-operational-modes {
       </address>
     </contact>
 
-  </section>
- 
-
-  <section anchor="Additional Authors" numbered="false">
-  <name>Additional Authors</name>
-  
     <contact fullname="Young Lee" initials="Y" surname="Lee">
       <organization>Samsung Electronics</organization>
       <address>

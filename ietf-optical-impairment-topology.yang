@@ -91,7 +91,7 @@ module ietf-optical-impairment-topology {
     description
       "Initial version.";
     reference
-      "RFC XXXX: A Yang Data Model for Impairment-aware
+      "RFC XXXX: A YANG Data Model for Impairment-aware
        Optical Networks";
   }
 
