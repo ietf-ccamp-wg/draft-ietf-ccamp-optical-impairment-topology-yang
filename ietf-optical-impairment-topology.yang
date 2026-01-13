@@ -360,7 +360,7 @@ module ietf-optical-impairment-topology {
         type l0-types:decimal-2-or-unknown;
         units "ps";
         description
-          "PMD of the fiber";
+          "Polarization Mode Dispersion (PMD) of the fiber.";
       }
       leaf conn-in {
         type l0-types:power-loss-or-unknown;
@@ -847,7 +847,7 @@ module ietf-optical-impairment-topology {
             type l0-types:unknown-value;
           }
           description
-            "Unique id of the element.";
+            "Unique id of the element, when known.";
         }
         container reverse-element-ref {
           description
@@ -1665,7 +1665,7 @@ module ietf-optical-impairment-topology {
       key "ttp-transponder-ref ttp-transceiver-ref";
       config false;
       description
-        "The list of transceivers having a LLC different from the
+        "The list of transceivers having an LLC different from the
          default LLC.";
       leaf ttp-transponder-ref {
         type leafref {
