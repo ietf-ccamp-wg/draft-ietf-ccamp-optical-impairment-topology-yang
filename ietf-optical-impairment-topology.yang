@@ -63,7 +63,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-12-11 {
+  revision 2026-01-13 {
     description
       "Initial version.";
     reference
@@ -360,7 +360,7 @@ module ietf-optical-impairment-topology {
         type l0-types:decimal-2-or-unknown;
         units "ps";
         description
-          "PMD of the fiber";
+          "Polarization Mode Dispersion (PMD) of the fiber.";
       }
       leaf conn-in {
         type l0-types:power-loss-or-unknown;
@@ -837,7 +837,7 @@ module ietf-optical-impairment-topology {
         leaf elt-index {
           type uint16;
           description
-            "An index allowing to sort the elements in their physical
+            "An index allowing sorting the elements in their physical
              order along the link without constraining their position
              in the list.";
         }
@@ -847,7 +847,7 @@ module ietf-optical-impairment-topology {
             type l0-types:unknown-value;
           }
           description
-            "Unique id of the element.";
+            "Unique id of the element, when known.";
         }
         container reverse-element-ref {
           description
@@ -1148,7 +1148,7 @@ module ietf-optical-impairment-topology {
                      + "/oit:explicit-transceiver-mode-id";
                 }
                 description
-                  "The refernce to the explicit transceiver
+                  "The reference to the explicit transceiver
                    mode template.";
               }
             }
@@ -1243,7 +1243,7 @@ module ietf-optical-impairment-topology {
         leaf regen-metric {
           type uint32;
           description
-            "The cost permits choice among different group of
+            "The cost permits choice among different groups of
              transponders during path computation";
         }
         leaf-list transponder-ref {
@@ -1251,7 +1251,7 @@ module ietf-optical-impairment-topology {
             path "../../../transponders/transponder/transponder-id";
           }
           description
-            "The list of transponder belonging to this 3R group.";
+            "The list of transponders belonging to this 3R group.";
         }
       } // end 3R-group
     }
@@ -1665,7 +1665,7 @@ module ietf-optical-impairment-topology {
       key "ttp-transponder-ref ttp-transceiver-ref";
       config false;
       description
-        "The list of transceivers having a LLC different from the
+        "The list of transceivers having an LLC different from the
          default LLC.";
       leaf ttp-transponder-ref {
         type leafref {
