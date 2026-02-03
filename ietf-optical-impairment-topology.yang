@@ -87,7 +87,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-01-27 {
+  revision 2026-02-03 {
     description
       "Initial version.";
     reference
@@ -169,9 +169,11 @@ module ietf-optical-impairment-topology {
           }
           container power-param {
             description
-              "The optical power after the out-voa of each amplifier
-               element.";
-            // Action: check for a reference (issue #214)
+              "Amplifier elements typically equalize the optical
+               power across the amplified channels using one of the
+               available equalization strategies — either targeting
+               a specific output power, or a specific power spectral
+               density (PSD), after the out-voa.";
             choice power-param {
               mandatory true;
               description
@@ -241,7 +243,6 @@ module ietf-optical-impairment-topology {
                 description
                   "The tilt target defined between lower and upper
                    frequency of the amplifier frequency range.";
-                // Action: check for a reference (issue #214)
               }
               leaf total-output-power {
                 type l0-types:power-dbm-or-unknown;
@@ -318,8 +319,10 @@ module ietf-optical-impairment-topology {
                 leaf delta-power {
                   type l0-types:power-ratio-or-unknown;
                   description
-                    "Deviation from the reference carrier power
-                     defined for the OMS.";
+                    "Deviation of the carrier power with respect to
+                     the reference carrier power, to account for
+                     power offset related to the carrier signal
+                     spectrum width or baud rate.";
                 }
               } // media channels list
             } // container dynamic-gain-equalizer
@@ -438,11 +441,21 @@ module ietf-optical-impairment-topology {
       type l0-types:decimal-2-or-unknown;
       units "dB";
       description
-        "In-band crosstalk, or coherent crosstalk, can occur in
-         components that can have multiple same wavelength inputs
-         with the inputs either routed to different output ports,
-         or all but one blocked";
-      // Action: check for a reference (issue #214)
+        "One of the basic properties of the key optical device
+         wavelength selective switch (WSS) is the isolation (i.e.,
+         the ratio between the optical power of a selected optical
+         channel and the leakage power of unselected channels).
+         
+         In the presence of imperfect isolation, the originated
+         leakage signals, usually known as crosstalk signals, will
+         interfere with the primary signal at the receiver end,
+         contributing to degrade the signal quality.
+         This interference is particularly harmful when both the
+         signal and interference have the same nominal wavelength
+         leading to the in-band crosstalk.";
+      reference
+        "ISSN 1068-5200: A framework for analyzing in-band crosstalk
+         accumulation in ROADM-based optical networks"
     }
     leaf roadm-maxloss {
       type l0-types:power-loss-or-unknown;
@@ -683,8 +696,6 @@ module ietf-optical-impairment-topology {
     }
   } // grouping roadm-drop-path
 
-// REVIEWED UP TO HERE BY THE TEAM (2026-01-27)
-
   grouping concentrated-loss-params {
     description
       "Concentrated loss";
@@ -698,8 +709,8 @@ module ietf-optical-impairment-topology {
         type l0-types:power-loss-or-unknown;
         mandatory true;
         description
-          "Loss introduced by the concentrated loss element (e.g.,
-           a fiber connector).";
+          "Loss introduced by the concentrated loss element (e.g., a
+           fiber connector, a fiber splice).";
       }
     }
   }
@@ -724,18 +735,21 @@ module ietf-optical-impairment-topology {
       description
         "The equalization mode.
 
+         ROADMs typically equalize the optical power across the
+         channels on the OMS using one of the available equalization
+         strategies — either targeting a specific output power, or a
+         specific power spectral density (PSD).
+
          When not present it indicates that the information about
          the equalization mode is not reported.
 
          Reporting this value is needed to support optical
          impairments applications.";
-      // Action: check for a reference (issue #214)
     }
     container power-param {
       description
         "Optical channel power or power spectral densitity (PSD)
          after the ROADM.";
-      // Action: check for a reference (issue #214)
       leaf nominal-carrier-power {
         when "derived-from-or-self(../../equalization-mode, "
            + "'l0-types:carrier-power')";
