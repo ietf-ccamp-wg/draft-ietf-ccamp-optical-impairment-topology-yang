@@ -1067,7 +1067,7 @@ module ietf-optical-impairment-topology {
           leaf roadm-path-impairments-set-id {
             type string;
             description
-              "The identifier of the set of optical impairments
+              "The identifier of an element in the list of the set of optical impairments
                related to a ROADM path.";
           }
           leaf description {
@@ -1273,7 +1273,7 @@ module ietf-optical-impairment-topology {
                  reported.";
             }
             description
-              "The OTSi received by the transceiver's received.";
+              "The OTSi received by the transceiver's receiver.";
             uses otsi-ref;
           }
           leaf configured-termination-type {
