@@ -91,7 +91,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-02-03 {
+  revision 2026-02-06 {
     description
       "Initial version.";
     reference
@@ -673,7 +673,7 @@ module ietf-optical-impairment-topology {
          power of a strong carrier(due to ripple, for example),
          then the use of the ROADM input power levels and
          the above drop losses is not appropriate.
-         
+
          This parameter corresponds to the typical case
          per carrier power levels expected at the output
          of the drop block.";
