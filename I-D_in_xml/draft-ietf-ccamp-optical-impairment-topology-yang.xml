@@ -63,11 +63,10 @@
   </t>
 
   <t>
-   This document provides a YANG data model supporting the provisioning
-   of optical connections in a impairment-aware traffic engineering
-   topology (TE topology) for optical networks.
-   It augments the technology agnostic YANG Data Model for Traffic
-   Engineering (TE) Topologies as defined in <xref target="RFC8795"/>.
+   This document provides a YANG data model for the impairment-aware
+   Traffic Engineering topology (TE topology) in optical networks.
+   It augments the technology agnostic YANG Data Model for TE
+   topologies.
    The topology YANG model provides read-only topology data including
    optical impairments that can be used for example by a Path
    Computation Engine (PCE) for calculating an optically feasible path
@@ -154,7 +153,7 @@
 
   <t>
    This document defines one YANG module: ietf-optical-impairment-
-   topology (<xref target="Tree View"/>).
+   topology (<xref target="YANG-code"/>).
   </t>
 
   <section title="Terminology" anchor="sect-1.1">
@@ -320,10 +319,9 @@
   <t>
    The model in this document does not provide device configuration
    capabilities. Where those capabilities are needed, a device model
-   as defined in <xref target="RFC8969"/> can be used;
-   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/> defines such
-   a model for DWDM interfaces (DWDM = dense wavelength division
-   multiplexing). 
+   as defined in <xref target="RFC8969"/> can be used:
+   <xref target="I-D.ietf-ccamp-dwdm-if-param-yang"/> defines a device
+   model for Dense Wavelength Division Multiplexing (DWDM) interfaces. 
   </t>
   
   </section>
@@ -511,7 +509,7 @@
 
   <t>
    The impairment-aware topology YANG model for optical networks in
-   <xref target="Tree View"/> defines the optical OTSi properties needed
+   <xref target="YANG-code"/> defines the optical OTSi properties needed
    for impairment-aware path computation including the spectrum
    occupied by each OTSi signal. The model also defines a pointer
    (leafref) from the OTSi to the transceiver module terminating the
@@ -536,7 +534,7 @@
    Hence, the OTSiG is an electrical signal that is carried by one or
    more OTSi's. The relationship between the OTSiG and the OTSi's is 
    described in <xref target="G.807"/>, section 10.2.
-   The YANG model in <xref target="Tree View"/> supports both cases: the
+   The YANG model in <xref target="YANG-code"/> supports both cases: the
    single OTSi case where the OTSiG contains a single OTSi (see
    <xref target="G.807"/>, Figure 10-2) and the multiple OTSi case
    where the OTSiG consists of more than one OTSi (see
@@ -643,7 +641,7 @@
   |     |          |          |       |          |          |     |
  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9  10  11  12
 --+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+-
-                   |             n=4             |
+                                 n=4
 
   <------------------------ Media Channel ----------------------->
 
@@ -673,7 +671,7 @@
    ITU-T [G.807] defines the Media Channel Group MCG as
    "A unidirectional point to point management/control abstraction that
    represents a set of one or more media channels that are co-routed."
-   The YANG model in <xref target="Tree View"/> assumes that the MCG is a
+   The YANG model in <xref target="YANG-code"/> assumes that the MCG is a
    logical grouping of one or more MCs that are used to carry all
    OTSi's belonging to the same OTSiG.
   </t>
@@ -986,10 +984,11 @@
       <t>Organizational Modes</t>
       <t>Explicit Modes</t>
     <?rfc subcompact="no"?>
-    </list></t>
+    </list>
+  </t>
 
 
-  <section title="Standard Modes" anchor="sect-2.5.1">
+  <section title="Standard Modes" anchor="standard-modes">
   <t>
    A standard mode is related to an optical specification developed
    by a Standards Development Organization (SDO). Currently, the
@@ -1142,7 +1141,7 @@
   
   </section>
 
-  <section title="Explicit Modes" anchor="sect-2.5.3">
+  <section title="Explicit Modes" anchor="explicit-modes">
   <t>
    The explicit mode allows the encoding, explicitly, of any subset of
    parameters e.g., FEC type, Modulation type, etc., to enable a
@@ -1161,7 +1160,7 @@
   <section title="Transponder Capabilities and Current Configuration"
    anchor="sect-2.5.4">
   <t>
-   The YANG model described in <xref target="Tree View"/> defines the
+   The YANG model described in <xref target="YANG-code"/> defines the
    optical transceiver properties. They are divided between:
   </t>
 
@@ -1176,9 +1175,9 @@
   <t>
    The transceiver capabilities are described by the set of modes the
    transceiver is supporting. Each mode must follow only one of the
-   three mode options defined in <xref target="sect-2.5.1"/>,
+   three mode options defined in <xref target="standard-modes"/>,
    <xref target="organizational-modes"/>, and
-   <xref target="sect-2.5.3"/> (choice in the YANG model).
+   <xref target="explicit-modes"/> (choice in the YANG model).
    The YANG model allows the description of the transceiver
    capabilities by mixing different modes. A transceiver may support
    some ITU-T application codes and in addition some organizational or
@@ -4805,6 +4804,174 @@ module ietf-optical-impairment-topology {
 ]]>
   </sourcecode>
   
+  <section title="YANG Model Explanations" anchor="Narrative Description">
+  
+  <t>
+   As indicated in <xref target="RFC8345"/>, section 4.1, "When a
+   network is of a certain type, it will contain a corresponding data
+   node. Network types SHOULD always be represented using presence
+   containers". The YANG model is in fact augmenting
+   "nw:network-types/tet:te-topology" with the new presence container
+   "optical-impairment-topology" representing an impairment-aware
+   topology type.
+  </t>
+  
+  <t>
+   As described in <xref target="OTSi"/>,the OTSi signals in the YANG
+   model are described by augmenting the "nw:network" data node and
+   each OTSi signal is uniquely identified by its otsi-carrier-id,
+   which is unique within the scope the OTSiG the OTSi belongs to.
+  </t>
+  
+  <t>
+   As described in <xref target="OTSiG"/>, all OTSiGs are described
+   in the YANG model by augmenting the "nw:network" data node and each
+   OTSiG is uniquely identified by its otsi-group-id, which is unique
+   within the network. Each OTSiG also contains a list of the OTSi
+   signals belonging to the OTSiG.
+  </t>
+  
+  <t>
+   Any OTSi signal is terminated by a transceiver and that is modeled
+   as a function of the tunnel termination point (TTP) and a
+   "ttp-transceiver" list of transceivers augmenting the
+   "tunnel-termination-point".
+  </t>
+  
+  <t>
+   The relationship between OTSi and the related transceiver is
+   provided in the YANG model by the containers "incoming-otsi" for the
+   OTSi received by the transceiver's receiver and "outgoing-otsi" for
+   the OTSi generated by the transceiver's transmitter.
+  </t>
+  
+  <t>
+   As described in <xref target="sect-2.6"/>, transponders are usually
+   used to terminate a layer 0 tunnel. But, they also can be used to
+   regenerate the signal and form a 3R regenarator. No new entity is
+   needed in the model since 3R functionality is provided by an optical
+   transponder pair. The YANG model provides two attributes related to
+   3R regenerators: "supported-termination-type" and
+   "supported-3r-mode".
+  </t>
+  
+  <t>
+   supported-termination-type is describing if an optical transponder
+   is supporting tunnel termination only, or 3R regenerator only, or
+   both.
+  </t>
+  
+  <t>
+   supported-3r-mode gives the configuration of transponder pair
+   providing the 3R functionality, if back-to-back (see
+   <xref target="Figure-x"/>) or
+   Cross-3R (see <xref target="Figure-y"/>). 
+  </t>
+  
+  <t>
+   The model also provides a "regen-group" list and each list entry
+   represents a group of transponders that support the 3R
+   functionality. "transponder-ref" is pointing to the transponders
+   belonging to any specific group.
+  </t>
+  
+  <t>
+   The data node "inter-layer-sequence-number" augments the termination
+   point attribute to describe additional constraints between a client
+   layer Link Termination Point (LTP), e.g., a muxponder port and a
+   server layer LTP. 
+  </t>
+  
+  <t>
+   To improve scalability, the model is defining templates for both,
+   "roadm-path-impairments-set", the list of the set of optical
+   impairments related to ROADM paths (express, add and drop paths) and
+   "explicit-transceiver-mode",the list of optical parameters related
+   to a transceiver’s explicit mode providing the cpability attributes
+   and optical impairment limits of an explicit transceiver mode.
+   These templates are also defined as "network" augmentation.
+  </t>
+  
+  <t>
+   As stated in <xref target="transponders"/>, the model defines three
+   types of approaches to describes the transceiver capabilities
+   (called "modes"):
+  </t>
+
+  <t>
+    <list style="symbols"><?rfc subcompact="yes"?>
+      <t>Standard Modes</t>
+      <t>Organizational Modes</t>
+      <t>Explicit Modes</t>
+    <?rfc subcompact="no"?>
+    </list>
+  </t>
+
+  
+  <t>
+   These different modes (described in <xref target="standard-modes"/>,
+   <xref target="organizational-modes"/>, and
+   <xref target="explicit-modes"/> are defined under the "transponders"
+   presence container augmenting the data node "node" as defined in
+   <xref target="RFC8345"/>. If present, this container will indicate
+   that the set of transponders/transceivers in a node are described
+   with all the impairments attribute depending on the supported mode
+   type of any specific transponder. The YANG model permits to describe
+   the transponder capabilities in a mixed way (a transceiver can
+   support more than one mode out of the three mode types). 
+  </t>
+  
+  <t>
+   <xref target="sect-2.3"/> followed by <xref target="MC"/>, and
+   <xref target="sect-2.3.4"/>d describe the OMS MCG and the OTS MCG
+   and the model represents this entity as a WDM TE-link
+   interconnecting two WDM-TE-nodes. The model augments the
+   te-link-attributes defined in <xref target="RFC8795"/> with the
+   optical impairments for the WDM TE-link of the layer-0 topology
+   related to a specific network controller domain.   
+  </t>
+  
+  <t>
+   As described in detail in <xref target="sect-2.9"/>, the optical
+   impairments imposed by passive or active optical ROADM components
+   for the three different ROADM path types have to be taken into
+   account when an OTSi signal crosses a ROADM node.
+   The following two entities defined in <xref target="RFC8795"/> are
+   used to describe the optical impairments for the 3 MC path types:
+   "connectivity-matrix" for express paths and
+   "local-link-connectivity-list" for Add/Drop paths crossing the
+   ROADM.
+  </t>
+  
+  <t>
+   A list of optical impairment sets "roadm-path-impairments-set" is
+   defined under "templates", and this parameter set list entries will
+   contain the optical impairments for express, add, and drop paths.
+  </t>
+  
+  <t>
+   The connectivity-matrix is augmented with the optical impairment
+   sets for the ROADM's express-path contained in the
+   "roadm-path-impairments-set", while the LLCL is augmented with the
+   optical impairment sets contained in the
+   "roadm-path-impairments-set" for the ROADM's add-path and drop-path
+   by using leafref "add-path.impairments-set" and leafref
+   "drop-path-impairments-set". 
+  </t>
+  
+  <t>
+   In case OTSi protection is supported, a list of additional line LTPs
+   is defined in the model to represent potential connectivity between
+   an add-drop LTP/TTP and multiple line LTPs including the related
+   optical impairments. See <xref target="Protection UC (ii)"/> for
+   more details).
+   Additional OTSi protection architectures are described in detail in
+   <xref target="Protection UC (i)"/> and
+   <xref target="Protection UC (iii)"/>.
+  </t>
+
+  </section>
+  
   </section>
 
   <section title="Security Considerations" anchor="sect-5">
@@ -4854,10 +5021,11 @@ module ietf-optical-impairment-topology {
   
   <t>
    Finally, the YANG module described in this document augments the
-   "ietf-network" YANG module [RFC8345] and the "ietf-te-topology" YANG
-   module <xref target="RFC8795"/> by adding data nodes. The security
-   considerations for the subtrees described in those RFCs apply
-   equally to the new data nodes that this module adds.
+   "ietf-network" YANG module <xref target="RFC8345"/> and the
+   "ietf-te-topology" YANG module <xref target="RFC8795"/> by adding
+   data nodes. The security considerations for the subtrees described
+   in those RFCs apply equally to the new data nodes that this module
+   adds.
   </t>
 
 <!--
@@ -5772,11 +5940,13 @@ r-unknown
 ]]> </artwork>
   </figure>  <sourcecode type="json" markers="false">
     <![CDATA[
+ =============== NOTE: '\\' line wrapping per RFC 8792 ===============
+
 {
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -5840,7 +6010,7 @@ r-unknown
         },
         "node": [
           {
-            "node-id": "WDM-TE-node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "tunnel-termination-point": [
@@ -5864,37 +6034,38 @@ r-unknown
 \rments-set": "1",
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-2"
+                            "ltp-ref": "example:LTP-2"
                           },
                           { 
-                            "ltp-ref": "LTP-3"
+                            "ltp-ref": "example:LTP-3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-2",
+                        "link-tp-ref": "example:LTP-2",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-1"
+                            "ltp-ref": "example:LTP-1"
                           },
                           {
-                            "ltp-ref": "LTP-3"
+                            "ltp-ref": "example:LTP-3"
                           }
                         ]
                       },
                       {
-                      "link-tp-ref": "LTP-3",
+                      "link-tp-ref": "example:LTP-3",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-1"
-                          },{
-                            "ltp-ref": "LTP-2"
+                            "ltp-ref": "example:LTP-1"
+                          },
+                          {
+                            "ltp-ref": "example:LTP-2"
                           }
                         ]
                       }
@@ -5909,35 +6080,35 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-i\
 \mpairments-set": "2",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-3",
+                        "link-tp-ref": "example:LTP-3",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-i\
 \mpairments-set": "2",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
@@ -5953,52 +6124,52 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "LTP-1",
+                        "link-tp-ref": "example:LTP-1",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-i\
 \mpairments-set": "3",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-2",
+                        "link-tp-ref": "example:LTP-2",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-i\
 \mpairments-set": "3",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-3",
+                            "ltp-ref": "example:LTP-3",
                             "add-path-impairments-set": "2"
                           }
                         ]
                       },
                       {
-                        "link-tp-ref": "LTP-3",
+                        "link-tp-ref": "example:LTP-3",
                         "is-allowed": true,
                         "ietf-optical-impairment-topology:add-path-i\
 \mpairments-set": "2",
                         "ietf-optical-impairment-topology:additional\
 \-ltp": [
                           {
-                            "ltp-ref": "LTP-1",
+                            "ltp-ref": "example:LTP-1",
                             "add-path-impairments-set": "3"
                           },
                           {
-                            "ltp-ref": "LTP-2",
+                            "ltp-ref": "example:LTP-2",
                             "add-path-impairments-set": "3"
                           }
                         ]
@@ -6010,13 +6181,13 @@ r-unknown
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "LTP-1"
+                "tp-id": "example:LTP-1"
               },
               {
-                "tp-id": "LTP-2"
+                "tp-id": "example:LTP-2"
               },
               {
-                "tp-id": "LTP-3"
+                "tp-id": "example:LTP-3"
               }
             ]
           }
@@ -6097,11 +6268,13 @@ r-unknown
   
   <sourcecode type="json" markers="false">
     <![CDATA[
+=============== NOTE: '\\' line wrapping per RFC 8792 ===============
+
 {
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -6163,7 +6336,7 @@ r-unknown
         },
         "node": [
           {
-            "node-id": "WDM-TE-node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
                "te-node-attributes": {
@@ -6172,19 +6345,19 @@ r-unknown
                         {           
                             "id": 1,
                             "from": {
-                               "tp-ref": "20"
+                               "tp-ref": "example:20"
                             },
                             "to": {
-                               "tp-ref": "1",
+                               "tp-ref": "example:1",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -6197,19 +6370,19 @@ r-unknown
                         {
                             "id": 2,
                             "from": {
-                               "tp-ref": "20"
+                               "tp-ref": "example:20"
                             },
                             "to": {
-                               "tp-ref": "3",
+                               "tp-ref": "example:3",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -6222,19 +6395,19 @@ r-unknown
                         {
                             "id": 3,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "1",
+                               "tp-ref": "example:1",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -6247,19 +6420,19 @@ r-unknown
                         {
                             "id": 4,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "2",
+                               "tp-ref": "example:2",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "2"
                                   },
                                   {
-                                    "ltp-ref": "3",
+                                    "ltp-ref": "example:3",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "2"
                                   }
@@ -6272,19 +6445,19 @@ r-unknown
                         {
                             "id": 5,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "3",
+                               "tp-ref": "example:3",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -6297,10 +6470,10 @@ r-unknown
                         {
                             "id": 6,
                             "from": {
-                               "tp-ref": "40"
+                               "tp-ref": "example:40"
                             },
                             "to": {
-                               "tp-ref": "1"
+                               "tp-ref": "example:1"
                             },
                             "is-allowed": true,
                             "ietf-optical-impairment-topology:roadm-\
@@ -6309,10 +6482,10 @@ r-unknown
                         {
                             "id": 7,
                             "from": {
-                               "tp-ref": "40"
+                               "tp-ref": "example:40"
                             },
                             "to": {
-                               "tp-ref": "2"
+                               "tp-ref": "example:2"
                             },
                             "is-allowed": true,
                             "ietf-optical-impairment-topology:roadm-\
@@ -6324,30 +6497,30 @@ r-unknown
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "20",
+                "tp-id": "example:20",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "30",
+                "tp-id": "example:30",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "40"
+                "tp-id": "example:40"
               }, 
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               } 
@@ -6520,11 +6693,13 @@ r-unknown
 
   <sourcecode type="json" markers="false">
     <![CDATA[
+=============== NOTE: '\\' line wrapping per RFC 8792 ===============
+
 {
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-1",
+        "network-id": "example:WDM-Network-1",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -6532,7 +6707,7 @@ r-unknown
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-1"
+          "topology-id": "example:WDM-Network-1"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -6579,7 +6754,7 @@ r-unknown
         },
         "node": [
           {
-            "node-id": "WDM-TE-node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "ietf-te-topology:tunnel-termination-point": [
@@ -6596,7 +6771,7 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "1",
+                        "link-tp-ref": "example:1",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -6626,7 +6801,7 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "2",
+                        "link-tp-ref": "example:2",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -6637,7 +6812,7 @@ r-unknown
                         ]
                       },
                       {
-                        "link-tp-ref": "3",
+                        "link-tp-ref": "example:3",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -6654,28 +6829,28 @@ r-unknown
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "AQ=="
                 }
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Ag=="
                 }
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Awo="
                 }
               },
               {
-                "tp-id": "23",
+                "tp-id": "example:23",
                 "ietf-te-topology:te-tp-id": 23
               }
             ],
@@ -6730,10 +6905,10 @@ r-unknown
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "1"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -6760,10 +6935,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "1"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -6790,10 +6965,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "2"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -6820,10 +6995,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "2"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -6850,10 +7025,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "3"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -6880,10 +7055,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "3"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
@@ -6910,42 +7085,42 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Bundled-Link-Forward",
+            "link-id": "example:Add-Drop-Bundled-Link-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "23"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:23"
             },
             "ietf-te-topology:te": {
               "bundled-links": {
                 "bundled-link": [
                   {
                     "sequence": 1,
-                    "src-tp-ref": "2"
+                    "src-tp-ref": "example:2"
                   },
                   {
                     "sequence": 2,
-                    "src-tp-ref": "3"
+                    "src-tp-ref": "example:3"
                   }
                 ]
               }
             }
           },
           {
-            "link-id": "Add-Drop-Bundled-Link-Reverse",
+            "link-id": "example:Add-Drop-Bundled-Link-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "23"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:23"
             },
             "ietf-te-topology:te": {
               "bundled-links": {
                 "bundled-link": [
                   {
                     "sequence": 1,
-                    "des-tp-ref": "2"
+                    "des-tp-ref": "example:2"
                   },
                   {
                     "sequence": 2,
-                    "des-tp-ref": "3"
+                    "des-tp-ref": "example:3"
                   }
                 ]
               }
@@ -6954,7 +7129,7 @@ r-unknown
         ]
       },
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -6962,7 +7137,7 @@ r-unknown
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-2"
+          "topology-id": "example:WDM-Network-2"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -7009,41 +7184,41 @@ r-unknown
         },
         "node": [
           {
-            "node-id": "WDM-TE-node-2",
+            "node-id": "example:WDM-TE-Node-2",
             "ietf-te-topology:te-node-id": "192.0.2.2",
             "ietf-te-topology:te": {},
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "4",
+                "tp-id": "example:4",
                 "ietf-te-topology:te-tp-id": 4,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "AQ=="
                 }
               },
               {
-                "tp-id": "5",
+                "tp-id": "example:5",
                 "ietf-te-topology:te-tp-id": 5,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Ag=="
                 }
               },
               {
-                "tp-id": "6",
+                "tp-id": "example:6",
                 "ietf-te-topology:te-tp-id": 6,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Awo="
@@ -7054,10 +7229,10 @@ r-unknown
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "4"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7086,10 +7261,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7134,10 +7309,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "5"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7165,10 +7340,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "5"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7213,10 +7388,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "6"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7244,10 +7419,10 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "6"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
@@ -7294,7 +7469,7 @@ r-unknown
         ]
       },
       {
-        "network-id": "WDM-Network-Complete",
+        "network-id": "example:WDM-Network-Complete",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -7302,7 +7477,7 @@ r-unknown
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-Complete"
+          "topology-id": "example:WDM-Network-Complete"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -7349,7 +7524,7 @@ r-unknown
         },
         "node": [
           {
-            "node-id": "WDM-TE-node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "ietf-te-topology:tunnel-termination-point": [
@@ -7366,7 +7541,7 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "1",
+                        "link-tp-ref": "example:1",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -7396,7 +7571,7 @@ r-unknown
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "2",
+                        "link-tp-ref": "example:2",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -7407,7 +7582,7 @@ r-unknown
                         ]
                       },
                       {
-                        "link-tp-ref": "3",
+                        "link-tp-ref": "example:3",
                         "ietf-optical-impairment-topology:llc-transc\
 \eiver": [
                           {
@@ -7424,22 +7599,22 @@ r-unknown
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "23",
+                "tp-id": "example:23",
                 "ietf-te-topology:te-tp-id": 23
               }
             ],
@@ -7492,42 +7667,42 @@ r-unknown
             }
           },
           {
-            "node-id": "WDM-TE-node-2",
+            "node-id": "example:WDM-TE-Node-2",
             "ietf-te-topology:te-node-id": "192.0.2.2",
             "ietf-te-topology:te": {},
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "4",
+                "tp-id": "example:4",
                 "ietf-te-topology:te-tp-id": 4,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "5",
+                "tp-id": "example:5",
                 "ietf-te-topology:te-tp-id": 5,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "6",
+                "tp-id": "example:6",
                 "ietf-te-topology:te-tp-id": 6,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "56",
+                "tp-id": "example:56",
                 "ietf-te-topology:te-tp-id": 56,
                 "ietf-te-topology:te": {}
               }
@@ -7536,14 +7711,14 @@ r-unknown
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "1"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:1"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "4"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7571,14 +7746,14 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "1"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7624,14 +7799,14 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "source": {
-              "source-node": "WDM-TE-node-1",
-              "source-tp": "2"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:2"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "5"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7659,14 +7834,14 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "5"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:5"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "2"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7711,14 +7886,14 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-2",
-              "dest-tp": "6"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -7746,14 +7921,14 @@ r-unknown
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "source": {
-              "source-node": "WDM-TE-node-2",
-              "source-tp": "6"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:6"
             },
             "destination": {
-              "dest-node": "WDM-TE-node-1",
-              "dest-tp": "3"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
