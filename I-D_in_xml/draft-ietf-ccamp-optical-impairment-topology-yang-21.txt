@@ -289,6 +289,11 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
    technologies (e.g. copper-based, radio-based, or free space optics-
    based, etc.), which are outside the scope of this document.
 
+   The term "muxponder" is a short for "multiplexer–transponder" and
+   refers to a device used in optical networking, especially in DWDM
+   (Dense Wavelength Division Multiplexing) systems, to combine multiple
+   client signals onto a single high-speed optical wavelength.
+
 1.2.  Tree Diagram
 
    A simplified graphical representation of the data model is used in
@@ -323,11 +328,6 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
 
    [Note to RFC editor: Please replace XXXX with the number assigned to
    the RFC once this draft becomes an RFC.]
-
-
-
-
-
 
 
 

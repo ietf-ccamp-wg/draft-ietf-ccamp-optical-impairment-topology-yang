@@ -237,6 +237,13 @@
    technologies (e.g. copper-based, radio-based, or free space
    optics-based, etc.), which are outside the scope of this document.
   </t>
+  
+  <t>
+   The term "muxponder" is a short for "multiplexer–transponder" and
+   refers to a device used in optical networking, especially in DWDM
+   (Dense Wavelength Division Multiplexing) systems, to combine
+   multiple client signals onto a single high-speed optical wavelength.
+  </t>
 
   </section>
 
