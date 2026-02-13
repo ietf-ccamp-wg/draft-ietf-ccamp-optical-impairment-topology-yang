@@ -2,14 +2,14 @@
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-1",
+        "network-id": "example:WDM-Network-1",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-1"
+          "topology-id": "example:WDM-Network-1"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -56,7 +56,7 @@
         },
         "node": [
           {
-            "node-id": "WDM-TE-Node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "ietf-te-topology:tunnel-termination-point": [
@@ -72,7 +72,7 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "1",
+                        "link-tp-ref": "example:1",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 1,
@@ -100,7 +100,7 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "2",
+                        "link-tp-ref": "example:2",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
@@ -110,7 +110,7 @@
                         ]
                       },
                       {
-                        "link-tp-ref": "3",
+                        "link-tp-ref": "example:3",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
@@ -126,28 +126,28 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "AQ=="
                 }
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Ag=="
                 }
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Awo="
                 }
               },
               {
-                "tp-id": "23",
+                "tp-id": "example:23",
                 "ietf-te-topology:te-tp-id": 23
               }
             ],
@@ -202,10 +202,10 @@
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "1"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -232,10 +232,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "1"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -262,10 +262,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "2"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -292,10 +292,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "2"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -322,10 +322,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "3"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -352,10 +352,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "3"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
@@ -382,42 +382,42 @@
             }
           },
           {
-            "link-id": "Add-Drop-Bundled-Link-Forward",
+            "link-id": "example:Add-Drop-Bundled-Link-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "23"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:23"
             },
             "ietf-te-topology:te": {
               "bundled-links": {
                 "bundled-link": [
                   {
                     "sequence": 1,
-                    "src-tp-ref": "2"
+                    "src-tp-ref": "example:2"
                   },
                   {
                     "sequence": 2,
-                    "src-tp-ref": "3"
+                    "src-tp-ref": "example:3"
                   }
                 ]
               }
             }
           },
           {
-            "link-id": "Add-Drop-Bundled-Link-Reverse",
+            "link-id": "example:Add-Drop-Bundled-Link-Reverse",
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "23"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:23"
             },
             "ietf-te-topology:te": {
               "bundled-links": {
                 "bundled-link": [
                   {
                     "sequence": 1,
-                    "des-tp-ref": "2"
+                    "des-tp-ref": "example:2"
                   },
                   {
                     "sequence": 2,
-                    "des-tp-ref": "3"
+                    "des-tp-ref": "example:3"
                   }
                 ]
               }
@@ -426,14 +426,14 @@
         ]
       },
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-2"
+          "topology-id": "example:WDM-Network-2"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -480,41 +480,41 @@
         },
         "node": [
           {
-            "node-id": "WDM-TE-Node-2",
+            "node-id": "example:WDM-TE-Node-2",
             "ietf-te-topology:te-node-id": "192.0.2.2",
             "ietf-te-topology:te": {},
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "4",
+                "tp-id": "example:4",
                 "ietf-te-topology:te-tp-id": 4,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "AQ=="
                 }
               },
               {
-                "tp-id": "5",
+                "tp-id": "example:5",
                 "ietf-te-topology:te-tp-id": 5,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Ag=="
                 }
               },
               {
-                "tp-id": "6",
+                "tp-id": "example:6",
                 "ietf-te-topology:te-tp-id": 6,
                 "ietf-te-topology:te": {
                   "inter-domain-plug-id": "Awo="
@@ -525,10 +525,10 @@
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "4"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -556,10 +556,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -604,10 +604,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "5"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -635,10 +635,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "5"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -683,10 +683,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "6"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -714,10 +714,10 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "6"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {
@@ -764,14 +764,14 @@
         ]
       },
       {
-        "network-id": "WDM-Network-Complete",
+        "network-id": "example:WDM-Network-Complete",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-topology": {}
           }
         },
         "ietf-te-topology:te-topology-identifier": {
-          "topology-id": "WDM-Network-Complete"
+          "topology-id": "example:WDM-Network-Complete"
         },
         "ietf-te-topology:te": {},
         "ietf-optical-impairment-topology:otsis": {
@@ -818,7 +818,7 @@
         },
         "node": [
           {
-            "node-id": "WDM-TE-Node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
               "ietf-te-topology:tunnel-termination-point": [
@@ -834,7 +834,7 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "1",
+                        "link-tp-ref": "example:1",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 1,
@@ -862,7 +862,7 @@
                     "is-allowed": false,
                     "local-link-connectivity": [
                       {
-                        "link-tp-ref": "2",
+                        "link-tp-ref": "example:2",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
@@ -872,7 +872,7 @@
                         ]
                       },
                       {
-                        "link-tp-ref": "3",
+                        "link-tp-ref": "example:3",
                         "ietf-optical-impairment-topology:llc-transceiver": [
                           {
                             "ttp-transponder-ref": 2,
@@ -888,22 +888,22 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "23",
+                "tp-id": "example:23",
                 "ietf-te-topology:te-tp-id": 23
               }
             ],
@@ -956,42 +956,42 @@
             }
           },
           {
-            "node-id": "WDM-TE-Node-2",
+            "node-id": "example:WDM-TE-Node-2",
             "ietf-te-topology:te-node-id": "192.0.2.2",
             "ietf-te-topology:te": {},
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-te-topology:te-tp-id": 1,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-te-topology:te-tp-id": 2,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-te-topology:te-tp-id": 3,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "4",
+                "tp-id": "example:4",
                 "ietf-te-topology:te-tp-id": 4,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "5",
+                "tp-id": "example:5",
                 "ietf-te-topology:te-tp-id": 5,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "6",
+                "tp-id": "example:6",
                 "ietf-te-topology:te-tp-id": 6,
                 "ietf-te-topology:te": {}
               },
               {
-                "tp-id": "56",
+                "tp-id": "example:56",
                 "ietf-te-topology:te-tp-id": 56,
                 "ietf-te-topology:te": {}
               }
@@ -1000,14 +1000,14 @@
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "Add-Drop-Link-1-Forward",
+            "link-id": "example:Add-Drop-Link-1-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "1"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:1"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "4"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:4"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -1035,14 +1035,14 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-1-Reverse",
+            "link-id": "example:Add-Drop-Link-1-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "1"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:1"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -1087,14 +1087,14 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Forward",
+            "link-id": "example:Add-Drop-Link-2-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-1",
-              "source-tp": "2"
+              "source-node": "example:WDM-TE-Node-1",
+              "source-tp": "example:2"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "5"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:5"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -1122,14 +1122,14 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-2-Reverse",
+            "link-id": "example:Add-Drop-Link-2-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "5"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:5"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "2"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:2"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -1174,14 +1174,14 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Forward",
+            "link-id": "example:Add-Drop-Link-3-Forward",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "4"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:4"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-2",
-              "dest-tp": "6"
+              "dest-node": "example:WDM-TE-Node-2",
+              "dest-tp": "example:6"
             },
             "ietf-te-topology:te": {
               "te-link-attributes": {
@@ -1209,14 +1209,14 @@
             }
           },
           {
-            "link-id": "Add-Drop-Link-3-Reverse",
+            "link-id": "example:Add-Drop-Link-3-Reverse",
             "source": {
-              "source-node": "WDM-TE-Node-2",
-              "source-tp": "6"
+              "source-node": "example:WDM-TE-Node-2",
+              "source-tp": "example:6"
             },
             "destination": {
-              "dest-node": "WDM-TE-Node-1",
-              "dest-tp": "3"
+              "dest-node": "example:WDM-TE-Node-1",
+              "dest-tp": "example:3"
             },
             "ietf-te-topology:te": {
               "ietf-te-topology:te-link-attributes": {

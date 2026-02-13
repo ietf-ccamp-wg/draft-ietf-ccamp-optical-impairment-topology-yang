@@ -18,13 +18,13 @@ module ietf-optical-impairment-topology {
     prefix tet;
     reference
       "RFC 8795: YANG Data Model for Traffic Engineering (TE)
-       Topologies";
+                 Topologies";
   }
   import ietf-te-types {
     prefix te-types;
     reference
       "RFC YYYY: Updated Common YANG Data Types for Traffic
-       Engineering";
+                 Engineering";
   }
 
   /* Note: The RFC Editor will replace YYYY with the number assigned
@@ -63,7 +63,7 @@ module ietf-optical-impairment-topology {
     "This module contains a collection of YANG definitions for
      impairment-aware optical networks.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -73,26 +73,30 @@ module ietf-optical-impairment-topology {
      Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.
+     All revisions of IETF and IANA published modules can be found
+     at the YANG Parameters registry group
+     (https://www.iana.org/assignments/yang-parameters).
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
      'MAY', and 'OPTIONAL' in this document are to be interpreted as
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-     they appear in all capitals, as shown here.";
+     they appear in all capitals, as shown here.
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
 
   // RFC Ed.: replace XXXX with actual RFC number and remove
   // this note
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2025-10-10 {
+  revision 2026-02-06 {
     description
       "Initial version.";
     reference
-      "RFC XXXX: A Yang Data Model for Impairment-aware
-       Optical Networks";
+      "RFC XXXX: A YANG Data Model for Impairment-aware
+                 Optical Networks";
   }
 
   /*
@@ -105,7 +109,7 @@ module ietf-optical-impairment-topology {
       "Individual OTSi(G) protection LSP protection type.";
     reference
       "ITU-T G.873.1 v5.2 (02/2022): Optical transport network:
-       Linear protection";
+                     Linear protection, Appendix III";
   }
 
   /*
@@ -114,20 +118,25 @@ module ietf-optical-impairment-topology {
 
   grouping amplifier-params {
     description
-      "Describes parameters for an amplifier";
+      "Describes parameters for an amplifier.";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware
+                 Optical Networks, Section 2.4";
     container amplifier {
       description
-        "Amplifier type, operational parameters are described.";
+        "The attributes of an amplifier.";
       leaf type-variety {
         type string;
         mandatory true;
         description
-          "String identifier of amplifier type referencing
-           a specification in a separate equipment catalog";
+          "The type of the amplifier.
+
+           It is usually a vendor-specific string referencing
+           specification in a separate equipment catalog.";
       }
       container operational {
         description
-          "Amplifier operational parameters";
+          "Amplifier operational parameters.";
         list amplifier-element {
           key "frequency-range-id stage-order";
           description
@@ -153,18 +162,22 @@ module ietf-optical-impairment-topology {
           leaf type-variety {
             type string;
             description
-              "String identifier of amplifier element type
-               referencing a specification in a separate equipment
-               catalog.
+              "The type of the amplifier element.
 
-               This attributes applies only when the type-variety of
+               It is usually a vendor-specific string referencing
+               specification in a separate equipment catalog.
+
+               This attribute applies only when the type-variety of
                the amplifier is not sufficient to describe the
                amplifier element type.";
           }
           container power-param {
             description
-              "The optical power after the out-voa of each amplifier
-               element.";
+              "Amplifier elements typically equalize the optical
+               power across the amplified channels using one of the
+               available equalization strategies — either targeting
+               a specific output power, or a specific power spectral
+               density (PSD), after the out-voa.";
             choice power-param {
               mandatory true;
               description
@@ -191,7 +204,14 @@ module ietf-optical-impairment-topology {
           leaf pdl {
             type l0-types:power-loss-or-unknown;
             description
-              "Polarization Dependent Loss (PDL)";
+              "Polarization Dependent Loss (PDL).";
+            reference
+              "ITU-T G.671 v9.0 (11/2025): Transmission
+                           characteristics of optical components and
+                           subsystems, clause 3.2.2.35
+               ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for
+                             optical fibre submarine cable systems,
+                             clause 8.1.5.2.2";
           }
           choice amplifier-element-type {
             mandatory true;
@@ -202,20 +222,20 @@ module ietf-optical-impairment-topology {
             container optical-amplifier {
               description
                 "The attributes applicable only to amplifier
-                 elements";
+                 elements.";
               leaf actual-gain {
                 type l0-types:power-gain-or-unknown;
                 mandatory true;
                 description
                   "The value of the gain provided by the
-                   amplification  stage of the optical amplifier.";
+                   amplification stage of the optical amplifier.";
               }
               leaf in-voa {
                 type l0-types:power-loss-or-unknown;
                 description
                   "Loss introduced by the Variable Optical Attenuator
                    (VOA) at the input of the amplification stage of
-                   the amplifier, if present";
+                   the amplifier, if present.";
               }
               leaf out-voa {
                 type l0-types:power-loss-or-unknown;
@@ -236,8 +256,8 @@ module ietf-optical-impairment-topology {
                 type l0-types:power-dbm-or-unknown;
                 mandatory true;
                 description
-                  "It represent total output power measured in the
-                   range specified by the frequency-range.
+                  "It represents the total output power measured in
+                   the range specified by the frequency-range.
 
                    Optical power is especially needed to
                    re-compute/check consistency of span
@@ -291,14 +311,14 @@ module ietf-optical-impairment-topology {
             container dynamic-gain-equalizer {
               presence
                 "When present it indicates that the amplifier element
-                 is a Dynamic Gain Equalizer (DGE)";
+                 is a Dynamic Gain Equalizer (DGE).";
               description
                 "The attributes applicable only to DEG amplifier
                  elements.";
               list media-channel {
                 key "flexi-n";
                 description
-                  "List of media channels represented as (n,m)";
+                  "List of media channels represented as (n,m).";
                 uses l0-types:flexi-grid-frequency-slot {
                   refine "flexi-m" {
                     mandatory true;
@@ -307,8 +327,10 @@ module ietf-optical-impairment-topology {
                 leaf delta-power {
                   type l0-types:power-ratio-or-unknown;
                   description
-                    "Deviation from the reference carrier power
-                     defined for the OMS.";
+                    "Deviation of the carrier power with respect to
+                     the reference carrier power, to account for
+                     power offset related to the carrier signal
+                     spectrum width or baud rate.";
                 }
               } // media channels list
             } // container dynamic-gain-equalizer
@@ -321,32 +343,40 @@ module ietf-optical-impairment-topology {
   grouping fiber-params {
     description
       "String identifier of fiber type referencing a
-       specification in a separate equipment catalog";
+       specification in a separate equipment catalog.";
     container fiber {
       description
-        "Fiber characteristics";
+        "Fiber characteristics.";
+      reference
+        "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                   Networks, Section 2.9";
       leaf type-variety {
         type string;
         mandatory true;
         description
-          "Fiber type";
+          "The type of the fiber.
+
+           It can be a string referencing a standard document (e.g.,
+           ITU-T G.652) or a vendor-specific string referencing
+           specification in a separate equipment catalog.";
       }
       leaf length {
         type l0-types:decimal-2-or-unknown;
         units "km";
         mandatory true;
         description
-          "Length of fiber";
+          "Length of fiber.";
       }
       leaf loss-coef {
         type l0-types:decimal-2-or-unknown;
         units "dB/km";
         mandatory true;
         description
-          "Loss coefficient of the fiber";
+          "Loss coefficient of the fiber.";
       }
       leaf total-loss {
         type l0-types:power-loss-or-unknown;
+        config false;
         description
           "The measured total loss of the fiber, which includes
            all possible losses: fiber loss and conn-in and conn-out
@@ -359,17 +389,24 @@ module ietf-optical-impairment-topology {
         type l0-types:decimal-2-or-unknown;
         units "ps";
         description
-          "PMD of the fiber";
+          "Polarization Mode Dispersion (PMD) of the fiber.";
+        reference
+          "ITU-T G.671 v9.0 (11/2025): Transmission characteristics
+                       of optical components and subsystems,
+                       clause 3.2.2.37
+           ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for
+                         optical fibre submarine cable systems,
+                         clause 6.2.2.3";
       }
       leaf conn-in {
         type l0-types:power-loss-or-unknown;
         description
-          "connector-in";
+          "The loss of the connector at the input of the fiber.";
       }
       leaf conn-out {
         type l0-types:power-loss-or-unknown;
         description
-          "connector-out";
+          "The loss of the connector at the output of the fiber.";
       }
     }
   }
@@ -378,6 +415,9 @@ module ietf-optical-impairment-topology {
     description
       "The optical impairments of a ROADM which are common to all
        its paths (express path, add path or drop path).";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                 Networks, Section 2.10.4";
     leaf roadm-pmd {
       type union {
         type decimal64 {
@@ -389,45 +429,72 @@ module ietf-optical-impairment-topology {
       units "ps";
       description
         "Polarization Mode Dispersion (PMD).";
+      reference
+        "ITU-T G.671 v9.0 (11/2025): Transmission characteristics of
+                     optical components and subsystems,
+                     clause 3.2.2.37
+         ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems,
+                       clause 6.2.2.3";
     }
     leaf roadm-cd {
       type l0-types:decimal-5-or-unknown;
       units "ps/nm";
       description
-        "Chromatic Dispersion (CD)";
+        "Chromatic Dispersion (CD).";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems,
+                       clause 6.2.2.4";
     }
     leaf roadm-pdl {
       type l0-types:power-loss-or-unknown;
       description
-        "Polarization Dependent Loss (PDL)";
+        "Polarization Dependent Loss (PDL).";
+      reference
+        "ITU-T G.671 v9.0 (11/2025): Transmission characteristics of
+                     optical components and subsystems,
+                     clause 3.2.2.35
+         ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems,
+                       clause 8.1.5.2.2";
     }
     leaf roadm-inband-crosstalk {
       type l0-types:decimal-2-or-unknown;
       units "dB";
       description
-        "In-band crosstalk, or coherent crosstalk, can occur in
-         components that can have multiple same wavelength inputs
-         with the inputs either routed to different output ports,
-         or all but one blocked";
+        "One of the basic properties of the key optical device
+         wavelength selective switch (WSS) is the isolation (i.e.,
+         the ratio between the optical power of a selected optical
+         channel and the leakage power of unselected channels).
+
+         In the presence of imperfect isolation, the originated
+         leakage signals, usually known as crosstalk signals, will
+         interfere with the primary signal at the receiver end,
+         contributing to degrade the signal quality.
+         This interference is particularly harmful when both the
+         signal and interference have the same nominal wavelength
+         leading to the in-band crosstalk.";
+      reference
+        "ISSN 1068-5200: A framework for analyzing in-band crosstalk
+                         accumulation in ROADM-based optical
+                         networks";
     }
     leaf roadm-maxloss {
       type l0-types:power-loss-or-unknown;
       description
         "This is the maximum expected path loss from the
          ROADM ingress to the ROADM egress
-         assuming no additional path loss is added";
+         assuming no additional path loss is added.";
     }
   } // grouping roadm-common-path
-
-  grouping roadm-express-path {
-    description
-      "The optical impairments of a ROADM express path.";
-    uses roadm-common-path;
-  } // grouping roadm-express-path
 
   grouping roadm-add-path {
     description
       "The optical impairments of a ROADM add path.";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                 Networks, Section 2.10.4";
     uses roadm-common-path {
       refine "roadm-inband-crosstalk" {
         description
@@ -447,15 +514,13 @@ module ietf-optical-impairment-topology {
            assuming no additional add path loss is added.
 
            This is used to establish the minimum required
-           transponder output power required
-           to hit the ROADM egress target power
-           levels and preventing
-           to hit the WSS attenuation limits.
+           transponder output power required to hit the ROADM
+           egress target power levels and preventing to hit
+           the WSS attenuation limits.
 
            If the add path contains an internal amplifier
-           this loss value MUST be based
-           on worst case expected amplifier gain due to
-           ripple or gain uncertainty";
+           this loss value MUST be based on worst case expected
+           amplifier gain due to ripple or gain uncertainty.";
       }
     }
     leaf roadm-pmax {
@@ -464,11 +529,12 @@ module ietf-optical-impairment-topology {
         "This is the maximum (per carrier) power level
          permitted at the add block input ports,
          that can be handled by the ROADM node.
+
          This can reflect either add amplifier power
          constraints or WSS adjustment limits.
+
          Higher power transponders would need to have
-         their launch power reduced
-         to this value or lower";
+         their launch power reduced to this value or lower.";
     }
     leaf roadm-osnr {
       type l0-types:snr-or-unknown;
@@ -484,6 +550,9 @@ module ietf-optical-impairment-topology {
          The worst case OSNR based on the input power and
          NF calculation method, and this value, MUST be used
          (if both are defined).";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems, clause 8.1.3";
     }
     leaf roadm-noise-figure {
       type l0-types:decimal-5-or-unknown;
@@ -496,12 +565,15 @@ module ietf-optical-impairment-topology {
          on the input power levels to the add block
          without knowing the ROADM path losses to
          the add amplifier.";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems, clause 8.1.3";
     }
   } // grouping roadm-add-path 
 
   grouping roadm-drop-path {
     description
-      "The optical impairments of a ROADM drop path";
+      "The optical impairments of a ROADM drop path.";
     uses roadm-common-path {
       refine "roadm-inband-crosstalk" {
         description
@@ -511,23 +583,23 @@ module ietf-optical-impairment-topology {
            output ports,or all but one blocked.
 
            In the case of drop path it is the total
-           of the ingress
-           to drop e.g. WSS and drop block crosstalk
-           contributions.";
+           of the ingress to drop, e.g. WSS and drop block
+           crosstalk contributions.";
       }
       refine "roadm-maxloss" {
         description
           "The net loss from the ROADM input,to the output
            of the drop block.
+
            If this ROADM ingress-to-drop path includes an amplifier,
            the amplifier gain reduces the net loss.
            This is before any additional drop path attenuation
-           that may be required
-           due to drop amplifier power constraints.
-           The max value correspond to worst case expected loss,
-           including amplifier gain ripple or uncertainty.
-           It is the maximum output power of the drop
-           amplifier.";
+           that may be required due to drop amplifier power
+           constraints.
+
+           The max value corresponds to the worst case expected
+           loss, including amplifier gain ripple or uncertainty.
+           It is the maximum output power of the drop amplifier.";
       }
     }
     leaf roadm-minloss {
@@ -535,28 +607,30 @@ module ietf-optical-impairment-topology {
       description
         "The net loss from the ROADM input, to the
          output of the drop block.
+
          If this ROADM ingress-to-drop path includes
          an amplifier,the amplifier gain reduces the net loss.
          This is before any additional drop path attenuation
          that may be required due to drop amplifier power
          constraints.
+
          The min value correspond to best case expected loss,
          including amplifier gain ripple or uncertainty.";
     }
     leaf roadm-typloss {
       type l0-types:power-loss-or-unknown;
       description
-        "The net loss from the ROADM input,
-         to the output of the drop block.
-         If this ROADM ingress-to-drop path
-         includes an amplifier,
+        "The net loss from the ROADM input, to the output
+         of the drop block.
+
+         If this ROADM ingress-to-drop path includes an amplifier,
          the amplifier gain reduces the net loss.
-         This is before any additional drop path
-         attenuation
-         that may be required due to drop amplifier
-         power constraints.
-         The typ value correspond to typical case
-         expected loss.";
+
+         This is before any additional drop path attenuation
+         that may be required due to drop amplifier power
+         constraints.
+
+         The typ value correspond to typical case expected loss.";
     }
     leaf roadm-pmin {
       type l0-types:power-dbm-or-unknown;
@@ -569,11 +643,10 @@ module ietf-optical-impairment-topology {
          not appropriate.
 
          This parameter corresponds to the minimum value of the Drop
-         Channel output power range, as defined in table 8-6 of
-         ITU-T G.680.";
+         Channel output power range.";
       reference
         "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
-                   optical network elements, table 8-6";
+                     optical network elements, Table 8-6";
     }
     leaf roadm-pmax {
       type l0-types:power-dbm-or-unknown;
@@ -586,11 +659,10 @@ module ietf-optical-impairment-topology {
          not appropriate.
 
          This parameter corresponds to the maximum value of the Drop
-         Channel output power range, as defined in table 8-6 of
-         ITU-T G.680.";
+         Channel output power range.";
       reference
         "ITU-T G.680 v1.0 (07/2007): Physical transfer functions of
-                   optical network elements, table 8-6";
+                     optical network elements, table 8-6";
     }
     leaf roadm-ptyp {
       type l0-types:power-dbm-or-unknown;
@@ -598,12 +670,13 @@ module ietf-optical-impairment-topology {
         "If the drop path has additional loss that is added,
          for example, to hit target power levels into a
          drop path amplifier,or simply,to reduce the
-         power of a strong carrier(due to ripple,for example),
+         power of a strong carrier(due to ripple, for example),
          then the use of the ROADM input power levels and
          the above drop losses is not appropriate.
+
          This parameter corresponds to the typical case
-         per carrier power levels expected
-         at the output of the drop block.";
+         per carrier power levels expected at the output
+         of the drop block.";
     }
     leaf roadm-osnr {
       type l0-types:snr-or-unknown;
@@ -611,10 +684,9 @@ module ietf-optical-impairment-topology {
         "Optical Signal-to-Noise Ratio (OSNR).
 
          Expected OSNR contribution of the drop path
-         amplifier(if present)
-         for the case of additional drop path loss
-         (before this amplifier)
-         in order to hit a target power level (per carrier).
+         amplifier (if present) for the case of additional drop
+         path loss (before this amplifier) in order to hit
+         a target power level (per carrier).
 
          If both, the OSNR based on the ROADM
          input power level
@@ -622,25 +694,31 @@ module ietf-optical-impairment-topology {
          Pref+10Log(carrier-baudrate/ref-baud) + delta-power)
          and the input inferred NF(NF.drop),
          and this OSNR value, are defined,
-         the minimum value between these two MUST be used";
+         the minimum value between these two MUST be used.";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems, clause 8.1.3";
     }
     leaf roadm-noise-figure {
       type l0-types:decimal-5-or-unknown;
       units "dB";
       description
         "Drop path Noise Figure.
-         If the drop path contains an amplifier,
-         this is the noise figure
-         of that amplifier, inferred to the
-         ROADM ingress port.
-         This permits to determine
-         amplifier OSNR contribution
-         without having to specify the
-         ROADM node's losses to that amplifier.
-         This applies for the case of no
-         additional drop path loss,
+
+         If the drop path contains an amplifier, this is the noise
+         figure of that amplifier, inferred to the ROADM ingress
+         port.
+
+         This permits to determine amplifier OSNR contribution
+         without having to specify the ROADM node's losses to
+         that amplifier.
+
+         This applies for the case of no additional drop path loss,
          before the amplifier, in order to reduce the power
-         of the carriers to a target value";
+         of the carriers to a target value.";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems, clause 8.1.3";
     }
   } // grouping roadm-drop-path
 
@@ -650,22 +728,32 @@ module ietf-optical-impairment-topology {
     container concentrated-loss {
       description
         "Concentrated loss";
+      reference
+        "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                   Networks, section 2.3";
       leaf loss {
         type l0-types:power-loss-or-unknown;
         mandatory true;
         description
-          "Loss introduced by the concentrated loss element.";
+          "Loss introduced by the concentrated loss element (e.g., a
+           fiber connector, a fiber splice).";
       }
     }
   }
 
   grouping oms-general-optical-params {
     description
-      "OMS link optical parameters";
+      "The optical paramaters of an OMS link.";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                 Networks, Section 2.3";
     leaf generalized-snr {
       type l0-types:snr;
       description
-        "Generalized SNR";
+        "Generalized SNR.";
+      reference
+        "ITU-T G.Sup41 v5.0 (07/2024): Design guidelines for optical
+                       fibre submarine cable systems, clause 8.1.4";
     }
     leaf equalization-mode {
       type identityref {
@@ -673,6 +761,11 @@ module ietf-optical-impairment-topology {
       }
       description
         "The equalization mode.
+
+         ROADMs typically equalize the optical power across the
+         channels on the OMS using one of the available equalization
+         strategies — either targeting a specific output power, or a
+         specific power spectral density (PSD).
 
          When not present it indicates that the information about
          the equalization mode is not reported.
@@ -696,24 +789,26 @@ module ietf-optical-impairment-topology {
            + "'l0-types:power-spectral-density')";
         type l0-types:psd-or-unknown;
         description
-          " Reference power spectral density (PSD).";
+          "Reference power spectral density (PSD).";
       }
     } // container power-param
   } // grouping oms-general-optical-params
 
   grouping otsi-group {
     description
-      "OTSiG definition , representing client
-       digital information stream supported by one or more OTSi";
+      "The list of the OTSis contained in one OTSiG.";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                 Networks, Sections 2.3.1 and 2.3.2";
     list otsi {
       key "carrier-id";
       description
-        "list of OTSi contained in one OTSiG.
-         The list could also be of only one element";
+        "The list of the OTSis contained in one OTSiG.
+         The list could also be of only one element.";
       leaf carrier-id {
         type uint16;
         description
-          "OTSi carrier-id";
+          "The identifier of the OTSi within the OTSiG.";
       }
       leaf carrier-frequency {
         type union {
@@ -737,16 +832,23 @@ module ietf-optical-impairment-topology {
 
            The list can be empty when the OTSi has only one
            e2e-MC path.";
+        reference
+          "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                     Networks, Section 2.11.1";
       }
     } // OTSi list
   } // OTSiG grouping
 
   grouping media-channel-groups {
     description
-      "media channel groups.
+      "The list of media channel groups (MCGs) and of their
+       constituent media channels (MCs).
 
        This grouping is not intended to be reused outside of this
        module.";
+    reference
+      "RFC XXXX: A YANG Data Model for Impairment-aware Optical
+                 Networks, Sections 2.3.3 and 2.3.4";
     container media-channel-groups {
       presence
         "When present, it indicates that the list media channel
@@ -771,7 +873,8 @@ module ietf-optical-impairment-topology {
           key "media-channel-id";
           unique "flexi-n";
           description
-            "list of media channels represented as (n,m)";
+            "The list of media channels within the media channel
+             group.";
           leaf media-channel-id {
             type int16;
             description
@@ -816,7 +919,7 @@ module ietf-optical-impairment-topology {
           leaf delta-power {
             type l0-types:power-ratio-or-unknown;
             description
-              " Deviation from the reference carrier power defined
+              "Deviation from the reference carrier power defined
                for the OMS.";
           }
         } // media channels list
@@ -826,7 +929,9 @@ module ietf-optical-impairment-topology {
 
   grouping oms-element {
     description
-      "OMS description";
+      "The list of the OMS elements, i.e., the building blocks
+       (e.g., fibers, amplifiers, concentrated loss) that compose the
+       OMS between its link termination points.";
     container oms-elements {
       presence
         "When present, it indicates that the list of OMS elements
@@ -836,13 +941,11 @@ module ietf-optical-impairment-topology {
       list oms-element {
         key "elt-index";
         description
-          "The building blocks (e.g., fibers, amplifiers,
-           concentrated loss) that compose the WDM TE-link between
-           its link termination points.";
+          "The list of OMS elements.";
         leaf elt-index {
           type uint16;
           description
-            "An index allowing to sort the elements in their physical
+            "An index allowing sorting the elements in their physical
              order along the link without constraining their position
              in the list.";
         }
@@ -852,7 +955,7 @@ module ietf-optical-impairment-topology {
             type l0-types:unknown-value;
           }
           description
-            "Unique id of the element.";
+            "Unique identifier of the OMS element, when known.";
         }
         container reverse-element-ref {
           description
@@ -909,7 +1012,7 @@ module ietf-optical-impairment-topology {
            + "otsi-group-id";
       }
       description
-        "The OTSi generated by the transceiver's transmitter.";
+        "The OTSiG the referenced OTSi belongs to.";
     }
     leaf otsi-ref {
       type leafref {
@@ -918,7 +1021,7 @@ module ietf-optical-impairment-topology {
            + "carrier-id";
       }
       description
-        "The OTSi generated by the transceiver's transmitter.";
+        "The referenced OTSi.";
     }
   }
 
@@ -934,7 +1037,7 @@ module ietf-optical-impairment-topology {
       presence
         "Indicates an impairment-aware topology of optical networks";
       description
-        "Container to identify impairment-aware topology type";
+        "Container to identify impairment-aware topology type.";
       reference
         "RFC8345: A YANG Data Model for Network Topologies.";
     }
@@ -960,12 +1063,12 @@ module ietf-optical-impairment-topology {
         key "otsi-group-id";
         description
           "the list of possible OTSiG representing client digital
-           stream";
+           stream.";
         leaf otsi-group-id {
           type string;
           description
             "A network-wide unique identifier of otsi-group element.
-             It could be structured e.g., as an URI or as an UUID.";
+             It could be structured, e.g., as a URI or as a UUID.";
         }
         uses otsi-group;
       } // list of OTSiG
@@ -987,18 +1090,18 @@ module ietf-optical-impairment-topology {
           leaf roadm-path-impairments-set-id {
             type string;
             description
-              "The identifier of the set of optical impairments
-               related to a ROADM path.";
+              "The identifier of an element in the list of the set of
+               optical impairments related to a ROADM path.";
           }
           leaf description {
             type string;
             description
-              "The textual description of the the set of optical
+              "The textual description of the set of optical
                impairments related to a ROADM path.";
           }
           choice impairment-type {
             description
-              "Type path impairment";
+              "Type path impairment.";
             case roadm-express-path {
               list roadm-express-path {
                 key "frequency-range-id";
@@ -1009,7 +1112,7 @@ module ietf-optical-impairment-topology {
                    Two elements in the list MUST NOT have the same
                    range or overlapping ranges.";
                 uses l0-types:frequency-range-with-identifier;
-                uses roadm-express-path;
+                uses roadm-common-path;
               }
             }
             case roadm-add-path {
@@ -1082,7 +1185,7 @@ module ietf-optical-impairment-topology {
         leaf transponder-id {
           type uint32;
           description
-            "transponder identifier";
+            "Transponder identifier.";
         }
         leaf termination-type-capabilities {
           type enumeration {
@@ -1098,9 +1201,9 @@ module ietf-optical-impairment-topology {
             }
             enum 3r-or-tunnel {
               description
-                "The transponder can be configure to be used either
-                 in an Optical Tunnel termination configuration or in
-                 a 3R configuration.";
+                "The transponder can be used either in an Optical
+                 Tunnel termination configuration or in a 3R
+                 configuration.";
             }
           }
           description
@@ -1133,11 +1236,11 @@ module ietf-optical-impairment-topology {
           key "transceiver-id";
           min-elements 1;
           description
-            "List of transceiver related to a transponder";
+            "List of transceiver related to a transponder.";
           leaf transceiver-id {
             type uint32;
             description
-              "Transceiver identifier";
+              "Transceiver identifier.";
           }
           uses l0-types:transceiver-capabilities {
             augment "supported-modes/supported-mode/mode/"
@@ -1153,7 +1256,7 @@ module ietf-optical-impairment-topology {
                      + "/oit:explicit-transceiver-mode-id";
                 }
                 description
-                  "The refernce to the explicit transceiver
+                  "The reference to the explicit transceiver
                    mode template.";
               }
             }
@@ -1193,7 +1296,7 @@ module ietf-optical-impairment-topology {
                  reported.";
             }
             description
-              "The OTSi received by the transceiver's received.";
+              "The OTSi received by the transceiver's receiver.";
             uses otsi-ref;
           }
           leaf configured-termination-type {
@@ -1236,7 +1339,7 @@ module ietf-optical-impairment-topology {
           "The list of 3R groups.
 
            Any 3R group represent a group of transponder in which an
-           a an electrical connectivity is either in place or could
+           electrical connectivity is either in place or could
            be dynamically provided, to associated transponders used
            for 3R regeneration.";
         leaf group-id {
@@ -1248,15 +1351,15 @@ module ietf-optical-impairment-topology {
         leaf regen-metric {
           type uint32;
           description
-            "The cost permits choice among different group of
-             transponders during path computation";
+            "The cost permits choice among different groups of
+             transponders during path computation.";
         }
         leaf-list transponder-ref {
           type leafref {
             path "../../../transponders/transponder/transponder-id";
           }
           description
-            "The list of transponder belonging to this 3R group.";
+            "The list of transponders belonging to this 3R group.";
         }
       } // end 3R-group
     }
@@ -1275,7 +1378,7 @@ module ietf-optical-impairment-topology {
     container oms-attributes {
       config false;
       description
-        "OMS attributes";
+        "OMS attributes.";
       uses oms-general-optical-params;
       uses media-channel-groups;
       uses oms-element;
@@ -1328,7 +1431,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology";
+         topology.";
     }
     description
       "Augment LTP";
@@ -1351,7 +1454,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology";
+         topology.";
     }
     description
       "Augment TE attributes of an LTP";
@@ -1385,7 +1488,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix information
@@ -1399,7 +1502,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices information-source
 
@@ -1410,7 +1514,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment TE node connectivity matrix entry information
@@ -1424,7 +1528,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix information-source
 
@@ -1434,7 +1539,7 @@ module ietf-optical-impairment-topology {
        + 'oit:optical-impairment-topology' {
       description
         "This augment is only valid for Optical Impairment
-         topology ";
+         topology.";
     }
     description
       "Augment default TE node connectivity matrix.";
@@ -1447,8 +1552,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrices
 
@@ -1458,8 +1563,8 @@ module ietf-optical-impairment-topology {
     when '../../../../../nw:network-types/tet:te-topology/'
        + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for
-         Optical Impairment topology ";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Augment TE node connectivity matrix entry.";
@@ -1472,8 +1577,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation connectivity-matrix
 
@@ -1483,8 +1588,8 @@ module ietf-optical-impairment-topology {
     when '../../../../../../nw:network-types/tet:te-topology/'
        + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for
-         Optical Impairment topology ";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Augment the attributes for the 'from' LTP for the TE node
@@ -1517,7 +1622,7 @@ module ietf-optical-impairment-topology {
         description
           "The reference to the potential secondary LTP that can be
            selected when the 'from' LTP of this connectivity matrix
-           entry is selected as a working LTP";
+           entry is selected as a working LTP.";
       }
       leaf roadm-path-impairments-set {
         type leafref {
@@ -1527,9 +1632,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between this secondary 'from' LTP and the 'to' LTP of
-           this connectivity matrix entry.";
+          "Pointer to optical impairments of the ROADM path between
+           this secondary 'from' LTP and the 'to' LTP of this
+           connectivity matrix entry.";
       }
     }
   } // augmentation connectivity-matrix from
@@ -1540,8 +1645,8 @@ module ietf-optical-impairment-topology {
     when '../../../../../../nw:network-types/tet:te-topology/'
        + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for
-         Optical Impairment topology ";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Augment the attributes for the 'to' LTP for the TE node
@@ -1574,7 +1679,7 @@ module ietf-optical-impairment-topology {
         description
           "The reference to the potential secondary LTP that can be
            selected when the 'to' LTP of this connectivity matrix
-           entry is selected as a working LTP";
+           entry is selected as a working LTP.";
       }
       leaf roadm-path-impairments-set {
         type leafref {
@@ -1584,9 +1689,9 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "Pointer to ROADM optical impairments of the ROADM path
-           between the 'from' LTP of this connectivity matrix entry
-           and this secondary LTP.";
+          "Pointer to optical impairments of the ROADM path between
+           the 'from' LTP of this connectivity matrix entry and this
+           secondary LTP.";
       }
     }
   } // augmentation connectivity-matrix to
@@ -1611,8 +1716,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "Pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -1623,8 +1728,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM
-         optical impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
   } // augmentation local-link-connectivities
 
@@ -1635,8 +1740,8 @@ module ietf-optical-impairment-topology {
     when '../../../../../nw:network-types/tet:te-topology/'
        + 'oit:optical-impairment-topology' {
       description
-        "This augment is only valid for
-         Optical Impairment topology ";
+        "This augment is only valid for Optical Impairment
+         topology.";
     }
     description
       "Augment TTP LLC entry.";
@@ -1649,8 +1754,8 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     leaf drop-path-impairments-set {
       type leafref {
@@ -1661,14 +1766,14 @@ module ietf-optical-impairment-topology {
       }
       config false;
       description
-        "pointer to the list set of ROADM optical
-         impairments";
+        "Pointer to optical impairments of the associated ROADM
+         path.";
     }
     list llc-transceiver {
       key "ttp-transponder-ref ttp-transceiver-ref";
       config false;
       description
-        "The list of transceivers having a LLC different from the
+        "The list of transceivers having an LLC different from the
          default LLC.";
       leaf ttp-transponder-ref {
         type leafref {
@@ -1683,7 +1788,7 @@ module ietf-optical-impairment-topology {
           path "../../../../ttp-transceiver/transceiver-ref";
         }
         description
-          "The reference to the the transceiver of this LLCL entry.";
+          "The reference to the transceiver of this LLCL entry.";
       }
       leaf is-allowed {
         type boolean;
@@ -1700,8 +1805,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -1711,8 +1816,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
     list additional-ltp {
@@ -1738,7 +1843,7 @@ module ietf-optical-impairment-topology {
         description
           "The reference to potential secondary LTP that can be
            selected when the LTP associated with this LLCP entry is
-           selected as a working LTP";
+           selected as a working LTP.";
       }
       leaf add-path-impairments-set {
         type leafref {
@@ -1748,8 +1853,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM optical
-           impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
       leaf drop-path-impairments-set {
         type leafref {
@@ -1759,8 +1864,8 @@ module ietf-optical-impairment-topology {
              + "/oit:roadm-path-impairments-set-id";
         }
         description
-          "pointer to the list set of ROADM
-           optical impairments";
+          "Pointer to optical impairments of the associated ROADM
+           path.";
       }
     }
   } // augmentation local-link-connectivity

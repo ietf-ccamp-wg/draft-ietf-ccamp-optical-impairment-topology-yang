@@ -4,7 +4,7 @@
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "WDM-Network-2",
+        "network-id": "example:WDM-Network-2",
         "network-types": {
           "ietf-te-topology:te-topology": {
             "ietf-optical-impairment-topology:optical-impairment-top\
@@ -66,7 +66,7 @@
         },
         "node": [
           {
-            "node-id": "WDM-TE-Node-1",
+            "node-id": "example:WDM-TE-Node-1",
             "ietf-te-topology:te-node-id": "192.0.2.1",
             "ietf-te-topology:te": {
                "te-node-attributes": {
@@ -75,19 +75,19 @@
                         {           
                             "id": 1,
                             "from": {
-                               "tp-ref": "20"
+                               "tp-ref": "example:20"
                             },
                             "to": {
-                               "tp-ref": "1",
+                               "tp-ref": "example:1",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -100,19 +100,19 @@
                         {
                             "id": 2,
                             "from": {
-                               "tp-ref": "20"
+                               "tp-ref": "example:20"
                             },
                             "to": {
-                               "tp-ref": "3",
+                               "tp-ref": "example:3",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -125,19 +125,19 @@
                         {
                             "id": 3,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "1",
+                               "tp-ref": "example:1",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -150,19 +150,19 @@
                         {
                             "id": 4,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "2",
+                               "tp-ref": "example:2",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "2"
                                   },
                                   {
-                                    "ltp-ref": "3",
+                                    "ltp-ref": "example:3",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "2"
                                   }
@@ -175,19 +175,19 @@
                         {
                             "id": 5,
                             "from": {
-                               "tp-ref": "30"
+                               "tp-ref": "example:30"
                             },
                             "to": {
-                               "tp-ref": "3",
+                               "tp-ref": "example:3",
                                "ietf-optical-impairment-topology:add\
 \itional-ltp": [
                                   {
-                                    "ltp-ref": "1",
+                                    "ltp-ref": "example:1",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   },
                                   {
-                                    "ltp-ref": "2",
+                                    "ltp-ref": "example:2",
                                     "ietf-optical-impairment-topolog\
 \y:roadm-path-impairments-set": "3"
                                   }
@@ -200,10 +200,10 @@
                         {
                             "id": 6,
                             "from": {
-                               "tp-ref": "40"
+                               "tp-ref": "example:40"
                             },
                             "to": {
-                               "tp-ref": "1"
+                               "tp-ref": "example:1"
                             },
                             "is-allowed": true,
                             "ietf-optical-impairment-topology:roadm-\
@@ -212,10 +212,10 @@
                         {
                             "id": 7,
                             "from": {
-                               "tp-ref": "40"
+                               "tp-ref": "example:40"
                             },
                             "to": {
-                               "tp-ref": "2"
+                               "tp-ref": "example:2"
                             },
                             "is-allowed": true,
                             "ietf-optical-impairment-topology:roadm-\
@@ -227,30 +227,30 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "20",
+                "tp-id": "example:20",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "30",
+                "tp-id": "example:30",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "40"
+                "tp-id": "example:40"
               }, 
               {
-                "tp-id": "1",
+                "tp-id": "example:1",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "2",
+                "tp-id": "example:2",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               }, 
               {
-                "tp-id": "3",
+                "tp-id": "example:3",
                 "ietf-optical-impairment-topology:protection-type": \
 \"ietf-optical-impairment-topology:otsi-protection"
               } 
