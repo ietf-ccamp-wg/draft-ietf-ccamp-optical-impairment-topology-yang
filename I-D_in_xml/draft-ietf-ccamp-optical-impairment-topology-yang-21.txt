@@ -5140,7 +5140,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
    with the new presence container "optical-impairment-topology"
    representing an impairment-aware topology type.
 
-   As described in Section 2.3.1,the OTSi signals in the YANG model are
+   As described in Section 2.3.1, the OTSi signals in the YANG model are
    described by augmenting the "nw:network" data node and each OTSi
    signal is uniquely identified by its otsi-carrier-id, which is unique
    within the scope the OTSiG the OTSi belongs to.
@@ -5198,7 +5198,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
    "roadm-path-impairments-set", the list of the set of optical
    impairments related to ROADM paths (express, add and drop paths) and
    "explicit-transceiver-mode",the list of optical parameters related to
-   a transceiver’s explicit mode providing the cpability attributes and
+   a transceiver’s explicit mode providing the capability attributes and
    optical impairment limits of an explicit transceiver mode.  These
    templates are also defined as "network" augmentation.
 
@@ -5220,21 +5220,21 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
    *  Explicit Modes
 
    These different modes (described in Section 2.6.1, Section 2.6.2, and
-   Section 2.6.3 are defined under the "transponders" presence container
-   augmenting the data node "node" as defined in [RFC8345].  If present,
-   this container will indicate that the set of transponders/
-   transceivers in a node are described with all the impairments
-   attribute depending on the supported mode type of any specific
-   transponder.  The YANG model permits to describe the transponder
-   capabilities in a mixed way (a transceiver can support more than one
-   mode out of the three mode types).
+   Section 2.6.3) are defined under the "transponders" presence
+   container augmenting the data node "node" as defined in [RFC8345].
+   If present, this container will indicate that the set of
+   transponders/transceivers in a node is described with all the
+   impairments attribute depending on the supported mode type of any
+   specific transponder.  The YANG model permits to describe the
+   transponder capabilities in a mixed way (a transceiver can support
+   more than one mode out of the three mode types).
 
-   Section 2.3 followed by Section 2.3.3, and Section 2.3.4d describe
-   the OMS MCG and the OTS MCG and the model represents this entity as a
-   WDM TE-link interconnecting two WDM-TE-nodes.  The model augments the
-   te-link-attributes defined in [RFC8795] with the optical impairments
-   for the WDM TE-link of the layer-0 topology related to a specific
-   network controller domain.
+   Section 2.3 followed by Section 2.3.3, and Section 2.3.4 describe the
+   OMS MCG and the OTS MCG and the model represents this entity as a WDM
+   TE-link interconnecting two WDM-TE-nodes.  The model augments the te-
+   link-attributes defined in [RFC8795] with the optical impairments for
+   the WDM TE-link of the layer-0 topology related to a specific network
+   controller domain.
 
    As described in detail in Section 2.10, the optical impairments
    imposed by passive or active optical ROADM components for the three
@@ -5252,8 +5252,8 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model    February 2026
    for the ROADM's express-path contained in the "roadm-path-
    impairments-set", while the LLCL is augmented with the optical
    impairment sets contained in the "roadm-path-impairments-set" for the
-   ROADM's add-path and drop-path by using leafref "add-
-   path.impairments-set" and leafref "drop-path-impairments-set".
+   ROADM's add-path and drop-path by using leafref "add-path-
+   impairments-set" and leafref "drop-path-impairments-set".
 
    In case OTSi protection is supported, a list of additional line LTPs
    is defined in the model to represent potential connectivity between

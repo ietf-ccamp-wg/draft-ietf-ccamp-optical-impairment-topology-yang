@@ -4824,7 +4824,7 @@ module ietf-optical-impairment-topology {
   </t>
   
   <t>
-   As described in <xref target="OTSi"/>,the OTSi signals in the YANG
+   As described in <xref target="OTSi"/>, the OTSi signals in the YANG
    model are described by augmenting the "nw:network" data node and
    each OTSi signal is uniquely identified by its otsi-carrier-id,
    which is unique within the scope the OTSiG the OTSi belongs to.
@@ -4894,7 +4894,7 @@ module ietf-optical-impairment-topology {
    "roadm-path-impairments-set", the list of the set of optical
    impairments related to ROADM paths (express, add and drop paths) and
    "explicit-transceiver-mode",the list of optical parameters related
-   to a transceiver’s explicit mode providing the cpability attributes
+   to a transceiver’s explicit mode providing the capability attributes
    and optical impairment limits of an explicit transceiver mode.
    These templates are also defined as "network" augmentation.
   </t>
@@ -4918,10 +4918,10 @@ module ietf-optical-impairment-topology {
   <t>
    These different modes (described in <xref target="standard-modes"/>,
    <xref target="organizational-modes"/>, and
-   <xref target="explicit-modes"/> are defined under the "transponders"
+   <xref target="explicit-modes"/>) are defined under the "transponders"
    presence container augmenting the data node "node" as defined in
    <xref target="RFC8345"/>. If present, this container will indicate
-   that the set of transponders/transceivers in a node are described
+   that the set of transponders/transceivers in a node is described
    with all the impairments attribute depending on the supported mode
    type of any specific transponder. The YANG model permits to describe
    the transponder capabilities in a mixed way (a transceiver can
@@ -4930,7 +4930,7 @@ module ietf-optical-impairment-topology {
   
   <t>
    <xref target="sect-2.3"/> followed by <xref target="MC"/>, and
-   <xref target="sect-2.3.4"/>d describe the OMS MCG and the OTS MCG
+   <xref target="sect-2.3.4"/> describe the OMS MCG and the OTS MCG
    and the model represents this entity as a WDM TE-link
    interconnecting two WDM-TE-nodes. The model augments the
    te-link-attributes defined in <xref target="RFC8795"/> with the
@@ -4962,7 +4962,7 @@ module ietf-optical-impairment-topology {
    "roadm-path-impairments-set", while the LLCL is augmented with the
    optical impairment sets contained in the
    "roadm-path-impairments-set" for the ROADM's add-path and drop-path
-   by using leafref "add-path.impairments-set" and leafref
+   by using leafref "add-path-impairments-set" and leafref
    "drop-path-impairments-set". 
   </t>
   
