@@ -91,7 +91,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-02-06 {
+  revision 2026-02-20 {
     description
       "Initial version.";
     reference
@@ -175,7 +175,7 @@ module ietf-optical-impairment-topology {
             description
               "Amplifier elements typically equalize the optical
                power across the amplified channels using one of the
-               available equalization strategies — either targeting
+               available equalization strategies - either targeting
                a specific output power, or a specific power spectral
                density (PSD), after the out-voa.";
             choice power-param {
@@ -764,7 +764,7 @@ module ietf-optical-impairment-topology {
 
          ROADMs typically equalize the optical power across the
          channels on the OMS using one of the available equalization
-         strategies — either targeting a specific output power, or a
+         strategies - either targeting a specific output power, or a
          specific power spectral density (PSD).
 
          When not present it indicates that the information about

@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-21"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-22"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2026" month="February" day="13" />
+  <date year="2026" month="February" day="20" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -239,7 +239,7 @@
   </t>
   
   <t>
-   The term "muxponder" is a short for "multiplexer–transponder" and
+   The term "muxponder" is a short for "multiplexer-transponder" and
    refers to a device used in optical networking, especially in DWDM
    (Dense Wavelength Division Multiplexing) systems, to combine
    multiple client signals onto a single high-speed optical wavelength.
@@ -2932,7 +2932,7 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
   <section title="Optical Impairment Topology YANG Model"
   anchor="YANG-code">
   
-  <sourcecode name="ietf-optical-impairment-topology@2026-02-06.yang" type="yang"
+  <sourcecode name="ietf-optical-impairment-topology@2026-02-20.yang" type="yang"
   markers="true">
     <![CDATA[
 module ietf-optical-impairment-topology {
@@ -3028,7 +3028,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-02-06 {
+  revision 2026-02-20 {
     description
       "Initial version.";
     reference
@@ -3112,7 +3112,7 @@ module ietf-optical-impairment-topology {
             description
               "Amplifier elements typically equalize the optical
                power across the amplified channels using one of the
-               available equalization strategies — either targeting
+               available equalization strategies - either targeting
                a specific output power, or a specific power spectral
                density (PSD), after the out-voa.";
             choice power-param {
@@ -3701,7 +3701,7 @@ module ietf-optical-impairment-topology {
 
          ROADMs typically equalize the optical power across the
          channels on the OMS using one of the available equalization
-         strategies — either targeting a specific output power, or a
+         strategies - either targeting a specific output power, or a
          specific power spectral density (PSD).
 
          When not present it indicates that the information about
@@ -4894,7 +4894,7 @@ module ietf-optical-impairment-topology {
    "roadm-path-impairments-set", the list of the set of optical
    impairments related to ROADM paths (express, add and drop paths) and
    "explicit-transceiver-mode",the list of optical parameters related
-   to a transceiver’s explicit mode providing the capability attributes
+   to a transceiver's explicit mode providing the capability attributes
    and optical impairment limits of an explicit transceiver mode.
    These templates are also defined as "network" augmentation.
   </t>
@@ -5195,8 +5195,6 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
 
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4252.xml"/>
-
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7950.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
@@ -5207,65 +5205,11 @@ reference: RFC XXXX (TDB)
 <!--
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8776.xml"/>
 -->
-  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-rfc8407bis.xml"/>
-
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-teas-rfc8776-update.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8795.xml"/>
 
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9000.xml"/>
-
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
-
-  </references>
-
-  <references title="Informative References">
-  
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6566.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7446.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7579.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7581.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7698.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8342.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8453.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8969.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
-
-  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml"/>
-
-  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-teas-te-topo-and-tunnel-modeling.xml"/>
-
-
-  <reference anchor="G.672">
-   <front>
-   <title>Characteristics of multi-degree reconfigurable optical
-   add/drop multiplexers</title>
-   <author>
-   </author>
-   <date month="October" year="2020"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.672"/>
-  </reference>
 
   <reference anchor="G.680">
    <front>
@@ -5276,6 +5220,29 @@ reference: RFC XXXX (TDB)
    <date month="July" year="2007"/>
    </front>
    <seriesInfo name="ITU-T" value="Recommendation G.680"/>
+  </reference>
+
+  <reference anchor="G.694.1">
+   <front>
+   <title>Spectral grids for WDM applications: DWDM frequency grid
+   </title>
+   <author>
+   </author>
+   <date month="February" year="2012"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.694.1"/>
+  </reference>
+  
+  <reference anchor="G.698.2">
+   <front>
+   <title>Amplified multichannel dense wavelength division multiplexing
+          applications with single channel optical interfaces
+   </title>
+   <author>
+   </author>
+   <date month="November" year="2018"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.698.2"/>
   </reference>
 
   <reference anchor="G.807">
@@ -5300,6 +5267,70 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T" value="Recommendation G.807 Amendment 1"/>
   </reference>
   
+  <reference anchor="G.959.1">
+   <front>
+   <title>Optical transport network physical layer interfaces</title>
+   <author>
+   </author>
+   <date month="February" year="2012"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.959.1"/>
+  </reference>
+
+  </references>
+
+  <references title="Informative References">
+  
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4252.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6566.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7446.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7579.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7581.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7698.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8340.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8453.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8792.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8969.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9000.xml"/>
+
+  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9094.xml"/>
+
+  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-dwdm-if-param-yang.xml"/>
+
+  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-teas-te-topo-and-tunnel-modeling.xml"/>
+
+  <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-rfc8407bis.xml"/>
+
+
+  <reference anchor="G.672">
+   <front>
+   <title>Characteristics of multi-degree reconfigurable optical
+   add/drop multiplexers</title>
+   <author>
+   </author>
+   <date month="October" year="2020"/>
+   </front>
+   <seriesInfo name="ITU-T" value="Recommendation G.672"/>
+  </reference>
+
   <reference anchor="G.873.1 Amd1">
    <front>
    <title>Optical transport network: Linear protection Amendment 1
@@ -5321,27 +5352,6 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T" value="Recommendation G.709"/>
   </reference>
   
-  <reference anchor="G.694.1">
-   <front>
-   <title>Spectral grids for WDM applications: DWDM frequency grid
-   </title>
-   <author>
-   </author>
-   <date month="February" year="2012"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.694.1"/>
-  </reference>
-  
-  <reference anchor="G.959.1">
-   <front>
-   <title>Optical transport network physical layer interfaces</title>
-   <author>
-   </author>
-   <date month="February" year="2012"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.959.1"/>
-  </reference>
-
   <reference anchor="G.872">
    <front>
    <title>Architecture of optical transport networks</title>
@@ -5350,18 +5360,6 @@ reference: RFC XXXX (TDB)
    <date month="December" year="2019"/>
    </front>
    <seriesInfo name="ITU-T" value="Recommendation G.872"/>
-  </reference>
-
-  <reference anchor="G.698.2">
-   <front>
-   <title>Amplified multichannel dense wavelength division multiplexing
-          applications with single channel optical interfaces
-   </title>
-   <author>
-   </author>
-   <date month="November" year="2018"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.698.2"/>
   </reference>
 
   <reference anchor="G.798.1">
@@ -5399,8 +5397,8 @@ reference: RFC XXXX (TDB)
   <title>A framework for analyzing in-band crosstalk accumulation in
     ROADM-based optical networks</title>
   <author fullname="Pema Chentsho"/>
-  <author fullname="Luís G.C. Cancela"/>
-  <author fullname="João J.O. Pires"/>
+  <author fullname="Luis G.C. Cancela"/>
+  <author fullname="Joao J.O. Pires"/>
   <date year="2020"/>
   </front>
   <seriesInfo name="Optical Fiber Technology" value="Volume 57, 2020, Article 102238"/>
@@ -5947,7 +5945,7 @@ r-unknown
 ]]> </artwork>
   </figure>  <sourcecode type="json" markers="false">
     <![CDATA[
- =============== NOTE: '\\' line wrapping per RFC 8792 ===============
+=============== NOTE: '\\' line wrapping per RFC 8792 ===============
 
 {
   "ietf-network:networks": {
@@ -7990,106 +7988,6 @@ r-unknown
   </section>
   
   </section>
-
-<!--  <section anchor="operational-mode_usage" numbered="true">
-  <name>Examples How to Use the organizational-mode Attribute</name>
-  
-  <t>
-   One option to describe the transceiver capabilities of an optical
-   transponder (supported-mode list in the supported-modes container
-   as defied in <xref target="I-D.ietf-ccamp-rfc9093-bis" />) is to
-   describe the organizational-modes a transceiver supports as
-   described in section <xref target="organizational-modes"/>.
-  </t>
-  
-  <t>
-   <xref target="I-D.ietf-ccamp-rfc9093-bis" />) defines the
-   operational-mode of type identityref, which means that the identity
-   the operational-mode attribute is referring to needs to be defined
-   in a separate organization-specific or vendor-specific YANG module.
-   An example of such an organization-specific YANG module as well as a
-   vendor-specific YANG module is provided below.
-  </t>
-  
-  <t>
-   YANG module example containing the identity definition for a 400G
-   operational-mode specified by the organization Forum A:
-  </t>
-
-  <sourcecode type="xml" markers="false">
-    <![CDATA[
-module forum-a-operational-modes {
-  yang-version 1.1;
-
-  import "ietf-layer0-types"{
-    prefix "id-base"};
-
-  namespace "urn:forum-a:example:forum-a-op-modes";
-  prefix "op-modes";
-
-...
-
-  identity 400G-operational-mode {
-    base "id-base:operational-mode"
-      description "Forum A 400G specific mode.";
-  }
-
-...
-
-}
-    ]]>
-  </sourcecode>
-
-  <t>
-   YANG module example containing the identity definition for a 400G
-   operational-mode specified by the organization Vendor B with the
-   same identity name "400G-operational-mode" as an operational mode
-   that specified by Forum A.
-  </t>
-
-  <sourcecode type="xml" markers="false">
-    <![CDATA[
-module vendor-b-operational-modes {
-  yang-version 1.1;
-
-  import "ietf-layer0-types"{
-    prefix "id-base"};
-
-  namespace "urn:vendor-b:example:vendor-b-op-modes";
-  prefix "op-modes";
-
-...
-
-  identity 400G-operational-mode {
-    base "id-base:operational-mode"
-      description "Vendor B 400G mode.";
-  }
-
-...
-
-}
-    ]]>
-  </sourcecode>
-
-  <t>
-   If there are transceivers in a network that are supporting any of
-   the two 400G operational modes, the one specified by Forum A or the
-   one specified by Vendor B or even both, the different name spaces
-   allow to unambiguously identify the two modes that are defined in
-   the YANG modules above with exactly the same identity name.
-  </t>
-  
-  <t>
-   The NETCONF server providing the optical impairment-aware topology
-   will have to support both YANG modules above and will have to
-   advertise both as capability in the NETCONF hello message indicating
-   that these operational mode identities are used in the description
-   of the optical impairment-aware topology model defined in this
-   document.
-  </t>
-
-  </section>
--->
 
   
   <section anchor="Contributors" numbered="false">
