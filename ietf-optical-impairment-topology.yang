@@ -45,19 +45,14 @@ module ietf-optical-impairment-topology {
     "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
      WG List: <mailto:ccamp@ietf.org>
 
-     Editor:   Young Lee <younglee.tx@gmail.com>
-     Editor:   Haomian Zheng <zhenghaomian@huawei.com>
-     Editor:   Nicola Sambo <nicosambo@gmail.com>
-     Editor:   Victor Lopez <victor.lopez@nokia.com>
      Editor:   Gabriele Galimberti <gabriele.galimberti@nokia.com>
-     Editor:   Giovanni Martinelli <giomarti@cisco.com>
-     Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
      Editor:   Julien Meuric <julien.meuric@orange.com>
      Editor:   Italo Busi <Italo.Busi@huawei.com>
      Editor:   Dieter Beller <dieter.beller@nokia.com>
      Editor:   Sergio Belotti <Sergio.belotti@nokia.com>
      Editor:   Griseri Enrico <enrico.griseri@nokia.com>
+     Editor:   Roberto Manzotti <rmanzott@cisco.com>
      Editor:   Gert Grammel <ggrammel@juniper.net>";
   description
     "This module contains a collection of YANG definitions for
@@ -91,7 +86,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-02-20 {
+  revision 2026-02-26 {
     description
       "Initial version.";
     reference

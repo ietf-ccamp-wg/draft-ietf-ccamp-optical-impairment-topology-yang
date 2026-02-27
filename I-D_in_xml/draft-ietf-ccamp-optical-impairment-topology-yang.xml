@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-22"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-23"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -46,7 +46,7 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2026" month="February" day="20" />
+  <date year="2026" month="February" day="27" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
@@ -2932,7 +2932,7 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
   <section title="Optical Impairment Topology YANG Model"
   anchor="YANG-code">
   
-  <sourcecode name="ietf-optical-impairment-topology@2026-02-20.yang" type="yang"
+  <sourcecode name="ietf-optical-impairment-topology@2026-02-26.yang" type="yang"
   markers="true">
     <![CDATA[
 module ietf-optical-impairment-topology {
@@ -2982,19 +2982,14 @@ module ietf-optical-impairment-topology {
     "WG Web: <https://datatracker.ietf.org/wg/ccamp/>
      WG List: <mailto:ccamp@ietf.org>
 
-     Editor:   Young Lee <younglee.tx@gmail.com>
-     Editor:   Haomian Zheng <zhenghaomian@huawei.com>
-     Editor:   Nicola Sambo <nicosambo@gmail.com>
-     Editor:   Victor Lopez <victor.lopez@nokia.com>
      Editor:   Gabriele Galimberti <gabriele.galimberti@nokia.com>
-     Editor:   Giovanni Martinelli <giomarti@cisco.com>
-     Editor:   Jean-Luc Auge <jeanluc.auge@orange.com>
      Editor:   Le Rouzic Esther <esther.lerouzic@orange.com>
      Editor:   Julien Meuric <julien.meuric@orange.com>
      Editor:   Italo Busi <Italo.Busi@huawei.com>
      Editor:   Dieter Beller <dieter.beller@nokia.com>
      Editor:   Sergio Belotti <Sergio.belotti@nokia.com>
      Editor:   Griseri Enrico <enrico.griseri@nokia.com>
+     Editor:   Roberto Manzotti <rmanzott@cisco.com>
      Editor:   Gert Grammel <ggrammel@juniper.net>";
   description
     "This module contains a collection of YANG definitions for
@@ -3028,7 +3023,7 @@ module ietf-optical-impairment-topology {
   // replace the revision date with the module publication date
   // the format is (year-month-day)
 
-  revision 2026-02-20 {
+  revision 2026-02-26 {
     description
       "Initial version.";
     reference
