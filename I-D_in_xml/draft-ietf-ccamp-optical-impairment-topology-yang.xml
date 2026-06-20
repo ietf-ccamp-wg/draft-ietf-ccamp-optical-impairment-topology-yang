@@ -2930,6 +2930,11 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
   <section title="Optical Impairment Topology YANG Model"
   anchor="YANG-code">
   
+  <t>
+    The YANG model defined below makes an informative reference to a paper on in-band crosstalk
+    accumulation in ROADM-based optical networks <xref target="CHENTSHO2020"/>.
+  </t>
+  
   <sourcecode name="ietf-optical-impairment-topology@2026-02-26.yang" type="yang"
   markers="true">
     <![CDATA[
