@@ -1754,7 +1754,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <t>Polarization dependent loss (PDL)</t>
    <t>Optical amplifier noise due to amplified spontaneous emission
    (ASE)</t>
-   <t>In-band cross-talk</t>
+   <t>In-band crosstalk</t>
    <t>Filtering effects (out of scope of this document)</t>
   <?rfc subcompact="no"?>
   </list></t>
@@ -5122,7 +5122,7 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T" value="G.694.1 (2020)"/>
   </reference>
-  
+
   <reference anchor="ITU-T_G.698.2" target="https://www.itu.int/rec/T-REC-G.698.2">
    <front>
    <title>Amplified multichannel dense wavelength division multiplexing
@@ -5147,7 +5147,7 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T" value="G.807 (2020)"/>
   </reference>
-  
+
   <reference anchor="ITU-T_G.807 Amd1" target="https://www.itu.int/rec/T-REC-G.807">
    <front>
    <title>Generic functional architecture of the optical media network
@@ -5159,7 +5159,7 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T Recommendation" value="G.807 Amendment 1 (2021)"/>
   </reference>
-  
+
   <reference anchor="ITU-T_G.959.1" target="https://www.itu.int/rec/T-REC-G.959.1">
    <front>
    <title>Optical transport network physical layer interfaces</title>
@@ -5224,18 +5224,6 @@ reference: RFC XXXX (TDB)
    <seriesInfo name="ITU-T Recommendation" value="G.672 (2025)"/>
   </reference>
 
-  <reference anchor="ITU-T_G.873.1 Amd1" target="https://www.itu.int/rec/T-REC-G.873.1">
-   <front>
-   <title>Optical transport network: Linear protection Amendment 1
-   </title>
-   <author>
-     <organization>International Telecommunication Union</organization>
-   </author>
-   <date month="February" year="2022"/>
-   </front>
-   <seriesInfo name="ITU-T Recommendation" value="G.873.1 Amendment 1 (2022)"/>
-  </reference>  
-  
    <reference anchor="ITU-T_G.709" target="https://www.itu.int/rec/T-REC-G.709">
    <front>
    <title>Interfaces for the Optical Transport Network (OTN)</title>
@@ -5245,17 +5233,6 @@ reference: RFC XXXX (TDB)
    <date month="June" year="2020"/>
    </front>
    <seriesInfo name="ITU-T Recommendation" value="G.709 (2020)"/>
-  </reference>
-  
-  <reference anchor="ITU-T_G.872 Amd1" target="https://www.itu.int/rec/T-REC-G.872">
-   <front>
-   <title>Architecture of optical transport networks Amendment 1</title>
-   <author>
-     <organization>International Telecommunication Union</organization>
-   </author>
-   <date month="January" year="2021"/>
-   </front>
-   <seriesInfo name="ITU-T Recommendation" value="G.872 Amendment 1 (2021)"/>
   </reference>
 
   <reference anchor="ITU-T_G.798.1" target="https://www.itu.int/rec/T-REC-G.798.1">
@@ -5269,7 +5246,18 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T Recommendation" value="G.798.1 (2013)"/>
   </reference>
-  
+
+  <reference anchor="ITU-T_G.872 Amd1" target="https://www.itu.int/rec/T-REC-G.872">
+   <front>
+   <title>Architecture of optical transport networks Amendment 1</title>
+   <author>
+     <organization>International Telecommunication Union</organization>
+   </author>
+   <date month="January" year="2021"/>
+   </front>
+   <seriesInfo name="ITU-T Recommendation" value="G.872 Amendment 1 (2021)"/>
+  </reference>
+
   <reference anchor="ITU-T_G.873.1" target="https://www.itu.int/rec/T-REC-G.873.1">
    <front>
    <title>Optical transport network: Linear protection</title>
@@ -5280,7 +5268,19 @@ reference: RFC XXXX (TDB)
    </front>
    <seriesInfo name="ITU-T Recommendation" value="G.873.1 (2017)"/>
   </reference>
-  
+
+  <reference anchor="ITU-T_G.873.1 Amd1" target="https://www.itu.int/rec/T-REC-G.873.1">
+   <front>
+   <title>Optical transport network: Linear protection Amendment 1
+   </title>
+   <author>
+     <organization>International Telecommunication Union</organization>
+   </author>
+   <date month="February" year="2022"/>
+   </front>
+   <seriesInfo name="ITU-T Recommendation" value="G.873.1 Amendment 1 (2022)"/>
+  </reference>  
+
   <reference anchor="OpenROADM" target="http://openroadm.org">
    <front>
    <title>OpenROADM Multi-Source Agreement (MSA)
@@ -5290,7 +5290,7 @@ reference: RFC XXXX (TDB)
    </author>
    </front>
   </reference>
-  
+
   <reference anchor="CHENTSHO2020" 
     target="https://www.sciencedirect.com/science/article/pii/S1068520020302285">
   <front>
@@ -5305,7 +5305,7 @@ reference: RFC XXXX (TDB)
   <seriesInfo name="ISSN" value="1068-5200"/>
   <seriesInfo name="DOI" value="10.1016/j.yofte.2020.102238"/>
   </reference>
-  
+
   </references>
 
   <section anchor="Tree View" numbered="true">

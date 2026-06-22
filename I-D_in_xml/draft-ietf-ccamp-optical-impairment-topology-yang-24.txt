@@ -1698,7 +1698,7 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2026
    *  Optical amplifier noise due to amplified spontaneous emission
       (ASE)
 
-   *  In-band cross-talk
+   *  In-band crosstalk
 
    *  Filtering effects (out of scope of this document)
 
@@ -5572,17 +5572,17 @@ Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2026
               multiplexers", ITU-T Recommendation G.672 (2025), November
               2025, <https://www.itu.int/rec/T-REC-G.672>.
 
-   [ITU-T_G.873.1_Amd1]
-              International Telecommunication Union, "Optical transport
-              network: Linear protection Amendment 1", ITU-T
-              Recommendation G.873.1 Amendment 1 (2022), February 2022,
-              <https://www.itu.int/rec/T-REC-G.873.1>.
-
    [ITU-T_G.709]
               International Telecommunication Union, "Interfaces for the
               Optical Transport Network (OTN)", ITU-T
               Recommendation G.709 (2020), June 2020,
               <https://www.itu.int/rec/T-REC-G.709>.
+
+   [ITU-T_G.798.1]
+              International Telecommunication Union, "Types and
+              characteristics of optical transport network equipment",
+              ITU-T Recommendation G.798.1 (2013), January 2013,
+              <https://www.itu.int/rec/T-REC-G.798.1>.
 
    [ITU-T_G.872_Amd1]
               International Telecommunication Union, "Architecture of
@@ -5602,16 +5602,16 @@ Beller, et al.          Expires 24 December 2026              [Page 100]
 Internet-Draft    Opt. Impairment-Aware Topo YANG Model        June 2026
 
 
-   [ITU-T_G.798.1]
-              International Telecommunication Union, "Types and
-              characteristics of optical transport network equipment",
-              ITU-T Recommendation G.798.1 (2013), January 2013,
-              <https://www.itu.int/rec/T-REC-G.798.1>.
-
    [ITU-T_G.873.1]
               International Telecommunication Union, "Optical transport
               network: Linear protection", ITU-T Recommendation G.873.1
               (2017), October 2017,
+              <https://www.itu.int/rec/T-REC-G.873.1>.
+
+   [ITU-T_G.873.1_Amd1]
+              International Telecommunication Union, "Optical transport
+              network: Linear protection Amendment 1", ITU-T
+              Recommendation G.873.1 Amendment 1 (2022), February 2022,
               <https://www.itu.int/rec/T-REC-G.873.1>.
 
    [OpenROADM]
