@@ -3,7 +3,7 @@
 
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  docName="draft-ietf-ccamp-optical-impairment-topology-yang-23"
+  docName="draft-ietf-ccamp-optical-impairment-topology-yang-24"
   category="std"
   consensus="true"
   ipr="trust200902"
@@ -36,9 +36,9 @@
     <address><email>Sergio.Belotti@nokia.com</email></address>
   </author>
 
-  <author initials="G." surname="Galimberti" fullname="G. Galimberti">
+  <author initials="G." surname="Galimberti" fullname="Gabriele Galimberti">
     <organization>Nokia</organization>
-    <address><email>ggalimbe56@gmail.com</email></address>
+    <address><email>gabriele.galimberti@nokia.com</email></address>
   </author>
   
   <author initials="I." surname="Busi" fullname="Italo Busi">
@@ -46,32 +46,29 @@
     <address><email>Italo.Busi@huawei.com</email></address>
   </author>
      
-  <date year="2026" month="February" day="27" />
+  <date year="2026" month="June" day="22" />
   <area>Routing</area>
   <workgroup>CCAMP Working Group</workgroup>
 
   <abstract>
   <t>
-   In order to provision an optical connection through optical
-   networks, a combination of path continuity, resource availability,
-   and impairment constraints must be met to determine viable and
-   optimal paths through the network. The determination of appropriate
-   paths is known as Impairment-Aware Routing and Wavelength Assignment
-   (IA-RWA) for a Wavelength Switched Optical Network (WSON), while it
-   is known as Impairment-Aware Routing and Spectrum Assignment
-   (IA-RSA) for a Spectrum Switched Optical Network (SSON).
+   Provisioning an optical connection requires that path continuity,
+   resource availability, and impairment constraints be satisfied in
+   order to determine viable paths through the network. This process is
+   known as Impairment-Aware Routing and Wavelength Assignment (IA-RWA)
+   in Wavelength Switched Optical Networks (WSONs) and as
+   Impairment-Aware Routing and Spectrum Assignment (IA-RSA) in
+   Spectrum Switched Optical Networks (SSONs).
   </t>
 
   <t>
-   This document provides a YANG data model for the impairment-aware
-   Traffic Engineering topology (TE topology) in optical networks.
-   It augments the technology agnostic YANG Data Model for TE
-   topologies.
-   The topology YANG model provides read-only topology data including
-   optical impairments that can be used for example by a Path
-   Computation Engine (PCE) for calculating an optically feasible path
-   for a new connection before it is established through an optical
-   network.
+   This document defines a YANG data model for impairment-aware Traffic
+   Engineering (TE) topologies in optical networks. The model augments
+   the technology-agnostic YANG data model for TE topologies and
+   provides read-only topology information, including optical
+   impairments. Such information can be used, for example, by a Path
+   Computation Engine (PCE) to compute optically feasible paths prior
+   to connection establishment.
   </t>
 
   </abstract>
@@ -159,7 +156,7 @@
   <section title="Terminology" anchor="sect-1.1">
   <t>
    Refer to <xref target="RFC6566"/>, <xref target="RFC7698"/>, and
-   <xref target="G.807"/> for the key terms used in
+   <xref target="ITU-T_G.807"/> for the key terms used in
    this document.
   </t>
 
@@ -185,7 +182,7 @@
   <t>
    The term ROADM in this document refers to the term "multi-degree
    reconfigurable optical add/drop multiplexer (MD-ROADM)" as defined
-   in <xref target="G.672"/>.  It does not include local optical
+   in <xref target="ITU-T_G.672"/>.  It does not include local optical
    transponders, which can be co-located in the same physical device
    (managed entity).
   </t>
@@ -229,9 +226,9 @@
    In the context of this document, the term "layer 0" refers to the
    photonic layer or WDM layer network in the architecture of the
    optical transport network (OTN) as defined in ITU-T Recommendation
-   G.709 <xref target="G.709"/>, ITU-T Recommendation G.872
-   <xref target="G.872"/>, and ITU-T Recommendation G.807
-   <xref target="G.807"/> as opposed to the electrical switching layers
+   G.709 <xref target="ITU-T_G.709"/>, ITU-T Recommendation G.872
+   Amendment 1 <xref target="ITU-T_G.872 Amd1"/>, and ITU-T Recommendation G.807
+   <xref target="ITU-T_G.807"/> as opposed to the electrical switching layers
    of the OTN, which are typically referred to as layer 1 (L1).
    The term "layer 0" may also be used for other transport network
    technologies (e.g. copper-based, radio-based, or free space
@@ -372,21 +369,21 @@
    BA: Booster Amplifier (or egress amplifier)
    PA: Pre-Amplifier (or ingress amplifier)
    ILA: In-Line Amplifier
-   MCG: Media Channel Group [G.807]
-   OTS MCG: Optical Transmission Section MCG [G.807]
-   OMS MCG: Optical Multiplex Section MCG [G.807]
+   MCG: Media Channel Group [ITU-T_G.807]
+   OTS MCG: Optical Transmission Section MCG [ITU-T_G.807]
+   OMS MCG: Optical Multiplex Section MCG [ITU-T_G.807]
 ]]></artwork>
   </figure>
 
   <t>
    BA (WDM-node 1) is the egress Amplifier and PA (WDM-node 2) is the
    ingress amplifier for the Optical Multiplex Section Media Channel
-   Group (OMS MCG) <xref target="G.807"/> in the direction from left to
+   Group (OMS MCG) <xref target="ITU-T_G.807"/> in the direction from left to
    right in <xref target="Figure-2"/>.
   </t>
   
   <t>
-   According to <xref target="G.807"/>, clause 3.2.4, a Media Channel
+   According to <xref target="ITU-T_G.807"/>, clause 3.2.4, a Media Channel
    Group (MCG) represents "a unidirectional point-to-point
    management/control abstraction that represents a set of one or more
    media channels that are co-routed. A media channel group (MCG) is
@@ -398,7 +395,7 @@
   <section title="OTS and OMS Media Channel Group" anchor="sect-2.3">
    
   <t>
-   According to <xref target="G.807"/>, an
+   According to <xref target="ITU-T_G.807"/>, an
    Optical Transmission Section Media Channel Group (OTS MCG) represents
    a topological construct between two adjacent amplifiers, such as:
   </t>
@@ -412,7 +409,7 @@
   </figure>
   
   <t>
-   <xref target="G.807"/> defines an OMS MCG as "The topological
+   <xref target="ITU-T_G.807"/> defines an OMS MCG as "The topological
    relationship between the media port on a filter or coupler where a
    set of media channels are aggregated and the media port on a filter
    or coupler where one or more media channel is added to or removed 
@@ -481,7 +478,7 @@
  <section title="Optical Tributary Signal (OTSi)" anchor="OTSi">
   <t>
    The OTSi is defined in ITU-T Recommendation G.959.1, section 3.2.4
-   <xref target="G.959.1"/> as "Optical signal that is placed within a 
+   <xref target="ITU-T_G.959.1"/> as "Optical signal that is placed within a 
    network media channel for transport across the optical network. This
    may consist of a single modulated optical carrier or a group of
    modulated optical carriers or subcarriers."
@@ -536,16 +533,16 @@
   anchor="OTSiG">
   <t>
    The OTSiG is defined in ITU-T Recommendation G.807
-   <xref target="G.807"/> as a "set of optical tributary signals (OTSi)
+   <xref target="ITU-T_G.807"/> as a "set of optical tributary signals (OTSi)
    that supports a single digital client".
    Hence, the OTSiG is an electrical signal that is carried by one or
    more OTSi's. The relationship between the OTSiG and the OTSi's is 
-   described in <xref target="G.807"/>, section 10.2.
+   described in <xref target="ITU-T_G.807"/>, section 10.2.
    The YANG model in <xref target="YANG-code"/> supports both cases: the
    single OTSi case where the OTSiG contains a single OTSi (see
-   <xref target="G.807"/>, Figure 10-2) and the multiple OTSi case
+   <xref target="ITU-T_G.807"/>, Figure 10-2) and the multiple OTSi case
    where the OTSiG consists of more than one OTSi (see
-   <xref target="G.807"/>, Figure 10-3).
+   <xref target="ITU-T_G.807"/>, Figure 10-3).
    From a layer 0 topology YANG model perspective, the OTSiG is a
    logical construct that associates the OTSi's, which belong to the
    same OTSiG. The typical application of an OTSiG consisting of more
@@ -592,7 +589,7 @@
   <section title="Media Channel (MC)" anchor="MC">
     
   <t>
-   <xref target="G.807"/> defines a "media channel" as "A media
+   <xref target="ITU-T_G.807"/> defines a "media channel" as "A media
    association that represents both the topology (i.e., the path
    through the media) and the resource (i.e., frequency slot or
    effective frequency slot) that it occupies." In this document,
@@ -615,7 +612,7 @@
   </t>
 
   <t>
-   <xref target="G.807 Amd1"/> defines a "network media channel (NMC)"
+   <xref target="ITU-T_G.807 Amd1"/> defines a "network media channel (NMC)"
    as "a type of media channel that is formed by the serial
    concatenation of all media channels between the media port of a
    modulator and the media port of a demodulator". The modulator and
@@ -629,7 +626,7 @@
   <t>
    In <xref target="Prot"/>, the term "end-to-end MC path" is
    used to describe the topological aspect of the end-to-end MC, i.e.,
-   the path through the media (see: <xref target="G.807 Amd1"/>,
+   the path through the media (see: <xref target="ITU-T_G.807 Amd1"/>,
    section 7.1.2). This is in line with the TE path defined in
    <xref target="RFC8795"/>, section 3.9, where the TE path is defined
    as "an ordered list of TE links and/or TE nodes on the TE topology
@@ -661,8 +658,8 @@
    The frequency slot of the MC is defined by the n value defining the
    central frequency of the MC and the m value that defines the width
    of the MC following the flexible grid definition in
-   <xref target="G.694.1"/>. In this model, the effective frequency
-   slot as defined in <xref target="G.807"/> is equal to the frequency
+   <xref target="ITU-T_G.694.1"/>. In this model, the effective frequency
+   slot as defined in <xref target="ITU-T_G.807"/> is equal to the frequency
    slot of this MC. It is also assumed that ROADM devices
    can switch MCs.
    For various reasons (e.g. differential delay), it is preferred to
@@ -675,9 +672,10 @@
 
   <section title="Media Channel Group (MCG)" anchor="sect-2.3.4">
   <t>
-   ITU-T [G.807] defines the Media Channel Group MCG as
-   "A unidirectional point to point management/control abstraction that
-   represents a set of one or more media channels that are co-routed."
+   ITU-T Recommendation G.807 <xref target="ITU-T_G.807"/> defines the 
+   Media Channel Group MCG as "A unidirectional point to point
+   management/control abstraction that represents a set of one or more
+   media channels that are co-routed."
    The YANG model in <xref target="YANG-code"/> assumes that the MCG is a
    logical grouping of one or more MCs that are used to carry all
    OTSi's belonging to the same OTSiG.
@@ -923,7 +921,7 @@
    optical signal from a DWDM network. A transponder can have one or
    more transceiver modules. A transceiver represents a transmitter and
    its corresponding receiver (Tx/Rx pair) as defined in ITU-T
-   Recommendation G.698.2 <xref target="G.698.2"/>. In addition to the
+   Recommendation G.698.2 <xref target="ITU-T_G.698.2"/>. In addition to the
    transceiver, which is terminating an OTSi signal, a transponder
    typically provides additional layer 1 functionality such as, for
    example, aggregation (multiplexing) of client traffic from multiple
@@ -972,7 +970,7 @@
    transponders is an important factor for optical signal to traverse
    through the fiber. There are three main approaches to determine
    optical signal compatibility. Application Code based on G.698.2
-   <xref target="G.698.2"/> is one approach that only checks the code
+   <xref target="ITU-T_G.698.2"/> is one approach that only checks the code
    at both ends of the link. Another approach is organization codes
    that are specific to an organization or a vendor. The third approach
    is specify all the relevant parameters explicitly, e.g., FEC type,
@@ -1000,13 +998,13 @@
    A standard mode is related to an optical specification developed
    by a Standards Development Organization (SDO). Currently, the
    "Standard Modes" can only be referred to ITU-T Recommendation
-   G.698.2 <xref target="G.698.2"/> since ITU-T Recommendation G.698.2
+   G.698.2 <xref target="ITU-T_G.698.2"/> since ITU-T Recommendation G.698.2
    is the only standard defining "Standard Modes" today.
    Nothing is precluding, however, consideration of other
    specifications provided by any other SDO in the Standard Mode
    context as soon as such specifications might be available. An
    application code as defined in ITU-T G.698.2
-   <xref target="G.698.2"/> represents a standard ITU-T G.698.2 optical
+   <xref target="ITU-T_G.698.2"/> represents a standard ITU-T G.698.2 optical
    interface specification towards the realization of transversely
    compatible DWDM systems that it is a standard that ensures
    transceivers from different vendors can work together in a DWDM
@@ -1021,7 +1019,7 @@
   <t>
    For the standard modes, some additional attributes are defined.
    The most important one is the line-coding-bitrate attribute, which
-   was added because <xref target="G.698.2"/> lists 100gpbs application
+   was added because <xref target="ITU-T_G.698.2"/> lists 100gpbs application
    codes supporting two data formats, an OTU4 related data format and a
    Flex-O related data format. The supported data formats for an
    application code can be described by listing the supported data
@@ -1034,7 +1032,7 @@
    range, optical carrier tunability, and transmitter/receiver optical
    power ranges can be described as optional attributes in case they
    differ from the specification for the standard mode, i.e., as
-   defined in <xref target="G.698.2"/>. A transceiver may support
+   defined in <xref target="ITU-T_G.698.2"/>. A transceiver may support
    extended optical frequency ranges or optical power ranges or a finer
    optical carrier tunability. These capabilities can be described
    explicitly if needed.
@@ -1121,7 +1119,7 @@
    An organization MAY define the operational modes to include the
    optical power and carrier frequency related properties following the
    application code approach as defined in ITU-T Recommendation G.698.2
-   <xref target="G.698.2"/>. In such a case, the explicit optical power
+   <xref target="ITU-T_G.698.2"/>. In such a case, the explicit optical power
    and carrier frequency related optional attributes should be omitted
    in order to avoid redundant information in the description of the
    transceiver capabilities. If these attributes are provided in
@@ -1212,7 +1210,7 @@
    These optical transceiver properties are explicitly defined in the
    model for explicit and organizational modes, while they are
    implicitly defined for the application codes (see ITU-T G698.2
-   <xref target="G.698.2"/>).
+   <xref target="ITU-T_G.698.2"/>).
   </t>
   
   <t>
@@ -1294,7 +1292,7 @@
    more 3R regenerators are needed for regenerating the optical signal
    in intermediate nodes. The term "3R" regenerator means:
    reamplification, reshaping, retiming. As described in
-   <xref target="G.807"/>, Appendix IV, a 3R regenerator terminates the
+   <xref target="ITU-T_G.807"/>, Appendix IV, a 3R regenerator terminates the
    OTSi and generates a new OTSi. Depending on the 3R regenerator
    capabilities, it can provide functions such as carrier frequency
    translation (carrier-frequency), changes in the modulation scheme
@@ -1305,7 +1303,7 @@
 
   <t>
    The 3R regeneration compound function is illustrated in section 10.1
-   of <xref target="G.798.1"/>, and sections 10.3 and 10.4 provide
+   of <xref target="ITU-T_G.798.1"/>, and sections 10.3 and 10.4 provide
    examples of a ROADM architecture and a photonic cross-connect
    architecture including 3R regenerators.
    Based on the functionality provided, 3R regenerators are considered
@@ -1756,7 +1754,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    <t>Polarization dependent loss (PDL)</t>
    <t>Optical amplifier noise due to amplified spontaneous emission
    (ASE)</t>
-   <t>In-band cross-talk</t>
+   <t>In-band crosstalk</t>
    <t>Filtering effects (out of scope of this document)</t>
   <?rfc subcompact="no"?>
   </list></t>
@@ -1807,7 +1805,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    necessary to know whether the optical power of the OTSi stays within
    a certain power window. This is reflected by some optical power
    related parameters such as loss parameters or power parameters (see
-   also <xref target="G.680"/>), which are included in the optical
+   also <xref target="ITU-T_G.680"/>), which are included in the optical
    impairment parameter sets
    (see tree view in <xref target="Tree View"/>).
   </t>
@@ -1851,7 +1849,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
   <t>
    Individual OTSi protection is a protection architecture where an
    individual OTSi signal is protected as described in Appendix III of
-   ITU-T Recommendation G.873.1 <xref target ="G.873.1"/>. 
+   ITU-T Recommendation G.873.1 <xref target ="ITU-T_G.873.1"/>. 
    This protection architecture requires specific photonic protection
    functions in the optical domain that are typically provided by
    specific protection hardware. These photonic protection functions
@@ -2453,7 +2451,7 @@ Line |     .  +-----+ | |  *  *  | | +-----+  .     | Line
    OMS MCG protection is a 1+1 protection architecture where a TE-link
    representing an OMS MCG between two adjacent WDM-TE-nodes is 1+1
    protected. This media layer protection type is also described in
-   Appendix III of <xref target="G.873.1 Amd1"/>.
+   Appendix III of <xref target="ITU-T_G.873.1 Amd1"/>.
    <xref target="OMS_MCG_prot"/> illustrates this 1+1 OMS MCG
    protection type and shows a 1+1 protected TE-link together with an
    unprotected TE-link between the same two adjacent WDM-TE-nodes. The
@@ -2931,6 +2929,11 @@ LTP1'   |       |   |   /   |LTP2' LTP3'|   \   |   |       |   LTP4'
  
   <section title="Optical Impairment Topology YANG Model"
   anchor="YANG-code">
+  
+  <t>
+    The YANG model defined below makes an informative reference to a paper on in-band crosstalk
+    accumulation in ROADM-based optical networks <xref target="CHENTSHO2020"/>.
+  </t>
   
   <sourcecode name="ietf-optical-impairment-topology@2026-02-26.yang" type="yang"
   markers="true">
@@ -5030,114 +5033,6 @@ module ietf-optical-impairment-topology {
    adds.
   </t>
 
-<!--
-  <t>
-   The YANG module specified in this document defines a schema for data
-   that is designed to be accessed via network management protocols
-   such as NETCONF <xref target="RFC6241"/> or RESTCONF
-   <xref target="RFC8040"/>. The lowest NETCONF layer is the secure
-   transport layer, and the mandatory-to-implement secure transport is
-   Secure Shell (SSH) <xref target="RFC6242"/>. The lowest RESTCONF
-   layer is HTTPS, and the mandatory-to-implement secure transport is
-   TLS <xref target="RFC8446"/>.
-  </t>
-  
-  <t>
-   The Network Configuration Access Control Model (NACM)
-   <xref target="RFC8341"/> provides the means to restrict access for
-   particular NETCONF or RESTCONF users to a preconfigured subset of
-   all available NETCONF or RESTCONF protocol operations and content.
-  </t>
-  
-  <t>
-   The YANG module specified in this document imports the ietf-network
-   and ietf-network-topology modules defined in
-   <xref target="RFC8345"/>. This YANG module augments te-topology
-   defined in <xref target="RFC8795"/> and consequently inherits
-   te-topology subtrees and data nodes and their potential
-   sensitivities and vulnerabilities. Therefore, the security
-   considerations from <xref target="RFC8345"/> also apply to the YANG
-   module defined in this document.
-  </t>
-  
-  <t>
-   The data nodes defined in this YANG module are not writable/
-   creatable/deletable (i.e., "config true", which is the default) and
-   are therefore only readable  (i.e., config false). Although the data
-   nodes are not susceptible to write operations or attacks (for
-   instance, thought "edit-config"), some data nodes accessible for
-   reading might be considered sensitive or prone to vulnerabilities as
-   they expose network topology information, which may be confidential
-   information for some operators. Therefore, it is critical to manage
-   access to these readable nodes carefully (for instance, through
-   "get", "get-config", or "notification" commands) to safeguard them.
-  </t>
-  
-  <t>
-   These are the subtrees and data nodes and their
-   sensitivity/vulnerability:
-  </t>
-
-  <t>
-    <dl newline="true">
-      <dt>/nw:networks/nw:network/nw:network-types/tet:te-topology</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the TE
-        topology type.
-      </dd>
-      
-      <dt>/nw:networks/tet:te</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the TE node
-        templates and TE link templates.
-      </dd>
-      
-      <dt>/nw:networks/nw:network</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        topology-wide configurations, including the TE topology ID, the
-        topology-wide policies, and the topology geolocation.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nw:node</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE nodes.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nt:link/tet:te</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE links.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nw:node/nt:termination-point</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE link termination points.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nt:link/tet:te/tet:te-link-attributes</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE link attributes.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nw:node/tet:te/tet:tunnel-termination-point</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE link tunnel termination
-        points.
-      </dd>
-      
-      <dt>/nw:networks/nw:network/nw:node/tet:te/tet:te-node-attributes</dt>
-      <dd>
-        Unauthorized access to this subtree can disclose the
-        operational state information of TE node attributes.
-      </dd>
-    </dl>
-  </t>
--->
 
   </section>
 
@@ -5174,8 +5069,8 @@ reference: RFC XXXX (TDB)
 
   <section title="Acknowledgments" anchor="sect-7">
   <t>
-   We thank Daniele Ceccarelli and Oscar G. De Dios for useful
-   discussions and motivation for this work.
+   The authors thank Daniele Ceccarelli and Oscar G. De Dios for
+   useful discussions and for motivating this work.
   </t>
 
   </section>
@@ -5206,70 +5101,74 @@ reference: RFC XXXX (TDB)
 
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ccamp-rfc9093-bis.xml"/>
 
-  <reference anchor="G.680">
+  <reference anchor="ITU-T_G.680" target="https://www.itu.int/rec/T-REC-G.680">
    <front>
-   <title>Physical transfer functions of optical network elements
-   </title>
+   <title>Physical transfer functions of optical network elements</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="July" year="2007"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.680"/>
+   <seriesInfo name="ITU-T" value="G.680 (2007)"/>
   </reference>
 
-  <reference anchor="G.694.1">
+  <reference anchor="ITU-T_G.694.1" target="https://www.itu.int/rec/T-REC-G.694.1">
    <front>
-   <title>Spectral grids for WDM applications: DWDM frequency grid
-   </title>
+   <title>Spectral grids for WDM applications: DWDM frequency grid</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
-   <date month="February" year="2012"/>
+   <date month="October" year="2020"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.694.1"/>
+   <seriesInfo name="ITU-T" value="G.694.1 (2020)"/>
   </reference>
-  
-  <reference anchor="G.698.2">
+
+  <reference anchor="ITU-T_G.698.2" target="https://www.itu.int/rec/T-REC-G.698.2">
    <front>
    <title>Amplified multichannel dense wavelength division multiplexing
           applications with single channel optical interfaces
    </title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="November" year="2018"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.698.2"/>
+   <seriesInfo name="ITU-T" value="G.698.2 (2018)"/>
   </reference>
 
-  <reference anchor="G.807">
+  <reference anchor="ITU-T_G.807" target ="https://www.itu.int/rec/T-REC-G.807">
    <front>
    <title>Generic functional architecture of the optical media network
    </title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="February" year="2020"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.807"/>
+   <seriesInfo name="ITU-T" value="G.807 (2020)"/>
   </reference>
-  
-  <reference anchor="G.807 Amd1">
+
+  <reference anchor="ITU-T_G.807 Amd1" target="https://www.itu.int/rec/T-REC-G.807">
    <front>
    <title>Generic functional architecture of the optical media network
    Amendment 1</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="January" year="2021"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.807 Amendment 1"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.807 Amendment 1 (2021)"/>
   </reference>
-  
-  <reference anchor="G.959.1">
+
+  <reference anchor="ITU-T_G.959.1" target="https://www.itu.int/rec/T-REC-G.959.1">
    <front>
    <title>Optical transport network physical layer interfaces</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
-   <date month="February" year="2012"/>
+   <date month="July" year="2018"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.959.1"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.959.1 (2018)"/>
   </reference>
 
   </references>
@@ -5279,8 +5178,6 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4252.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
-
-  <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
 
   <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6566.xml"/>
 
@@ -5315,77 +5212,85 @@ reference: RFC XXXX (TDB)
   <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netmod-rfc8407bis.xml"/>
 
 
-  <reference anchor="G.672">
+  <reference anchor="ITU-T_G.672" target="https://www.itu.int/rec/T-REC-G.672">
    <front>
    <title>Characteristics of multi-degree reconfigurable optical
    add/drop multiplexers</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
-   <date month="October" year="2020"/>
+   <date month="November" year="2025"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.672"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.672 (2025)"/>
   </reference>
 
-  <reference anchor="G.873.1 Amd1">
-   <front>
-   <title>Optical transport network: Linear protection Amendment 1
-   </title>
-   <author>
-   </author>
-   <date month="February" year="2022"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.873.1 Amendment 1"/>
-  </reference>  
-  
-   <reference anchor="G.709">
+   <reference anchor="ITU-T_G.709" target="https://www.itu.int/rec/T-REC-G.709">
    <front>
    <title>Interfaces for the Optical Transport Network (OTN)</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
-   <date month="June" year="2016"/>
+   <date month="June" year="2020"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.709"/>
-  </reference>
-  
-  <reference anchor="G.872">
-   <front>
-   <title>Architecture of optical transport networks</title>
-   <author>
-   </author>
-   <date month="December" year="2019"/>
-   </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.872"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.709 (2020)"/>
   </reference>
 
-  <reference anchor="G.798.1">
+  <reference anchor="ITU-T_G.798.1" target="https://www.itu.int/rec/T-REC-G.798.1">
    <front>
    <title>Types and characteristics of optical transport network
    equipment</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="January" year="2013"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.798.1"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.798.1 (2013)"/>
   </reference>
-  
-  <reference anchor="G.873.1">
+
+  <reference anchor="ITU-T_G.872 Amd1" target="https://www.itu.int/rec/T-REC-G.872">
+   <front>
+   <title>Architecture of optical transport networks Amendment 1</title>
+   <author>
+     <organization>International Telecommunication Union</organization>
+   </author>
+   <date month="January" year="2021"/>
+   </front>
+   <seriesInfo name="ITU-T Recommendation" value="G.872 Amendment 1 (2021)"/>
+  </reference>
+
+  <reference anchor="ITU-T_G.873.1" target="https://www.itu.int/rec/T-REC-G.873.1">
    <front>
    <title>Optical transport network: Linear protection</title>
    <author>
+     <organization>International Telecommunication Union</organization>
    </author>
    <date month="October" year="2017"/>
    </front>
-   <seriesInfo name="ITU-T" value="Recommendation G.873.1"/>
+   <seriesInfo name="ITU-T Recommendation" value="G.873.1 (2017)"/>
   </reference>
-  
-  <reference anchor="OpenROADM">
+
+  <reference anchor="ITU-T_G.873.1 Amd1" target="https://www.itu.int/rec/T-REC-G.873.1">
    <front>
-   <title>OpenROADM Multi-Source Agreement (MSA) - http://openroadm.org
+   <title>Optical transport network: Linear protection Amendment 1
    </title>
-   <author/>
+   <author>
+     <organization>International Telecommunication Union</organization>
+   </author>
+   <date month="February" year="2022"/>
+   </front>
+   <seriesInfo name="ITU-T Recommendation" value="G.873.1 Amendment 1 (2022)"/>
+  </reference>  
+
+  <reference anchor="OpenROADM" target="http://openroadm.org">
+   <front>
+   <title>OpenROADM Multi-Source Agreement (MSA)
+   </title>
+   <author>
+     <organization>OpenROADM MSA</organization>
+   </author>
    </front>
   </reference>
-  
+
   <reference anchor="CHENTSHO2020" 
     target="https://www.sciencedirect.com/science/article/pii/S1068520020302285">
   <front>
@@ -5400,7 +5305,7 @@ reference: RFC XXXX (TDB)
   <seriesInfo name="ISSN" value="1068-5200"/>
   <seriesInfo name="DOI" value="10.1016/j.yofte.2020.102238"/>
   </reference>
-  
+
   </references>
 
   <section anchor="Tree View" numbered="true">
@@ -7992,7 +7897,7 @@ r-unknown
     <contact fullname="Aihua Guo" initials="A" surname="Guo">
       <organization>Huawei Technologies</organization>
       <address>
-        <email>aguo@futurewei.com</email>
+        <email>aihuaguo.ietf@gmail.com</email>
       </address>
     </contact>
 
@@ -8004,7 +7909,7 @@ r-unknown
     </contact>
 
     <contact fullname="Young Lee" initials="Y" surname="Lee">
-      <organization>Samsung Electronics</organization>
+      <organization>CRU</organization>
       <address>
         <email>younglee.tx@gmail.com</email>
       </address>
@@ -8060,9 +7965,9 @@ r-unknown
     </contact>
     
     <contact fullname="Gert Grammel" initials="G" surname="Grammel">
-      <organization>Juniper</organization>
+      <organization>HPE</organization>
       <address>
-        <email>ggrammel@juniper.net</email>
+        <email>gert.grammel@hpe.com</email>
       </address>
     </contact>
     
